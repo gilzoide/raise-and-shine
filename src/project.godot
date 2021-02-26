@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Object",
+"class": "MapTypes",
+"language": "GDScript",
+"path": "res://Editor/MapTypes.gd"
+} ]
 _global_script_class_icons={
-
+"MapTypes": ""
 }
 
 [application]
@@ -18,6 +23,10 @@ _global_script_class_icons={
 config/name="Normal-Height editor"
 run/main_scene="res://MainUI/Main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+ImageFileDialog="*res://MainUI/ImageFileDialog.tscn"
 
 [editor_plugins]
 

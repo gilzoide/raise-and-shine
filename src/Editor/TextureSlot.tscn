@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Editor/TextureSlot.gd" type="Script" id=1]
+
+[node name="TextureSlot" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "TEXTURE TITLE"
+align = 1
+valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 576.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch_mode = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_top = 580.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+custom_constants/separation = 16
+
+[node name="LoadButton" type="Button" parent="HBoxContainer"]
+margin_right = 504.0
+margin_bottom = 20.0
+hint_tooltip = "Choose a file to load texture from"
+size_flags_horizontal = 3
+text = "Load..."
+
+[node name="SaveAsButton" type="Button" parent="HBoxContainer"]
+margin_left = 520.0
+margin_right = 1024.0
+margin_bottom = 20.0
+hint_tooltip = "Choose a file to load texture from"
+size_flags_horizontal = 3
+text = "Save as..."

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://MainUI/FileMenuButton/FileMenuButton.gd" type="Script" id=1]
+[ext_resource path="res://Editor/LoadedTextureBar.tscn" type="PackedScene" id=2]
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -9,48 +10,64 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="."]
+[node name="MainPanel" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-
-[node name="MenuBar" type="HBoxContainer" parent="Panel"]
-anchor_right = 1.0
-margin_bottom = 20.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MenuButton" type="MenuButton" parent="Panel/MenuBar"]
+[node name="MenuBar" type="HBoxContainer" parent="MainPanel"]
+anchor_right = 1.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButton" type="MenuButton" parent="MainPanel/MenuBar"]
 margin_right = 35.0
-margin_bottom = 20.0
+margin_bottom = 32.0
 text = "File"
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-file_popup_path = NodePath("../../../ImageFileDialog")
 
-[node name="MenuButton2" type="MenuButton" parent="Panel/MenuBar"]
+[node name="MenuButton2" type="MenuButton" parent="MainPanel/MenuBar"]
 margin_left = 39.0
 margin_right = 89.0
-margin_bottom = 20.0
+margin_bottom = 32.0
 text = "About"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ImageFileDialog" type="FileDialog" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -300.5
-margin_top = -149.0
-margin_right = 300.5
-margin_bottom = 149.0
-window_title = "Load Image File"
-mode = 0
-access = 2
-filters = PoolStringArray( "*.bmp ; BMP", "*.dds ; DirectDraw Surface", "*.exr ; OpenEXR", "*.hdr ; Radiance HDR", "*.jpg ; JPG", "*.jpeg ; JPEG", "*.png ; PNG", "*.tga ; Truevision Targa", "*.webp ; WebP" )
-current_dir = "/media/dados/prog/Godot-Projects/normal-height-map-editor/src"
-current_path = "/media/dados/prog/Godot-Projects/normal-height-map-editor/src/"
+[node name="WorkbenchPanel" type="Panel" parent="MainPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MainPanel/WorkbenchPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+split_offset = 150
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoadedTextureBar" parent="MainPanel/WorkbenchPanel/HSplitContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 300.0
+margin_bottom = 568.0
+rect_min_size = Vector2( 150, 0 )
+
+[node name="TabContainer" type="TabContainer" parent="MainPanel/WorkbenchPanel/HSplitContainer"]
+margin_left = 312.0
+margin_right = 1024.0
+margin_bottom = 568.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

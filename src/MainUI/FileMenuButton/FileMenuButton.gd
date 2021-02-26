@@ -1,6 +1,6 @@
 extends MenuButton
 
-export(Resource) var loaded_project = preload("res://Project/ActiveEditorProject.tres")
+export(Resource) var loaded_project = preload("res://Editor/ActiveEditorProject.tres")
 export(NodePath) var file_popup_path: NodePath
 onready var file_popup: FileDialog = get_node(file_popup_path)
 
