@@ -15,7 +15,7 @@ __meta__ = {
 [node name="Title" type="Label" parent="."]
 margin_right = 1024.0
 margin_bottom = 14.0
-text = "TEXTURE TITLE"
+text = "TITLE"
 align = 1
 valign = 1
 
@@ -48,3 +48,4 @@ margin_bottom = 20.0
 hint_tooltip = "Choose a file to load texture from"
 size_flags_horizontal = 3
 text = "Save as..."
+[connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]

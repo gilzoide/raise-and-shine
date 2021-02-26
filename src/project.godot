@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Object",
 "class": "MapTypes",
 "language": "GDScript",
-"path": "res://Editor/MapTypes.gd"
+"path": "res://Editor/Project/MapTypes.gd"
 } ]
 _global_script_class_icons={
 "MapTypes": ""

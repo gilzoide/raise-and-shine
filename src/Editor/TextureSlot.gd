@@ -1,18 +1,20 @@
-tool
 extends Control
 
-export(MapTypes.Type) var type
-export(Texture) var texture: Texture = null setget set_texture, get_texture
+enum Type {
+	ALBEDO_MAP,
+	HEIGHT_MAP,
+	NORMAL_MAP,
+}
+
+export(Type) var type
+export(Resource) var project = preload("res://Editor/Project/ActiveEditorProject.tres")
 
 onready var title_label: Label = $Title
 onready var texture_rect = $TextureRect
 
 func _ready() -> void:
 	title_label.text = MapTypes.map_name(type)
+	texture_rect.texture = MapTypes.map_texture(type)
 
-func set_texture(value: Texture) -> void:
-	if texture_rect:
-		texture_rect.texture = value
-
-func get_texture() -> Texture:
-	return texture_rect.texture
+func _on_LoadButton_pressed() -> void:
+	project.load_image_dialog(type)
