@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Editor/Visualizers/Visualizer2D.tscn" type="PackedScene" id=1]
+
+[node name="Visualizer2D_UI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Visualizer2D" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
