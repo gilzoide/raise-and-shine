@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://MainUI/FileMenuButton/FileMenuButton.gd" type="Script" id=1]
+
+[node name="MainUI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MenuBar" type="HBoxContainer" parent="Panel"]
+anchor_right = 1.0
+margin_bottom = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButton" type="MenuButton" parent="Panel/MenuBar"]
+margin_right = 35.0
+margin_bottom = 20.0
+text = "File"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+file_popup_path = NodePath("../../../ImageFileDialog")
+
+[node name="MenuButton2" type="MenuButton" parent="Panel/MenuBar"]
+margin_left = 39.0
+margin_right = 89.0
+margin_bottom = 20.0
+text = "About"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ImageFileDialog" type="FileDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -300.5
+margin_top = -149.0
+margin_right = 300.5
+margin_bottom = 149.0
+window_title = "Load Image File"
+mode = 0
+access = 2
+filters = PoolStringArray( "*.bmp ; BMP", "*.dds ; DirectDraw Surface", "*.exr ; OpenEXR", "*.hdr ; Radiance HDR", "*.jpg ; JPG", "*.jpeg ; JPEG", "*.png ; PNG", "*.tga ; Truevision Targa", "*.webp ; WebP" )
+current_dir = "/media/dados/prog/Godot-Projects/normal-height-map-editor/src"
+current_path = "/media/dados/prog/Godot-Projects/normal-height-map-editor/src/"
