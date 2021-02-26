@@ -18,24 +18,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Separator1" type="ColorRect" parent="GridContainer"]
+margin_right = 1024.0
+margin_bottom = 2.0
+rect_min_size = Vector2( 0, 2 )
+size_flags_horizontal = 3
+
 [node name="AlbedoTextureSlot" parent="GridContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_top = 18.0
 margin_right = 1024.0
 margin_bottom = 189.0
+
+[node name="Separator2" type="ColorRect" parent="GridContainer"]
+margin_top = 205.0
+margin_right = 1024.0
+margin_bottom = 207.0
+rect_min_size = Vector2( 0, 2 )
+size_flags_horizontal = 3
 
 [node name="HeightTextureSlot" parent="GridContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 205.0
+margin_top = 223.0
 margin_right = 1024.0
 margin_bottom = 394.0
 type = 1
 
+[node name="Separator3" type="ColorRect" parent="GridContainer"]
+margin_top = 410.0
+margin_right = 1024.0
+margin_bottom = 412.0
+rect_min_size = Vector2( 0, 2 )
+size_flags_horizontal = 3
+
 [node name="NormalTextureSlot" parent="GridContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 410.0
+margin_top = 428.0
 margin_right = 1024.0
 margin_bottom = 599.0
 type = 2

@@ -4,8 +4,8 @@
 control = true
 command = true
 pressed = true
-scancode = 79
-unicode = 111
+scancode = 81
+unicode = 113
 
 [resource]
 shortcut = SubResource( 1 )
