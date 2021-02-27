@@ -1,9 +1,11 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://MainUI/FileMenuButton/FileMenuButton.gd" type="Script" id=1]
-[ext_resource path="res://Editor/VisualizerGrid.tscn" type="PackedScene" id=2]
-[ext_resource path="res://MainUI/UI_theme.tres" type="Theme" id=3]
-[ext_resource path="res://Editor/Inspector/Inspector.tscn" type="PackedScene" id=4]
+[ext_resource path="res://mainUI/FileMenuButton/FileMenuButton.gd" type="Script" id=1]
+[ext_resource path="res://editor/VisualizerGrid.tscn" type="PackedScene" id=2]
+[ext_resource path="res://mainUI/UI_theme.tres" type="Theme" id=3]
+[ext_resource path="res://editor/inspector/Inspector.tscn" type="PackedScene" id=4]
+
+
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -121,3 +123,6 @@ anchor_bottom = 0.0
 margin_left = 860.0
 margin_right = 1010.0
 margin_bottom = 554.0
+[connection signal="toggled" from="MainPanel/MenuBar/ToggleAlbedo" to="MainPanel/WorkbenchPanel/HSplitContainer/VisualizerGrid" method="set_albedo_visible"]
+[connection signal="toggled" from="MainPanel/MenuBar/ToggleHeight" to="MainPanel/WorkbenchPanel/HSplitContainer/VisualizerGrid" method="set_height_visible"]
+[connection signal="toggled" from="MainPanel/MenuBar/ToggleNormal" to="MainPanel/WorkbenchPanel/HSplitContainer/VisualizerGrid" method="set_normal_visible"]

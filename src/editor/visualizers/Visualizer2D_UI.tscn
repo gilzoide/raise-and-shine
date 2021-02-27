@@ -1,7 +1,9 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Editor/Visualizers/Visualizer2D.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Editor/Visualizers/StepRange.gd" type="Script" id=2]
+[ext_resource path="res://editor/visualizers/Visualizer2D.tscn" type="PackedScene" id=1]
+[ext_resource path="res://editor/visualizers/StepRange.gd" type="Script" id=2]
+
+
 
 [sub_resource type="InputEventAction" id=1]
 action = "visualizer_zoom_down"

@@ -7,7 +7,7 @@ enum Type {
 }
 
 export(Type) var type
-export(Resource) var project = preload("res://Editor/Project/ActiveEditorProject.tres")
+export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 
 onready var title_label: Label = $Title
 onready var texture_rect = $TextureRect

@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Object",
 "class": "MapTypes",
 "language": "GDScript",
-"path": "res://Editor/Project/MapTypes.gd"
+"path": "res://editor/project/MapTypes.gd"
 } ]
 _global_script_class_icons={
 "MapTypes": ""
@@ -21,12 +21,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Normal-Height editor"
-run/main_scene="res://MainUI/Main.tscn"
+run/main_scene="res://mainUI/Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-ImageFileDialog="*res://MainUI/ImageFileDialog.tscn"
+ImageFileDialog="*res://mainUI/ImageFileDialog.tscn"
 
 [editor_plugins]
 

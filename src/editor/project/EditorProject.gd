@@ -5,9 +5,9 @@ signal texture_updated(type, texture)
 export(Image) var albedo_image: Image
 export(Image) var height_image: Image
 export(Image) var normal_image: Image
-var albedo_texture: ImageTexture = preload("res://Editor/Project/Albedo_imagetexture.tres")
-var height_texture: ImageTexture = preload("res://Editor/Project/Height_imagetexture.tres")
-var normal_texture: ImageTexture = preload("res://Editor/Project/Normal_imagetexture.tres")
+var albedo_texture: ImageTexture = MapTypes.ALBEDO_PROXY_TEXTURE
+var height_texture: ImageTexture = MapTypes.HEIGHT_PROXY_TEXTURE
+var normal_texture: ImageTexture = MapTypes.NORMAL_PROXY_TEXTURE
 
 func load_image_dialog(type: int) -> void:
 	var method = ""

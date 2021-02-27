@@ -1,16 +1,14 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://MainUI/ImageFileDialog.gd" type="Script" id=1]
+[ext_resource path="res://mainUI/ImageFileDialog.gd" type="Script" id=1]
+
 
 [node name="ImageFileDialog" type="FileDialog"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -300.5
-margin_top = -149.0
-margin_right = 300.5
-margin_bottom = 149.0
+visible = true
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
 window_title = "Abrir um Arquivo"
 mode = 0
 access = 2
@@ -18,10 +16,15 @@ filters = PoolStringArray( "*.bmp ; BMP", "*.dds ; DirectDraw Surface", "*.exr ;
 current_dir = "/media/dados/prog/Godot-Projects/normal-height-map-editor/src"
 current_path = "/media/dados/prog/Godot-Projects/normal-height-map-editor/src/"
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="AcceptDialog3" type="AcceptDialog" parent="."]
-margin_right = 90.0
-margin_bottom = 58.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 606.4
+margin_bottom = 324.0
 window_title = "Alerta!"
 dialog_text = "Failed to load image =("
 [connection signal="file_selected" from="." to="." method="_on_file_selected"]

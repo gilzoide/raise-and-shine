@@ -2,7 +2,6 @@ extends Node2D
 
 signal zoom_percent_changed(value)
 
-export(Resource) var loaded_project = preload("res://Editor/Project/ActiveEditorProject.tres")
 export(float) var min_zoom: float = 1
 export(float) var max_zoom: float = 10
 export(float) var zoom_step: float = 0.01

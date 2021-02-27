@@ -8,9 +8,9 @@ enum Type {
 	NORMAL_MAP,
 }
 
-const ALBEDO_PROXY_TEXTURE = preload("res://Editor/Project/Albedo_imagetexture.tres")
-const HEIGHT_PROXY_TEXTURE = preload("res://Editor/Project/Height_imagetexture.tres")
-const NORMAL_PROXY_TEXTURE = preload("res://Editor/Project/Normal_imagetexture.tres")
+const ALBEDO_PROXY_TEXTURE = preload("res://editor/project/Albedo_imagetexture.tres")
+const HEIGHT_PROXY_TEXTURE = preload("res://editor/project/Height_imagetexture.tres")
+const NORMAL_PROXY_TEXTURE = preload("res://editor/project/Normal_imagetexture.tres")
 
 static func map_name(type: int) -> String:
 	if type == Type.ALBEDO_MAP:
