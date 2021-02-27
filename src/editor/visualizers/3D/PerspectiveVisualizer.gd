@@ -1,6 +1,7 @@
 extends Control
 
-export(float) var faster_speed: float = 5
+export(float) var speed: float = 60
+export(float) var faster_factor: float = 5
 
 var dragging = false
 
@@ -15,10 +16,10 @@ func _gui_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	if has_focus():
-		var speed = faster_speed if Input.is_action_pressed("visualizer_3d_faster") else 1
+		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * speed * delta
 		var movement = Vector2(
 			Input.get_action_strength("visualizer_3d_rotate_left") - Input.get_action_strength("visualizer_3d_rotate_right"),
 			Input.get_action_strength("visualizer_3d_rotate_up") - Input.get_action_strength("visualizer_3d_rotate_down")
 		)
 		var clockwise = Input.get_action_strength("visualizer_3d_rotate_clockwise") - Input.get_action_strength("visualizer_3d_rotate_counterclockwise")
-		PhotoBooth.rotate_plate(movement * speed, clockwise * speed)
+		PhotoBooth.rotate_plate(movement * factor, clockwise * factor)

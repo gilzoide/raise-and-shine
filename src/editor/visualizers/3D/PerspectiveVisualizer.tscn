@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://editor/visualizers/3D/Visualizer3D_UI.gd" type="Script" id=1]
+[ext_resource path="res://editor/visualizers/3D/PerspectiveVisualizer.gd" type="Script" id=1]
 
-[node name="Visualizer3D_UI" type="Control"]
+[node name="PerspectiveVisualizer" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 focus_mode = 2

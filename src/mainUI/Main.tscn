@@ -95,15 +95,6 @@ toggle_mode = true
 pressed = true
 text = "3D"
 
-[node name="ToggleInspector" type="Button" parent="MainPanel/MenuBar"]
-margin_left = 297.0
-margin_right = 370.0
-margin_bottom = 32.0
-hint_tooltip = "Toggle inspector"
-toggle_mode = true
-pressed = true
-text = "Inspector"
-
 [node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
