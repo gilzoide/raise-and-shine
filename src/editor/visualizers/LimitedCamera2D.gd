@@ -6,7 +6,7 @@ var dragging = false
 var pan_modifier = false
 
 func _ready() -> void:
-	sprite.connect("item_rect_changed", self, "update_limits")
+	var _err = sprite.connect("item_rect_changed", self, "update_limits")
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("visualizer_pan_modifier"):

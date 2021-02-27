@@ -15,6 +15,6 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventMouseButton and not event.is_pressed():
 		dragging = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if dragging:
 		global_position = get_global_mouse_position()
