@@ -4,5 +4,5 @@
 
 [resource]
 material = ExtResource( 1 )
-subdivide_width = 63
-subdivide_depth = 63
+subdivide_width = 64
+subdivide_depth = 64
