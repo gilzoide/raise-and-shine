@@ -12,41 +12,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="MenuButton" parent="."]
 margin_right = 1024.0
-margin_bottom = 14.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
+button_mask = 3
 text = "TITLE"
-align = 1
-valign = 1
+flat = false
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_top = 18.0
-margin_right = 1024.0
-margin_bottom = 576.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-stretch_mode = 6
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_top = 580.0
+margin_top = 36.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
-custom_constants/separation = 16
-
-[node name="LoadButton" type="Button" parent="HBoxContainer"]
-margin_right = 504.0
-margin_bottom = 20.0
-hint_tooltip = "Choose a file to load texture from"
-size_flags_horizontal = 3
-text = "Load..."
-
-[node name="SaveAsButton" type="Button" parent="HBoxContainer"]
-margin_left = 520.0
-margin_right = 1024.0
-margin_bottom = 20.0
-hint_tooltip = "Choose a file to load texture from"
-size_flags_horizontal = 3
-text = "Save as..."
-[connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
-[connection signal="pressed" from="HBoxContainer/SaveAsButton" to="." method="_on_SaveAsButton_pressed"]
+size_flags_vertical = 3
+stretch_mode = 6
