@@ -42,7 +42,7 @@ func get_background_visible() -> bool:
 	return background.visible
 
 func rotate_plate_mouse(amount: Vector2) -> void:
-	rotate_plate(amount * plate_angular_speed, 0)
+	rotate_plate(amount, 0)
 
 func rotate_plate(amount: Vector2, clockwise: float) -> void:
 	plate.rotate_y(amount.x * plate_angular_speed)
