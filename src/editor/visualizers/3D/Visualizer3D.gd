@@ -7,5 +7,5 @@ func _ready() -> void:
 	update_planemesh()
 
 func update_planemesh() -> void:
-	planemesh.subdivide_width = project.height_image.get_width()
-	planemesh.subdivide_depth = project.height_image.get_height()
+	planemesh.subdivide_width = project.height_image.get_width() - 1
+	planemesh.subdivide_depth = project.height_image.get_height() - 1

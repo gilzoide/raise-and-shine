@@ -14,12 +14,14 @@ script = ExtResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
 environment = ExtResource( 3 )
 
-[node name="Border" type="MeshInstance" parent="."]
+[node name="Plate" type="Spatial" parent="."]
+
+[node name="Background" type="MeshInstance" parent="Plate"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01 )
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="MeshInstance" type="MeshInstance" parent="Plate"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 mesh = ExtResource( 1 )
 material/0 = null
