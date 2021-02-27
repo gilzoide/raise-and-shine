@@ -18,3 +18,7 @@ func _ready() -> void:
 
 func _on_LoadButton_pressed() -> void:
 	project.load_image_dialog(type)
+
+
+func _on_SaveAsButton_pressed() -> void:
+	project.save_image_dialog(type)
