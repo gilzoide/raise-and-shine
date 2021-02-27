@@ -39,23 +39,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MenuButton2" type="MenuButton" parent="MainPanel/MenuBar"]
-margin_left = 39.0
-margin_right = 89.0
-margin_bottom = 32.0
-text = "About"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="VSeparator" type="VSeparator" parent="MainPanel/MenuBar"]
-margin_left = 93.0
-margin_right = 97.0
+margin_left = 39.0
+margin_right = 43.0
 margin_bottom = 32.0
 
 [node name="ToggleAlbedo" type="Button" parent="MainPanel/MenuBar"]
-margin_left = 101.0
-margin_right = 158.0
+margin_left = 47.0
+margin_right = 104.0
 margin_bottom = 32.0
 hint_tooltip = "Toggle albedo map editor"
 toggle_mode = true
@@ -64,8 +55,8 @@ shortcut = ExtResource( 7 )
 text = "Albedo"
 
 [node name="ToggleHeight" type="Button" parent="MainPanel/MenuBar"]
-margin_left = 162.0
-margin_right = 216.0
+margin_left = 108.0
+margin_right = 162.0
 margin_bottom = 32.0
 hint_tooltip = "Toggle heightmap editor"
 toggle_mode = true
@@ -74,8 +65,8 @@ shortcut = ExtResource( 6 )
 text = "Height"
 
 [node name="ToggleNormal" type="Button" parent="MainPanel/MenuBar"]
-margin_left = 220.0
-margin_right = 279.0
+margin_left = 166.0
+margin_right = 225.0
 margin_bottom = 32.0
 rect_pivot_offset = Vector2( 509.5, 316.5 )
 hint_tooltip = "Toggle normal map editor"
@@ -85,8 +76,8 @@ shortcut = ExtResource( 5 )
 text = "Normal"
 
 [node name="Toggle2D" type="Button" parent="MainPanel/MenuBar"]
-margin_left = 283.0
-margin_right = 313.0
+margin_left = 229.0
+margin_right = 259.0
 margin_bottom = 32.0
 hint_tooltip = "Toggle 2D scene visualizer"
 toggle_mode = true
@@ -94,13 +85,22 @@ pressed = true
 text = "2D"
 
 [node name="Toggle3D" type="Button" parent="MainPanel/MenuBar"]
-margin_left = 317.0
-margin_right = 347.0
+margin_left = 263.0
+margin_right = 293.0
 margin_bottom = 32.0
 hint_tooltip = "Toggle 3D scene visualizer"
 toggle_mode = true
 pressed = true
 text = "3D"
+
+[node name="ToggleInspector" type="Button" parent="MainPanel/MenuBar"]
+margin_left = 297.0
+margin_right = 370.0
+margin_bottom = 32.0
+hint_tooltip = "Toggle inspector"
+toggle_mode = true
+pressed = true
+text = "Inspector"
 
 [node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]
 anchor_right = 1.0
