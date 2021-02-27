@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="Inspector" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 150, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

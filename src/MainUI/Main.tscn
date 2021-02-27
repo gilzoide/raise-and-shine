@@ -1,13 +1,14 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://MainUI/FileMenuButton/FileMenuButton.gd" type="Script" id=1]
-[ext_resource path="res://Editor/LoadedTextureBar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Editor/VisualizerGrid.tscn" type="PackedScene" id=2]
 [ext_resource path="res://MainUI/UI_theme.tres" type="Theme" id=3]
-[ext_resource path="res://Editor/Visualizers/Visualizer2D_UI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Editor/Inspector/Inspector.tscn" type="PackedScene" id=4]
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -44,7 +45,52 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WorkbenchPanel" type="Panel" parent="MainPanel"]
+[node name="VSeparator" type="VSeparator" parent="MainPanel/MenuBar"]
+margin_left = 93.0
+margin_right = 97.0
+margin_bottom = 32.0
+
+[node name="ToggleAlbedo" type="Button" parent="MainPanel/MenuBar"]
+margin_left = 101.0
+margin_right = 158.0
+margin_bottom = 32.0
+toggle_mode = true
+pressed = true
+text = "Albedo"
+
+[node name="ToggleHeight" type="Button" parent="MainPanel/MenuBar"]
+margin_left = 162.0
+margin_right = 216.0
+margin_bottom = 32.0
+toggle_mode = true
+pressed = true
+text = "Height"
+
+[node name="ToggleNormal" type="Button" parent="MainPanel/MenuBar"]
+margin_left = 220.0
+margin_right = 279.0
+margin_bottom = 32.0
+toggle_mode = true
+pressed = true
+text = "Normal"
+
+[node name="Toggle2D" type="Button" parent="MainPanel/MenuBar"]
+margin_left = 283.0
+margin_right = 313.0
+margin_bottom = 32.0
+toggle_mode = true
+pressed = true
+text = "2D"
+
+[node name="Toggle3D" type="Button" parent="MainPanel/MenuBar"]
+margin_left = 317.0
+margin_right = 347.0
+margin_bottom = 32.0
+toggle_mode = true
+pressed = true
+text = "3D"
+
+[node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 32.0
@@ -54,29 +100,24 @@ __meta__ = {
 }
 
 [node name="HSplitContainer" type="HSplitContainer" parent="MainPanel/WorkbenchPanel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-split_offset = 150
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 561.0
+split_offset = 700
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LoadedTextureBar" parent="MainPanel/WorkbenchPanel/HSplitContainer" instance=ExtResource( 2 )]
+[node name="VisualizerGrid" parent="MainPanel/WorkbenchPanel/HSplitContainer" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 300.0
-margin_bottom = 568.0
-rect_min_size = Vector2( 150, 0 )
+margin_right = 848.0
+margin_bottom = 554.0
 
-[node name="TabContainer" type="TabContainer" parent="MainPanel/WorkbenchPanel/HSplitContainer"]
-margin_left = 312.0
-margin_right = 1024.0
-margin_bottom = 568.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="2D" parent="MainPanel/WorkbenchPanel/HSplitContainer/TabContainer" instance=ExtResource( 4 )]
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+[node name="Inspector" parent="MainPanel/WorkbenchPanel/HSplitContainer" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 860.0
+margin_right = 1010.0
+margin_bottom = 554.0

@@ -1,3 +1,8 @@
 [gd_resource type="Theme" format=2]
 
 [resource]
+HSplitContainer/colors/grabber = Color( 1, 1, 1, 1 )
+HSplitContainer/constants/autohide = 0
+HSplitContainer/constants/separation = 12
+HSplitContainer/icons/grabber = null
+HSplitContainer/styles/bg = null

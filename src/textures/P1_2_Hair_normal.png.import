@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/P1_2_Hair_normal.png-e91ad894d039f9a807aecf8ee745b25c.image"
+
+[deps]
+
+source_file="res://textures/P1_2_Hair_normal.png"
+dest_files=[ "res://.import/P1_2_Hair_normal.png-e91ad894d039f9a807aecf8ee745b25c.image" ]
+
+[params]
+
