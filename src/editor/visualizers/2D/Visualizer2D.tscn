@@ -5,7 +5,7 @@
 [ext_resource path="res://editor/visualizers/2D/LimitedCamera2D.gd" type="Script" id=3]
 [ext_resource path="res://editor/visualizers/2D/light.png" type="Texture" id=4]
 [ext_resource path="res://editor/visualizers/2D/Visualizer2D.gd" type="Script" id=5]
-[ext_resource path="res://materials/InvertNormalYMaterial.tres" type="Material" id=6]
+[ext_resource path="res://editor/visualizers/2D/Sprite_material.tres" type="Material" id=6]
 [ext_resource path="res://editor/visualizers/2D/DraggableNode2D.gd" type="Script" id=7]
 
 [node name="Visualizer2D" type="Node2D"]
@@ -33,5 +33,6 @@ texture = ExtResource( 4 )
 script = ExtResource( 7 )
 
 [node name="Sprite" type="Sprite" parent="Light2D"]
+position = Vector2( 95.8623, 70.6353 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 4 )
