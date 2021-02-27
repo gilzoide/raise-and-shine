@@ -11,6 +11,7 @@
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 theme = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -19,6 +20,7 @@ __meta__ = {
 [node name="MainPanel" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -106,6 +108,7 @@ text = "Inspector"
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 32.0
+mouse_filter = 1
 theme = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -116,6 +119,7 @@ margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
 margin_bottom = 561.0
+mouse_filter = 1
 split_offset = 700
 __meta__ = {
 "_edit_use_anchors_": false

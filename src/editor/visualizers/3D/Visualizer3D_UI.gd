@@ -9,10 +9,14 @@ enum {
 }
 
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
+
+export(float) var faster_speed: float = 5
+
 onready var flags_menu = $FlagsMenu
 onready var flags_menu_popup = flags_menu.get_popup()
 onready var background_mesh = $ViewportContainer/Viewport/Visualizer3D/Plate/Background
 onready var visualizer3D = $ViewportContainer/Viewport/Visualizer3D
+var dragging = false
 
 func _ready() -> void:
 	flags_menu_popup.hide_on_checkable_item_selection = false
@@ -27,6 +31,25 @@ func _ready() -> void:
 	flags_menu_popup.add_check_item("Perspective", TOGGLE_PERSPECTIVE)
 	update_perspective_check_item()
 	var _err = flags_menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.is_pressed() and not event.is_echo() \
+			and event.button_index == BUTTON_MIDDLE:
+		dragging = true
+	elif event is InputEventMouseButton and not event.is_pressed():
+		dragging = false
+	if dragging and event is InputEventMouseMotion:
+		visualizer3D.rotate_plate_mouse(event.relative)
+
+func _process(delta: float) -> void:
+	if has_focus():
+		var speed = faster_speed if Input.is_action_pressed("visualizer_3d_faster") else 1
+		var movement = Vector2(
+			Input.get_action_strength("visualizer_3d_rotate_left") - Input.get_action_strength("visualizer_3d_rotate_right"),
+			Input.get_action_strength("visualizer_3d_rotate_up") - Input.get_action_strength("visualizer_3d_rotate_down")
+		)
+		var clockwise = Input.get_action_strength("visualizer_3d_rotate_clockwise") - Input.get_action_strength("visualizer_3d_rotate_counterclockwise")
+		visualizer3D.rotate_plate(movement * speed, clockwise * speed)
 
 func _on_menu_popup_id_pressed(id: int) -> void:
 	if id == TOGGLE_BACKGROUND:

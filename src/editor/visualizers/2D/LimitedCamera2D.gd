@@ -14,16 +14,16 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_released("visualizer_pan_modifier"):
 		pan_modifier = false
 	
-	if event is InputEventMouseButton and event.is_pressed() and not event.is_echo() \
-			and (event.button_index == BUTTON_MIDDLE or pan_modifier and event.button_index == BUTTON_LEFT):
-		dragging = true
-		update_limits()
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	elif event is InputEventMouseButton and not event.is_pressed():
-		dragging = false
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	elif event is InputEventMouseMotion and dragging:
-		translate(-event.relative)
+#	if event is InputEventMouseButton and event.is_pressed() and not event.is_echo() \
+#			and (event.button_index == BUTTON_MIDDLE or pan_modifier and event.button_index == BUTTON_LEFT):
+#		dragging = true
+#		update_limits()
+#		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+#	elif event is InputEventMouseButton and not event.is_pressed():
+#		dragging = false
+#		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+#	elif event is InputEventMouseMotion and dragging:
+#		translate(-event.relative)
 
 func _exit_tree() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

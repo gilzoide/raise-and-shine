@@ -6,6 +6,8 @@
 [node name="Visualizer3D_UI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+focus_mode = 2
+mouse_filter = 1
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -14,6 +16,7 @@ __meta__ = {
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -31,3 +34,6 @@ margin_right = 63.0
 margin_bottom = 20.0
 text = "Options"
 flat = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
