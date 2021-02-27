@@ -27,6 +27,7 @@ config/icon="res://icon.png"
 [autoload]
 
 ImageFileDialog="*res://mainUI/ImageFileDialog.tscn"
+PhotoBooth="*res://editor/visualizers/3D/PhotoBooth.tscn"
 
 [editor_plugins]
 

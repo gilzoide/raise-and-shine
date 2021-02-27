@@ -11,9 +11,7 @@ enum {
 
 export(float) var plate_angular_speed = 0.01
 
-var perspective: bool setget set_perspective, get_perspective
 var background_visible: bool setget set_background_visible, get_background_visible
-onready var camera = $Camera
 onready var plate = $Plate
 onready var background = $Plate/Background
 
@@ -28,12 +26,6 @@ func update_planemesh() -> void:
 func _on_texture_updated(type: int, texture: Texture) -> void:
 	if type == HEIGHT_MAP:
 		update_planemesh()
-
-func set_perspective(value: bool) -> void:
-	camera.projection = Camera.PROJECTION_PERSPECTIVE if value else Camera.PROJECTION_ORTHOGONAL
-
-func get_perspective() -> bool:
-	return camera.projection == Camera.PROJECTION_PERSPECTIVE
 
 func set_background_visible(value: bool) -> void:
 	background.visible = value

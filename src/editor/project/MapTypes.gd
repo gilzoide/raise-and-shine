@@ -12,9 +12,9 @@ const ALBEDO_IMAGE = preload("res://textures/P1_2_Hair.png")
 const HEIGHT_IMAGE = preload("res://textures/P1_2_Hair_height.png")
 const NORMAL_IMAGE = preload("res://textures/P1_2_Hair_normal.png")
 
-const ALBEDO_TEXTURE = preload("res://editor/project/Albedo_imagetexture.tres")
-const HEIGHT_TEXTURE = preload("res://editor/project/Height_imagetexture.tres")
-const NORMAL_TEXTURE = preload("res://editor/project/Normal_imagetexture.tres")
+const ALBEDO_TEXTURE = preload("res://textures/Albedo_imagetexture.tres")
+const HEIGHT_TEXTURE = preload("res://textures/Height_imagetexture.tres")
+const NORMAL_TEXTURE = preload("res://textures/Normal_imagetexture.tres")
 
 static func map_name(type: int) -> String:
 	if type == Type.ALBEDO_MAP:
