@@ -1,7 +1,5 @@
 extends MenuButton
 
-export(Resource) var loaded_project = preload("res://editor/project/ActiveEditorProject.tres")
-
 const IMAGE_EXTENSIONS = []
 
 enum {
