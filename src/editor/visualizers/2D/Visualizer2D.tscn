@@ -28,11 +28,11 @@ texture = ExtResource( 1 )
 normal_map = ExtResource( 2 )
 
 [node name="Light2D" type="Light2D" parent="."]
-position = Vector2( -153.516, -98.2937 )
+position = Vector2( -46.5103, -34.4611 )
 texture = ExtResource( 4 )
 script = ExtResource( 7 )
 
 [node name="Sprite" type="Sprite" parent="Light2D"]
-position = Vector2( 95.8623, 70.6353 )
+light_mask = 0
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 4 )

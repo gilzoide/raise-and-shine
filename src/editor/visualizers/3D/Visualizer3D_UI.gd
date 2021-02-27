@@ -5,12 +5,14 @@ enum {
 	TOGGLE_ALBEDO,
 	TOGGLE_HEIGHT,
 	TOGGLE_NORMAL,
+	TOGGLE_PERSPECTIVE,
 }
 
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
 onready var flags_menu = $FlagsMenu
 onready var flags_menu_popup = flags_menu.get_popup()
 onready var background_mesh = $ViewportContainer/Viewport/Visualizer3D/Plate/Background
+onready var visualizer3D = $ViewportContainer/Viewport/Visualizer3D
 
 func _ready() -> void:
 	flags_menu_popup.hide_on_checkable_item_selection = false
@@ -22,11 +24,13 @@ func _ready() -> void:
 	update_height_check_item()
 	flags_menu_popup.add_check_item("Normal", TOGGLE_NORMAL)
 	update_normal_check_item()
+	flags_menu_popup.add_check_item("Perspective", TOGGLE_PERSPECTIVE)
+	update_perspective_check_item()
 	var _err = flags_menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
 
 func _on_menu_popup_id_pressed(id: int) -> void:
 	if id == TOGGLE_BACKGROUND:
-		background_mesh.visible = not background_mesh.visible
+		visualizer3D.background_visible = not visualizer3D.background_visible
 		update_background_check_item()
 	elif id == TOGGLE_ALBEDO:
 		plane_material.set_shader_param("use_albedo", not plane_material.get_shader_param("use_albedo"))
@@ -37,9 +41,12 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 	elif id == TOGGLE_NORMAL:
 		plane_material.set_shader_param("use_normal", not plane_material.get_shader_param("use_normal"))
 		update_normal_check_item()
+	elif id == TOGGLE_PERSPECTIVE:
+		visualizer3D.perspective = not visualizer3D.perspective
+		update_perspective_check_item()
 
 func update_background_check_item() -> void:
-	flags_menu_popup.set_item_checked(TOGGLE_BACKGROUND, background_mesh.visible)
+	flags_menu_popup.set_item_checked(TOGGLE_BACKGROUND, visualizer3D.background_visible)
 
 func update_albedo_check_item() -> void:
 	flags_menu_popup.set_item_checked(TOGGLE_ALBEDO, plane_material.get_shader_param("use_albedo"))
@@ -49,3 +56,6 @@ func update_height_check_item() -> void:
 
 func update_normal_check_item() -> void:
 	flags_menu_popup.set_item_checked(TOGGLE_NORMAL, plane_material.get_shader_param("use_normal"))
+
+func update_perspective_check_item() -> void:
+	flags_menu_popup.set_item_checked(TOGGLE_PERSPECTIVE, visualizer3D.perspective)

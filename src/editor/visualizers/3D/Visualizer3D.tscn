@@ -1,11 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/PlaneMesh.tres" type="PlaneMesh" id=1]
 [ext_resource path="res://editor/visualizers/3D/Visualizer3D.gd" type="Script" id=2]
 [ext_resource path="res://editor/visualizers/3D/Environment.tres" type="Environment" id=3]
+[ext_resource path="res://editor/visualizers/2D/light.png" type="Texture" id=4]
 
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 2.1, 2.1 )
+
+[sub_resource type="QuadMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_transparent = true
+flags_unshaded = true
+albedo_texture = ExtResource( 4 )
 
 [node name="Visualizer3D" type="Spatial"]
 script = ExtResource( 2 )
@@ -13,6 +21,7 @@ script = ExtResource( 2 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
 environment = ExtResource( 3 )
+size = 3.0
 
 [node name="Plate" type="Spatial" parent="."]
 
@@ -25,3 +34,11 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 mesh = ExtResource( 1 )
 material/0 = null
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0.541, 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="OmniLight"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )

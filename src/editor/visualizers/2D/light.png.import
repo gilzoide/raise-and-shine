@@ -2,26 +2,28 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/light.png-2a88104dbf4facc3aea7297fc874b077.stex"
+path.s3tc="res://.import/light.png-2a88104dbf4facc3aea7297fc874b077.s3tc.stex"
+path.etc="res://.import/light.png-2a88104dbf4facc3aea7297fc874b077.etc.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://editor/visualizers/2D/light.png"
-dest_files=[ "res://.import/light.png-2a88104dbf4facc3aea7297fc874b077.stex" ]
+dest_files=[ "res://.import/light.png-2a88104dbf4facc3aea7297fc874b077.s3tc.stex", "res://.import/light.png-2a88104dbf4facc3aea7297fc874b077.etc.stex" ]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=true
 flags/filter=true
-flags/mipmaps=false
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true
@@ -30,5 +32,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
