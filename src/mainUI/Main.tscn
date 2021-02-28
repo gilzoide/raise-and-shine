@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://editor/VisualizerGrid.tscn" type="PackedScene" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://shortcuts/ToggleNormalView_shortcut.tres" type="ShortCut" id=5]
 [ext_resource path="res://shortcuts/ToggleHeightView_shortcut.tres" type="ShortCut" id=6]
 [ext_resource path="res://shortcuts/ToggleAlbedoView_shortcut.tres" type="ShortCut" id=7]
+[ext_resource path="res://shortcuts/Toggle3DView_shortcut.tres" type="ShortCut" id=8]
+[ext_resource path="res://shortcuts/Toggle2DView_shortcut.tres" type="ShortCut" id=9]
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -84,6 +86,7 @@ margin_bottom = 32.0
 hint_tooltip = "Toggle 2D scene visualizer"
 toggle_mode = true
 pressed = true
+shortcut = ExtResource( 9 )
 text = "2D"
 
 [node name="Toggle3D" type="Button" parent="MainPanel/MenuBar"]
@@ -93,6 +96,7 @@ margin_bottom = 32.0
 hint_tooltip = "Toggle 3D scene visualizer"
 toggle_mode = true
 pressed = true
+shortcut = ExtResource( 8 )
 text = "3D"
 
 [node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]
