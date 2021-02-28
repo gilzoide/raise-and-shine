@@ -1,8 +1,7 @@
 [gd_resource type="ShortCut" load_steps=2 format=2]
 
 [sub_resource type="InputEventKey" id=1]
-control = true
-command = true
+alt = true
 pressed = true
 scancode = 53
 unicode = 53

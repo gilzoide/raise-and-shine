@@ -2,6 +2,7 @@
 
 [sub_resource type="InputEventKey" id=1]
 alt = true
+shift = true
 pressed = true
 scancode = 50
 unicode = 50
