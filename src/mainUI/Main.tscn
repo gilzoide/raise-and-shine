@@ -34,6 +34,7 @@ __meta__ = {
 margin_right = 35.0
 margin_bottom = 32.0
 text = "File"
+switch_on_hover = true
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -44,6 +45,7 @@ margin_left = 39.0
 margin_right = 81.0
 margin_bottom = 32.0
 text = "View"
+switch_on_hover = true
 script = ExtResource( 10 )
 visualizer_grid_path = NodePath("../../WorkbenchPanel/HSplitContainer/VisualizerGrid")
 
