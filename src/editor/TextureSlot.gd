@@ -14,10 +14,11 @@ enum {
 
 export(Type) var type
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
+export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
 
 onready var title_menu_button = $Title
 onready var menu_popup = title_menu_button.get_popup()
-onready var texture_rect = $TextureRect
+onready var texture_rect: TextureRect = $TextureRect
 
 func _ready() -> void:
 	title_menu_button.text = MapTypes.map_name(type)
@@ -41,3 +42,9 @@ func _on_menu_id_pressed(id: int) -> void:
 
 func update_filter_check_item() -> void:
 	menu_popup.set_item_checked(TOGGLE_FILTER, texture_rect.texture.flags & Texture.FLAG_FILTER)
+
+func _on_TextureRect_position_hovered(position) -> void:
+	selection.set_mouse_hovering(position)
+
+func _on_TextureRect_mouse_exited_texture() -> void:
+	selection.mouse_exited_hovering()

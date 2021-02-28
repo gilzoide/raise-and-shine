@@ -11,10 +11,12 @@ const int ALBEDO_FROM_NORMAL = 2;
 uniform sampler2D albedo_map;
 uniform sampler2D height_map;
 uniform sampler2D normal_map;
+uniform sampler2D selection_map;
 uniform bool use_albedo = true;
 uniform bool use_height = true;
 uniform bool use_normal = true;
 uniform int albedo_source = 0;
+uniform vec4 selection_color : hint_color = vec4(1, 1, 0, 1);
 
 varying float height;
 
@@ -31,8 +33,11 @@ void fragment() {
 	sources[ALBEDO_FROM_ALBEDO] = texel;
 	sources[ALBEDO_FROM_HEIGHT] = vec4(height, height, height, 1);
 	sources[ALBEDO_FROM_NORMAL] = vec4(normal, 1);
-	
 	vec4 color = sources[albedo_source] * COLOR;
+	
+	float selection = texture(selection_map, UV).r;
+	color = mix(color, selection_color, selection);
+	
 	NORMALMAP = float(use_normal) * normal;
 	ALBEDO = mix(vec3(1), color.rgb, float(use_albedo));
 	ALPHA = color.a;
