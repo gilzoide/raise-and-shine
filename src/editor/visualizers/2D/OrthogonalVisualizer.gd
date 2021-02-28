@@ -15,13 +15,14 @@ func _gui_input(event: InputEvent) -> void:
 	elif event is InputEventMouseButton and not event.is_pressed():
 		dragging = false
 	if dragging and event is InputEventMouseMotion:
-		update_camera_position(event.relative * mouse_speed)
+		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * mouse_speed
+		update_camera_position(event.relative * factor)
 
 func _process(delta: float) -> void:
 	if has_focus():
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * speed * delta
 		var movement = Vector2(
-			Input.get_action_strength("visualizer_3d_rotate_right") - Input.get_action_strength("visualizer_3d_rotate_left"),
+			Input.get_action_strength("visualizer_3d_rotate_left") - Input.get_action_strength("visualizer_3d_rotate_right"),
 			Input.get_action_strength("visualizer_3d_rotate_up") - Input.get_action_strength("visualizer_3d_rotate_down")
 		)
 		update_camera_position(movement * factor)
