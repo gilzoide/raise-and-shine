@@ -12,8 +12,10 @@ enum {
 export(float) var plate_angular_speed = 0.01
 
 var background_visible: bool setget set_background_visible, get_background_visible
+var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 onready var plate = $Plate
 onready var background = $Plate/Background
+onready var lights = $Lights
 
 func _ready() -> void:
 	update_planemesh()
@@ -40,3 +42,10 @@ func rotate_plate(amount: Vector2, clockwise: float) -> void:
 	plate.rotate_y(amount.x * plate_angular_speed)
 	plate.rotate_x(amount.y * plate_angular_speed)
 	plate.rotate_z(-clockwise * plate_angular_speed)
+
+func set_lights_enabled(value: bool) -> void:
+	for c in lights.get_children():
+		c.visible = value
+
+func get_lights_enabled() -> bool:
+	return lights.get_child(0).visible
