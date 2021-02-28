@@ -1,7 +1,5 @@
 extends MenuButton
 
-const IMAGE_EXTENSIONS = []
-
 enum {
 	QUIT,
 }

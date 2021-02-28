@@ -1,14 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://editor/VisualizerGrid.tscn" type="PackedScene" id=2]
 [ext_resource path="res://mainUI/UI_theme.tres" type="Theme" id=3]
 [ext_resource path="res://editor/inspector/Inspector.tscn" type="PackedScene" id=4]
-[ext_resource path="res://shortcuts/ToggleNormalView_shortcut.tres" type="ShortCut" id=5]
-[ext_resource path="res://shortcuts/ToggleHeightView_shortcut.tres" type="ShortCut" id=6]
-[ext_resource path="res://shortcuts/ToggleAlbedoView_shortcut.tres" type="ShortCut" id=7]
-[ext_resource path="res://shortcuts/Toggle3DView_shortcut.tres" type="ShortCut" id=8]
-[ext_resource path="res://shortcuts/Toggle2DView_shortcut.tres" type="ShortCut" id=9]
+[ext_resource path="res://mainUI/ViewMenuButton.gd" type="Script" id=10]
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -34,7 +30,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MenuButton" type="MenuButton" parent="MainPanel/MenuBar"]
+[node name="FileMenuButton" type="MenuButton" parent="MainPanel/MenuBar"]
 margin_right = 35.0
 margin_bottom = 32.0
 text = "File"
@@ -43,61 +39,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VSeparator" type="VSeparator" parent="MainPanel/MenuBar"]
+[node name="ViewMenuButton" type="MenuButton" parent="MainPanel/MenuBar"]
 margin_left = 39.0
-margin_right = 43.0
+margin_right = 81.0
 margin_bottom = 32.0
+text = "View"
+script = ExtResource( 10 )
+visualizer_grid_path = NodePath("../../WorkbenchPanel/HSplitContainer/VisualizerGrid")
 
-[node name="ToggleAlbedo" type="Button" parent="MainPanel/MenuBar"]
-margin_left = 47.0
-margin_right = 104.0
+[node name="VSeparator" type="VSeparator" parent="MainPanel/MenuBar"]
+margin_left = 85.0
+margin_right = 89.0
 margin_bottom = 32.0
-hint_tooltip = "Toggle albedo map editor"
-toggle_mode = true
-pressed = true
-shortcut = ExtResource( 7 )
-text = "Albedo"
-
-[node name="ToggleHeight" type="Button" parent="MainPanel/MenuBar"]
-margin_left = 108.0
-margin_right = 162.0
-margin_bottom = 32.0
-hint_tooltip = "Toggle heightmap editor"
-toggle_mode = true
-pressed = true
-shortcut = ExtResource( 6 )
-text = "Height"
-
-[node name="ToggleNormal" type="Button" parent="MainPanel/MenuBar"]
-margin_left = 166.0
-margin_right = 225.0
-margin_bottom = 32.0
-rect_pivot_offset = Vector2( 509.5, 316.5 )
-hint_tooltip = "Toggle normal map editor"
-toggle_mode = true
-pressed = true
-shortcut = ExtResource( 5 )
-text = "Normal"
-
-[node name="Toggle2D" type="Button" parent="MainPanel/MenuBar"]
-margin_left = 229.0
-margin_right = 259.0
-margin_bottom = 32.0
-hint_tooltip = "Toggle 2D scene visualizer"
-toggle_mode = true
-pressed = true
-shortcut = ExtResource( 9 )
-text = "2D"
-
-[node name="Toggle3D" type="Button" parent="MainPanel/MenuBar"]
-margin_left = 263.0
-margin_right = 293.0
-margin_bottom = 32.0
-hint_tooltip = "Toggle 3D scene visualizer"
-toggle_mode = true
-pressed = true
-shortcut = ExtResource( 8 )
-text = "3D"
 
 [node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]
 anchor_right = 1.0
@@ -136,8 +89,3 @@ margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
-[connection signal="toggled" from="MainPanel/MenuBar/ToggleAlbedo" to="MainPanel/WorkbenchPanel/HSplitContainer/VisualizerGrid" method="set_albedo_visible"]
-[connection signal="toggled" from="MainPanel/MenuBar/ToggleHeight" to="MainPanel/WorkbenchPanel/HSplitContainer/VisualizerGrid" method="set_height_visible"]
-[connection signal="toggled" from="MainPanel/MenuBar/ToggleNormal" to="MainPanel/WorkbenchPanel/HSplitContainer/VisualizerGrid" method="set_normal_visible"]
-[connection signal="toggled" from="MainPanel/MenuBar/Toggle2D" to="MainPanel/WorkbenchPanel/HSplitContainer/VisualizerGrid" method="set_2d_visible"]
-[connection signal="toggled" from="MainPanel/MenuBar/Toggle3D" to="MainPanel/WorkbenchPanel/HSplitContainer/VisualizerGrid" method="set_3d_visible"]
