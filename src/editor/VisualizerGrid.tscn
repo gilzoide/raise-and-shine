@@ -47,6 +47,7 @@ type = 2
 margin_left = 162.0
 margin_right = 1024.0
 margin_bottom = 600.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
