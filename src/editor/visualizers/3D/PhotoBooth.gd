@@ -1,6 +1,7 @@
 extends Spatial
 
 const planemesh = preload("res://editor/visualizers/3D/PlaneMesh.tres")
+const planematerial = preload("res://editor/visualizers/3D/Plane_material.tres")
 const project = preload("res://editor/project/ActiveEditorProject.tres")
 
 enum {
@@ -22,8 +23,9 @@ func _ready() -> void:
 	var _err = project.connect("texture_updated", self, "_on_texture_updated")
 
 func update_planemesh() -> void:
-	planemesh.subdivide_width = project.height_image.get_width()
-	planemesh.subdivide_depth = project.height_image.get_height()
+	planemesh.subdivide_width = project.height_image.get_width() * 2
+	planemesh.subdivide_depth = project.height_image.get_height() * 2
+	planematerial.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / project.height_image.get_size())
 
 func _on_texture_updated(type: int, _texture: Texture) -> void:
 	if type == HEIGHT_MAP:
