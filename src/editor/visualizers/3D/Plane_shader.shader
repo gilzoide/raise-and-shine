@@ -1,7 +1,5 @@
 shader_type spatial;
 
-render_mode cull_disabled;
-
 // enum {
 const int ALBEDO_FROM_ALBEDO = 0;
 const int ALBEDO_FROM_HEIGHT = 1;

@@ -88,6 +88,10 @@ visualizer_3d_faster={
  ]
 }
 
+[physics]
+
+3d/active_soft_world=false
+
 [rendering]
 
 quality/driver/driver_name="GLES2"

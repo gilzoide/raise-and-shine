@@ -23,13 +23,13 @@ func _gui_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	if has_focus():
-		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * speed * delta
+		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * delta
 		var movement = Vector2(
 			Input.get_action_strength("visualizer_3d_rotate_left") - Input.get_action_strength("visualizer_3d_rotate_right"),
 			Input.get_action_strength("visualizer_3d_rotate_up") - Input.get_action_strength("visualizer_3d_rotate_down")
 		)
 		var clockwise = Input.get_action_strength("visualizer_3d_rotate_clockwise") - Input.get_action_strength("visualizer_3d_rotate_counterclockwise")
-		update_orbit_camera(movement * factor, clockwise * factor)
+		update_orbit_camera(movement * speed * factor, clockwise * factor)
 
 func update_orbit_camera(pan: Vector2, angle: float) -> void:
 	var pan3d = Vector3(-pan.x, pan.y, 0)

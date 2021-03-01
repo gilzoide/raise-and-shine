@@ -7,27 +7,27 @@
 [ext_resource path="res://editor/visualizers/3D/CullDisabled_spatialmaterial.tres" type="Material" id=5]
 [ext_resource path="res://editor/visualizers/3D/Plane_heightmapshape.tres" type="Shape" id=6]
 
-[sub_resource type="QuadMesh" id=1]
-size = Vector2( 1.1, 1.1 )
+[sub_resource type="PlaneMesh" id=1]
+size = Vector2( 128, 128 )
 
 [node name="PhotoBooth" type="Spatial"]
 script = ExtResource( 3 )
 
 [node name="Plate" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 input_capture_on_drag = true
 
 [node name="Background" type="MeshInstance" parent="Plate"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
 mesh = SubResource( 1 )
 material/0 = ExtResource( 5 )
 
 [node name="Model" type="MeshInstance" parent="Plate"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 mesh = ExtResource( 2 )
 material/0 = null
 
 [node name="HeightMapShape" type="CollisionShape" parent="Plate"]
-transform = Transform( 0.016, 0, 0, 0, -4.37114e-08, -0.016, 0, 1, -6.99382e-10, 0, 0, 0 )
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
 shape = ExtResource( 6 )
 
 [node name="Lights" type="Spatial" parent="."]

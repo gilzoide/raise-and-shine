@@ -36,14 +36,15 @@ func update_plane_dimensions() -> void:
 	plane_heightmapshape.map_depth = size.y
 	heightmapshape_collision.scale.x = plane_size.x / size.x
 	heightmapshape_collision.scale.z = plane_size.y / size.y
-	heightmapshape_collision.translation = Vector3.ZERO
 
-#	height_map.lock()
-#	for i in range(size.y):
-#		for j in range(size.x):
-#			plane_heightmapshape.map_data[i * size.x + j] = height_map.get_pixel(i, j).r
-#	heightmapshape_collision.shape.map_data = plane_heightmapshape.map_data
-#	height_map.unlock()
+	var height_scale = min(plane_size.x, plane_size.y) * 0.5
+	height_map.lock()
+	for y in size.y:
+		for x in size.x:
+			plane_heightmapshape.map_data[y * size.x + x] = height_map.get_pixel(x, y).r * height_scale
+	heightmapshape_collision.shape.map_data = plane_heightmapshape.map_data
+	height_map.unlock()
+	plane_material.set_shader_param("height_scale", height_scale)
 	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
 
 func _on_texture_updated(type: int, _texture: Texture) -> void:
@@ -73,11 +74,9 @@ func get_lights_enabled() -> bool:
 
 func _on_Plate_input_event(camera: Node, event: InputEvent, click_position: Vector3, click_normal: Vector3, shape_idx: int) -> void:
 	if event is InputEventMouseMotion:
-		click_position = plate.to_local(click_position)
-		var uv = Vector2(click_position.x, -click_position.y) + Vector2(0.5, 0.5)
-#		print("MOUSE POS ", click_position, " UV ", uv)
+		var local_click_position = plate.to_local(click_position)
+		var uv = Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
 		selection.set_mouse_hovering_uv(uv)
-
 
 func _on_Plate_mouse_exited() -> void:
 	selection.mouse_exited_hovering()
