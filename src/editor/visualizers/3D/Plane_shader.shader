@@ -44,11 +44,9 @@ void fragment() {
 	vec3 normal = texture(normal_map, UV).xyz;
 	vec4 texel = texture(albedo_map, UV);
 	
-	vec4 sources[3];
-	sources[ALBEDO_FROM_ALBEDO] = texel;
-	sources[ALBEDO_FROM_HEIGHT] = vec4(height, height, height, 1);
-	sources[ALBEDO_FROM_NORMAL] = vec4(normal, 1);
-	vec4 color = sources[albedo_source] * COLOR;
+	vec4 color = float(albedo_source == ALBEDO_FROM_ALBEDO) * texel
+		+ float(albedo_source == ALBEDO_FROM_HEIGHT) * vec4(height, height, height, 1)
+		+ float(albedo_source == ALBEDO_FROM_NORMAL) * vec4(normal, 1);
 	
 	vec2 uv_offset = TEXTURE_PIXEL_SIZE * selection_pixel_width;
 	bool this_is_not_selection = texture(selection_map, UV).r < 0.5;
