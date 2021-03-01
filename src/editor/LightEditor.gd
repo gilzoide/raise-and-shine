@@ -1,19 +1,22 @@
-extends Popup
+extends Control
 
+signal color_changed(color)
+signal energy_changed(energy)
+
+var color: Color setget set_color
+var energy: float setget set_energy
 onready var color_picker = $ColorPicker
+onready var energy_slider = $EnergyEditor/HSlider
 
-var color_changed: FuncRef
+func set_color(value: Color) -> void:
+	color_picker.color = value
 
-func popup_at(position: Vector2, current_color: Color, color_changed_func: FuncRef) -> void:
-	color_picker.color = current_color
-	color_changed = color_changed_func
-	var rect = Rect2(position, rect_size)
-	popup(rect)
+func set_energy(value: float) -> void:
+	energy_slider.value = value
 
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_POPUP_HIDE:
-		color_changed = null
+func _on_ColorPicker_color_changed(color_: Color) -> void:
+	emit_signal("color_changed", color_)
 
-func _on_ColorPicker_color_changed(color: Color) -> void:
-	if color_changed:
-		color_changed.call_func(color)
+
+func _on_energy_value_changed(value: float) -> void:
+	emit_signal("energy_changed", value)

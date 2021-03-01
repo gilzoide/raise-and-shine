@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://editor/LightEditor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://editor/LightEditorPopup.gd" type="Script" id=2]
+
+[node name="LightEditorPopup" type="PopupPanel"]
+margin_right = 212.0
+margin_bottom = 56.0
+script = ExtResource( 2 )
+
+[node name="LightEditor" parent="." instance=ExtResource( 1 )]
+[connection signal="color_changed" from="LightEditor" to="." method="_on_color_changed"]
+[connection signal="energy_changed" from="LightEditor" to="." method="_on_energy_changed"]
