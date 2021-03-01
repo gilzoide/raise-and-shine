@@ -32,4 +32,4 @@ physics_object_picking = true
 [node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 128 )
 current = true
-far = 200.0
+far = 500.0

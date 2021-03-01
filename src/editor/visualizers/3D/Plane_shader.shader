@@ -54,7 +54,7 @@ void fragment() {
 	vec4 selection_color = vec4(vec3(1) - color.rgb, 1);
 	color = mix(color, selection_color, float(this_is_border));
 	
-	NORMALMAP = float(use_normal) * normal;
+	NORMALMAP = mix(NORMALMAP, normal, float(use_normal));
 	ALBEDO = mix(vec3(1), color.rgb, float(use_albedo));
 	ALPHA = color.a;
 }

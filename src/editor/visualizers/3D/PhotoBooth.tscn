@@ -33,7 +33,7 @@ shape = ExtResource( 6 )
 [node name="Lights" type="Spatial" parent="."]
 
 [node name="LightPoint" parent="Lights" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -94.8735, -2.40635, 0 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 1 )
