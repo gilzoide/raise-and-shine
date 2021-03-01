@@ -4,5 +4,6 @@
 
 [resource]
 material = ExtResource( 1 )
+size = Vector2( 1, 1 )
 subdivide_width = 64
 subdivide_depth = 64

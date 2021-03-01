@@ -4,6 +4,7 @@ export(float) var speed: float = 1
 export(float) var faster_factor: float = 5
 export(float) var mouse_speed: float = 0.01
 
+onready var viewport: Viewport = $ViewportContainer/Viewport
 onready var camera: Camera = $ViewportContainer/Viewport/Camera
 onready var camera_initial_position: Vector3 = camera.translation
 var dragging: bool = false
@@ -17,6 +18,8 @@ func _gui_input(event: InputEvent) -> void:
 	if dragging and event is InputEventMouseMotion:
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * mouse_speed
 		update_orbit_camera(event.relative * factor, 0)
+	elif event is InputEventMouse:
+		viewport.unhandled_input(event)
 
 func _process(delta: float) -> void:
 	if has_focus():

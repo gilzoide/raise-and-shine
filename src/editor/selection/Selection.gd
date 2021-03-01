@@ -23,6 +23,11 @@ func _on_texture_updated(type: int, texture: Texture) -> void:
 		var new_size = texture.get_size()
 		selection_image.resize(new_size.x, new_size.y, Image.INTERPOLATE_NEAREST)
 
+func set_mouse_hovering_uv(uv: Vector2) -> void:
+	if Rect2(0, 0, 1, 1).has_point(uv):
+		var position = (uv * project.height_image.get_size()).floor()
+		set_mouse_hovering(position)
+
 func set_mouse_hovering(position: Vector2) -> void:
 	if not position.is_equal_approx(last_hover_position):
 		selection_image.lock()

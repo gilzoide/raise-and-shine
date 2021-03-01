@@ -1,8 +1,10 @@
 extends Spatial
 
-const planemesh = preload("res://editor/visualizers/3D/PlaneMesh.tres")
-const planematerial = preload("res://editor/visualizers/3D/Plane_material.tres")
 const project = preload("res://editor/project/ActiveEditorProject.tres")
+const selection = preload("res://editor/selection/ActiveSelection.tres")
+const plane_mesh = preload("res://editor/visualizers/3D/PlaneMesh.tres")
+const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
+#const plane_heightmapshape = preload("res://editor/visualizers/3D/Plane_heightmapshape.tres")
 
 enum {
 	ALBEDO_MAP,
@@ -16,20 +18,37 @@ var background_visible: bool setget set_background_visible, get_background_visib
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 onready var plate = $Plate
 onready var background = $Plate/Background
+onready var heightmapshape_collision = $Plate/HeightMapShape
 onready var lights = $Lights
+onready var plane_size = plane_mesh.size
 
 func _ready() -> void:
-	update_planemesh()
+	update_plane_dimensions()
 	var _err = project.connect("texture_updated", self, "_on_texture_updated")
 
-func update_planemesh() -> void:
-	planemesh.subdivide_width = project.height_image.get_width() * 2
-	planemesh.subdivide_depth = project.height_image.get_height() * 2
-	planematerial.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / project.height_image.get_size())
+func update_plane_dimensions() -> void:
+	var height_map = project.height_image
+	var size = height_map.get_size()
+	plane_mesh.subdivide_width = size.x * 2
+	plane_mesh.subdivide_depth = size.y * 2
+	var plane_heightmapshape = heightmapshape_collision.shape
+	plane_heightmapshape.map_width = size.x
+	plane_heightmapshape.map_depth = size.y
+	heightmapshape_collision.scale.x = plane_size.x / size.x
+	heightmapshape_collision.scale.z = plane_size.y / size.y
+	heightmapshape_collision.translation = Vector3.ZERO
+
+#	height_map.lock()
+#	for i in range(size.y):
+#		for j in range(size.x):
+#			plane_heightmapshape.map_data[i * size.x + j] = height_map.get_pixel(i, j).r
+#	heightmapshape_collision.shape.map_data = plane_heightmapshape.map_data
+#	height_map.unlock()
+	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
 
 func _on_texture_updated(type: int, _texture: Texture) -> void:
 	if type == HEIGHT_MAP:
-		update_planemesh()
+		update_plane_dimensions()
 
 func set_background_visible(value: bool) -> void:
 	background.visible = value
@@ -51,3 +70,14 @@ func set_lights_enabled(value: bool) -> void:
 
 func get_lights_enabled() -> bool:
 	return lights.get_child(0).visible
+
+func _on_Plate_input_event(camera: Node, event: InputEvent, click_position: Vector3, click_normal: Vector3, shape_idx: int) -> void:
+	if event is InputEventMouseMotion:
+		click_position = plate.to_local(click_position)
+		var uv = Vector2(click_position.x, -click_position.y) + Vector2(0.5, 0.5)
+#		print("MOUSE POS ", click_position, " UV ", uv)
+		selection.set_mouse_hovering_uv(uv)
+
+
+func _on_Plate_mouse_exited() -> void:
+	selection.mouse_exited_hovering()

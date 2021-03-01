@@ -25,8 +25,10 @@ __meta__ = {
 size = Vector2( 1024, 600 )
 handle_input_locally = false
 render_target_update_mode = 3
+physics_object_picking = true
 
 [node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
 projection = 1
-size = 3.0
+current = true
+size = 2.0

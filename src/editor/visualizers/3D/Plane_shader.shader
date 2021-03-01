@@ -18,12 +18,13 @@ uniform bool use_normal = true;
 uniform int albedo_source = 0;
 uniform float selection_pixel_width = 0.5;
 uniform vec2 TEXTURE_PIXEL_SIZE;
+uniform float height_scale = 0.5;
 
 varying float height;
 
 void vertex() {
 	height = texture(height_map, UV).r;
-	VERTEX.y += float(use_height) * height;
+	VERTEX.y += float(use_height) * height * height_scale;
 }
 
 bool is_any_neighbour_selection(sampler2D tex, vec2 uv, vec2 uv_offset) {

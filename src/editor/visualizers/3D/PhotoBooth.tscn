@@ -1,18 +1,20 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/Environment.tres" type="Environment" id=1]
 [ext_resource path="res://editor/visualizers/3D/PlaneMesh.tres" type="PlaneMesh" id=2]
 [ext_resource path="res://editor/visualizers/3D/PhotoBooth.gd" type="Script" id=3]
 [ext_resource path="res://editor/visualizers/LightPoint.tscn" type="PackedScene" id=4]
 [ext_resource path="res://editor/visualizers/3D/CullDisabled_spatialmaterial.tres" type="Material" id=5]
+[ext_resource path="res://editor/visualizers/3D/Plane_heightmapshape.tres" type="Shape" id=6]
 
 [sub_resource type="QuadMesh" id=1]
-size = Vector2( 2.1, 2.1 )
+size = Vector2( 1.1, 1.1 )
 
 [node name="PhotoBooth" type="Spatial"]
 script = ExtResource( 3 )
 
-[node name="Plate" type="Spatial" parent="."]
+[node name="Plate" type="StaticBody" parent="."]
+input_capture_on_drag = true
 
 [node name="Background" type="MeshInstance" parent="Plate"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01 )
@@ -24,10 +26,16 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0
 mesh = ExtResource( 2 )
 material/0 = null
 
+[node name="HeightMapShape" type="CollisionShape" parent="Plate"]
+transform = Transform( 0.016, 0, 0, 0, -4.37114e-08, -0.016, 0, 1, -6.99382e-10, 0, 0, 0 )
+shape = ExtResource( 6 )
+
 [node name="Lights" type="Spatial" parent="."]
 
 [node name="LightPoint" parent="Lights" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 2 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 1 )
+[connection signal="input_event" from="Plate" to="." method="_on_Plate_input_event"]
+[connection signal="mouse_exited" from="Plate" to="." method="_on_Plate_mouse_exited"]
