@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://editor/TextureSlot.gd" type="Script" id=1]
 [ext_resource path="res://editor/RayCastTextureRect.gd" type="Script" id=2]
+[ext_resource path="res://editor/visualizers/2D/ShowSelection_material.tres" type="Material" id=5]
+[ext_resource path="res://textures/Albedo_imagetexture.tres" type="Texture" id=6]
 
 [node name="TextureSlot" type="VBoxContainer"]
 anchor_right = 1.0
@@ -23,11 +25,13 @@ text = "TITLE"
 flat = false
 
 [node name="TextureRect" type="TextureRect" parent="."]
+material = ExtResource( 5 )
 margin_top = 36.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+texture = ExtResource( 6 )
 stretch_mode = 6
 script = ExtResource( 2 )
 [connection signal="mouse_exited_texture" from="TextureRect" to="." method="_on_TextureRect_mouse_exited_texture"]
