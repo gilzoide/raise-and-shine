@@ -72,7 +72,7 @@ func set_lights_enabled(value: bool) -> void:
 func get_lights_enabled() -> bool:
 	return lights.get_child(0).visible
 
-func _on_Plate_input_event(camera: Node, event: InputEvent, click_position: Vector3, click_normal: Vector3, shape_idx: int) -> void:
+func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseMotion:
 		var local_click_position = plate.to_local(click_position)
 		var uv = Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
