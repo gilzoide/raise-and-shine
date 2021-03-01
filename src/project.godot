@@ -28,6 +28,7 @@ config/icon="res://icon.png"
 
 ImageFileDialog="*res://mainUI/ImageFileDialog.tscn"
 PhotoBooth="*res://editor/visualizers/3D/PhotoBooth.tscn"
+LightEditorPopup="*res://editor/LightEditor.tscn"
 
 [editor_plugins]
 
