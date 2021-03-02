@@ -8,3 +8,4 @@ export.cfg
 data_*/
 
 build/
+logs/
