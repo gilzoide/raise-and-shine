@@ -1,6 +1,18 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://editor/project/EditorProject.gd" type="Script" id=1]
+[ext_resource path="res://textures/Albedo_imagetexture.tres" type="Texture" id=2]
+[ext_resource path="res://textures/Height_imagetexture.tres" type="Texture" id=3]
+[ext_resource path="res://textures/Normal_imagetexture.tres" type="Texture" id=4]
+[ext_resource path="res://textures/P1_2_Hair.png" type="Image" id=5]
+[ext_resource path="res://textures/P1_2_Hair_height.png" type="Image" id=6]
+[ext_resource path="res://textures/P1_2_Hair_normal.png" type="Image" id=7]
 
 [resource]
 script = ExtResource( 1 )
+albedo_image = ExtResource( 5 )
+height_image = ExtResource( 6 )
+normal_image = ExtResource( 7 )
+albedo_texture = ExtResource( 2 )
+height_texture = ExtResource( 3 )
+normal_texture = ExtResource( 4 )

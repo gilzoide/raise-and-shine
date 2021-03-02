@@ -3,8 +3,8 @@ extends Resource
 const INVALID_POSITION = Vector2(-1, -1)
 const NOT_SELECTED_PIXEL = Color(0, 0, 0, 1)
 const SELECTED_PIXEL = Color(1, 0, 0, 1)
-const selection_texture: ImageTexture = preload("res://textures/Selection_imagetexture.tres")
 
+export(ImageTexture) var selection_texture: ImageTexture = preload("res://textures/Selection_imagetexture.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 
 var selection_image: Image = Image.new()

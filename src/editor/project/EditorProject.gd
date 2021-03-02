@@ -2,12 +2,12 @@ extends Resource
 
 signal texture_updated(type, texture)
 
-var albedo_image: Image = MapTypes.ALBEDO_IMAGE
-var height_image: Image = MapTypes.HEIGHT_IMAGE
-var normal_image: Image = MapTypes.NORMAL_IMAGE
-var albedo_texture: ImageTexture = MapTypes.ALBEDO_TEXTURE
-var height_texture: ImageTexture = MapTypes.HEIGHT_TEXTURE
-var normal_texture: ImageTexture = MapTypes.NORMAL_TEXTURE
+export(Image) var albedo_image: Image = MapTypes.ALBEDO_IMAGE
+export(Image) var height_image: Image = MapTypes.HEIGHT_IMAGE
+export(Image) var normal_image: Image = MapTypes.NORMAL_IMAGE
+export(ImageTexture) var albedo_texture: ImageTexture = MapTypes.ALBEDO_TEXTURE
+export(ImageTexture) var height_texture: ImageTexture = MapTypes.HEIGHT_TEXTURE
+export(ImageTexture) var normal_texture: ImageTexture = MapTypes.NORMAL_TEXTURE
 
 func load_image_dialog(type: int) -> void:
 	var method = ""
