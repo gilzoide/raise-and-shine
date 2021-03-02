@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://editor/selection/OperationToolbar.gd" type="Script" id=1]
+
+[node name="OperationToolbar" type="HBoxContainer"]
+margin_right = 303.0
+margin_bottom = 32.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = 9.0
+margin_right = 64.0
+margin_bottom = 23.0
+text = "Operation"
+
+[node name="OperationPicker" type="OptionButton" parent="."]
+margin_left = 68.0
+margin_right = 171.0
+margin_bottom = 32.0
+text = "Increase by"
+selected = 0
+
+[node name="AmountSlider" type="HSlider" parent="."]
+margin_left = 175.0
+margin_right = 303.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 128, 0 )
+size_flags_vertical = 3
+max_value = 1.0
+step = 0.004
+value = 0.1
+[connection signal="item_selected" from="OperationPicker" to="." method="_on_OperationPicker_item_selected"]
+[connection signal="value_changed" from="AmountSlider" to="." method="_on_AmountSlider_value_changed"]

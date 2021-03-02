@@ -2,6 +2,7 @@ extends TextureRect
 
 signal position_hovered(position)
 signal mouse_exited_texture()
+signal mouse_clicked()
 
 const INVALID_POSITION = Vector2(-1, -1)
 
@@ -34,6 +35,8 @@ func _gui_input(event: InputEvent) -> void:
 			if not last_position.is_equal_approx(INVALID_POSITION):
 				emit_signal("mouse_exited_texture")
 			last_position = INVALID_POSITION
+	elif event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed() and not event.is_echo():
+		emit_signal("mouse_clicked")
 
 func update_drawn_rect() -> void:
 	# Adapted from TextureRect draw code to include `scale` result
