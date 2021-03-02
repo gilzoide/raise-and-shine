@@ -10,11 +10,17 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Object",
+"class": "HeightNormalConversion",
+"language": "GDScript",
+"path": "res://editor/selection/HeightNormalConversion.gd"
+}, {
+"base": "Object",
 "class": "MapTypes",
 "language": "GDScript",
 "path": "res://editor/project/MapTypes.gd"
 } ]
 _global_script_class_icons={
+"HeightNormalConversion": "",
 "MapTypes": ""
 }
 

@@ -1,7 +1,5 @@
 extends Resource
 
-signal selection_changed()
-
 const INVALID_POSITION = Vector2(-1, -1)
 const NOT_SELECTED_PIXEL = Color(0, 0, 0, 1)
 const SELECTED_PIXEL = Color(1, 0, 0, 1)
@@ -11,6 +9,7 @@ export(Resource) var project = preload("res://editor/project/ActiveEditorProject
 
 var selection_image: Image = Image.new()
 var last_hover_position: Vector2 = Vector2.ZERO
+var current_selected_coordinates: PoolVector2Array
 
 func _init() -> void:
 	var size = project.height_image.get_size()
@@ -29,24 +28,23 @@ func set_mouse_hovering_uv(uv: Vector2) -> void:
 		set_mouse_hovering(position)
 
 func set_mouse_hovering(position: Vector2) -> void:
-	if not position.is_equal_approx(last_hover_position):
-		selection_image.lock()
-		clear_last_hover()
-		selection_image.set_pixelv(position, SELECTED_PIXEL)
-		selection_image.unlock()
-		update_texture()
-		last_hover_position = position
+	selection_image.lock()
+	clear_last_hover()
+	selection_image.set_pixelv(position, SELECTED_PIXEL)
+	selection_image.unlock()
+	update_texture()
+	current_selected_coordinates.append(position)
 
 func mouse_exited_hovering() -> void:
 	selection_image.lock()
 	clear_last_hover()
 	selection_image.unlock()
 	update_texture()
-	last_hover_position = INVALID_POSITION
 
 func clear_last_hover() -> void:
-	if not last_hover_position.is_equal_approx(INVALID_POSITION):
-		selection_image.set_pixelv(last_hover_position, NOT_SELECTED_PIXEL)
+	for v in current_selected_coordinates:
+		selection_image.set_pixelv(v, NOT_SELECTED_PIXEL)
+	current_selected_coordinates.resize(0)
 
 func update_texture() -> void:
 	selection_texture.set_data(selection_image)

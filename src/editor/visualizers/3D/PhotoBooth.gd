@@ -2,9 +2,9 @@ extends Spatial
 
 const project = preload("res://editor/project/ActiveEditorProject.tres")
 const selection = preload("res://editor/selection/ActiveSelection.tres")
+const operation = preload("res://editor/selection/ActiveOperation.tres")
 const plane_mesh = preload("res://editor/visualizers/3D/PlaneMesh.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
-#const plane_heightmapshape = preload("res://editor/visualizers/3D/Plane_heightmapshape.tres")
 
 enum {
 	ALBEDO_MAP,
@@ -77,6 +77,8 @@ func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vec
 		var local_click_position = plate.to_local(click_position)
 		var uv = Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
 		selection.set_mouse_hovering_uv(uv)
+	elif event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed() and not event.is_echo():
+		project.apply_operation_to(operation, selection)
 
 func _on_Plate_mouse_exited() -> void:
 	selection.mouse_exited_hovering()

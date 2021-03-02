@@ -40,8 +40,13 @@ func set_height_image(value: Image) -> void:
 	height_image = value
 	height_texture.create_from_image(value)
 	emit_signal("texture_updated", MapTypes.Type.HEIGHT_MAP, height_texture)
+	set_normal_image(HeightNormalConversion.new_normalmap_from_heightmap(height_image))
 
 func set_normal_image(value: Image) -> void:
 	normal_image = value
 	normal_texture.create_from_image(value)
 	emit_signal("texture_updated", MapTypes.Type.NORMAL_MAP, normal_texture)
+
+func apply_operation_to(operation, selection) -> void:
+	operation.apply(height_image, selection.current_selected_coordinates)
+	height_texture.set_data(height_image)
