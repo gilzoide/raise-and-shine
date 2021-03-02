@@ -26,7 +26,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Normal-Height editor"
+config/name="Raise and Shine"
 config/description="Edit height maps and generate normal maps for 2D sprites"
 run/main_scene="res://mainUI/Main.tscn"
 config/icon="res://icon.png"

@@ -3,9 +3,9 @@
 script_root=$(dirname $(realpath $0))
 project_root="$script_root/.."
 
-butler push --if-changed "$project_root/build/SpriteHeightNormalEditor_web.zip"      gilzoide/sprite-height-normal-editor:web
-butler push --if-changed "$project_root/build/SpriteHeightNormalEditor_win32.zip"  gilzoide/sprite-height-normal-editor:win32
-butler push --if-changed "$project_root/build/SpriteHeightNormalEditor_linux32.zip"  gilzoide/sprite-height-normal-editor:linux32
-butler push --if-changed "$project_root/build/SpriteHeightNormalEditor_linux64.zip"  gilzoide/sprite-height-normal-editor:linux64
-butler push --if-changed "$project_root/build/SpriteHeightNormalEditor_osx.zip"      gilzoide/sprite-height-normal-editor:osx
+butler push --if-changed "$project_root/build/RaiseAndShine_web.zip"      gilzoide/raise-and-shine:web
+butler push --if-changed "$project_root/build/RaiseAndShine_win32.zip"    gilzoide/raise-and-shine:win32
+butler push --if-changed "$project_root/build/RaiseAndShine_linux32.zip"  gilzoide/raise-and-shine:linux32
+butler push --if-changed "$project_root/build/RaiseAndShine_linux64.zip"  gilzoide/raise-and-shine:linux64
+butler push --if-changed "$project_root/build/RaiseAndShine_osx.zip"      gilzoide/raise-and-shine:osx
 
