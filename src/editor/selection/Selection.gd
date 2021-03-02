@@ -6,6 +6,7 @@ const SELECTED_PIXEL = Color(1, 0, 0, 1)
 
 export(ImageTexture) var selection_texture: ImageTexture = preload("res://textures/Selection_imagetexture.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
+export(Resource) var brush = preload("res://editor/selection/ActiveBrush.tres")
 
 var selection_image: Image = Image.new()
 var last_hover_position: Vector2 = Vector2.ZERO
@@ -30,10 +31,11 @@ func set_mouse_hovering_uv(uv: Vector2) -> void:
 func set_mouse_hovering(position: Vector2) -> void:
 	selection_image.lock()
 	clear_last_hover()
-	selection_image.set_pixelv(position, SELECTED_PIXEL)
+	current_selected_coordinates = brush.get_coordinates(position, selection_image.get_size())
+	for v in current_selected_coordinates:
+		selection_image.set_pixelv(v, SELECTED_PIXEL)
 	selection_image.unlock()
 	update_texture()
-	current_selected_coordinates.append(position)
 
 func mouse_exited_hovering() -> void:
 	selection_image.lock()

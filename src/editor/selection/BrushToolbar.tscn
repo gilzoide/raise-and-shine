@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://editor/selection/BrushToolbar.gd" type="Script" id=1]
+
+[node name="BrushToolbar" type="PanelContainer"]
+margin_right = 14.0
+margin_bottom = 14.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 245.0
+margin_bottom = 27.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_top = 3.0
+margin_right = 37.0
+margin_bottom = 17.0
+text = "Brush"
+
+[node name="FormatPicker" type="OptionButton" parent="HBoxContainer"]
+margin_left = 41.0
+margin_right = 106.0
+margin_bottom = 20.0
+text = "Circle"
+
+[node name="SizeSlider" type="HSlider" parent="HBoxContainer"]
+margin_left = 110.0
+margin_right = 238.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 128, 0 )
+size_flags_vertical = 3
+min_value = 1.0
+max_value = 128.0
+value = 1.0
+rounded = true
+[connection signal="item_selected" from="HBoxContainer/FormatPicker" to="." method="_on_FormatPicker_item_selected"]
+[connection signal="value_changed" from="HBoxContainer/SizeSlider" to="." method="_on_SizeSlider_value_changed"]
