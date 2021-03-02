@@ -25,11 +25,11 @@ static func offset_by(heightmap: Image, coordinates: PoolVector2Array, value: fl
 	for v in coordinates:
 		var height = heightmap.get_pixelv(v).r
 		height = clamp(height + value, 0, 1)
-		heightmap.set_pixelv(v, Color(height, 0, 0, 1))
+		heightmap.set_pixelv(v, Color(height, height, height, 1))
 	heightmap.unlock()
 
 static func set_height(heightmap: Image, coordinates: PoolVector2Array, value: float) -> void:
 	heightmap.lock()
 	for v in coordinates:
-		heightmap.set_pixelv(v, Color(value, 0, 0, 1))
+		heightmap.set_pixelv(v, Color(value, value, value, 1))
 	heightmap.unlock()
