@@ -30,7 +30,6 @@ margin_left = 68.0
 margin_right = 171.0
 margin_bottom = 20.0
 text = "Increase by"
-selected = 0
 
 [node name="AmountSlider" type="HSlider" parent="OperationToolbar"]
 margin_left = 175.0
@@ -38,6 +37,7 @@ margin_right = 303.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 128, 0 )
 size_flags_vertical = 3
+min_value = 0.004
 max_value = 1.0
 step = 0.004
 value = 0.1
