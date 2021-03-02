@@ -11,9 +11,12 @@ export(int) var size: int = 8
 func get_coordinates(position: Vector2, bounds_size: Vector2) -> PoolVector2Array:
 	return get_brush_coordinates(position, bounds_size, format, size)
 
+func get_affected_coordinates(position: Vector2, bounds_size: Vector2) -> PoolVector2Array:
+	return get_brush_coordinates(position, bounds_size, format, size + 2)
+
 static func get_brush_coordinates(position: Vector2, bounds_size: Vector2, format: int, size: int) -> PoolVector2Array:
 	var array = PoolVector2Array()
-	var bounds = Rect2(Vector2.ZERO, bounds_size)
+	var bounds = Rect2(Vector2.ZERO, bounds_size - Vector2.ONE)
 	if size <= 1:
 		array.append(position)
 	else:

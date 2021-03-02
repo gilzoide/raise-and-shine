@@ -50,3 +50,5 @@ func set_normal_image(value: Image) -> void:
 func apply_operation_to(operation, selection) -> void:
 	operation.apply(height_image, selection.current_selected_coordinates)
 	height_texture.set_data(height_image)
+	HeightNormalConversion.recalculate_normals(height_image, normal_image, selection.current_affected_coordinates)
+	normal_texture.set_data(normal_image)

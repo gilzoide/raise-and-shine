@@ -11,6 +11,7 @@ export(Resource) var brush = preload("res://editor/selection/ActiveBrush.tres")
 var selection_image: Image = Image.new()
 var last_hover_position: Vector2 = Vector2.ZERO
 var current_selected_coordinates: PoolVector2Array
+var current_affected_coordinates: PoolVector2Array
 
 func _init() -> void:
 	var size = project.height_image.get_size()
@@ -32,6 +33,7 @@ func set_mouse_hovering(position: Vector2) -> void:
 	selection_image.lock()
 	clear_last_hover()
 	current_selected_coordinates = brush.get_coordinates(position, selection_image.get_size())
+	current_affected_coordinates = brush.get_affected_coordinates(position, selection_image.get_size())
 	for v in current_selected_coordinates:
 		selection_image.set_pixelv(v, SELECTED_PIXEL)
 	selection_image.unlock()
