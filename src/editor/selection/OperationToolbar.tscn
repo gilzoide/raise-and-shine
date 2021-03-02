@@ -2,35 +2,44 @@
 
 [ext_resource path="res://editor/selection/OperationToolbar.gd" type="Script" id=1]
 
-[node name="OperationToolbar" type="HBoxContainer"]
-margin_right = 303.0
-margin_bottom = 32.0
+[node name="PanelContainer" type="PanelContainer"]
+margin_right = 317.0
+margin_bottom = 34.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OperationToolbar" type="HBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 310.0
+margin_bottom = 27.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
-margin_top = 9.0
+[node name="Label" type="Label" parent="OperationToolbar"]
+margin_top = 3.0
 margin_right = 64.0
-margin_bottom = 23.0
+margin_bottom = 17.0
 text = "Operation"
 
-[node name="OperationPicker" type="OptionButton" parent="."]
+[node name="OperationPicker" type="OptionButton" parent="OperationToolbar"]
 margin_left = 68.0
 margin_right = 171.0
-margin_bottom = 32.0
+margin_bottom = 20.0
 text = "Increase by"
 selected = 0
 
-[node name="AmountSlider" type="HSlider" parent="."]
+[node name="AmountSlider" type="HSlider" parent="OperationToolbar"]
 margin_left = 175.0
 margin_right = 303.0
-margin_bottom = 32.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 128, 0 )
 size_flags_vertical = 3
 max_value = 1.0
 step = 0.004
 value = 0.1
-[connection signal="item_selected" from="OperationPicker" to="." method="_on_OperationPicker_item_selected"]
-[connection signal="value_changed" from="AmountSlider" to="." method="_on_AmountSlider_value_changed"]
+[connection signal="item_selected" from="OperationToolbar/OperationPicker" to="OperationToolbar" method="_on_OperationPicker_item_selected"]
+[connection signal="value_changed" from="OperationToolbar/AmountSlider" to="OperationToolbar" method="_on_AmountSlider_value_changed"]

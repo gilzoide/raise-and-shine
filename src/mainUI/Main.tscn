@@ -33,7 +33,7 @@ __meta__ = {
 
 [node name="FileMenuButton" type="MenuButton" parent="MainPanel/MenuBar"]
 margin_right = 35.0
-margin_bottom = 32.0
+margin_bottom = 34.0
 text = "File"
 switch_on_hover = true
 script = ExtResource( 1 )
@@ -44,7 +44,7 @@ __meta__ = {
 [node name="ViewMenuButton" type="MenuButton" parent="MainPanel/MenuBar"]
 margin_left = 39.0
 margin_right = 81.0
-margin_bottom = 32.0
+margin_bottom = 34.0
 text = "View"
 switch_on_hover = true
 script = ExtResource( 10 )
@@ -53,12 +53,11 @@ visualizer_grid_path = NodePath("../../WorkbenchPanel/HSplitContainer/Visualizer
 [node name="VSeparator" type="VSeparator" parent="MainPanel/MenuBar"]
 margin_left = 85.0
 margin_right = 89.0
-margin_bottom = 32.0
+margin_bottom = 34.0
 
 [node name="OperationToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 5 )]
 margin_left = 93.0
-margin_right = 196.0
-margin_bottom = 32.0
+margin_right = 410.0
 
 [node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]
 anchor_right = 1.0
