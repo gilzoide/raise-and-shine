@@ -14,10 +14,9 @@ enum {
 
 export(float) var plate_angular_speed = 0.01
 
-var background_visible: bool setget set_background_visible, get_background_visible
+var alpha_enabled: bool setget set_alpha_enabled, get_alpha_enabled
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 onready var plate = $Plate
-onready var background = $Plate/Background
 onready var heightmapshape_collision = $Plate/HeightMapShape
 onready var lights = $Lights
 onready var plane_size = plane_mesh.size
@@ -51,11 +50,11 @@ func _on_texture_updated(type: int, _texture: Texture) -> void:
 	if type == HEIGHT_MAP:
 		update_plane_dimensions()
 
-func set_background_visible(value: bool) -> void:
-	background.visible = value
+func set_alpha_enabled(value: bool) -> void:
+	plane_material.set_shader_param("use_alpha", value)
 
-func get_background_visible() -> bool:
-	return background.visible
+func get_alpha_enabled() -> bool:
+	return plane_material.get_shader_param("use_alpha")
 
 func rotate_plate_mouse(amount: Vector2) -> void:
 	rotate_plate(amount, 0)

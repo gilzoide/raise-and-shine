@@ -13,6 +13,7 @@ uniform sampler2D selection_map;
 uniform bool use_albedo = true;
 uniform bool use_height = true;
 uniform bool use_normal = true;
+uniform bool use_alpha = true;
 uniform int albedo_source = 0;
 uniform float selection_pixel_width = 0.5;
 uniform vec2 TEXTURE_PIXEL_SIZE;
@@ -43,6 +44,7 @@ bool is_any_neighbour_selection(sampler2D tex, vec2 uv, vec2 uv_offset) {
 void fragment() {
 	vec3 normal = texture(normal_map, UV).xyz;
 	vec4 texel = texture(albedo_map, UV);
+	texel.a = mix(1, texel.a, float(use_alpha));
 	
 	vec4 color = float(albedo_source == ALBEDO_FROM_ALBEDO) * texel
 		+ float(albedo_source == ALBEDO_FROM_HEIGHT) * vec4(height, height, height, 1)

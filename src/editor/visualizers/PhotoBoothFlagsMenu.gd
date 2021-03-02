@@ -5,7 +5,7 @@ enum {
 	TOGGLE_HEIGHT,
 	TOGGLE_NORMAL,
 	TOGGLE_LIGHTS,
-	TOGGLE_BACKGROUND,
+	TOGGLE_ALPHA,
 	_SEPARATOR_2,
 	ALBEDO_FROM_ALBEDO,
 	ALBEDO_FROM_HEIGHT,
@@ -31,8 +31,8 @@ func _ready() -> void:
 	flags_menu_popup.add_check_item("Enable Lights", TOGGLE_LIGHTS)
 	flags_menu_popup.set_item_shortcut(TOGGLE_LIGHTS, preload("res://shortcuts/TogglePlaneLights_shortcut.tres"))
 	update_lights_check_item()
-	flags_menu_popup.add_check_item("Enable Background", TOGGLE_BACKGROUND)
-	flags_menu_popup.set_item_shortcut(TOGGLE_BACKGROUND, preload("res://shortcuts/TogglePlaneBackground_shortcut.tres"))
+	flags_menu_popup.add_check_item("Enable Alpha", TOGGLE_ALPHA)
+	flags_menu_popup.set_item_shortcut(TOGGLE_ALPHA, preload("res://shortcuts/TogglePlaneBackground_shortcut.tres"))
 	update_background_check_item()
 	flags_menu_popup.add_separator()
 	
@@ -59,8 +59,8 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 	elif id == TOGGLE_LIGHTS:
 		PhotoBooth.lights_enabled = not PhotoBooth.lights_enabled
 		update_lights_check_item()
-	elif id == TOGGLE_BACKGROUND:
-		PhotoBooth.background_visible = not PhotoBooth.background_visible
+	elif id == TOGGLE_ALPHA:
+		PhotoBooth.alpha_enabled = not PhotoBooth.alpha_enabled
 		update_background_check_item()
 	elif id == ALBEDO_FROM_ALBEDO:
 		plane_material.set_shader_param("albedo_source", 0)
@@ -85,7 +85,7 @@ func update_lights_check_item() -> void:
 	flags_menu_popup.set_item_checked(TOGGLE_LIGHTS, PhotoBooth.lights_enabled)
 
 func update_background_check_item() -> void:
-	flags_menu_popup.set_item_checked(TOGGLE_BACKGROUND, PhotoBooth.background_visible)
+	flags_menu_popup.set_item_checked(TOGGLE_ALPHA, PhotoBooth.alpha_enabled)
 
 func update_albedo_from_check_items() -> void:
 	var current = plane_material.get_shader_param("albedo_source")

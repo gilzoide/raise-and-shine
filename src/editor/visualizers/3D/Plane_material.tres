@@ -11,6 +11,7 @@ shader = ExtResource( 1 )
 shader_param/use_albedo = true
 shader_param/use_height = true
 shader_param/use_normal = true
+shader_param/use_alpha = true
 shader_param/albedo_source = 0
 shader_param/selection_pixel_width = 0.5
 shader_param/TEXTURE_PIXEL_SIZE = null
