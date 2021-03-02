@@ -19,6 +19,7 @@ var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 onready var plate = $Plate
 onready var heightmapshape_collision = $Plate/HeightMapShape
 onready var lights = $Lights
+onready var ambient_light = $WorldEnvironment
 onready var plane_size = plane_mesh.size
 
 func _ready() -> void:
@@ -63,6 +64,9 @@ func rotate_plate(amount: Vector2, clockwise: float) -> void:
 	plate.rotate_y(amount.x * plate_angular_speed)
 	plate.rotate_x(amount.y * plate_angular_speed)
 	plate.rotate_z(-clockwise * plate_angular_speed)
+
+func get_light_nodes() -> Array:
+	return lights.get_children()
 
 func set_lights_enabled(value: bool) -> void:
 	for c in lights.get_children():

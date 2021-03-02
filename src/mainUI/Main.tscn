@@ -3,7 +3,7 @@
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://editor/VisualizerGrid.tscn" type="PackedScene" id=2]
 [ext_resource path="res://mainUI/UI_theme.tres" type="Theme" id=3]
-[ext_resource path="res://editor/inspector/Inspector.tscn" type="PackedScene" id=4]
+[ext_resource path="res://editor/inspector/LightInspector.tscn" type="PackedScene" id=4]
 [ext_resource path="res://editor/selection/OperationToolbar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://editor/selection/BrushToolbar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://mainUI/ViewMenuButton.gd" type="Script" id=10]
@@ -89,15 +89,16 @@ __meta__ = {
 [node name="VisualizerGrid" parent="MainPanel/WorkbenchPanel/HSplitContainer" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 840.0
+margin_right = 848.0
 margin_bottom = 554.0
 
 [node name="TabContainer" type="TabContainer" parent="MainPanel/WorkbenchPanel/HSplitContainer"]
-margin_left = 852.0
+margin_left = 860.0
 margin_right = 1010.0
 margin_bottom = 554.0
+rect_min_size = Vector2( 150, 0 )
 
-[node name="Inspector" parent="MainPanel/WorkbenchPanel/HSplitContainer/TabContainer" instance=ExtResource( 4 )]
+[node name="Lights" parent="MainPanel/WorkbenchPanel/HSplitContainer/TabContainer" instance=ExtResource( 4 )]
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
