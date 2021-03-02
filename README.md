@@ -1,2 +1,5 @@
-# Normal/Height map editor (WIP)
-An editor for Normal/Height maps, using 2D colors and 3D vector visualizations.
+# Raise and Shine
+Height map editor with automatic Normal map generation for 2D textures.
+
+It counts with a 3D visualization of the height and dynamic lighting preview,
+making it super easy to create normal maps.
