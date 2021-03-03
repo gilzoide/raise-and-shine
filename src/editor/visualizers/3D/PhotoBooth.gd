@@ -30,6 +30,7 @@ var dragging = false
 func _ready() -> void:
 	update_plane_dimensions()
 	var _err = project.connect("texture_updated", self, "_on_texture_updated")
+	_err = project.connect("height_changed", self, "update_heightmapshape_values")
 
 func update_plane_dimensions() -> void:
 	var height_map = project.height_image
@@ -41,16 +42,23 @@ func update_plane_dimensions() -> void:
 	plane_heightmapshape.map_depth = size.y
 	heightmapshape_collision.scale.x = plane_size.x / size.x
 	heightmapshape_collision.scale.z = plane_size.y / size.y
-
 	var height_scale = min(plane_size.x, plane_size.y) * 0.5
+	update_heightmapshape_values()
+	
+	plane_material.set_shader_param("height_scale", height_scale)
+	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
+
+func update_heightmapshape_values() -> void:
+	var height_map = project.height_image
+	var plane_heightmapshape = heightmapshape_collision.shape
+	var height_scale = min(plane_size.x, plane_size.y) * 0.5
+	var size = height_map.get_size()
 	height_map.lock()
 	for y in size.y:
 		for x in size.x:
 			plane_heightmapshape.map_data[y * size.x + x] = height_map.get_pixel(x, y).r * height_scale
 	heightmapshape_collision.shape.map_data = plane_heightmapshape.map_data
 	height_map.unlock()
-	plane_material.set_shader_param("height_scale", height_scale)
-	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
 
 func _on_texture_updated(type: int, _texture: Texture) -> void:
 	if type == HEIGHT_MAP:
