@@ -2,7 +2,7 @@ extends TextureRect
 
 signal position_hovered(position)
 signal mouse_exited_texture()
-signal mouse_clicked()
+signal mouse_drag(event)
 
 const INVALID_POSITION = Vector2(-1, -1)
 
@@ -16,6 +16,7 @@ class ScaledRect:
 
 var last_position: Vector2 = INVALID_POSITION
 var drawn_rect: ScaledRect
+var dragging = false
 
 func _ready() -> void:
 	update_drawn_rect()
@@ -25,18 +26,38 @@ func _notification(what: int) -> void:
 		emit_signal("mouse_exited_texture")
 	elif what == NOTIFICATION_RESIZED:
 		update_drawn_rect()
+	elif what == NOTIFICATION_MOUSE_EXIT:
+		stop_dragging()
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		if drawn_rect.rect.has_point(event.position):
-			last_position = ((event.position - drawn_rect.rect.position) / drawn_rect.scale).floor()
-			emit_signal("position_hovered", last_position)
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+		if event.is_pressed() and drawn_rect.rect.has_point(event.position):
+			start_dragging()
 		else:
-			if not last_position.is_equal_approx(INVALID_POSITION):
-				emit_signal("mouse_exited_texture")
-			last_position = INVALID_POSITION
-	elif event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed() and not event.is_echo():
-		emit_signal("mouse_clicked")
+			stop_dragging()
+			hover_over(event.position)
+	elif event is InputEventMouseMotion:
+		if dragging:
+			emit_signal("mouse_drag", event)
+		else:
+			hover_over(event.position)
+
+func start_dragging() -> void:
+	dragging = true
+	mouse_default_cursor_shape = Control.CURSOR_VSIZE
+
+func stop_dragging() -> void:
+	dragging = false
+	mouse_default_cursor_shape = Control.CURSOR_ARROW
+
+func hover_over(position: Vector2) -> void:
+	if drawn_rect.rect.has_point(position):
+		last_position = ((position - drawn_rect.rect.position) / drawn_rect.scale).floor()
+		emit_signal("position_hovered", last_position)
+	else:
+		if not last_position.is_equal_approx(INVALID_POSITION):
+			emit_signal("mouse_exited_texture")
+		last_position = INVALID_POSITION
 
 func update_drawn_rect() -> void:
 	# Adapted from TextureRect draw code to include `scale` result

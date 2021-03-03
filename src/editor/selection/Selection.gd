@@ -24,6 +24,9 @@ func _on_texture_updated(type: int, texture: Texture) -> void:
 		var new_size = texture.get_size()
 		selection_image.resize(new_size.x, new_size.y, Image.INTERPOLATE_NEAREST)
 
+func empty() -> bool:
+	return current_selected_coordinates.empty()
+
 func set_mouse_hovering_uv(uv: Vector2) -> void:
 	if Rect2(0, 0, 1, 1).has_point(uv):
 		var position = (uv * project.height_image.get_size()).floor()

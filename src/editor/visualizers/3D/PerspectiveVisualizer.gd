@@ -9,6 +9,10 @@ onready var camera: Camera = $ViewportContainer/Viewport/Camera
 onready var camera_initial_position: Vector3 = camera.translation
 var dragging: bool = false
 
+func _ready() -> void:
+	var _err = PhotoBooth.connect("drag_started", self, "set_default_cursor_shape", [Control.CURSOR_VSIZE])
+	_err = PhotoBooth.connect("drag_ended", self, "set_default_cursor_shape", [Control.CURSOR_ARROW])
+
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and not event.is_echo() \
 			and event.button_index == BUTTON_MIDDLE:
@@ -18,7 +22,7 @@ func _gui_input(event: InputEvent) -> void:
 	if dragging and event is InputEventMouseMotion:
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * mouse_speed
 		update_orbit_camera(event.relative * factor, 0)
-	elif event is InputEventMouse:
+	else:
 		viewport.unhandled_input(event)
 
 func _process(delta: float) -> void:

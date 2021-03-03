@@ -1,8 +1,11 @@
 extends Spatial
 
+signal drag_started()
+signal drag_ended()
+
 const project = preload("res://editor/project/ActiveEditorProject.tres")
 const selection = preload("res://editor/selection/ActiveSelection.tres")
-const operation = preload("res://editor/selection/ActiveOperation.tres")
+const operation = preload("res://editor/selection/DragOperation.tres")
 const plane_mesh = preload("res://editor/visualizers/3D/PlaneMesh.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
 
@@ -13,6 +16,7 @@ enum {
 }
 
 export(float) var plate_angular_speed = 0.01
+export(float) var drag_height_speed = 0.01
 
 var alpha_enabled: bool setget set_alpha_enabled, get_alpha_enabled
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
@@ -21,6 +25,7 @@ onready var heightmapshape_collision = $Plate/HeightMapShape
 onready var lights = $Lights
 onready var ambient_light = $WorldEnvironment
 onready var plane_size = plane_mesh.size
+var dragging = false
 
 func _ready() -> void:
 	update_plane_dimensions()
@@ -76,12 +81,28 @@ func get_lights_enabled() -> bool:
 	return lights.get_child(0).visible
 
 func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	if event is InputEventMouseMotion:
-		var local_click_position = plate.to_local(click_position)
-		var uv = Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
-		selection.set_mouse_hovering_uv(uv)
-	elif event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed() and not event.is_echo():
-		project.apply_operation_to(operation, selection)
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.is_echo():
+		if event.is_pressed():
+			start_dragging()
+		else:
+			stop_dragging()
+	elif event is InputEventMouseMotion:
+		if dragging and not selection.empty():
+			operation.amount = -event.relative.y * drag_height_speed
+			project.apply_operation_to(operation, selection)
+		else:
+			var local_click_position = plate.to_local(click_position)
+			var uv = Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
+			selection.set_mouse_hovering_uv(uv)
+
+func start_dragging() -> void:
+	dragging = true
+	emit_signal("drag_started")
+
+func stop_dragging() -> void:
+	dragging = false
+	emit_signal("drag_ended")
 
 func _on_Plate_mouse_exited() -> void:
+	stop_dragging()
 	selection.mouse_exited_hovering()

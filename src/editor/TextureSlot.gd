@@ -13,9 +13,10 @@ enum {
 }
 
 export(Type) var type
+export(float) var drag_height_speed = 0.01
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
-export(Resource) var operation = preload("res://editor/selection/ActiveOperation.tres")
+export(Resource) var drag_operation = preload("res://editor/selection/DragOperation.tres")
 
 onready var title_menu_button = $Title
 onready var menu_popup = title_menu_button.get_popup()
@@ -50,5 +51,7 @@ func _on_TextureRect_position_hovered(position) -> void:
 func _on_TextureRect_mouse_exited_texture() -> void:
 	selection.mouse_exited_hovering()
 
-func _on_TextureRect_mouse_clicked() -> void:
-	project.apply_operation_to(operation, selection)
+func _on_TextureRect_mouse_drag(event) -> void:
+	drag_operation.amount = -event.relative.y * drag_height_speed
+	project.apply_operation_to(drag_operation, selection)
+	
