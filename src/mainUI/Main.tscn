@@ -81,7 +81,6 @@ margin_top = 7.0
 margin_right = 1017.0
 margin_bottom = 561.0
 mouse_filter = 1
-split_offset = 700
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -91,6 +90,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 848.0
 margin_bottom = 554.0
+size_flags_horizontal = 3
 
 [node name="TabContainer" type="TabContainer" parent="MainPanel/WorkbenchPanel/HSplitContainer"]
 margin_left = 860.0
