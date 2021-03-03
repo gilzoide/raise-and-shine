@@ -53,10 +53,11 @@ void fragment() {
 	vec2 uv_offset = TEXTURE_PIXEL_SIZE * selection_pixel_width;
 	bool this_is_not_selection = texture(selection_map, UV).r < 0.5;
 	bool this_is_border = this_is_not_selection && is_any_neighbour_selection(selection_map, UV, uv_offset);
-	vec4 selection_color = vec4(vec3(1) - color.rgb, 1);
-	color = mix(color, selection_color, float(this_is_border));
+	vec3 selection_color = vec3(1) - color.rgb;
+	color = mix(color, vec4(selection_color, 1), float(this_is_border));
 	
 	NORMALMAP = mix(NORMALMAP, normal, float(use_normal));
 	ALBEDO = mix(vec3(1), color.rgb, float(use_albedo));
 	ALPHA = color.a;
+	EMISSION = selection_color * float(this_is_border);
 }
