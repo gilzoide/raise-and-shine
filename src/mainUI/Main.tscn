@@ -57,12 +57,13 @@ margin_right = 89.0
 margin_bottom = 34.0
 
 [node name="OperationToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 5 )]
+visible = false
 margin_left = 93.0
 margin_right = 410.0
 
 [node name="BrushToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 6 )]
-margin_left = 414.0
-margin_right = 666.0
+margin_left = 93.0
+margin_right = 345.0
 margin_bottom = 34.0
 
 [node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]
