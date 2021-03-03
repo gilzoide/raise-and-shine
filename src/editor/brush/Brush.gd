@@ -28,7 +28,7 @@ func get_brush_coordinates(position: Vector2, bounds_size: Vector2, size_: float
 	var array = PoolVector3Array()
 	var bounds = Rect2(Vector2.ZERO, bounds_size - Vector2.ONE)
 	if size_ <= 1:
-		array.append(Vector3(position.x, position.y, 0))
+		array.append(Vector3(position.x, position.y, 1))
 	else:
 		var ease_param = easing_to_param(easing)
 		var half_size = int(size_ * 0.5)
