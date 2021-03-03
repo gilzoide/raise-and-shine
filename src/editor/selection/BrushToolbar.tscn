@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://editor/selection/BrushToolbar.gd" type="Script" id=1]
+[ext_resource path="res://mainUI/ScrollableOptionButton.gd" type="Script" id=2]
 
 [node name="BrushToolbar" type="PanelContainer"]
 margin_right = 14.0
@@ -27,12 +28,14 @@ margin_left = 41.0
 margin_right = 106.0
 margin_bottom = 20.0
 text = "Circle"
+script = ExtResource( 2 )
 
 [node name="EasingPicker" type="OptionButton" parent="HBoxContainer"]
 margin_left = 110.0
 margin_right = 162.0
 margin_bottom = 20.0
 text = "Flat"
+script = ExtResource( 2 )
 
 [node name="SizeSlider" type="HSlider" parent="HBoxContainer"]
 margin_left = 166.0
