@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource( 1 )
 format = 0
+easing = 0
 size = 12

@@ -8,12 +8,13 @@ static func new_normalmap_from_heightmap(heightmap: Image):
 	normalmap.bumpmap_to_normalmap(min(heightmap.get_width(), heightmap.get_height()))
 	return normalmap
 
-static func recalculate_normals(heightmap: Image, normalmap: Image, coordinates: PoolVector2Array) -> void:
+static func recalculate_normals(heightmap: Image, normalmap: Image, coordinates: PoolVector3Array) -> void:
 	heightmap.lock()
 	normalmap.lock()
 	var bounds = heightmap.get_size()
 	var bump_scale = min(heightmap.get_width(), heightmap.get_height())
-	for v in coordinates:
+	for c in coordinates:
+		var v = Vector2(c.x, c.y)
 		var here = heightmap.get_pixelv(v).r
 		var right = heightmap.get_pixelv(v + Vector2(1, 0)).r if v.x < bounds.x else here
 		var below = heightmap.get_pixelv(v + Vector2(0, 1)).r if v.y < bounds.y else here

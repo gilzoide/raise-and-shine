@@ -13,7 +13,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 245.0
+margin_right = 301.0
 margin_bottom = 27.0
 
 [node name="Label" type="Label" parent="HBoxContainer"]
@@ -28,9 +28,15 @@ margin_right = 106.0
 margin_bottom = 20.0
 text = "Circle"
 
-[node name="SizeSlider" type="HSlider" parent="HBoxContainer"]
+[node name="EasingPicker" type="OptionButton" parent="HBoxContainer"]
 margin_left = 110.0
-margin_right = 238.0
+margin_right = 162.0
+margin_bottom = 20.0
+text = "Flat"
+
+[node name="SizeSlider" type="HSlider" parent="HBoxContainer"]
+margin_left = 166.0
+margin_right = 294.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 128, 0 )
 size_flags_vertical = 3
@@ -39,4 +45,5 @@ max_value = 128.0
 value = 12.0
 rounded = true
 [connection signal="item_selected" from="HBoxContainer/FormatPicker" to="." method="_on_FormatPicker_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/EasingPicker" to="." method="_on_EasingPicker_item_selected"]
 [connection signal="value_changed" from="HBoxContainer/SizeSlider" to="." method="_on_SizeSlider_value_changed"]
