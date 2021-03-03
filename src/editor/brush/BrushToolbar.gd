@@ -1,9 +1,10 @@
 extends PanelContainer
 
-export(Resource) var brush = preload("res://editor/selection/ActiveBrush.tres")
+export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 
 onready var format_picker = $HBoxContainer/FormatPicker
 onready var easing_picker = $HBoxContainer/EasingPicker
+
 
 func _ready() -> void:
 	format_picker.add_item("Circle", brush.Format.CIRCLE)

@@ -6,7 +6,7 @@ const SELECTED_PIXEL = Color(1, 0, 0, 1)
 
 export(ImageTexture) var selection_texture: ImageTexture = preload("res://textures/Selection_imagetexture.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
-export(Resource) var brush = preload("res://editor/selection/ActiveBrush.tres")
+export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 
 var selection_image: Image = Image.new()
 var last_hover_position: Vector2 = Vector2.ZERO

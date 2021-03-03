@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://editor/selection/BrushToolbar.gd" type="Script" id=1]
+[ext_resource path="res://editor/brush/BrushToolbar.gd" type="Script" id=1]
 [ext_resource path="res://mainUI/ScrollableOptionButton.gd" type="Script" id=2]
+[ext_resource path="res://editor/brush/BrushDirectionPicker.tscn" type="PackedScene" id=3]
 
 [node name="BrushToolbar" type="PanelContainer"]
 margin_right = 14.0
@@ -14,7 +15,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 301.0
+margin_right = 376.0
 margin_bottom = 27.0
 
 [node name="Label" type="Label" parent="HBoxContainer"]
@@ -37,9 +38,13 @@ margin_bottom = 20.0
 text = "Flat"
 script = ExtResource( 2 )
 
-[node name="SizeSlider" type="HSlider" parent="HBoxContainer"]
+[node name="BrushDirectionPicker" parent="HBoxContainer" instance=ExtResource( 3 )]
 margin_left = 166.0
-margin_right = 294.0
+margin_right = 237.0
+
+[node name="SizeSlider" type="HSlider" parent="HBoxContainer"]
+margin_left = 241.0
+margin_right = 369.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 128, 0 )
 size_flags_vertical = 3

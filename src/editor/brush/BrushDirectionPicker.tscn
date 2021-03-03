@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://editor/brush/BrushDirectionPickerButton.gd" type="Script" id=1]
+[ext_resource path="res://editor/brush/BrushDirectionPicker.gd" type="Script" id=2]
+[ext_resource path="res://editor/brush/ActiveBrush.tres" type="Resource" id=3]
+
+
+[node name="BrushDirectionPickerButton" type="Button"]
+margin_right = 12.0
+margin_bottom = 20.0
+focus_mode = 0
+enabled_focus_mode = 0
+text = "Direction"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelPopup" type="PopupPanel" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_right = 180.0
+margin_bottom = 180.0
+focus_mode = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+brush = ExtResource( 3 )
+border_color = Color( 1, 1, 1, 1 )
+selection_color = Color( 1, 0, 0, 1 )
+line_width = 2.0
+none_radius_percent = 0.5
+min_margin = 8.0
+point_count = 32
+wheel_radians_speed = 0.1
+[connection signal="pressed" from="." to="." method="_on_pressed"]

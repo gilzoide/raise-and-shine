@@ -5,7 +5,7 @@
 [ext_resource path="res://mainUI/UI_theme.tres" type="Theme" id=3]
 [ext_resource path="res://editor/inspector/LightInspector.tscn" type="PackedScene" id=4]
 [ext_resource path="res://editor/selection/OperationToolbar.tscn" type="PackedScene" id=5]
-[ext_resource path="res://editor/selection/BrushToolbar.tscn" type="PackedScene" id=6]
+[ext_resource path="res://editor/brush/BrushToolbar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://mainUI/ViewMenuButton.gd" type="Script" id=10]
 
 [node name="MainUI" type="Control"]
@@ -63,7 +63,7 @@ margin_right = 410.0
 
 [node name="BrushToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 6 )]
 margin_left = 93.0
-margin_right = 345.0
+margin_right = 476.0
 margin_bottom = 34.0
 
 [node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]
