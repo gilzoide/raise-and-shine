@@ -42,15 +42,14 @@ func update_plane_dimensions() -> void:
 	plane_heightmapshape.map_depth = size.y
 	heightmapshape_collision.scale.x = plane_size.x / size.x
 	heightmapshape_collision.scale.z = plane_size.y / size.y
-	var height_scale = min(plane_size.x, plane_size.y) * 0.5
-	update_heightmapshape_values(project.height_data)
-	
+	var height_scale = update_heightmapshape_values(project.height_data)
 	plane_material.set_shader_param("height_scale", height_scale)
 	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
 
-func update_heightmapshape_values(height_data) -> void:
+func update_heightmapshape_values(height_data) -> float:
 	var height_scale = min(plane_size.x, plane_size.y) * 0.5
 	heightmapshape_collision.shape.map_data = height_data.scaled(height_scale)
+	return height_scale
 
 func _on_texture_updated(type: int, _texture: Texture) -> void:
 	if type == HEIGHT_MAP:
