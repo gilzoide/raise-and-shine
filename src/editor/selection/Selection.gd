@@ -23,14 +23,16 @@ func _on_texture_updated(type: int, texture: Texture) -> void:
 	if type == MapTypes.Type.HEIGHT_MAP:
 		var new_size = texture.get_size()
 		selection_image.resize(new_size.x, new_size.y, Image.INTERPOLATE_NEAREST)
+		selection_texture.create_from_image(selection_image, selection_texture.flags)
 
 func empty() -> bool:
 	return current_selected_coordinates.empty()
 
 func set_mouse_hovering_uv(uv: Vector2) -> void:
-	if Rect2(0, 0, 1, 1).has_point(uv):
-		var position = (uv * project.height_image.get_size()).floor()
-		set_mouse_hovering(position)
+	uv.x = clamp(uv.x, 0, 1)
+	uv.y = clamp(uv.y, 0, 1)
+	var position = (uv * project.height_image.get_size()).floor()
+	set_mouse_hovering(position)
 
 func set_mouse_hovering(position: Vector2) -> void:
 	selection_image.lock()

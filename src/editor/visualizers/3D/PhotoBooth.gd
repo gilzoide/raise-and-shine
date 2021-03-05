@@ -17,6 +17,7 @@ enum {
 
 export(float) var plate_angular_speed = 0.01
 export(float) var drag_height_speed = 0.01
+export(float) var plane_subdivide_scale = 2
 
 var alpha_enabled: bool setget set_alpha_enabled, get_alpha_enabled
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
@@ -35,13 +36,13 @@ func _ready() -> void:
 func update_plane_dimensions() -> void:
 	var height_map = project.height_image
 	var size = height_map.get_size()
-	plane_mesh.subdivide_width = size.x * 2
-	plane_mesh.subdivide_depth = size.y * 2
+	plane_mesh.subdivide_width = size.x * plane_subdivide_scale
+	plane_mesh.subdivide_depth = size.y * plane_subdivide_scale
 	var plane_heightmapshape = heightmapshape_collision.shape
 	plane_heightmapshape.map_width = size.x
 	plane_heightmapshape.map_depth = size.y
-	heightmapshape_collision.scale.x = plane_size.x / size.x
-	heightmapshape_collision.scale.z = plane_size.y / size.y
+	heightmapshape_collision.scale.x = plane_size.x / (size.x - 1)
+	heightmapshape_collision.scale.z = plane_size.y / (size.y - 1)
 	var height_scale = update_heightmapshape_values(project.height_data)
 	plane_material.set_shader_param("height_scale", height_scale)
 	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)

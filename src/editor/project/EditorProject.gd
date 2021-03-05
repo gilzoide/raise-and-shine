@@ -40,19 +40,19 @@ func save_image_dialog(type: int) -> void:
 
 func set_albedo_image(value: Image) -> void:
 	albedo_image = value
-	albedo_texture.create_from_image(value)
+	albedo_texture.create_from_image(value, albedo_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.ALBEDO_MAP, albedo_texture)
 
 func set_height_image(value: Image) -> void:
 	height_image = value
 	height_data.update_from_image(height_image)
-	height_texture.create_from_image(value)
+	height_texture.create_from_image(value, height_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.HEIGHT_MAP, height_texture)
 	set_normal_image(HeightNormalConversion.new_normalmap_from_heightmap(height_image))
 
 func set_normal_image(value: Image) -> void:
 	normal_image = value
-	normal_texture.create_from_image(value)
+	normal_texture.create_from_image(value, normal_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.NORMAL_MAP, normal_texture)
 
 func apply_operation_to(operation, selection) -> void:
