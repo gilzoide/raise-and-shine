@@ -48,4 +48,3 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="file_selected" from="." to="." method="_on_file_selected"]
-[connection signal="popup_hide" from="." to="." method="_on_popup_hide"]

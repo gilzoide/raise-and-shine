@@ -18,21 +18,30 @@ const SAVE_FILTERS = [
 	"*.png ; PNG",
 ]
 
+const OPEN_TEXT = "You can also drop files to this window\n"
+const SAVE_TEXT = ""
+
 onready var image_load_error = $AcceptDialog3
 onready var image_save_error = $AcceptDialog4
 var success_method: FuncRef
 var image_to_save: Image
+var hovering = false
+
+func _ready() -> void:
+	get_tree().connect("files_dropped", self, "_on_files_dropped")
 
 func try_load_image(on_success_method: FuncRef) -> void:
 	success_method = on_success_method
 	mode = MODE_OPEN_FILE
 	filters = OPEN_FILTERS
+	dialog_text = OPEN_TEXT
 	popup_centered()
 
 func try_save_image(image: Image) -> void:
 	image_to_save = image
 	mode = MODE_SAVE_FILE
 	filters = SAVE_FILTERS
+	dialog_text = SAVE_TEXT
 	popup_centered()
 
 func _on_file_selected(path: String) -> void:
@@ -53,8 +62,20 @@ func _on_file_selected(path: String) -> void:
 		if res != OK:
 			image_save_error.popup_centered()
 
+func _on_files_dropped(files: PoolStringArray, screen: int) -> void:
+	if visible:
+		for f in files:
+			if f.ends_with(".png") or f.ends_with(".exr"):
+				_on_file_selected(f)
+				hide()
+				break
 
-func _on_popup_hide() -> void:
-	"""Cleans up callback related variables"""
-	success_method = null
-	image_to_save = null
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_POPUP_HIDE:
+		success_method = null
+		image_to_save = null
+		hovering = false
+	elif what == NOTIFICATION_MOUSE_ENTER:
+		hovering = true
+	elif what == NOTIFICATION_MOUSE_EXIT:
+		hovering = false
