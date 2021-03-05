@@ -5,6 +5,7 @@ const NOT_SELECTED_PIXEL = Color(0, 0, 0, 1)
 const SELECTED_PIXEL = Color(1, 0, 0, 1)
 
 export(ImageTexture) var selection_texture: ImageTexture = preload("res://textures/Selection_imagetexture.tres")
+export(ShaderMaterial) var selection_material: ShaderMaterial = preload("res://editor/visualizers/2D/ShowSelection_material.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 
@@ -17,6 +18,7 @@ func _init() -> void:
 	var size = project.height_image.get_size()
 	selection_image.create(size.x, size.y, false, Image.FORMAT_L8)
 	selection_texture.create_from_image(selection_image, selection_texture.flags)
+	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
 	project.connect("texture_updated", self, "_on_texture_updated")
 
 func _on_texture_updated(type: int, texture: Texture) -> void:
@@ -24,6 +26,7 @@ func _on_texture_updated(type: int, texture: Texture) -> void:
 		var new_size = texture.get_size()
 		selection_image.resize(new_size.x, new_size.y, Image.INTERPOLATE_NEAREST)
 		selection_texture.create_from_image(selection_image, selection_texture.flags)
+		selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / new_size.x, 1.0 / new_size.y))
 
 func empty() -> bool:
 	return current_selected_coordinates.empty()

@@ -1,12 +1,14 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://editor/project/ActiveEditorProject.tres" type="Resource" id=1]
 [ext_resource path="res://editor/selection/Selection.gd" type="Script" id=2]
 [ext_resource path="res://textures/Selection_imagetexture.tres" type="Texture" id=3]
 [ext_resource path="res://editor/brush/ActiveBrush.tres" type="Resource" id=4]
+[ext_resource path="res://editor/visualizers/2D/ShowSelection_material.tres" type="Material" id=5]
 
 [resource]
 script = ExtResource( 2 )
 selection_texture = ExtResource( 3 )
+selection_material = ExtResource( 5 )
 project = ExtResource( 1 )
 brush = ExtResource( 4 )

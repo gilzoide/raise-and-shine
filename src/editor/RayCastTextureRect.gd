@@ -4,18 +4,10 @@ signal position_hovered(uv)
 signal mouse_exited_texture()
 signal mouse_drag(event)
 
-const INVALID_POSITION = Vector2(-1, -1)
+const INVALID_UV = Vector2(-1, -1)
 
-class ScaledRect:
-	var rect: Rect2
-	var scale: float
-	
-	func _init(_rect: Rect2, _scale: float):
-		rect = _rect
-		scale = _scale
-
-var last_position: Vector2 = INVALID_POSITION
-var drawn_rect: ScaledRect
+var last_uv: Vector2 = INVALID_UV
+var drawn_rect: Rect2
 var dragging = false
 
 func _ready() -> void:
@@ -31,7 +23,7 @@ func _notification(what: int) -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-		if event.is_pressed() and drawn_rect.rect.has_point(event.position):
+		if event.is_pressed() and drawn_rect.has_point(event.position):
 			start_dragging()
 		else:
 			stop_dragging()
@@ -51,28 +43,24 @@ func stop_dragging() -> void:
 	mouse_default_cursor_shape = Control.CURSOR_ARROW
 
 func hover_over(position: Vector2) -> void:
-	if drawn_rect.rect.has_point(position):
-		last_position = ((position - drawn_rect.rect.position) / drawn_rect.scale).floor()
-		emit_signal("position_hovered", last_position / texture.get_size())
+	if drawn_rect.has_point(position):
+		last_uv = ((position - drawn_rect.position) / drawn_rect.size)
+		emit_signal("position_hovered", last_uv)
 	else:
-		if not last_position.is_equal_approx(INVALID_POSITION):
+		if not last_uv.is_equal_approx(INVALID_UV):
 			emit_signal("mouse_exited_texture")
-		last_position = INVALID_POSITION
+		last_uv = INVALID_UV
 
 func update_drawn_rect() -> void:
-	# Adapted from TextureRect draw code to include `scale` result
 	# Ref: https://github.com/godotengine/godot/blob/7961a1dea3e7ce8c4e7197a0000e35ab31e9ff2e/scene/gui/texture_rect.cpp#L66-L81
 	var texture_size = texture.get_size()
 	var size = rect_size
-	var scale = size.y / texture_size.y
-	var tex_width = texture_size.x * scale
+	var tex_width = texture_size.x * size.y / texture_size.y
 	var tex_height = size.y
 
 	if tex_width > size.x:
 		tex_width = size.x
-		scale = tex_width / texture_size.x
-		tex_height = texture_size.y * scale
+		tex_height = texture_size.y * tex_width / texture_size.x
 	
 	var offset = Vector2((size.x - tex_width) * 0.5, (size.y - tex_height) * 0.5)
-	var rect = Rect2(offset.x, offset.y, tex_width, tex_height)
-	drawn_rect = ScaledRect.new(rect, scale)
+	drawn_rect = Rect2(offset.x, offset.y, tex_width, tex_height)

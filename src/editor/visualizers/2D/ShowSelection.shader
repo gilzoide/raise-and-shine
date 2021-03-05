@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
 uniform sampler2D selection_map;
+uniform vec2 selection_texture_pixel_size;
 uniform float selection_pixel_width = 0.5;
 
 bool is_any_neighbour_selection(sampler2D tex, vec2 uv, vec2 uv_offset) {
@@ -21,7 +22,7 @@ bool is_any_neighbour_selection(sampler2D tex, vec2 uv, vec2 uv_offset) {
 
 void fragment() {
 	vec4 texel = texture(TEXTURE, UV);
-	vec2 uv_offset = TEXTURE_PIXEL_SIZE * selection_pixel_width;
+	vec2 uv_offset = selection_texture_pixel_size * selection_pixel_width;
 	bool this_is_not_selection = texture(selection_map, UV).r < 0.5;
 	bool this_is_border = this_is_not_selection && is_any_neighbour_selection(selection_map, UV, uv_offset);
 	vec4 selection_color = vec4(vec3(1) - texel.rgb, 1);
