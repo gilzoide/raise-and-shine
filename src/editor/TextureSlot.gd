@@ -45,8 +45,8 @@ func _on_menu_id_pressed(id: int) -> void:
 func update_filter_check_item() -> void:
 	menu_popup.set_item_checked(TOGGLE_FILTER, texture_rect.texture.flags & Texture.FLAG_FILTER)
 
-func _on_TextureRect_position_hovered(position) -> void:
-	selection.set_mouse_hovering(position)
+func _on_TextureRect_position_hovered(uv) -> void:
+	selection.set_mouse_hovering_uv(uv)
 
 func _on_TextureRect_mouse_exited_texture() -> void:
 	selection.mouse_exited_hovering()

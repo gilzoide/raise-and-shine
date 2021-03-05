@@ -1,6 +1,6 @@
 extends TextureRect
 
-signal position_hovered(position)
+signal position_hovered(uv)
 signal mouse_exited_texture()
 signal mouse_drag(event)
 
@@ -53,7 +53,7 @@ func stop_dragging() -> void:
 func hover_over(position: Vector2) -> void:
 	if drawn_rect.rect.has_point(position):
 		last_position = ((position - drawn_rect.rect.position) / drawn_rect.scale).floor()
-		emit_signal("position_hovered", last_position)
+		emit_signal("position_hovered", last_position / texture.get_size())
 	else:
 		if not last_position.is_equal_approx(INVALID_POSITION):
 			emit_signal("mouse_exited_texture")
