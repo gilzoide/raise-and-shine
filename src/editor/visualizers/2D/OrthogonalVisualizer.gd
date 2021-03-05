@@ -6,7 +6,7 @@ export(float) var mouse_speed: float = 0.01
 
 onready var viewport: Viewport = $ViewportContainer/Viewport
 onready var camera: Camera = $ViewportContainer/Viewport/Camera
-onready var camera_initial_position: Vector3 = camera.translation
+onready var camera_initial_transform: Transform = camera.transform
 var dragging: bool = false
 
 func _ready() -> void:
@@ -17,11 +17,14 @@ func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and not event.is_echo() \
 			and event.button_index == BUTTON_MIDDLE:
 		dragging = true
+		grab_focus()
 	elif event is InputEventMouseButton and not event.is_pressed():
 		dragging = false
 	if dragging and event is InputEventMouseMotion:
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * mouse_speed
 		update_camera_position(event.relative * factor)
+	elif event.is_action_pressed("visualizer_reset"):
+		camera.transform = camera_initial_transform
 	else:
 		viewport.unhandled_input(event)
 
