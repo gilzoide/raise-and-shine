@@ -11,29 +11,37 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
-margin_right = 43.0
-margin_bottom = 20.0
-size_flags_vertical = 1
-text = "Light 1"
-valign = 1
+[node name="Title" type="Label" parent="."]
+visible = false
+margin_top = 5.0
+margin_right = 8.0
+margin_bottom = 19.0
+text = "1"
+
+[node name="CheckButton" type="CheckBox" parent="."]
+margin_right = 36.0
+margin_bottom = 40.0
+focus_mode = 0
+text = "1"
 
 [node name="EnergySlider" type="HSlider" parent="."]
-margin_left = 47.0
+margin_left = 40.0
 margin_right = 221.0
-margin_bottom = 20.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 2.0
 min_value = 0.1
-max_value = 10.0
+max_value = 5.0
 step = 0.1
 value = 1.0
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="."]
 margin_left = 225.0
 margin_right = 265.0
-margin_bottom = 20.0
+margin_bottom = 40.0
 text = "light"
+
+[connection signal="toggled" from="CheckButton" to="." method="_on_CheckButton_toggled"]
 [connection signal="value_changed" from="EnergySlider" to="." method="_on_EnergySlider_value_changed"]
 [connection signal="color_changed" from="ColorPickerButton" to="." method="_on_ColorPickerButton_color_changed"]

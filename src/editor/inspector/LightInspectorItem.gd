@@ -1,6 +1,7 @@
 extends Control
 
-onready var title = $Label
+onready var label = $Title
+onready var check_button = $CheckButton
 onready var energy_slider = $EnergySlider
 onready var color_picker = $ColorPickerButton
 var light: Node
@@ -14,8 +15,22 @@ func _ready() -> void:
 	if light.has_signal("energy_changed"):
 		var _err = light.connect("energy_changed", self, "update_energy_slider_value")
 
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == BUTTON_WHEEL_UP and event.is_pressed():
+		energy_slider.value += energy_slider.step
+	if event is InputEventMouseButton and event.button_index == BUTTON_WHEEL_DOWN and event.is_pressed():
+		energy_slider.value -= energy_slider.step
+
 func set_name_index(index: int):
-	title.text = "Ambient" if index < 0 else "Light %d" % index
+	if index >= 0:
+		label.visible = false
+		check_button.visible = true
+		check_button.pressed = light.visible
+		check_button.text = "%d" % index
+	else:
+		label.visible = true
+		check_button.visible = false
+		label.text = "Ambient"
 
 func update_energy_slider_value(value: float) -> void:
 	energy_slider.value = value
@@ -28,3 +43,6 @@ func _on_EnergySlider_value_changed(value: float) -> void:
 
 func _on_ColorPickerButton_color_changed(color: Color) -> void:
 	light.set_light_color(color)
+
+func _on_CheckButton_toggled(button_pressed: bool) -> void:
+	light.visible = button_pressed
