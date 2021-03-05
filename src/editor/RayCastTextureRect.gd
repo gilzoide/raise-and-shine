@@ -14,12 +14,11 @@ func _ready() -> void:
 	update_drawn_rect()
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_MOUSE_EXIT:
-		emit_signal("mouse_exited_texture")
-	elif what == NOTIFICATION_RESIZED:
+	if what == NOTIFICATION_RESIZED:
 		update_drawn_rect()
 	elif what == NOTIFICATION_MOUSE_EXIT:
 		stop_dragging()
+		emit_signal("mouse_exited_texture")
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
