@@ -16,8 +16,8 @@ static func recalculate_normals(heightmap: Image, normalmap: Image, coordinates:
 	for c in coordinates:
 		var v = Vector2(c.x, c.y)
 		var here = heightmap.get_pixelv(v).r
-		var right = heightmap.get_pixelv(v + Vector2(1, 0)).r if v.x < bounds.x else here
-		var below = heightmap.get_pixelv(v + Vector2(0, 1)).r if v.y < bounds.y else here
+		var right = heightmap.get_pixelv(v + Vector2(1, 0)).r if v.x + 1 < bounds.x else here
+		var below = heightmap.get_pixelv(v + Vector2(0, 1)).r if v.y + 1 < bounds.y else here
 		var up = Vector3(0, 1, (here - below) * bump_scale)
 		var across = Vector3(1, 0, (right - here) * bump_scale)
 		var normal = across.cross(up).normalized()

@@ -26,7 +26,7 @@ func get_affected_coordinates(position: Vector2, bounds_size: Vector2) -> PoolVe
 
 func get_brush_coordinates(position: Vector2, bounds_size: Vector2, size_: float) -> PoolVector3Array:
 	var array = PoolVector3Array()
-	var bounds = Rect2(Vector2.ZERO, bounds_size - Vector2.ONE)
+	var bounds = Rect2(Vector2.ZERO, bounds_size)
 	if size_ <= 1:
 		array.append(Vector3(position.x, position.y, 1))
 	else:
@@ -37,7 +37,7 @@ func get_brush_coordinates(position: Vector2, bounds_size: Vector2, size_: float
 				var delta = Vector2(x, y)
 				var pos = position + delta
 				var normalized_delta = delta / half_size
-				if bounds.has_point(pos) and (format == Format.SQUARE or normalized_delta.length_squared() <= 1.0):
+				if bounds.has_point(pos) and (format == Format.SQUARE or normalized_delta.length_squared() <= 1.1):
 					var z
 					if is_nan(direction):
 						z = get_brush_depth(normalized_delta.length(), ease_param)
