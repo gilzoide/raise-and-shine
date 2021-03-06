@@ -23,6 +23,7 @@ func _ready() -> void:
 	menu_popup.add_item("Redo", REDO)
 	menu_popup.set_item_shortcut(REDO, preload("res://shortcuts/RedoShortcut.tres"))
 	menu_popup.add_submenu_item("History", HISTORY_SUBMENU_NAME, HISTORY)
+	menu_popup.connect("about_to_show", self, "_on_menu_popup_about_to_show")
 	menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
 
 func _on_menu_popup_id_pressed(id: int) -> void:
@@ -30,6 +31,10 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		history.apply_undo()
 	elif id == REDO:
 		history.apply_redo()
+
+func _on_menu_popup_about_to_show() -> void:
+	menu_popup.set_item_disabled(UNDO, not history.can_undo())
+	menu_popup.set_item_disabled(REDO, not history.can_redo())
 
 func _on_history_menu_about_to_show() -> void:
 	history_submenu.clear()

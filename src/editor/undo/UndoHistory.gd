@@ -34,6 +34,12 @@ func apply_undo() -> void:
 func apply_redo() -> void:
 	set_current_revision(current_revision + 1)
 
+func can_undo() -> bool:
+	return current_revision >= 1
+
+func can_redo() -> bool:
+	return current_revision < list.size() - 1
+
 func get_revision(id: int) -> Image:
 	if id >= 0 and id < list.size():
 		return list[id]
