@@ -4,7 +4,7 @@ export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 
 onready var format_picker = $HBoxContainer/FormatPicker
 onready var easing_picker = $HBoxContainer/EasingPicker
-
+onready var size_label = $HBoxContainer/SizeLabel
 
 func _ready() -> void:
 	format_picker.add_item("Circle", brush.Format.CIRCLE)
@@ -26,3 +26,4 @@ func _on_EasingPicker_item_selected(index: int) -> void:
 
 func _on_SizeSlider_value_changed(value: float) -> void:
 	brush.size = value
+	size_label.text = str(int(value))

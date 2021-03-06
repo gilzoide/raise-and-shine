@@ -15,7 +15,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 376.0
+margin_right = 396.0
 margin_bottom = 27.0
 
 [node name="Label" type="Label" parent="HBoxContainer"]
@@ -52,6 +52,13 @@ min_value = 1.0
 max_value = 128.0
 value = 12.0
 rounded = true
+
+[node name="SizeLabel" type="Label" parent="HBoxContainer"]
+margin_left = 373.0
+margin_top = 3.0
+margin_right = 389.0
+margin_bottom = 17.0
+text = "12"
 [connection signal="item_selected" from="HBoxContainer/FormatPicker" to="." method="_on_FormatPicker_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/EasingPicker" to="." method="_on_EasingPicker_item_selected"]
 [connection signal="value_changed" from="HBoxContainer/SizeSlider" to="." method="_on_SizeSlider_value_changed"]
