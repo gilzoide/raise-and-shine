@@ -2,9 +2,10 @@
 
 [ext_resource path="res://editor/TextureSlot.gd" type="Script" id=1]
 [ext_resource path="res://editor/RayCastTextureRect.gd" type="Script" id=2]
-[ext_resource path="res://editor/visualizers/HeightDragSlider.tscn" type="PackedScene" id=3]
+[ext_resource path="res://editor/visualizers/HeightDragIndicator.tscn" type="PackedScene" id=3]
 [ext_resource path="res://editor/visualizers/2D/ShowSelection_material.tres" type="Material" id=5]
 [ext_resource path="res://textures/Albedo_imagetexture.tres" type="Texture" id=6]
+
 
 [node name="TextureSlot" type="Control"]
 anchor_right = 1.0

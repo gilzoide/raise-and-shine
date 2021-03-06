@@ -7,7 +7,7 @@ export(Resource) var selection = preload("res://editor/selection/ActiveSelection
 
 onready var viewport: Viewport = $ViewportContainer/Viewport
 onready var camera: Camera = $ViewportContainer/Viewport/Camera
-onready var height_slider: VSlider = $HeightDragSlider
+onready var height_slider = $HeightDragIndicator
 onready var camera_initial_transform: Transform = camera.transform
 var dragging: bool = false
 
@@ -33,10 +33,10 @@ func _gui_input(event: InputEvent) -> void:
 func _on_height_drag_start() -> void:
 	set_default_cursor_shape(Control.CURSOR_VSIZE)
 	height_slider.show_at_position(get_global_mouse_position())
-	height_slider.value = selection.get_hover_position_height()
+	height_slider.update_height(selection.get_hover_position_height())
 
 func _on_height_drag_moved() -> void:
-	height_slider.value = selection.get_hover_position_height()
+	height_slider.update_height(selection.get_hover_position_height())
 
 func _on_height_drag_stop() -> void:
 	height_slider.visible = false

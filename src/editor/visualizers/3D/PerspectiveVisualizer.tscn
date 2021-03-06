@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/PerspectiveVisualizer.gd" type="Script" id=1]
-[ext_resource path="res://editor/visualizers/HeightDragSlider.tscn" type="PackedScene" id=2]
+[ext_resource path="res://editor/visualizers/HeightDragIndicator.tscn" type="PackedScene" id=2]
 
 [node name="PerspectiveVisualizer" type="Control"]
 anchor_right = 1.0
@@ -35,5 +35,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 128 )
 current = true
 far = 500.0
 
-[node name="HeightDragSlider" parent="." instance=ExtResource( 2 )]
+[node name="HeightDragIndicator" parent="." instance=ExtResource( 2 )]
 visible = false
