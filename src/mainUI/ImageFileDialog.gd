@@ -38,11 +38,28 @@ func try_load_image(on_success_method: FuncRef) -> void:
 	popup_centered()
 
 func try_save_image(image: Image) -> void:
-	image_to_save = image
-	mode = MODE_SAVE_FILE
-	filters = SAVE_FILTERS
-	dialog_text = SAVE_TEXT
-	popup_centered()
+	if OS.get_name() != "HTML5":
+		image_to_save = image
+		mode = MODE_SAVE_FILE
+		filters = SAVE_FILTERS
+		dialog_text = SAVE_TEXT
+		popup_centered()
+	else:
+		var bytes = image.save_png_to_buffer()
+		var base64 = Marshalls.raw_to_base64(bytes)
+		var uri = "data:image/png;base64," + base64
+		if OS.has_feature("JavaScript"):
+			JavaScript.eval("""
+				function download(dataurl, filename) {
+					var a = document.createElement('a');
+					a.href = dataurl;
+					a.setAttribute('download', filename);
+					a.click();
+				}
+				download('%s', 'raise_and_shine_generated.png');
+			""" % uri)
+		elif OS.shell_open(uri) != OK:
+			image_save_error.popup_centered()
 
 func _on_file_selected(path: String) -> void:
 	if mode == MODE_OPEN_FILE:
@@ -61,6 +78,8 @@ func _on_file_selected(path: String) -> void:
 			res = image_to_save.save_exr(path)
 		if res != OK:
 			image_save_error.popup_centered()
+
+
 
 func _on_files_dropped(files: PoolStringArray, _screen: int) -> void:
 	if visible:
