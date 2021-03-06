@@ -16,6 +16,8 @@ func _ready() -> void:
 	easing_picker.add_item("Ease In", brush.Easing.EASE_IN)
 	easing_picker.add_item("Ease Out", brush.Easing.EASE_OUT)
 	easing_picker.add_item("Ease InOut", brush.Easing.EASE_INOUT)
+	easing_picker.add_item("Circular In", brush.Easing.CIRCULAR_IN)
+	easing_picker.add_item("Circular Out", brush.Easing.CIRCULAR_OUT)
 	easing_picker.selected = 0
 
 func _on_FormatPicker_item_selected(index: int) -> void:

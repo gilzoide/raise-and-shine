@@ -11,6 +11,8 @@ enum Easing {
 	EASE_IN,
 	EASE_OUT,
 	EASE_INOUT,
+	CIRCULAR_IN,
+	CIRCULAR_OUT,
 }
 
 export(Format) var format = Format.CIRCLE
@@ -30,7 +32,7 @@ func get_brush_coordinates(position: Vector2, bounds_size: Vector2, size_: float
 	if size_ <= 1:
 		array.append(Vector3(position.x, position.y, 1))
 	else:
-		var ease_param = easing_to_param(easing)
+		var ease_func = easing_func(easing)
 		var half_size = int(size_ * 0.5)
 		for x in range(-half_size, half_size + 1):
 			for y in range(-half_size, half_size + 1):
@@ -40,30 +42,57 @@ func get_brush_coordinates(position: Vector2, bounds_size: Vector2, size_: float
 				if bounds.has_point(pos) and (format == Format.SQUARE or normalized_delta.length_squared() <= 1.1):
 					var z
 					if is_nan(direction):
-						z = get_brush_depth(normalized_delta.length(), ease_param)
+						z = get_brush_depth(normalized_delta.length(), ease_func)
 					else:
-						z = get_brush_direction_depth(normalized_delta, ease_param, direction)
+						z = get_brush_direction_depth(normalized_delta, ease_func, direction)
 					array.append(Vector3(pos.x, pos.y, z))
 	return array
 
 
-static func get_brush_direction_depth(normalized_delta: Vector2, ease_param: float, direction_: float) -> float:
+static func get_brush_direction_depth(normalized_delta: Vector2, ease_func: FuncRef, direction_: float) -> float:
 	var delta_factor = -cos(direction_ - normalized_delta.angle())
 	var percent_from_highest = delta_factor * normalized_delta.length() * 0.5 + 0.5
-	return get_brush_depth(percent_from_highest, ease_param)
+	return get_brush_depth(percent_from_highest, ease_func)
 
-static func get_brush_depth(percent_from_highest: float, ease_param: float) -> float:
-	return 1 - ease(percent_from_highest, ease_param)
+static func get_brush_depth(percent_from_highest: float, ease_func: FuncRef) -> float:
+	return 1 - ease_func.call_func(percent_from_highest)
 
-static func easing_to_param(easing_: int) -> float:
-	if easing_ == Easing.LINEAR:
-		return 1.0
+func easing_func(easing_: int) -> FuncRef:
+	if easing_ == Easing.FLAT:
+		return funcref(self, "flat")
+	elif easing_ == Easing.LINEAR:
+		return funcref(self, "ease_linear")
 	elif easing_ == Easing.EASE_IN:
-		return 0.5
+		return funcref(self, "ease_in")
 	elif easing_ == Easing.EASE_OUT:
-		return 2.0
+		return funcref(self, "ease_out")
 	elif easing_ == Easing.EASE_INOUT:
-		return -2.0
-	else:  # FLAT
-		return 0.0
+		return funcref(self, "ease_inout")
+	elif easing_ == Easing.CIRCULAR_IN:
+		return funcref(self, "ease_in_circular")
+	elif easing_ == Easing.CIRCULAR_OUT:
+		return funcref(self, "ease_out_circular")
+	else:
+		assert(false, "FIXME!!!")
+		return null
 
+static func flat(_p: float) -> float:
+	return 0.0
+
+static func ease_linear(p: float) -> float:
+	return p
+
+static func ease_in(p: float) -> float:
+	return ease(p, 0.5)
+
+static func ease_out(p: float) -> float:
+	return ease(p, 2.0)
+
+static func ease_inout(p: float) -> float:
+	return ease(p, -2.0)
+
+static func ease_in_circular(p: float) -> float:
+	return 1 - sqrt(1 - (p * p))
+
+static func ease_out_circular(p: float) -> float:
+	return sqrt((2 - p) * p)
