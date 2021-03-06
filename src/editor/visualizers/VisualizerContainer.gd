@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and not event.is_echo() \
-			and event.button_index == BUTTON_MIDDLE:
+			and (event.button_index == BUTTON_RIGHT or event.button_index == BUTTON_MIDDLE):
 		start_panning()
 	elif event is InputEventMouseButton and not event.is_pressed():
 		stop_panning()
@@ -26,7 +26,7 @@ func _gui_input(event: InputEvent) -> void:
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * mouse_speed
 		update_camera_with_pan(event.relative * factor)
 	elif event.is_action_pressed("visualizer_reset"):
-		camera.transform = camera_initial_transform
+		reset_camera()
 	else:
 		viewport.unhandled_input(event)
 
@@ -59,3 +59,6 @@ func _notification(what: int) -> void:
 
 func update_camera_with_pan(_pan: Vector2) -> void:
 	assert(false, "Implement me!!!")
+
+func reset_camera() -> void:
+	camera.transform = camera_initial_transform
