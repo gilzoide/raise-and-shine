@@ -1,4 +1,4 @@
-extends FileDialog
+extends Node
 
 signal image_loaded(image)
 
@@ -21,8 +21,10 @@ const SAVE_FILTERS = [
 const OPEN_TEXT = "You can also drop files to this window\n"
 const SAVE_TEXT = ""
 
-onready var image_load_error = $AcceptDialog3
-onready var image_save_error = $AcceptDialog4
+onready var file_dialog = $FileDialog
+onready var drop_dialog = $DropDialog
+onready var image_load_error = $ImageLoadErrorDialog
+onready var image_save_error = $ImageSaveErrorDialog
 var success_method: FuncRef
 var image_to_save: Image
 var hovering = false
@@ -32,18 +34,21 @@ func _ready() -> void:
 
 func try_load_image(on_success_method: FuncRef) -> void:
 	success_method = on_success_method
-	mode = MODE_OPEN_FILE
-	filters = OPEN_FILTERS
-	dialog_text = OPEN_TEXT
-	popup_centered()
+	if OS.get_name() != "HTML5":
+		file_dialog.mode = FileDialog.MODE_OPEN_FILE
+		file_dialog.filters = OPEN_FILTERS
+		file_dialog.dialog_text = OPEN_TEXT
+		file_dialog.popup_centered_ratio()
+	else:
+		drop_dialog.popup_centered_ratio()
 
 func try_save_image(image: Image) -> void:
 	if OS.get_name() != "HTML5":
 		image_to_save = image
-		mode = MODE_SAVE_FILE
-		filters = SAVE_FILTERS
-		dialog_text = SAVE_TEXT
-		popup_centered()
+		file_dialog.mode = FileDialog.MODE_SAVE_FILE
+		file_dialog.filters = SAVE_FILTERS
+		file_dialog.dialog_text = SAVE_TEXT
+		file_dialog.popup_centered_ratio()
 	else:
 		var bytes = image.save_png_to_buffer()
 		var base64 = Marshalls.raw_to_base64(bytes)
@@ -62,7 +67,7 @@ func try_save_image(image: Image) -> void:
 			image_save_error.popup_centered()
 
 func _on_file_selected(path: String) -> void:
-	if mode == MODE_OPEN_FILE:
+	if file_dialog.mode == FileDialog.MODE_OPEN_FILE:
 		var img = Image.new()
 		if img.load(path) == OK:
 			emit_signal("image_loaded", img)
@@ -70,7 +75,7 @@ func _on_file_selected(path: String) -> void:
 				success_method.call_func(img)
 		else:
 			image_load_error.popup_centered()
-	elif mode == MODE_SAVE_FILE:
+	elif file_dialog.mode == FileDialog.MODE_SAVE_FILE:
 		var res = ERR_FILE_UNRECOGNIZED
 		if path.ends_with(".png"):
 			res = image_to_save.save_png(path)
@@ -82,19 +87,15 @@ func _on_file_selected(path: String) -> void:
 
 
 func _on_files_dropped(files: PoolStringArray, _screen: int) -> void:
-	if visible:
+	if file_dialog.visible or drop_dialog.visible:
 		for f in files:
 			if f.ends_with(".png") or f.ends_with(".exr"):
 				_on_file_selected(f)
-				hide()
+				file_dialog.hide()
+				drop_dialog.hide()
 				break
 
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_POPUP_HIDE:
-		success_method = null
-		image_to_save = null
-		hovering = false
-	elif what == NOTIFICATION_MOUSE_ENTER:
-		hovering = true
-	elif what == NOTIFICATION_MOUSE_EXIT:
-		hovering = false
+func _on_popup_hide() -> void:
+	success_method = null
+	image_to_save = null
+	hovering = false

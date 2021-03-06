@@ -63,7 +63,7 @@ margin_right = 410.0
 
 [node name="BrushToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 6 )]
 margin_left = 93.0
-margin_right = 476.0
+margin_right = 496.0
 margin_bottom = 34.0
 
 [node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]

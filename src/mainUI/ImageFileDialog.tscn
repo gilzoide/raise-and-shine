@@ -2,23 +2,41 @@
 
 [ext_resource path="res://mainUI/ImageFileDialog.gd" type="Script" id=1]
 
-[node name="ImageFileDialog" type="FileDialog"]
+[node name="ImageFileDialog" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="FileDialog" type="FileDialog" parent="."]
 anchor_left = 0.2
 anchor_top = 0.2
 anchor_right = 0.8
 anchor_bottom = 0.8
 window_title = "Abrir um Arquivo"
+dialog_text = "You can also drop files to this window
+"
 mode = 0
 access = 2
 filters = PoolStringArray( "*.bmp ; BMP", "*.dds ; DirectDraw Surface", "*.exr ; OpenEXR", "*.hdr ; Radiance HDR", "*.jpg ; JPG", "*.jpeg ; JPEG", "*.png ; PNG", "*.tga ; Truevision Targa", "*.webp ; WebP" )
 current_dir = "/media/dados/prog/Godot-Projects/normal-height-map-editor/src"
 current_path = "/media/dados/prog/Godot-Projects/normal-height-map-editor/src/"
-script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="AcceptDialog3" type="AcceptDialog" parent="."]
+[node name="DropDialog" type="WindowDialog" parent="."]
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+window_title = "Drop image file"
+
+[node name="Label" type="Label" parent="DropDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Drop image file here"
+align = 1
+valign = 1
+
+[node name="ImageLoadErrorDialog" type="AcceptDialog" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -33,7 +51,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AcceptDialog4" type="AcceptDialog" parent="."]
+[node name="ImageSaveErrorDialog" type="AcceptDialog" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -47,4 +65,6 @@ dialog_text = "Failed to save image =("
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="file_selected" from="." to="." method="_on_file_selected"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]
+[connection signal="popup_hide" from="FileDialog" to="." method="_on_popup_hide"]
+[connection signal="popup_hide" from="DropDialog" to="." method="_on_popup_hide"]
