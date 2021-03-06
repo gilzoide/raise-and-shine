@@ -17,11 +17,13 @@ export(float) var drag_height_speed = 0.01
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
 export(Resource) var drag_operation = preload("res://editor/selection/DragOperation.tres")
+export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 
 onready var title_menu_button = $Title
 onready var menu_popup = title_menu_button.get_popup()
 onready var texture_rect = $TextureRect
 onready var height_slider = $TextureRect/HeightDragSlider
+var dragged_height = false
 
 func _ready() -> void:
 	title_menu_button.text = MapTypes.map_name(type)
@@ -65,10 +67,14 @@ func _on_TextureRect_drag_started() -> void:
 	mouse_default_cursor_shape = Control.CURSOR_VSIZE
 
 func _on_TextureRect_drag_ended() -> void:
+	if dragged_height:
+		history.push_heightmapdata(project.height_data)
+	dragged_height = false
 	mouse_default_cursor_shape = Control.CURSOR_ARROW
 	height_slider.hide()
 
 func _on_TextureRect_drag_moved(event) -> void:
+	dragged_height = true
 	drag_operation.amount = -event.relative.y * drag_height_speed
 	project.apply_operation_to(drag_operation, selection)
 	height_slider.update_height(selection.get_hover_position_height())

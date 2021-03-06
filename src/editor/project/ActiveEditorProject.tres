@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=8 format=2]
+[gd_resource type="Resource" load_steps=9 format=2]
 
 [ext_resource path="res://editor/project/EditorProject.gd" type="Script" id=1]
 [ext_resource path="res://textures/Albedo_imagetexture.tres" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://textures/P1_2_Hair.png" type="Image" id=5]
 [ext_resource path="res://textures/P1_2_Hair_height.png" type="Image" id=6]
 [ext_resource path="res://textures/P1_2_Hair_normal.png" type="Image" id=7]
+[ext_resource path="res://editor/undo/UndoHistory.tres" type="Resource" id=8]
 
 [resource]
 script = ExtResource( 1 )
@@ -16,3 +17,4 @@ normal_image = ExtResource( 7 )
 albedo_texture = ExtResource( 2 )
 height_texture = ExtResource( 3 )
 normal_texture = ExtResource( 4 )
+history = ExtResource( 8 )

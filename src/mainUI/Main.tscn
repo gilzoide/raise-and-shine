@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://editor/VisualizerGrid.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://editor/inspector/LightInspector.tscn" type="PackedScene" id=4]
 [ext_resource path="res://editor/selection/OperationToolbar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://editor/brush/BrushToolbar.tscn" type="PackedScene" id=6]
+[ext_resource path="res://mainUI/EditMenuButton.gd" type="Script" id=7]
 [ext_resource path="res://mainUI/ViewMenuButton.gd" type="Script" id=10]
 
 [node name="MainUI" type="Control"]
@@ -42,9 +43,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ViewMenuButton" type="MenuButton" parent="MainPanel/MenuBar"]
+[node name="EditMenuButton" type="MenuButton" parent="MainPanel/MenuBar"]
 margin_left = 39.0
-margin_right = 81.0
+margin_right = 75.0
+margin_bottom = 34.0
+text = "Edit"
+script = ExtResource( 7 )
+
+[node name="ViewMenuButton" type="MenuButton" parent="MainPanel/MenuBar"]
+margin_left = 79.0
+margin_right = 121.0
 margin_bottom = 34.0
 text = "View"
 switch_on_hover = true
@@ -52,8 +60,8 @@ script = ExtResource( 10 )
 visualizer_grid_path = NodePath("../../WorkbenchPanel/HSplitContainer/VisualizerGrid")
 
 [node name="VSeparator" type="VSeparator" parent="MainPanel/MenuBar"]
-margin_left = 85.0
-margin_right = 89.0
+margin_left = 125.0
+margin_right = 129.0
 margin_bottom = 34.0
 
 [node name="OperationToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 5 )]
@@ -62,8 +70,8 @@ margin_left = 93.0
 margin_right = 410.0
 
 [node name="BrushToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 6 )]
-margin_left = 93.0
-margin_right = 496.0
+margin_left = 133.0
+margin_right = 536.0
 margin_bottom = 34.0
 
 [node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]

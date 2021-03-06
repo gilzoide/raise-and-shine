@@ -9,12 +9,15 @@ export(Image) var normal_image: Image = MapTypes.NORMAL_IMAGE
 export(ImageTexture) var albedo_texture: ImageTexture = MapTypes.ALBEDO_TEXTURE
 export(ImageTexture) var height_texture: ImageTexture = MapTypes.HEIGHT_TEXTURE
 export(ImageTexture) var normal_texture: ImageTexture = MapTypes.NORMAL_TEXTURE
+export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 
 var height_data: HeightMapData = HeightMapData.new()
 
 func _init() -> void:
 	._init()
 	height_data.update_from_image(height_image)
+	history.set_heightmapdata(height_data)
+	history.connect("revision_changed", self, "set_height_image")
 
 func load_image_dialog(type: int) -> void:
 	var method = ""
@@ -44,7 +47,7 @@ func set_albedo_image(value: Image) -> void:
 	emit_signal("texture_updated", MapTypes.Type.ALBEDO_MAP, albedo_texture)
 
 func set_height_image(value: Image) -> void:
-	height_image = value
+	height_image.copy_from(value)
 	height_data.update_from_image(height_image)
 	height_texture.create_from_image(value, height_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.HEIGHT_MAP, height_texture)

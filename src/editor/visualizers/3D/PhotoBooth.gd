@@ -5,10 +5,11 @@ signal drag_moved()
 signal drag_ended()
 
 const project = preload("res://editor/project/ActiveEditorProject.tres")
-const selection = preload("res://editor/selection/ActiveSelection.tres")
-const operation = preload("res://editor/selection/DragOperation.tres")
-const plane_mesh = preload("res://editor/visualizers/3D/PlaneMesh.tres")
+const history = preload("res://editor/undo/UndoHistory.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
+const plane_mesh = preload("res://editor/visualizers/3D/PlaneMesh.tres")
+const operation = preload("res://editor/selection/DragOperation.tres")
+const selection = preload("res://editor/selection/ActiveSelection.tres")
 
 enum {
 	ALBEDO_MAP,
@@ -27,7 +28,8 @@ onready var heightmapshape_collision = $Plate/HeightMapShape
 onready var lights = $Lights
 onready var ambient_light = $WorldEnvironment
 onready var plane_size = plane_mesh.size
-var dragging = false
+var dragging: bool = false
+var dragged_height: bool = false
 
 func _ready() -> void:
 	update_plane_dimensions()
@@ -81,6 +83,7 @@ func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vec
 			stop_dragging()
 	elif event is InputEventMouseMotion:
 		if dragging and not selection.empty():
+			dragged_height = true
 			operation.amount = -event.relative.y * drag_height_speed
 			project.apply_operation_to(operation, selection)
 			emit_signal("drag_moved")
@@ -94,7 +97,10 @@ func start_dragging() -> void:
 	emit_signal("drag_started")
 
 func stop_dragging() -> void:
+	if dragged_height:
+		history.push_heightmapdata(project.height_data)
 	dragging = false
+	dragged_height =  false
 	emit_signal("drag_ended")
 
 func _on_Plate_mouse_exited() -> void:
