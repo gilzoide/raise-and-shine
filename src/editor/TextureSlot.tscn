@@ -6,35 +6,32 @@
 [ext_resource path="res://editor/visualizers/2D/ShowSelection_material.tres" type="Material" id=5]
 [ext_resource path="res://textures/Albedo_imagetexture.tres" type="Texture" id=6]
 
-[node name="TextureSlot" type="VBoxContainer"]
+[node name="TextureSlot" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 script = ExtResource( 1 )
+
+[node name="Title" type="MenuButton" parent="."]
+anchor_right = 1.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 32 )
+mouse_filter = 1
+size_flags_horizontal = 0
+size_flags_vertical = 0
+button_mask = 3
+text = "TITLE"
+flat = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="MenuButton" parent="."]
-margin_right = 1024.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 0, 32 )
-mouse_filter = 1
-button_mask = 3
-text = "TITLE"
-flat = false
-
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="Control" parent="."]
 material = ExtResource( 5 )
-margin_top = 36.0
-margin_right = 1024.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource( 6 )
-stretch_mode = 6
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 32.0
 script = ExtResource( 2 )
+texture = ExtResource( 6 )
 
 [node name="HeightDragSlider" parent="TextureRect" instance=ExtResource( 3 )]
 visible = false

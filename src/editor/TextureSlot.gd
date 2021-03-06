@@ -20,12 +20,14 @@ export(Resource) var drag_operation = preload("res://editor/selection/DragOperat
 
 onready var title_menu_button = $Title
 onready var menu_popup = title_menu_button.get_popup()
-onready var texture_rect: TextureRect = $TextureRect
+onready var texture_rect = $TextureRect
 onready var height_slider: Slider = $TextureRect/HeightDragSlider
 
 func _ready() -> void:
 	title_menu_button.text = MapTypes.map_name(type)
 	texture_rect.texture = MapTypes.map_texture(type)
+	project.connect("texture_updated", self, "_on_texture_updated")
+	
 	menu_popup.add_check_item("Filter texture", TOGGLE_FILTER)
 	update_filter_check_item()
 	menu_popup.add_separator()
@@ -42,6 +44,11 @@ func _on_menu_id_pressed(id: int) -> void:
 		project.load_image_dialog(type)
 	elif id == SAVE_IMAGE_AS:
 		project.save_image_dialog(type)
+
+func _on_texture_updated(type_: int, texture: Texture) -> void:
+	if type_ == type:
+		texture_rect.texture = texture
+		texture_rect.update()
 
 func update_filter_check_item() -> void:
 	menu_popup.set_item_checked(TOGGLE_FILTER, texture_rect.texture.flags & Texture.FLAG_FILTER)

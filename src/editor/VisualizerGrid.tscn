@@ -26,6 +26,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 150.0
 margin_bottom = 189.0
+size_flags_vertical = 3
 
 [node name="HeightMap" parent="MapsContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
@@ -33,6 +34,7 @@ anchor_bottom = 0.0
 margin_top = 205.0
 margin_right = 150.0
 margin_bottom = 394.0
+size_flags_vertical = 3
 type = 1
 
 [node name="NormalMap" parent="MapsContainer" instance=ExtResource( 1 )]
@@ -41,6 +43,7 @@ anchor_bottom = 0.0
 margin_top = 410.0
 margin_right = 150.0
 margin_bottom = 600.0
+size_flags_vertical = 3
 type = 2
 
 [node name="VisualizersContainer" type="Control" parent="."]

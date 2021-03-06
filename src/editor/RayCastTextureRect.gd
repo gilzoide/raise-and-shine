@@ -1,4 +1,5 @@
-extends TextureRect
+tool
+extends Control
 
 signal position_hovered(uv)
 signal drag_started()
@@ -8,6 +9,7 @@ signal mouse_exited_texture()
 
 const INVALID_UV = Vector2(-1, -1)
 
+export(Texture) var texture: Texture
 var last_uv: Vector2 = INVALID_UV
 var drawn_rect: Rect2
 var dragging = false
@@ -15,9 +17,13 @@ var dragging = false
 func _ready() -> void:
 	update_drawn_rect()
 
+func _draw() -> void:
+	update_drawn_rect()
+	draw_texture_rect(texture, drawn_rect, false)
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED:
-		update_drawn_rect()
+		update()
 	elif what == NOTIFICATION_MOUSE_EXIT:
 		stop_dragging()
 		emit_signal("mouse_exited_texture")
