@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://editor/visualizers/HeightDragSlider.gd" type="Script" id=1]
+
+[node name="HeightDragSlider" type="VSlider"]
+margin_right = 16.0
+margin_bottom = 128.0
+rect_pivot_offset = Vector2( 16, 64 )
+size_flags_vertical = 0
+max_value = 1.0
+step = 0.01
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

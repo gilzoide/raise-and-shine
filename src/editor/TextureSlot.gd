@@ -21,6 +21,7 @@ export(Resource) var drag_operation = preload("res://editor/selection/DragOperat
 onready var title_menu_button = $Title
 onready var menu_popup = title_menu_button.get_popup()
 onready var texture_rect: TextureRect = $TextureRect
+onready var height_slider: Slider = $TextureRect/HeightDragSlider
 
 func _ready() -> void:
 	title_menu_button.text = MapTypes.map_name(type)
@@ -51,7 +52,16 @@ func _on_TextureRect_position_hovered(uv) -> void:
 func _on_TextureRect_mouse_exited_texture() -> void:
 	selection.mouse_exited_hovering()
 
-func _on_TextureRect_mouse_drag(event) -> void:
+func _on_TextureRect_drag_started() -> void:
+	height_slider.show_at_position(get_global_mouse_position())
+	height_slider.value = selection.get_hover_position_height()
+	mouse_default_cursor_shape = Control.CURSOR_VSIZE
+
+func _on_TextureRect_drag_ended() -> void:
+	mouse_default_cursor_shape = Control.CURSOR_ARROW
+	height_slider.hide()
+
+func _on_TextureRect_drag_moved(event) -> void:
 	drag_operation.amount = -event.relative.y * drag_height_speed
 	project.apply_operation_to(drag_operation, selection)
-	
+	height_slider.value = selection.get_hover_position_height()

@@ -1,8 +1,10 @@
 extends TextureRect
 
 signal position_hovered(uv)
+signal drag_started()
+signal drag_moved(event)
+signal drag_ended()
 signal mouse_exited_texture()
-signal mouse_drag(event)
 
 const INVALID_UV = Vector2(-1, -1)
 
@@ -29,17 +31,17 @@ func _gui_input(event: InputEvent) -> void:
 			hover_over(event.position)
 	elif event is InputEventMouseMotion:
 		if dragging:
-			emit_signal("mouse_drag", event)
+			emit_signal("drag_moved", event)
 		else:
 			hover_over(event.position)
 
 func start_dragging() -> void:
 	dragging = true
-	mouse_default_cursor_shape = Control.CURSOR_VSIZE
+	emit_signal("drag_started")
 
 func stop_dragging() -> void:
 	dragging = false
-	mouse_default_cursor_shape = Control.CURSOR_ARROW
+	emit_signal("drag_ended")
 
 func hover_over(position: Vector2) -> void:
 	if drawn_rect.has_point(position):

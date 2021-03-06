@@ -1,6 +1,7 @@
 extends Spatial
 
 signal drag_started()
+signal drag_moved()
 signal drag_ended()
 
 const project = preload("res://editor/project/ActiveEditorProject.tres")
@@ -47,7 +48,7 @@ func update_plane_dimensions() -> void:
 	plane_material.set_shader_param("height_scale", height_scale)
 	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
 
-func update_heightmapshape_values(height_data) -> float:
+func update_heightmapshape_values(height_data: HeightMapData) -> float:
 	var height_scale = min(plane_size.x, plane_size.y) * 0.5
 	heightmapshape_collision.shape.map_data = height_data.scaled(height_scale)
 	return height_scale
@@ -61,14 +62,6 @@ func set_alpha_enabled(value: bool) -> void:
 
 func get_alpha_enabled() -> bool:
 	return plane_material.get_shader_param("use_alpha")
-
-func rotate_plate_mouse(amount: Vector2) -> void:
-	rotate_plate(amount, 0)
-
-func rotate_plate(amount: Vector2, clockwise: float) -> void:
-	plate.rotate_y(amount.x * plate_angular_speed)
-	plate.rotate_x(amount.y * plate_angular_speed)
-	plate.rotate_z(-clockwise * plate_angular_speed)
 
 func get_light_nodes() -> Array:
 	return lights.get_children()
@@ -90,6 +83,7 @@ func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vec
 		if dragging and not selection.empty():
 			operation.amount = -event.relative.y * drag_height_speed
 			project.apply_operation_to(operation, selection)
+			emit_signal("drag_moved")
 		else:
 			var local_click_position = plate.to_local(click_position)
 			var uv = Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)

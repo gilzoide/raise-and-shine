@@ -28,7 +28,7 @@ var image_to_save: Image
 var hovering = false
 
 func _ready() -> void:
-	get_tree().connect("files_dropped", self, "_on_files_dropped")
+	var _err = get_tree().connect("files_dropped", self, "_on_files_dropped")
 
 func try_load_image(on_success_method: FuncRef) -> void:
 	success_method = on_success_method
@@ -62,7 +62,7 @@ func _on_file_selected(path: String) -> void:
 		if res != OK:
 			image_save_error.popup_centered()
 
-func _on_files_dropped(files: PoolStringArray, screen: int) -> void:
+func _on_files_dropped(files: PoolStringArray, _screen: int) -> void:
 	if visible:
 		for f in files:
 			if f.ends_with(".png") or f.ends_with(".exr"):

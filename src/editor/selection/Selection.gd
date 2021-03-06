@@ -34,8 +34,8 @@ func empty() -> bool:
 func set_mouse_hovering_uv(uv: Vector2) -> void:
 	uv.x = clamp(uv.x, 0, 1)
 	uv.y = clamp(uv.y, 0, 1)
-	var position = (uv * project.height_image.get_size()).floor()
-	set_mouse_hovering(position)
+	last_hover_position = (uv * project.height_image.get_size()).floor()
+	set_mouse_hovering(last_hover_position)
 
 func set_mouse_hovering(position: Vector2) -> void:
 	selection_image.lock()
@@ -60,3 +60,6 @@ func clear_last_hover() -> void:
 
 func update_texture() -> void:
 	selection_texture.set_data(selection_image)
+
+func get_hover_position_height() -> float:
+	return project.height_data.get_value(last_hover_position.x, last_hover_position.y)
