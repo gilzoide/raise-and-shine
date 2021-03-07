@@ -18,7 +18,11 @@ func _init() -> void:
 	height_image.create(64, 64, false, HeightMapData.HEIGHT_IMAGE_FORMAT)
 	set_height_image(height_image)
 	history.set_heightmapdata(height_data)
-	history.connect("revision_changed", self, "set_height_image")
+	history.connect("revision_changed", self, "_on_revision_changed")
+
+func _on_revision_changed(data: HeightMapData) -> void:
+	data.fill_image(height_image)
+	set_height_image(height_image)
 
 func load_image_dialog(type: int) -> void:
 	var method = ""
@@ -49,6 +53,7 @@ func set_albedo_image(value: Image) -> void:
 
 func set_height_image(value: Image) -> void:
 	height_image.copy_from(value)
+	height_image.convert(HeightMapData.HEIGHT_IMAGE_FORMAT)
 	height_data.copy_from_image(height_image)
 	height_texture.create_from_image(height_image, height_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.HEIGHT_MAP, height_texture)

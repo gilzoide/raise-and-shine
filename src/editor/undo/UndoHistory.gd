@@ -23,10 +23,10 @@ func push_heightmapdata(data: HeightMapData) -> void:
 	current_revision = list.size() - 1
 
 func set_current_revision(id: int) -> void:
-	var img = get_revision(id)
-	if img != null:
+	var data = get_revision(id)
+	if data != null:
 		current_revision = id
-		emit_signal("revision_changed", img)
+		emit_signal("revision_changed", data)
 
 func apply_undo() -> void:
 	set_current_revision(current_revision - 1)
@@ -40,9 +40,9 @@ func can_undo() -> bool:
 func can_redo() -> bool:
 	return current_revision < list.size() - 1
 
-func get_revision(id: int) -> Image:
+func get_revision(id: int) -> HeightMapData:
 	if id >= 0 and id < list.size():
-		return list[id].create_image()
+		return list[id]
 	return null
 
 func is_current(id: int) -> bool:
