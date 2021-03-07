@@ -15,7 +15,8 @@ var height_data: HeightMapData = HeightMapData.new()
 
 func _init() -> void:
 	._init()
-	height_data.update_from_image(height_image)
+	height_image.create(64, 64, false, HeightMapData.HEIGHT_IMAGE_FORMAT)
+	set_height_image(height_image)
 	history.set_heightmapdata(height_data)
 	history.connect("revision_changed", self, "set_height_image")
 
@@ -43,25 +44,25 @@ func save_image_dialog(type: int) -> void:
 
 func set_albedo_image(value: Image) -> void:
 	albedo_image = value
-	albedo_texture.create_from_image(value, albedo_texture.flags)
+	albedo_texture.create_from_image(albedo_image, albedo_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.ALBEDO_MAP, albedo_texture)
 
 func set_height_image(value: Image) -> void:
 	height_image.copy_from(value)
-	height_data.update_from_image(height_image)
-	height_texture.create_from_image(value, height_texture.flags)
+	height_data.copy_from_image(height_image)
+	height_texture.create_from_image(height_image, height_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.HEIGHT_MAP, height_texture)
-	set_normal_image(HeightNormalConversion.new_normalmap_from_heightmap(height_image))
+	set_normal_image(HeightMapProcessing.new_normalmap_from_heightmap(height_image))
 
 func set_normal_image(value: Image) -> void:
-	normal_image = value
-	normal_texture.create_from_image(value, normal_texture.flags)
+	normal_image.copy_from(value)
+	normal_texture.create_from_image(normal_image, normal_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.NORMAL_MAP, normal_texture)
 
 func apply_operation_to(operation, selection) -> void:
-	operation.apply(height_image, selection.current_selected_coordinates)
-	height_data.update_from_image(height_image)
+	operation.apply(height_data, selection.current_selected_coordinates)
+	height_data.fill_image(height_image)
 	height_texture.set_data(height_image)
-	HeightNormalConversion.recalculate_normals(height_image, normal_image, selection.current_affected_coordinates)
+	HeightMapProcessing.recalculate_normals(height_image, normal_image, selection.current_affected_coordinates)
 	normal_texture.set_data(normal_image)
 	emit_signal("height_changed", height_data)

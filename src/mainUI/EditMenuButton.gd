@@ -40,7 +40,7 @@ func _on_history_menu_about_to_show() -> void:
 	history_submenu.clear()
 	for i in range(history.list.size()):
 		var id = history.list.size() - i - 1
-		var img = history.list[id]
+		var img = history.get_revision(id)
 		var tex = ImageTexture.new()
 		tex.create_from_image(img)
 		var caption = "*" if history.is_current(id) else ""

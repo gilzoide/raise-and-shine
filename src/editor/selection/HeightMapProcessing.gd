@@ -1,6 +1,6 @@
 extends Object
 
-class_name HeightNormalConversion
+class_name HeightMapProcessing
 
 static func new_normalmap_from_heightmap(heightmap: Image):
 	var normalmap = Image.new()
