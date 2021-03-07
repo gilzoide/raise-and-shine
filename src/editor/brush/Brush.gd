@@ -55,7 +55,7 @@ static func get_brush_direction_depth(normalized_delta: Vector2, ease_func: Func
 	return get_brush_depth(percent_from_highest, ease_func)
 
 static func get_brush_depth(percent_from_highest: float, ease_func: FuncRef) -> float:
-	return 1 - ease_func.call_func(percent_from_highest)
+	return 1 - ease_func.call_func(clamp(percent_from_highest, 0, 1))
 
 func easing_func(easing_: int) -> FuncRef:
 	if easing_ == Easing.FLAT:
