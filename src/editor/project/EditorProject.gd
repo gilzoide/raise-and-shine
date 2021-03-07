@@ -68,6 +68,6 @@ func apply_operation_to(operation, selection) -> void:
 	operation.apply(height_data, selection.current_selected_coordinates)
 	height_data.fill_image(height_image)
 	height_texture.set_data(height_image)
-	HeightMapProcessing.recalculate_normals(height_image, normal_image, selection.current_affected_coordinates)
+	HeightMapProcessing.recalculate_normals(height_data, normal_image, selection.current_affected_coordinates)
 	normal_texture.set_data(normal_image)
 	emit_signal("height_changed", height_data)
