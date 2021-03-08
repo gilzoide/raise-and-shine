@@ -15,36 +15,36 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 396.0
+margin_right = 408.0
 margin_bottom = 27.0
 
-[node name="Label" type="Label" parent="HBoxContainer"]
-margin_top = 3.0
-margin_right = 37.0
-margin_bottom = 17.0
+[node name="MenuButton" type="MenuButton" parent="HBoxContainer"]
+margin_right = 49.0
+margin_bottom = 20.0
 text = "Brush"
+switch_on_hover = true
 
 [node name="FormatPicker" type="OptionButton" parent="HBoxContainer"]
-margin_left = 41.0
-margin_right = 106.0
+margin_left = 53.0
+margin_right = 118.0
 margin_bottom = 20.0
 text = "Circle"
 script = ExtResource( 2 )
 
 [node name="EasingPicker" type="OptionButton" parent="HBoxContainer"]
-margin_left = 110.0
-margin_right = 162.0
+margin_left = 122.0
+margin_right = 174.0
 margin_bottom = 20.0
 text = "Flat"
 script = ExtResource( 2 )
 
 [node name="BrushDirectionPicker" parent="HBoxContainer" instance=ExtResource( 3 )]
-margin_left = 166.0
-margin_right = 237.0
+margin_left = 178.0
+margin_right = 249.0
 
 [node name="SizeSlider" type="HSlider" parent="HBoxContainer"]
-margin_left = 241.0
-margin_right = 369.0
+margin_left = 253.0
+margin_right = 381.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 128, 0 )
 size_flags_vertical = 3
@@ -54,9 +54,9 @@ value = 12.0
 rounded = true
 
 [node name="SizeLabel" type="Label" parent="HBoxContainer"]
-margin_left = 373.0
+margin_left = 385.0
 margin_top = 3.0
-margin_right = 389.0
+margin_right = 401.0
 margin_bottom = 17.0
 text = "12"
 [connection signal="item_selected" from="HBoxContainer/FormatPicker" to="." method="_on_FormatPicker_item_selected"]
