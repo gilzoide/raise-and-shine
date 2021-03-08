@@ -48,6 +48,7 @@ margin_left = 39.0
 margin_right = 75.0
 margin_bottom = 34.0
 text = "Edit"
+switch_on_hover = true
 script = ExtResource( 7 )
 
 [node name="ViewMenuButton" type="MenuButton" parent="MainPanel/MenuBar"]
