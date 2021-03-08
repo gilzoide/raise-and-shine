@@ -3,6 +3,7 @@ extends Control
 export(float) var speed: float = 1
 export(float) var faster_factor: float = 5
 export(float) var mouse_speed: float = 0.01
+export(float) var zoom_speed: float = 0.01
 export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
 
 onready var viewport: Viewport = $ViewportContainer/Viewport
@@ -10,6 +11,7 @@ onready var camera: Camera = $ViewportContainer/Viewport/Camera
 onready var height_slider = $HeightDragIndicator
 onready var camera_initial_transform: Transform = camera.transform
 var dragging: bool = false
+var current_zoom = 0
 
 func _ready() -> void:
 	var _err = PhotoBooth.connect("drag_started", self, "_on_height_drag_start")
@@ -17,9 +19,15 @@ func _ready() -> void:
 	_err = PhotoBooth.connect("drag_ended", self, "_on_height_drag_stop")
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed() and not event.is_echo() \
-			and (event.button_index == BUTTON_RIGHT or event.button_index == BUTTON_MIDDLE):
-		start_panning()
+	if event is InputEventMouseButton and event.is_pressed():
+		if event.button_index == BUTTON_RIGHT or event.button_index == BUTTON_MIDDLE:
+			start_panning()
+		elif event.button_index == BUTTON_WHEEL_UP:
+			var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
+			zoom_by(factor)
+		elif event.button_index == BUTTON_WHEEL_DOWN:
+			var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
+			zoom_by(-factor)
 	elif event is InputEventMouseButton and not event.is_pressed():
 		stop_panning()
 	if dragging and event is InputEventMouseMotion:
@@ -49,6 +57,13 @@ func start_panning() -> void:
 func stop_panning() -> void:
 	dragging = false
 
+func zoom_by(factor: float) -> void:
+	zoom_to(current_zoom + factor)
+
+func zoom_to(zoom: float) -> void:
+	current_zoom = clamp(zoom, 0, 1)
+	set_camera_zoom_percent(current_zoom)
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_MOUSE_EXIT:
 		stop_panning()
@@ -60,5 +75,9 @@ func _notification(what: int) -> void:
 func update_camera_with_pan(_pan: Vector2) -> void:
 	assert(false, "Implement me!!!")
 
+func set_camera_zoom_percent(_percent: float) -> void:
+	assert(false, "Implement me!!!")
+
 func reset_camera() -> void:
+	zoom_to(0)
 	camera.transform = camera_initial_transform

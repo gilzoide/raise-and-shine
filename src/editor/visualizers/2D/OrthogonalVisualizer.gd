@@ -1,5 +1,8 @@
 extends "res://editor/visualizers/VisualizerContainer.gd"
 
+export(float) var min_zoom_size: float = 150
+export(float) var max_zoom_size: float = 4
+
 func _process(delta: float) -> void:
 	if has_focus():
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * speed * delta
@@ -11,3 +14,6 @@ func _process(delta: float) -> void:
 
 func update_camera_with_pan(pan: Vector2) -> void:
 	camera.translate_object_local(Vector3(-pan.x, pan.y, 0))
+
+func set_camera_zoom_percent(percent: float) -> void:
+	camera.size = lerp(min_zoom_size, max_zoom_size, percent)
