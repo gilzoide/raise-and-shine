@@ -9,6 +9,7 @@ export(Resource) var selection = preload("res://editor/selection/ActiveSelection
 onready var viewport: Viewport = $ViewportContainer/Viewport
 onready var camera: Camera = $ViewportContainer/Viewport/Camera
 onready var height_slider = $HeightDragIndicator
+onready var zoom_slider = $ZoomSlider
 onready var camera_initial_transform: Transform = camera.transform
 var dragging: bool = false
 var current_zoom = 0
@@ -19,15 +20,14 @@ func _ready() -> void:
 	_err = PhotoBooth.connect("drag_ended", self, "_on_height_drag_stop")
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed():
-		if event.button_index == BUTTON_RIGHT or event.button_index == BUTTON_MIDDLE:
-			start_panning()
-		elif event.button_index == BUTTON_WHEEL_UP:
-			var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
-			zoom_by(factor)
-		elif event.button_index == BUTTON_WHEEL_DOWN:
-			var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
-			zoom_by(-factor)
+	if event.is_action_pressed("visualizer_zoom_up"):
+		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
+		zoom_by(factor)
+	elif event.is_action_pressed("visualizer_zoom_down"):
+		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
+		zoom_by(-factor)
+	elif event is InputEventMouseButton and event.is_pressed() and (event.button_index == BUTTON_RIGHT or event.button_index == BUTTON_MIDDLE):
+		start_panning()
 	elif event is InputEventMouseButton and not event.is_pressed():
 		stop_panning()
 	if dragging and event is InputEventMouseMotion:
@@ -61,6 +61,7 @@ func zoom_by(factor: float) -> void:
 	zoom_to(current_zoom + factor)
 
 func zoom_to(zoom: float) -> void:
+	zoom_slider.value = zoom
 	current_zoom = clamp(zoom, 0, 1)
 	set_camera_zoom_percent(current_zoom)
 
