@@ -20,6 +20,7 @@ func _init() -> void:
 	selection_texture.create_from_image(selection_image, selection_texture.flags)
 	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
 	project.connect("texture_updated", self, "_on_texture_updated")
+	brush.connect("parameter_changed", self, "_on_brush_parameter_changed")
 
 func _on_texture_updated(type: int, texture: Texture) -> void:
 	if type == MapTypes.Type.HEIGHT_MAP:
@@ -27,6 +28,9 @@ func _on_texture_updated(type: int, texture: Texture) -> void:
 		selection_image.resize(new_size.x, new_size.y, Image.INTERPOLATE_NEAREST)
 		selection_texture.create_from_image(selection_image, selection_texture.flags)
 		selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / new_size.x, 1.0 / new_size.y))
+
+func _on_brush_parameter_changed() -> void:
+	set_mouse_hovering(last_hover_position)
 
 func empty() -> bool:
 	return current_selected_coordinates.empty()

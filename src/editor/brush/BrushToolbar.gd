@@ -1,7 +1,5 @@
 extends PanelContainer
 
-signal brush_size_changed(value)
-
 enum {
 	INCREASE_SIZE,
 	INCREASE_SIZE_FASTER,
@@ -32,6 +30,7 @@ func _ready() -> void:
 	
 	format_picker.add_item("Circle", brush.Format.CIRCLE)
 	format_picker.add_item("Square", brush.Format.SQUARE)
+	format_picker.add_item("Rhombus", brush.Format.RHOMBUS)
 	format_picker.selected = brush.Format.CIRCLE
 	
 	easing_picker.add_item("Flat", brush.Easing.FLAT)
@@ -55,13 +54,15 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 
 func _on_FormatPicker_item_selected(index: int) -> void:
 	brush.format = index
+	brush.set_parameter_changed()
 
 func _on_EasingPicker_item_selected(index: int) -> void:
 	brush.easing = index
+	brush.set_parameter_changed()
 
 func _on_SizeSlider_value_changed(value: float) -> void:
 	brush.size = value
-	emit_signal("brush_size_changed", value)
+	brush.set_parameter_changed()
 	size_label.text = str(int(value))
 
 func increase_brush_size(factor: int = 1) -> void:
