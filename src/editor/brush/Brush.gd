@@ -23,8 +23,13 @@ export(int) var size: int = 8
 func get_coordinates(position: Vector2, bounds_size: Vector2) -> PoolVector3Array:
 	return get_brush_coordinates(position, bounds_size, size)
 
-func get_affected_coordinates(position: Vector2, bounds_size: Vector2) -> PoolVector3Array:
-	return get_brush_coordinates(position, bounds_size, size + 2)
+func get_affected_rect(position: Vector2, bounds_size: Vector2) -> Rect2:
+	return get_brush_rect(position, bounds_size, size + 2)
+
+func get_brush_rect(position: Vector2, bounds_size: Vector2, size_: float) -> Rect2:
+	var half_size = int(size_ * 0.5)
+	var bounds = Rect2(Vector2.ZERO, bounds_size)
+	return Rect2(position - Vector2(half_size, half_size), Vector2(size_, size_)).clip(bounds)
 
 func get_brush_coordinates(position: Vector2, bounds_size: Vector2, size_: float) -> PoolVector3Array:
 	var array = PoolVector3Array()

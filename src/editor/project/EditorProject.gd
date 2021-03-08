@@ -1,7 +1,7 @@
 extends Resource
 
 signal texture_updated(type, texture)
-signal height_changed()
+signal height_changed(data, rect)
 
 export(Image) var albedo_image: Image = MapTypes.ALBEDO_IMAGE
 export(Image) var height_image: Image = MapTypes.HEIGHT_IMAGE
@@ -68,6 +68,7 @@ func apply_operation_to(operation, selection) -> void:
 	operation.apply(height_data, selection.current_selected_coordinates)
 	height_data.fill_image(height_image)
 	height_texture.set_data(height_image)
-	HeightMapProcessing.recalculate_normals(height_data, normal_image, selection.current_affected_coordinates)
+	var changed_rect = selection.current_affected_rect
+	HeightMapProcessing.recalculate_normals(height_data, normal_image, changed_rect)
 	normal_texture.set_data(normal_image)
-	emit_signal("height_changed", height_data)
+	emit_signal("height_changed", height_data, changed_rect)

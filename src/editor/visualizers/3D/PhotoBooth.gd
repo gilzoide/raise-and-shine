@@ -55,7 +55,7 @@ func update_plane_dimensions() -> void:
 	plane_material.set_shader_param("height_scale", height_scale)
 	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
 
-func update_heightmapshape_values(height_data: HeightMapData) -> float:
+func update_heightmapshape_values(height_data: HeightMapData, _rect = null) -> float:
 	var height_scale = min(plane_size.x, plane_size.y) * 0.5
 	heightmapshape_collision.shape.map_data = height_data.scaled(height_scale)
 	return height_scale
