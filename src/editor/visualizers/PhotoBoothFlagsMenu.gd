@@ -6,6 +6,7 @@ enum {
 	TOGGLE_NORMAL,
 	TOGGLE_LIGHTS,
 	TOGGLE_ALPHA,
+	TOGGLE_NORMAL_VECTORS,
 	_SEPARATOR_2,
 	ALBEDO_FROM_ALBEDO,
 	ALBEDO_FROM_HEIGHT,
@@ -34,6 +35,9 @@ func _ready() -> void:
 	flags_menu_popup.add_check_item("Enable Alpha", TOGGLE_ALPHA)
 	flags_menu_popup.set_item_shortcut(TOGGLE_ALPHA, preload("res://shortcuts/TogglePlaneBackground_shortcut.tres"))
 	update_background_check_item()
+	flags_menu_popup.add_check_item("Enable Normal Vectors", TOGGLE_NORMAL_VECTORS)
+	flags_menu_popup.set_item_shortcut(TOGGLE_NORMAL_VECTORS, preload("res://shortcuts/TogglePlaneNormalVectors_shortcut.tres"))
+	update_normal_vectors_check_item()
 	flags_menu_popup.add_separator()
 	
 	flags_menu_popup.add_radio_check_item("Preview albedo map", ALBEDO_FROM_ALBEDO)
@@ -62,6 +66,9 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 	elif id == TOGGLE_ALPHA:
 		PhotoBooth.alpha_enabled = not PhotoBooth.alpha_enabled
 		update_background_check_item()
+	elif id == TOGGLE_NORMAL_VECTORS:
+		PhotoBooth.normal_vectors_enabled = not PhotoBooth.normal_vectors_enabled
+		update_normal_vectors_check_item()
 	elif id == ALBEDO_FROM_ALBEDO:
 		plane_material.set_shader_param("albedo_source", 0)
 		update_albedo_from_check_items()
@@ -86,6 +93,9 @@ func update_lights_check_item() -> void:
 
 func update_background_check_item() -> void:
 	flags_menu_popup.set_item_checked(TOGGLE_ALPHA, PhotoBooth.alpha_enabled)
+
+func update_normal_vectors_check_item() -> void:
+	flags_menu_popup.set_item_checked(TOGGLE_NORMAL_VECTORS, PhotoBooth.normal_vectors_enabled)
 
 func update_albedo_from_check_items() -> void:
 	var current = plane_material.get_shader_param("albedo_source")

@@ -32,6 +32,7 @@ physics_object_picking = true
 
 [node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150 )
+cull_mask = 1048573
 projection = 1
 current = true
 size = 150.0

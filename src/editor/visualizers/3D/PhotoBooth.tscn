@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/Environment.tres" type="Environment" id=1]
 [ext_resource path="res://editor/visualizers/3D/PlaneMesh.tres" type="PlaneMesh" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://editor/visualizers/LightPoint.tscn" type="PackedScene" id=4]
 [ext_resource path="res://editor/visualizers/3D/AmbientLightWorldEnvironment.gd" type="Script" id=5]
 [ext_resource path="res://editor/visualizers/3D/Plane_heightmapshape.tres" type="Shape" id=6]
+[ext_resource path="res://editor/visualizers/3D/NormalVectorsMultiMeshInstance.tscn" type="PackedScene" id=7]
 
 [node name="PhotoBooth" type="Spatial"]
 script = ExtResource( 3 )
@@ -17,6 +18,9 @@ input_capture_on_drag = true
 [node name="Model" type="MeshInstance" parent="Plate"]
 mesh = ExtResource( 2 )
 material/0 = null
+
+[node name="NormalVectorsMultiMeshInstance" parent="Plate/Model" instance=ExtResource( 7 )]
+visible = false
 
 [node name="HeightMapShape" type="CollisionShape" parent="Plate"]
 transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )

@@ -23,10 +23,12 @@ export(float) var plane_subdivide_scale = 2
 
 var alpha_enabled: bool setget set_alpha_enabled, get_alpha_enabled
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
+var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_vectors_enabled
 onready var plate = $Plate
 onready var heightmapshape_collision = $Plate/HeightMapShape
 onready var lights = $Lights
 onready var ambient_light = $WorldEnvironment
+onready var normal_vectors = $Plate/Model/NormalVectorsMultiMeshInstance
 onready var plane_size = plane_mesh.size
 var dragging: bool = false
 var dragged_height: bool = false
@@ -35,6 +37,8 @@ func _ready() -> void:
 	update_plane_dimensions()
 	var _err = project.connect("texture_updated", self, "_on_texture_updated")
 	_err = project.connect("height_changed", self, "update_heightmapshape_values")
+	normal_vectors.plane_size = plane_size
+	normal_vectors.update_all(project.normal_image, project.height_data)
 
 func update_plane_dimensions() -> void:
 	var height_map = project.height_image
@@ -47,6 +51,7 @@ func update_plane_dimensions() -> void:
 	heightmapshape_collision.scale.x = plane_size.x / (size.x - 1)
 	heightmapshape_collision.scale.z = plane_size.y / (size.y - 1)
 	var height_scale = update_heightmapshape_values(project.height_data)
+	normal_vectors.height_scale = height_scale
 	plane_material.set_shader_param("height_scale", height_scale)
 	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
 
@@ -74,6 +79,14 @@ func set_lights_enabled(value: bool) -> void:
 
 func get_lights_enabled() -> bool:
 	return lights.get_child(0).visible
+	
+func set_normal_vectors_enabled(value: bool) -> void:
+	normal_vectors.visible = value
+	if normal_vectors.visible:
+		normal_vectors.update_all(project.normal_image, project.height_data)
+
+func get_normal_vectors_enabled() -> bool:
+	return normal_vectors.visible
 
 func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.is_echo():
@@ -86,6 +99,8 @@ func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vec
 			dragged_height = true
 			operation.amount = -event.relative.y * drag_height_speed
 			project.apply_operation_to(operation, selection)
+			if normal_vectors.visible:
+				normal_vectors.update_all(project.normal_image, project.height_data)
 			emit_signal("drag_moved")
 		else:
 			var local_click_position = plate.to_local(click_position)

@@ -107,6 +107,15 @@ visualizer_reset={
  ]
 }
 
+[layer_names]
+
+3d_render/layer_1="General"
+3d_render/layer_2="NormalVectors"
+
+[node]
+
+name_num_separator=2
+
 [physics]
 
 3d/active_soft_world=false
