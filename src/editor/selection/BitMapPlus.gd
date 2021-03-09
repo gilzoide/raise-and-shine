@@ -7,9 +7,7 @@ const FALSE_COLOR = Color.black
 
 enum Format {
 	RECTANGLE,
-	RHOMBUS,
 	ELLIPSE,
-	CAPSULE,
 }
 
 func copy_from(bitmap: BitMap) -> void:
@@ -44,8 +42,6 @@ func create_format(size: Vector2, format: int) -> void:
 	create(size)
 	if format == Format.RECTANGLE:
 		set_bit_rect(Rect2(Vector2.ZERO, size), true)
-	elif format == Format.RHOMBUS:
-		pass
 	elif format == Format.ELLIPSE:
 		var half_size = size / 2
 		var squared_size_x = half_size.x * half_size.x
@@ -55,7 +51,5 @@ func create_format(size: Vector2, format: int) -> void:
 				var centered_x = x - half_size.x
 				var centered_y = y - half_size.y
 				set_bit(Vector2(x, y), (centered_x * centered_x) / squared_size_x + (centered_y * centered_y) / squared_size_y <= 1.0)
-	elif format == Format.CAPSULE:
-		pass
 	else:
 		assert(false, "FIXME!!!")

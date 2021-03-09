@@ -2,9 +2,7 @@ extends Resource
 
 enum DragOperation {
 	BRUSH_RECTANGLE,
-	BRUSH_RHOMBUS,
 	BRUSH_ELLIPSE,
-	BRUSH_CAPSULE,
 }
 
 const INVALID_POSITION = Vector2(-1, -1)
@@ -43,12 +41,8 @@ func empty() -> bool:
 func set_drag_operation_started(uv: Vector2) -> void:
 	if drag_operation == DragOperation.BRUSH_RECTANGLE:
 		brush.format = BitMapPlus.Format.RECTANGLE
-	elif drag_operation == DragOperation.BRUSH_RHOMBUS:
-		brush.format = BitMapPlus.Format.RHOMBUS
 	elif drag_operation == DragOperation.BRUSH_ELLIPSE:
 		brush.format = BitMapPlus.Format.ELLIPSE
-	elif drag_operation == DragOperation.BRUSH_CAPSULE:
-		brush.format = BitMapPlus.Format.CAPSULE
 	drag_start_position = uv_to_position(uv)
 
 func set_drag_operation_ended() -> void:

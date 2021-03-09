@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://editor/VisualizerGrid.tscn" type="PackedScene" id=2]
 [ext_resource path="res://mainUI/UI_theme.tres" type="Theme" id=3]
 [ext_resource path="res://editor/inspector/LightInspector.tscn" type="PackedScene" id=4]
-[ext_resource path="res://editor/operation/OperationToolbar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://editor/brush/BrushToolbar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://mainUI/EditMenuButton.gd" type="Script" id=7]
 [ext_resource path="res://mainUI/ViewMenuButton.gd" type="Script" id=10]
@@ -64,11 +63,6 @@ visualizer_grid_path = NodePath("../../WorkbenchPanel/HSplitContainer/Visualizer
 margin_left = 125.0
 margin_right = 129.0
 margin_bottom = 34.0
-
-[node name="OperationToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 5 )]
-visible = false
-margin_left = 93.0
-margin_right = 410.0
 
 [node name="BrushToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 6 )]
 margin_left = 133.0
