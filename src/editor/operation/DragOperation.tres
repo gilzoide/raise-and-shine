@@ -1,8 +1,10 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://editor/selection/HeightOperation.gd" type="Script" id=1]
+[ext_resource path="res://editor/operation/HeightOperation.gd" type="Script" id=1]
 
 [resource]
 script = ExtResource( 1 )
 type = 0
 amount = 0.1
+easing = 0
+direction = nan

@@ -16,7 +16,7 @@ export(Type) var type
 export(float) var drag_height_speed = 0.01
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
-export(Resource) var drag_operation = preload("res://editor/selection/DragOperation.tres")
+export(Resource) var drag_operation = preload("res://editor/operation/DragOperation.tres")
 export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 
 onready var title_menu_button = $Title
@@ -24,6 +24,7 @@ onready var menu_popup = title_menu_button.get_popup()
 onready var texture_rect = $TextureRect
 onready var height_slider = $TextureRect/HeightDragSlider
 var dragged_height = false
+var hover_uv: Vector2
 
 func _ready() -> void:
 	title_menu_button.text = MapTypes.map_name(type)
@@ -56,25 +57,32 @@ func update_filter_check_item() -> void:
 	menu_popup.set_item_checked(TOGGLE_FILTER, texture_rect.texture.flags & Texture.FLAG_FILTER)
 
 func _on_TextureRect_position_hovered(uv) -> void:
-	selection.set_mouse_hovering_uv(uv)
+	hover_uv = uv
 
 func _on_TextureRect_mouse_exited_texture() -> void:
 	selection.mouse_exited_hovering()
 
 func _on_TextureRect_drag_started() -> void:
-	height_slider.show_at_position(get_global_mouse_position())
-	height_slider.update_height(selection.get_hover_position_height())
-	mouse_default_cursor_shape = Control.CURSOR_VSIZE
+	selection.set_drag_operation_started(hover_uv)
+#	height_slider.show_at_position(get_global_mouse_position())
+#	height_slider.update_height(selection.get_hover_position_height())
+#	mouse_default_cursor_shape = Control.CURSOR_VSIZE
 
 func _on_TextureRect_drag_ended() -> void:
-	if dragged_height:
-		history.push_heightmapdata(project.height_data)
-	dragged_height = false
-	mouse_default_cursor_shape = Control.CURSOR_ARROW
-	height_slider.hide()
+	selection.set_drag_operation_ended()
+#	if dragged_height:
+#		history.push_heightmapdata(project.height_data)
+#	dragged_height = false
+#	mouse_default_cursor_shape = Control.CURSOR_ARROW
+#	height_slider.hide()
 
-func _on_TextureRect_drag_moved(event) -> void:
-	dragged_height = true
-	drag_operation.amount = -event.relative.y * drag_height_speed
-	project.apply_operation_to(drag_operation, selection)
-	height_slider.update_height(selection.get_hover_position_height())
+func _on_TextureRect_drag_moved(uv) -> void:
+	selection.set_drag_hovering_uv(uv)
+#	dragged_height = true
+#	drag_operation.amount = -event.relative.y * drag_height_speed
+#	project.apply_operation_to(drag_operation, selection)
+#	height_slider.update_height(selection.get_hover_position_height())
+
+
+func _on_TextureRect_mouse_entered_texture(uv: Vector2) -> void:
+	hover_uv = uv

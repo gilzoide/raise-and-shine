@@ -8,6 +8,7 @@ enum {
 }
 
 export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
+export(Resource) var operation = preload("res://editor/operation/DragOperation.tres")
 export(int) var faster_size_amount = 10
 
 onready var menu_button = $HBoxContainer/MenuButton
@@ -28,18 +29,18 @@ func _ready() -> void:
 	menu_popup.set_item_shortcut(DECREASE_SIZE_FASTER, preload("res://shortcuts/BrushSizeDecreaseFaster_shortcut.tres"))
 	menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
 	
-	format_picker.add_item("Circle", brush.Format.CIRCLE)
-	format_picker.add_item("Square", brush.Format.SQUARE)
-	format_picker.add_item("Rhombus", brush.Format.RHOMBUS)
-	format_picker.selected = brush.Format.CIRCLE
+#	format_picker.add_item("Circle", brush.Format.CIRCLE)
+#	format_picker.add_item("Square", brush.Format.SQUARE)
+#	format_picker.add_item("Rhombus", brush.Format.RHOMBUS)
+#	format_picker.selected = brush.Format.CIRCLE
 	
-	easing_picker.add_item("Flat", brush.Easing.FLAT)
-	easing_picker.add_item("Linear", brush.Easing.LINEAR)
-	easing_picker.add_item("Ease In", brush.Easing.EASE_IN)
-	easing_picker.add_item("Ease Out", brush.Easing.EASE_OUT)
-	easing_picker.add_item("Ease InOut", brush.Easing.EASE_INOUT)
-	easing_picker.add_item("Circular In", brush.Easing.CIRCULAR_IN)
-	easing_picker.add_item("Circular Out", brush.Easing.CIRCULAR_OUT)
+	easing_picker.add_item("Flat", operation.Easing.FLAT)
+	easing_picker.add_item("Linear", operation.Easing.LINEAR)
+	easing_picker.add_item("Ease In", operation.Easing.EASE_IN)
+	easing_picker.add_item("Ease Out", operation.Easing.EASE_OUT)
+	easing_picker.add_item("Ease InOut", operation.Easing.EASE_INOUT)
+	easing_picker.add_item("Circular In", operation.Easing.CIRCULAR_IN)
+	easing_picker.add_item("Circular Out", operation.Easing.CIRCULAR_OUT)
 	easing_picker.selected = 0
 
 func _on_menu_popup_id_pressed(id: int) -> void:
@@ -57,8 +58,7 @@ func _on_FormatPicker_item_selected(index: int) -> void:
 	brush.set_parameter_changed()
 
 func _on_EasingPicker_item_selected(index: int) -> void:
-	brush.easing = index
-	brush.set_parameter_changed()
+	operation.easing = index
 
 func _on_SizeSlider_value_changed(value: float) -> void:
 	brush.size = value

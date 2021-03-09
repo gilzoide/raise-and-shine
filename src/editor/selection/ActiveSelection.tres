@@ -12,3 +12,4 @@ selection_texture = ExtResource( 3 )
 selection_material = ExtResource( 5 )
 project = ExtResource( 1 )
 brush = ExtResource( 4 )
+drag_operation = 2

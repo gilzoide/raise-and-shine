@@ -2,7 +2,7 @@ extends HBoxContainer
 
 onready var operation_picker = $OperationPicker
 onready var amount_slider = $AmountSlider
-const operation = preload("res://editor/selection/ActiveOperation.tres")
+const operation = preload("res://editor/operation/ActiveOperation.tres")
 
 func _ready() -> void:
 	operation_picker.add_item("Increase by", operation.Operation.INCREASE_BY)

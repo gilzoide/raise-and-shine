@@ -1,5 +1,12 @@
 extends Resource
 
+enum DragOperation {
+	BRUSH_RECTANGLE,
+	BRUSH_RHOMBUS,
+	BRUSH_ELLIPSE,
+	BRUSH_CAPSULE,
+}
+
 const INVALID_POSITION = Vector2(-1, -1)
 const NOT_SELECTED_PIXEL = Color(0, 0, 0, 1)
 const SELECTED_PIXEL = Color(1, 0, 0, 1)
@@ -8,62 +15,62 @@ export(ImageTexture) var selection_texture: ImageTexture = preload("res://textur
 export(ShaderMaterial) var selection_material: ShaderMaterial = preload("res://editor/visualizers/2D/ShowSelection_material.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
+export(DragOperation) var drag_operation = DragOperation.BRUSH_RECTANGLE
 
 var selection_image: Image = Image.new()
-var last_hover_position: Vector2 = Vector2.ZERO
-var current_selected_coordinates: PoolVector3Array
-var current_affected_rect: Rect2
+var selection_bitmap: BitMapPlus = BitMapPlus.new()
+var selection_rect: Rect2 = Rect2()
+var drag_start_position: Vector2
 
 func _init() -> void:
-	var size = project.height_image.get_size()
-	selection_image.create(size.x, size.y, false, Image.FORMAT_L8)
-	selection_texture.create_from_image(selection_image, selection_texture.flags)
-	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
+	update_with_size(project.height_image)
 	project.connect("texture_updated", self, "_on_texture_updated")
-	brush.connect("parameter_changed", self, "_on_brush_parameter_changed")
 
 func _on_texture_updated(type: int, texture: Texture) -> void:
 	if type == MapTypes.Type.HEIGHT_MAP:
-		var new_size = texture.get_size()
-		selection_image.resize(new_size.x, new_size.y, Image.INTERPOLATE_NEAREST)
-		selection_texture.create_from_image(selection_image, selection_texture.flags)
-		selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / new_size.x, 1.0 / new_size.y))
+		update_with_size(texture)
 
-func _on_brush_parameter_changed() -> void:
-	set_mouse_hovering(last_hover_position)
+func update_with_size(image_or_texture) -> void:
+	var size: Vector2 = image_or_texture.get_size()
+	selection_bitmap.create(size)
+	selection_image = selection_bitmap.create_image()
+	selection_texture.create_from_image(selection_image, selection_texture.flags)
+	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
 
 func empty() -> bool:
-	return current_selected_coordinates.empty()
+	return selection_rect.has_no_area()
 
-func set_mouse_hovering_uv(uv: Vector2) -> void:
+func set_drag_operation_started(uv: Vector2) -> void:
+	if drag_operation == DragOperation.BRUSH_RECTANGLE:
+		brush.format = BitMapPlus.Format.RECTANGLE
+	elif drag_operation == DragOperation.BRUSH_RHOMBUS:
+		brush.format = BitMapPlus.Format.RHOMBUS
+	elif drag_operation == DragOperation.BRUSH_ELLIPSE:
+		brush.format = BitMapPlus.Format.ELLIPSE
+	elif drag_operation == DragOperation.BRUSH_CAPSULE:
+		brush.format = BitMapPlus.Format.CAPSULE
+	drag_start_position = uv_to_position(uv)
+
+func set_drag_operation_ended() -> void:
+	brush.blit_to_image(selection_image)
+
+func set_drag_hovering_uv(uv: Vector2) -> void:
+	var position = uv_to_position(uv)
+	var rect = Rect2(drag_start_position, Vector2.ONE).expand(position)
+	brush.set_rect(rect)
+	var ored_bitmap = BitMapPlus.new()
+	ored_bitmap.copy_from(selection_bitmap)
+	ored_bitmap.blend_or(brush.bitmap, rect.position)
+	ored_bitmap.blit_to_image(selection_image)
+	update_texture()
+
+func uv_to_position(uv: Vector2) -> Vector2:
 	uv.x = clamp(uv.x, 0, 1)
 	uv.y = clamp(uv.y, 0, 1)
-	last_hover_position = (uv * project.height_image.get_size()).floor()
-	set_mouse_hovering(last_hover_position)
-
-func set_mouse_hovering(position: Vector2) -> void:
-	selection_image.lock()
-	clear_last_hover()
-	current_selected_coordinates = brush.get_coordinates(position, selection_image.get_size())
-	current_affected_rect = brush.get_affected_rect(position, selection_image.get_size())
-	for c in current_selected_coordinates:
-		selection_image.set_pixel(c.x, c.y, SELECTED_PIXEL)
-	selection_image.unlock()
-	update_texture()
+	return (uv * project.height_image.get_size()).floor()
 
 func mouse_exited_hovering() -> void:
-	selection_image.lock()
-	clear_last_hover()
-	selection_image.unlock()
-	update_texture()
-
-func clear_last_hover() -> void:
-	for c in current_selected_coordinates:
-		selection_image.set_pixel(c.x, c.y, NOT_SELECTED_PIXEL)
-	current_selected_coordinates.resize(0)
+	pass
 
 func update_texture() -> void:
 	selection_texture.set_data(selection_image)
-
-func get_hover_position_height() -> float:
-	return project.height_data.get_value(last_hover_position.x, last_hover_position.y)

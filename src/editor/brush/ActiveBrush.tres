@@ -5,6 +5,4 @@
 [resource]
 script = ExtResource( 1 )
 format = 0
-easing = 0
-direction = nan
-size = 12
+rect = Rect2( 0, 0, 0, 0 )

@@ -8,7 +8,7 @@ const project = preload("res://editor/project/ActiveEditorProject.tres")
 const history = preload("res://editor/undo/UndoHistory.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
 const plane_mesh = preload("res://editor/visualizers/3D/PlaneMesh.tres")
-const operation = preload("res://editor/selection/DragOperation.tres")
+const operation = preload("res://editor/operation/DragOperation.tres")
 const selection = preload("res://editor/selection/ActiveSelection.tres")
 
 enum {
@@ -105,7 +105,7 @@ func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vec
 		else:
 			var local_click_position = plate.to_local(click_position)
 			var uv = Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
-			selection.set_mouse_hovering_uv(uv)
+#			selection.set_mouse_hovering_uv(uv)
 
 func start_dragging() -> void:
 	dragging = true

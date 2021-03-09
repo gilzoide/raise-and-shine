@@ -31,6 +31,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 32.0
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 texture = ExtResource( 6 )
 
 [node name="HeightDragSlider" parent="TextureRect" instance=ExtResource( 3 )]
@@ -38,5 +41,6 @@ visible = false
 [connection signal="drag_ended" from="TextureRect" to="." method="_on_TextureRect_drag_ended"]
 [connection signal="drag_moved" from="TextureRect" to="." method="_on_TextureRect_drag_moved"]
 [connection signal="drag_started" from="TextureRect" to="." method="_on_TextureRect_drag_started"]
+[connection signal="mouse_entered_texture" from="TextureRect" to="." method="_on_TextureRect_mouse_entered_texture"]
 [connection signal="mouse_exited_texture" from="TextureRect" to="." method="_on_TextureRect_mouse_exited_texture"]
 [connection signal="position_hovered" from="TextureRect" to="." method="_on_TextureRect_position_hovered"]

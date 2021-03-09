@@ -3,8 +3,9 @@ extends Control
 
 signal position_hovered(uv)
 signal drag_started()
-signal drag_moved(event)
+signal drag_moved(uv)
 signal drag_ended()
+signal mouse_entered_texture(uv)
 signal mouse_exited_texture()
 
 const INVALID_UV = Vector2(-1, -1)
@@ -37,7 +38,7 @@ func _gui_input(event: InputEvent) -> void:
 			hover_over(event.position)
 	elif event is InputEventMouseMotion:
 		if dragging:
-			emit_signal("drag_moved", event)
+			drag_over(event.position)
 		else:
 			hover_over(event.position)
 
@@ -51,12 +52,19 @@ func stop_dragging() -> void:
 
 func hover_over(position: Vector2) -> void:
 	if drawn_rect.has_point(position):
+		if last_uv.is_equal_approx(INVALID_UV):
+			emit_signal("mouse_entered_texture", last_uv)
 		last_uv = ((position - drawn_rect.position) / drawn_rect.size)
 		emit_signal("position_hovered", last_uv)
 	else:
 		if not last_uv.is_equal_approx(INVALID_UV):
 			emit_signal("mouse_exited_texture")
 		last_uv = INVALID_UV
+
+func drag_over(position: Vector2) -> void:
+	if drawn_rect.has_point(position):
+		last_uv = ((position - drawn_rect.position) / drawn_rect.size)
+		emit_signal("drag_moved", last_uv)
 
 func update_drawn_rect() -> void:
 	# Ref: https://github.com/godotengine/godot/blob/7961a1dea3e7ce8c4e7197a0000e35ab31e9ff2e/scene/gui/texture_rect.cpp#L66-L81

@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://editor/selection/OperationToolbar.gd" type="Script" id=1]
+[ext_resource path="res://editor/operation/OperationToolbar.gd" type="Script" id=1]
+
 
 [node name="PanelContainer" type="PanelContainer"]
 margin_right = 317.0
