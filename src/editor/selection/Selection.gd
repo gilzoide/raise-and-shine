@@ -82,9 +82,9 @@ func uv_to_position(uv: Vector2) -> Vector2:
 func mouse_exited_hovering() -> void:
 	pass
 
-func clear() -> void:
-	selection_bitmap.clear()
-	selection_image.fill(NOT_SELECTED_PIXEL)
+func clear(bit: bool = false) -> void:
+	selection_bitmap.clear(bit)
+	selection_image.fill(SELECTED_PIXEL if bit else NOT_SELECTED_PIXEL)
 	update_texture()
 
 func invert() -> void:
