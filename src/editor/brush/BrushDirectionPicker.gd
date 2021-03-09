@@ -3,7 +3,7 @@ extends Popup
 
 signal direction_changed(direction)
 
-export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
+export(Resource) var operation = preload("res://editor/operation/DragOperation.tres")
 
 export(Color) var border_color: Color = Color.white
 export(Color) var selection_color: Color = Color.red
@@ -13,7 +13,7 @@ export(float) var min_margin: float = 16
 export(int) var point_count: int = 32
 export(float) var wheel_radians_speed: float = 0.1
 
-var direction: float = NAN
+var direction: float = operation.RADIAL_DIRECTION
 var center: Vector2
 var radius: float
 var inner_radius: float
@@ -25,7 +25,7 @@ func _ready() -> void:
 func _draw() -> void:
 	draw_arc(center, inner_radius, 0, TAU, point_count, border_color, line_width)
 	draw_arc(center, radius, 0, TAU, point_count, border_color, line_width)
-	if is_nan(direction):
+	if operation.is_radial_direction(direction):
 		draw_circle(center, inner_radius * none_radius_percent, selection_color)
 	else:
 		var segment_direction = inner_radius * Vector2.RIGHT.rotated(direction)
@@ -37,7 +37,7 @@ func _notification(what: int) -> void:
 		update_size()
 		update()
 	elif what == NOTIFICATION_POST_POPUP:
-		direction = brush.direction
+		direction = operation.direction
 		update()
 	elif what == NOTIFICATION_POPUP_HIDE:
 		dragging = false
@@ -46,12 +46,12 @@ func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == BUTTON_WHEEL_DOWN:
-				if is_nan(direction):
+				if operation.is_radial_direction(direction):
 					set_direction(0)
 				else:
 					set_direction(direction + wheel_radians_speed)
 			elif event.button_index == BUTTON_WHEEL_UP:
-				if is_nan(direction):
+				if operation.is_radial_direction(direction):
 					set_direction(0)
 				else:
 					set_direction(direction - wheel_radians_speed)
@@ -68,7 +68,7 @@ func set_direction_from_position(position: Vector2) -> void:
 	var vec: Vector2 = position - center
 	var distance = vec.length()
 	if distance <= inner_radius:
-		set_direction(NAN)
+		set_direction(operation.RADIAL_DIRECTION)
 	elif distance <= radius:
 		set_direction(vec.angle())
 	dragging = true
@@ -80,6 +80,6 @@ func update_size() -> void:
 
 func set_direction(value: float) -> void:
 	direction = value
-	brush.direction = value
+	operation.direction = value
 	update()
 	emit_signal("direction_changed", value)

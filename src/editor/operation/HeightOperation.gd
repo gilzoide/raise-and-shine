@@ -26,6 +26,9 @@ export(float) var direction = RADIAL_DIRECTION
 func apply(heightmap: HeightMapData, coordinates: PoolVector3Array) -> void:
 	apply_to(heightmap, coordinates, type, amount)
 
+static func is_radial_direction(value: float) -> bool:
+	return is_nan(value)
+
 static func apply_to(heightmap: HeightMapData, coordinates: PoolVector3Array, type_: int, value: float) -> void:
 	if type_ == Operation.INCREASE_BY:
 		offset_by(heightmap, coordinates, value)
