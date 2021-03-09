@@ -13,12 +13,23 @@ enum Format {
 func copy_from(bitmap: BitMap) -> void:
 	data = bitmap.data
 
+func clear(bit: bool = false) -> void:
+	set_bit_rect(Rect2(Vector2.ZERO, get_size()), bit)
+
 func create_image() -> Image:
 	var image = Image.new()
 	var size = get_size()
 	image.create(size.x, size.y, false, Image.FORMAT_L8)
 	blit_to_image(image)
 	return image
+
+func blit(bitmap: BitMap, dst: Vector2 = Vector2.ZERO) -> void:
+	var self_size = get_size()
+	var bitmap_size = bitmap.get_size()
+	for x in min(self_size.x - dst.x, bitmap_size.x):
+		for y in min(self_size.y - dst.y, bitmap_size.y):
+			var dst_v = Vector2(x, y) + dst
+			set_bit(dst_v, bitmap.get_bit(dst_v))
 
 func blit_to_image(image: Image, dst: Vector2 = Vector2.ZERO) -> void:
 	var self_size = get_size()
@@ -29,7 +40,7 @@ func blit_to_image(image: Image, dst: Vector2 = Vector2.ZERO) -> void:
 			image.set_pixel(x, y, TRUE_COLOR if get_bit(Vector2(x, y)) else FALSE_COLOR)
 	image.unlock()
 
-func blend_or(bitmap: BitMap, dst: Vector2) -> void:
+func blend_sum(bitmap: BitMap, dst: Vector2) -> void:
 	var self_size = get_size()
 	var bitmap_size = bitmap.get_size()
 	for x in min(self_size.x - dst.x, bitmap_size.x):
@@ -37,6 +48,15 @@ func blend_or(bitmap: BitMap, dst: Vector2) -> void:
 			var v = Vector2(x, y)
 			var dst_v = dst + v
 			set_bit(dst_v, get_bit(dst_v) or bitmap.get_bit(v))
+
+func blend_difference(bitmap: BitMap, dst: Vector2) -> void:
+	var self_size = get_size()
+	var bitmap_size = bitmap.get_size()
+	for x in min(self_size.x - dst.x, bitmap_size.x):
+		for y in min(self_size.y - dst.y, bitmap_size.y):
+			var v = Vector2(x, y)
+			var dst_v = dst + v
+			set_bit(dst_v, get_bit(dst_v) and not bitmap.get_bit(v))
 
 func create_format(size: Vector2, format: int) -> void:
 	create(size)
