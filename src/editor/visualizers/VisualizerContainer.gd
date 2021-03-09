@@ -14,10 +14,10 @@ onready var camera_initial_transform: Transform = camera.transform
 var dragging: bool = false
 var current_zoom = 0
 
-func _ready() -> void:
-	var _err = PhotoBooth.connect("drag_started", self, "_on_height_drag_start")
-	_err = PhotoBooth.connect("drag_moved", self, "_on_height_drag_moved")
-	_err = PhotoBooth.connect("drag_ended", self, "_on_height_drag_stop")
+#func _ready() -> void:
+#	var _err = PhotoBooth.connect("drag_started", self, "_on_height_drag_start")
+#	_err = PhotoBooth.connect("drag_moved", self, "_on_height_drag_moved")
+#	_err = PhotoBooth.connect("drag_ended", self, "_on_height_drag_stop")
 
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("visualizer_zoom_up"):
@@ -41,10 +41,11 @@ func _gui_input(event: InputEvent) -> void:
 func _on_height_drag_start() -> void:
 	set_default_cursor_shape(Control.CURSOR_VSIZE)
 	height_slider.show_at_position(get_global_mouse_position())
-	height_slider.update_height(selection.get_hover_position_height())
+#	height_slider.update_height(selection.get_hover_position_height())
 
 func _on_height_drag_moved() -> void:
-	height_slider.update_height(selection.get_hover_position_height())
+#	height_slider.update_height(selection.get_hover_position_height())
+	pass
 
 func _on_height_drag_stop() -> void:
 	height_slider.visible = false

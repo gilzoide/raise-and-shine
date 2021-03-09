@@ -13,7 +13,6 @@ script = ExtResource( 3 )
 
 [node name="Plate" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
-input_capture_on_drag = true
 
 [node name="Model" type="MeshInstance" parent="Plate"]
 mesh = ExtResource( 2 )

@@ -91,24 +91,27 @@ func get_normal_vectors_enabled() -> bool:
 func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.is_echo():
 		if event.is_pressed():
-			start_dragging()
+			start_dragging(click_position_to_uv(click_position))
 		else:
 			stop_dragging()
 	elif event is InputEventMouseMotion:
-		if dragging and not selection.empty():
-			dragged_height = true
-			operation.amount = -event.relative.y * drag_height_speed
-			project.apply_operation_to(operation, selection)
-			if normal_vectors.visible:
-				normal_vectors.update_all(project.normal_image, project.height_data)
-			emit_signal("drag_moved")
-		else:
-			var local_click_position = plate.to_local(click_position)
-			var uv = Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
-#			selection.set_mouse_hovering_uv(uv)
+		if dragging:  # and not selection.empty():
+#			dragged_height = true
+#			operation.amount = -event.relative.y * drag_height_speed
+#			project.apply_operation_to(operation, selection)
+#			if normal_vectors.visible:
+#				normal_vectors.update_all(project.normal_image, project.height_data)
+#			emit_signal("drag_moved")
+#		else:
+			selection.set_drag_hovering_uv(click_position_to_uv(click_position))
 
-func start_dragging() -> void:
+func click_position_to_uv(click_position: Vector3) -> Vector2:
+	var local_click_position = plate.to_local(click_position)
+	return Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
+
+func start_dragging(uv: Vector2) -> void:
 	dragging = true
+	selection.set_drag_operation_started(uv)
 	emit_signal("drag_started")
 
 func stop_dragging() -> void:
@@ -116,8 +119,10 @@ func stop_dragging() -> void:
 		history.push_heightmapdata(project.height_data)
 	dragging = false
 	dragged_height =  false
+	selection.set_drag_operation_ended()
 	emit_signal("drag_ended")
 
 func _on_Plate_mouse_exited() -> void:
-	stop_dragging()
-	selection.mouse_exited_hovering()
+	pass
+#	stop_dragging()
+#	selection.mouse_exited_hovering()
