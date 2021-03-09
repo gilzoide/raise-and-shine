@@ -23,9 +23,10 @@ bool is_any_neighbour_selection(sampler2D tex, vec2 uv, vec2 uv_offset) {
 void fragment() {
 	vec4 texel = texture(TEXTURE, UV);
 	vec2 uv_offset = selection_texture_pixel_size * selection_pixel_width;
-	bool this_is_not_selection = texture(selection_map, UV).r < 0.5;
-	bool this_is_border = this_is_not_selection && is_any_neighbour_selection(selection_map, UV, uv_offset);
+	bool this_is_selection = texture(selection_map, UV).r > 0.5;
+	bool this_is_border = (!this_is_selection) && is_any_neighbour_selection(selection_map, UV, uv_offset);
 	vec4 selection_color = vec4(vec3(1) - texel.rgb, 1);
-	vec4 color = mix(texel, selection_color, float(this_is_border));
+	float selection_factor = float(this_is_selection) * 0.2 + float(this_is_border);
+	vec4 color = mix(texel, selection_color, selection_factor);
 	COLOR = color;
 }
