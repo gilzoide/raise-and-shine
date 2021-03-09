@@ -73,3 +73,10 @@ func create_format(size: Vector2, format: int) -> void:
 				set_bit(Vector2(x, y), (centered_x * centered_x) / squared_size_x + (centered_y * centered_y) / squared_size_y <= 1.0)
 	else:
 		assert(false, "FIXME!!!")
+
+func invert() -> void:
+	var size = get_size()
+	for x in size.x:
+		for y in size.y:
+			var v = Vector2(x, y)
+			set_bit(v, not get_bit(v))

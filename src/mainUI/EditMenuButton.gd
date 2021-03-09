@@ -4,10 +4,14 @@ enum {
 	UNDO,
 	REDO,
 	HISTORY,
+	_SEPARATOR_0,
+	SELECTION_CLEAR,
+	SELECTION_INVERT,
 }
 const HISTORY_SUBMENU_NAME = "HistoryPopupMenu"
 
 export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
+export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
 
 onready var menu_popup = get_popup()
 var history_submenu = PopupMenu.new()
@@ -23,6 +27,11 @@ func _ready() -> void:
 	menu_popup.add_item("Redo", REDO)
 	menu_popup.set_item_shortcut(REDO, preload("res://shortcuts/RedoShortcut.tres"))
 	menu_popup.add_submenu_item("History", HISTORY_SUBMENU_NAME, HISTORY)
+	menu_popup.add_separator()
+	menu_popup.add_item("Clear selection", SELECTION_CLEAR)
+	menu_popup.set_item_shortcut(SELECTION_CLEAR, preload("res://shortcuts/SelectionClear_shortcut.tres"))
+	menu_popup.add_item("Invert selection", SELECTION_INVERT)
+	menu_popup.set_item_shortcut(SELECTION_INVERT, preload("res://shortcuts/SelectionInvert_shortcut.tres"))
 	menu_popup.connect("about_to_show", self, "_on_menu_popup_about_to_show")
 	menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
 
@@ -31,6 +40,10 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		history.apply_undo()
 	elif id == REDO:
 		history.apply_redo()
+	elif id == SELECTION_CLEAR:
+		selection.clear()
+	elif id == SELECTION_INVERT:
+		selection.invert()
 
 func _on_menu_popup_about_to_show() -> void:
 	menu_popup.set_item_disabled(UNDO, not history.can_undo())

@@ -12,8 +12,8 @@ enum SelectionBehaviour {
 }
 
 const INVALID_POSITION = Vector2(-1, -1)
-const NOT_SELECTED_PIXEL = Color(0, 0, 0, 1)
-const SELECTED_PIXEL = Color(1, 0, 0, 1)
+const SELECTED_PIXEL = BitMapPlus.TRUE_COLOR
+const NOT_SELECTED_PIXEL = BitMapPlus.FALSE_COLOR
 
 export(ImageTexture) var selection_texture: ImageTexture = preload("res://textures/Selection_imagetexture.tres")
 export(ShaderMaterial) var selection_material: ShaderMaterial = preload("res://editor/visualizers/2D/ShowSelection_material.tres")
@@ -81,6 +81,16 @@ func uv_to_position(uv: Vector2) -> Vector2:
 
 func mouse_exited_hovering() -> void:
 	pass
+
+func clear() -> void:
+	selection_bitmap.clear()
+	selection_image.fill(NOT_SELECTED_PIXEL)
+	update_texture()
+
+func invert() -> void:
+	selection_bitmap.invert()
+	selection_bitmap.blit_to_image(selection_image)
+	update_texture()
 
 func update_texture() -> void:
 	selection_texture.set_data(selection_image)
