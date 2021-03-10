@@ -20,4 +20,4 @@ func _on_EasingPicker_item_selected(index: int) -> void:
 	operation.easing = index
 
 func _on_tool_button_pressed(op: int) -> void:
-	selection.drag_operation = op
+	selection.active_tool = op

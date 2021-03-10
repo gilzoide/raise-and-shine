@@ -18,7 +18,6 @@ enum {
 }
 
 export(float) var plate_angular_speed = 0.01
-export(float) var drag_height_speed = 0.01
 export(float) var plane_subdivide_scale = 2
 
 var alpha_enabled: bool setget set_alpha_enabled, get_alpha_enabled
@@ -94,16 +93,8 @@ func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vec
 			start_dragging(click_position_to_uv(click_position))
 		else:
 			stop_dragging()
-	elif event is InputEventMouseMotion:
-		if dragging:  # and not selection.empty():
-#			dragged_height = true
-#			operation.amount = -event.relative.y * drag_height_speed
-#			project.apply_operation_to(operation, selection)
-#			if normal_vectors.visible:
-#				normal_vectors.update_all(project.normal_image, project.height_data)
-#			emit_signal("drag_moved")
-#		else:
-			selection.set_drag_hovering_uv(click_position_to_uv(click_position))
+	elif dragging and event is InputEventMouseMotion:
+		selection.set_drag_hovering(event, click_position_to_uv(click_position))
 
 func click_position_to_uv(click_position: Vector3) -> Vector2:
 	var local_click_position = plate.to_local(click_position)
@@ -123,6 +114,5 @@ func stop_dragging() -> void:
 	emit_signal("drag_ended")
 
 func _on_Plate_mouse_exited() -> void:
-	pass
-#	stop_dragging()
+	stop_dragging()
 #	selection.mouse_exited_hovering()

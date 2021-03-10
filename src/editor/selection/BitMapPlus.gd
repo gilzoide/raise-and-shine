@@ -80,3 +80,18 @@ func invert() -> void:
 		for y in size.y:
 			var v = Vector2(x, y)
 			set_bit(v, not get_bit(v))
+
+func get_true_rect() -> Rect2:
+	var size = get_size()
+	var min_x = size.x
+	var min_y = size.y
+	var max_x = -1
+	var max_y = -1
+	for x in size.x:
+		for y in size.y:
+			if get_bit(Vector2(x, y)):
+				min_x = min(x, min_x)
+				min_y = min(y, min_y)
+				max_x = max(x, max_x)
+				max_y = max(y, max_y)
+	return Rect2(min_x, min_y, max_x - min_x + 1, max_y - min_y + 1)

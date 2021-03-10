@@ -64,11 +64,14 @@ func set_normal_image(value: Image) -> void:
 	normal_texture.create_from_image(normal_image, normal_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.NORMAL_MAP, normal_texture)
 
-func apply_operation_to(operation, selection) -> void:
-	operation.apply(height_data, selection.current_selected_coordinates)
+func apply_operation_to(operation, bitmap: BitMap, rect: Rect2) -> void:
+	operation.apply(height_data, bitmap, rect)
 	height_data.fill_image(height_image)
 	height_texture.set_data(height_image)
-	var changed_rect = selection.current_affected_rect
+	var changed_rect = rect.grow(1).clip(Rect2(Vector2.ZERO, height_data.size))
 	HeightMapProcessing.recalculate_normals(height_data, normal_image, changed_rect)
 	normal_texture.set_data(normal_image)
 	emit_signal("height_changed", height_data, changed_rect)
+
+func operation_ended() -> void:
+	history.push_heightmapdata(height_data)

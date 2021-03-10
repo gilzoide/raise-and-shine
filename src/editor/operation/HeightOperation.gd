@@ -23,30 +23,33 @@ export(float) var amount = 0.1
 export(Easing) var easing = Easing.FLAT
 export(float) var direction = RADIAL_DIRECTION
 
-func apply(heightmap: HeightMapData, coordinates: PoolVector3Array) -> void:
-	apply_to(heightmap, coordinates, type, amount)
+func apply(heightmap: HeightMapData, mask: BitMap, rect: Rect2) -> void:
+	offset_by(heightmap, mask, rect, amount)
+
+func offset_by(heightmap: HeightMapData, mask: BitMap, rect: Rect2, value: float) -> void:
+	var ease_func = easing_func(easing)
+	var half_size = rect.size * 0.5
+	var center = rect.position + half_size
+	for x in range(rect.position.x, rect.end.x):
+		for y in range(rect.position.y, rect.end.y):
+			var v = Vector2(x, y)
+			if mask.get_bit(v):
+				var height = heightmap.get_value(x, y)
+				var depth
+				if easing == Easing.FLAT:
+					depth = 1.0
+				else:
+					var normalized_delta = (v - center) / half_size
+					if is_radial_direction(direction):
+						depth = get_brush_depth(normalized_delta.length(), ease_func)
+					else:
+						depth = get_direction_depth(normalized_delta, ease_func, direction)
+				height = clamp(height + value * depth, 0, 1)
+				heightmap.set_value(x, y, height)
+
 
 static func is_radial_direction(value: float) -> bool:
 	return is_nan(value)
-
-static func apply_to(heightmap: HeightMapData, coordinates: PoolVector3Array, type_: int, value: float) -> void:
-	if type_ == Operation.INCREASE_BY:
-		offset_by(heightmap, coordinates, value)
-	elif type_ == Operation.DECREASE_BY:
-		offset_by(heightmap, coordinates, -value)
-	elif type_ == Operation.SET_VALUE:
-		set_height(heightmap, coordinates, value)
-
-static func offset_by(heightmap: HeightMapData, coordinates: PoolVector3Array, value: float) -> void:
-	for c in coordinates:
-		var height = heightmap.get_value(c.x, c.y)
-		height = clamp(height + value * c.z, 0, 1)
-		heightmap.set_value(c.x, c.y, height)
-
-static func set_height(heightmap: HeightMapData, coordinates: PoolVector3Array, value: float) -> void:
-	for c in coordinates:
-		var height = value * c.z
-		heightmap.set_value(c.x, c.y, height)
 
 static func get_direction_depth(normalized_delta: Vector2, ease_func: FuncRef, direction_: float) -> float:
 	var delta_factor = -cos(direction_ - normalized_delta.angle())

@@ -9,11 +9,11 @@ static func new_normalmap_from_heightmap(heightmap: Image) -> Image:
 	return normalmap
 
 static func recalculate_normals(heightmap: HeightMapData, normalmap: Image, rect: Rect2) -> void:
-	normalmap.lock()
 	var bounds = heightmap.size
 	var bump_scale = min(bounds.x, bounds.y)
-	for x in range(rect.position.x, rect.end.x + 1):
-		for y in range(rect.position.y, rect.end.y + 1):
+	normalmap.lock()
+	for x in range(rect.position.x, rect.end.x):
+		for y in range(rect.position.y, rect.end.y):
 			var here = heightmap.get_value(x, y)
 			var right = heightmap.get_value(x + 1, y) if x + 1 < bounds.x else here
 			var below = heightmap.get_value(x, y + 1) if y + 1 < bounds.y else here

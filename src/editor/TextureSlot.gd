@@ -76,8 +76,8 @@ func _on_TextureRect_drag_ended() -> void:
 #	mouse_default_cursor_shape = Control.CURSOR_ARROW
 #	height_slider.hide()
 
-func _on_TextureRect_drag_moved(uv) -> void:
-	selection.set_drag_hovering_uv(uv)
+func _on_TextureRect_drag_moved(event, uv) -> void:
+	selection.set_drag_hovering(event, uv)
 #	dragged_height = true
 #	drag_operation.amount = -event.relative.y * drag_height_speed
 #	project.apply_operation_to(drag_operation, selection)

@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://editor/brush/BrushToolbar.gd" type="Script" id=1]
 [ext_resource path="res://editor/brush/BrushDragOperation_buttongroup.tres" type="ButtonGroup" id=2]
 [ext_resource path="res://editor/brush/BrushDirectionPicker.tscn" type="PackedScene" id=3]
+[ext_resource path="res://shortcuts/SelectionToolHeight_shortcut.tres" type="ShortCut" id=4]
+[ext_resource path="res://shortcuts/SelectionToolRectangle_shortcut.tres" type="ShortCut" id=5]
+[ext_resource path="res://shortcuts/SelectionToolEllipse_shortcut.tres" type="ShortCut" id=6]
 
 [node name="BrushToolbar" type="PanelContainer"]
 margin_right = 277.0
@@ -15,7 +18,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 270.0
+margin_right = 328.0
 margin_bottom = 29.0
 
 [node name="Rectangle" type="ToolButton" parent="HBoxContainer"]
@@ -23,6 +26,7 @@ margin_right = 74.0
 margin_bottom = 22.0
 toggle_mode = true
 pressed = true
+shortcut = ExtResource( 5 )
 group = ExtResource( 2 )
 text = "Rectangle"
 
@@ -31,18 +35,30 @@ margin_left = 78.0
 margin_right = 132.0
 margin_bottom = 22.0
 toggle_mode = true
+shortcut = ExtResource( 6 )
 group = ExtResource( 2 )
 text = "Ellipse"
 
-[node name="EasingPicker" type="OptionButton" parent="HBoxContainer"]
+[node name="Height" type="ToolButton" parent="HBoxContainer"]
 margin_left = 136.0
-margin_right = 188.0
+margin_right = 190.0
+margin_bottom = 22.0
+toggle_mode = true
+shortcut = ExtResource( 4 )
+group = ExtResource( 2 )
+text = "Height"
+
+[node name="EasingPicker" type="OptionButton" parent="HBoxContainer"]
+margin_left = 194.0
+margin_right = 246.0
 margin_bottom = 22.0
 text = "Flat"
 
 [node name="BrushDirectionPickerButton" parent="HBoxContainer" instance=ExtResource( 3 )]
-margin_left = 192.0
-margin_right = 263.0
+margin_left = 250.0
+margin_right = 321.0
 margin_bottom = 22.0
 [connection signal="pressed" from="HBoxContainer/Rectangle" to="." method="_on_tool_button_pressed" binds= [ 0 ]]
 [connection signal="pressed" from="HBoxContainer/Ellipse" to="." method="_on_tool_button_pressed" binds= [ 1 ]]
+[connection signal="pressed" from="HBoxContainer/Height" to="." method="_on_tool_button_pressed" binds= [ 2 ]]
+[connection signal="item_selected" from="HBoxContainer/EasingPicker" to="." method="_on_EasingPicker_item_selected"]
