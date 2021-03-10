@@ -75,20 +75,29 @@ func set_drag_operation_ended() -> void:
 
 func set_drag_hovering(event: InputEventMouseMotion, uv: Vector2) -> void:
 	if active_tool == DragTool.HEIGHT_EDIT:
-		drag_operation.amount = -event.relative.y * drag_height_speed
-		project.apply_operation_to(drag_operation, selection_bitmap, selection_rect)
-		height_changed = true
+		drag_height_moved(event)
 	else:
-		var position = uv_to_position(uv)
-		var rect = Rect2(drag_start_position, Vector2.ONE).expand(position)
-		brush.set_rect(rect)
-		composed_bitmap.copy_from(selection_bitmap)
-		if selection_start_behaviour == SelectionBehaviour.DIFFERENCE:
-			composed_bitmap.blend_difference(brush.bitmap, rect.position)
-		else:
-			composed_bitmap.blend_sum(brush.bitmap, rect.position)
-		composed_bitmap.blit_to_image(selection_image)
-		update_texture()
+		drag_selection_moved(uv)
+
+func drag_height_moved(event: InputEventMouseMotion) -> void:
+	drag_operation.amount = -event.relative.y * drag_height_speed
+	project.apply_operation_to(drag_operation, selection_bitmap, selection_rect)
+	height_changed = true
+
+func drag_selection_moved(uv: Vector2) -> void:
+	var position = uv_to_position(uv)
+	var rect: Rect2 = Rect2(drag_start_position, Vector2.ONE).expand(position)
+	if Input.is_action_pressed("selection_center_modifier"):
+		var delta_pos = position - drag_start_position
+		rect = rect.expand(drag_start_position - delta_pos)
+	brush.set_rect(rect)
+	composed_bitmap.copy_from(selection_bitmap)
+	if selection_start_behaviour == SelectionBehaviour.DIFFERENCE:
+		composed_bitmap.blend_difference(brush.bitmap, rect.position)
+	else:
+		composed_bitmap.blend_sum(brush.bitmap, rect.position)
+	composed_bitmap.blit_to_image(selection_image)
+	update_texture()
 
 func uv_to_position(uv: Vector2) -> Vector2:
 	uv.x = clamp(uv.x, 0, 1)

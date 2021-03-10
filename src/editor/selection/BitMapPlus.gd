@@ -26,6 +26,8 @@ func create_image() -> Image:
 func blit(bitmap: BitMap, dst: Vector2 = Vector2.ZERO) -> void:
 	var self_size = get_size()
 	var bitmap_size = bitmap.get_size()
+	dst.x = max(dst.x, 0)
+	dst.y = max(dst.y, 0)
 	for x in min(self_size.x - dst.x, bitmap_size.x):
 		for y in min(self_size.y - dst.y, bitmap_size.y):
 			var dst_v = Vector2(x, y) + dst
@@ -34,6 +36,8 @@ func blit(bitmap: BitMap, dst: Vector2 = Vector2.ZERO) -> void:
 func blit_to_image(image: Image, dst: Vector2 = Vector2.ZERO) -> void:
 	var self_size = get_size()
 	var image_size = image.get_size()
+	dst.x = max(dst.x, 0)
+	dst.y = max(dst.y, 0)
 	image.lock()
 	for x in min(self_size.x - dst.x, image_size.x):
 		for y in min(self_size.y - dst.y, image_size.y):
@@ -43,6 +47,8 @@ func blit_to_image(image: Image, dst: Vector2 = Vector2.ZERO) -> void:
 func blend_sum(bitmap: BitMap, dst: Vector2) -> void:
 	var self_size = get_size()
 	var bitmap_size = bitmap.get_size()
+	dst.x = max(dst.x, 0)
+	dst.y = max(dst.y, 0)
 	for x in min(self_size.x - dst.x, bitmap_size.x):
 		for y in min(self_size.y - dst.y, bitmap_size.y):
 			var v = Vector2(x, y)
@@ -52,6 +58,8 @@ func blend_sum(bitmap: BitMap, dst: Vector2) -> void:
 func blend_difference(bitmap: BitMap, dst: Vector2) -> void:
 	var self_size = get_size()
 	var bitmap_size = bitmap.get_size()
+	dst.x = max(dst.x, 0)
+	dst.y = max(dst.y, 0)
 	for x in min(self_size.x - dst.x, bitmap_size.x):
 		for y in min(self_size.y - dst.y, bitmap_size.y):
 			var v = Vector2(x, y)
