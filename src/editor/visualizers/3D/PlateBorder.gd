@@ -1,7 +1,7 @@
 extends MeshInstance
 
 export(Resource) var settings = preload("res://settings/DefaultSettings.tres")
-export(float) var line_width := 2.0
+export(float) var line_width := 1.0
 
 func _ready() -> void:
 	update_color()
