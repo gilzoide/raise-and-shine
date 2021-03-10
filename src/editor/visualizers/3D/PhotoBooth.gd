@@ -1,7 +1,6 @@
 extends Spatial
 
 signal drag_started()
-signal drag_moved()
 signal drag_ended()
 
 const project = preload("res://editor/project/ActiveEditorProject.tres")
@@ -115,4 +114,3 @@ func stop_dragging() -> void:
 
 func _on_Plate_mouse_exited() -> void:
 	stop_dragging()
-#	selection.mouse_exited_hovering()

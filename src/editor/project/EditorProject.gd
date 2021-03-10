@@ -21,8 +21,11 @@ func _init() -> void:
 	history.connect("revision_changed", self, "_on_revision_changed")
 
 func _on_revision_changed(data: HeightMapData) -> void:
-	data.fill_image(height_image)
-	set_height_image(height_image)
+	height_data = data
+	height_data.fill_image(height_image)
+	height_texture.create_from_image(height_image, height_texture.flags)
+	height_data.fill_normalmap(normal_image)
+	normal_texture.create_from_image(normal_image, normal_texture.flags)
 
 func load_image_dialog(type: int) -> void:
 	var method = ""
