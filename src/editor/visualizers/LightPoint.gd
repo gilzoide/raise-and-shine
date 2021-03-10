@@ -3,7 +3,6 @@ extends CollisionObject
 signal color_changed(color)
 signal energy_changed(energy)
 
-export(float) var energy_wheel_step = 0.1
 export(float) var max_energy = 10
 onready var light = $SpotLight
 onready var sphere = $SphereMesh
@@ -16,10 +15,6 @@ func _input_event(camera: Object, event: InputEvent, _click_position: Vector3, _
 		elif event.button_index == BUTTON_RIGHT and event.is_pressed() and not event.is_echo():
 			var position = get_tree().root.get_viewport().get_mouse_position()
 			open_light_editor(position)
-		elif event.button_index == BUTTON_WHEEL_UP:
-			set_light_energy(get_light_energy() + energy_wheel_step)
-		elif event.button_index == BUTTON_WHEEL_DOWN:
-			set_light_energy(get_light_energy() - energy_wheel_step)
 	elif dragging and event is InputEventMouseMotion:
 		var position_in_xy = Plane.PLANE_XY.intersects_ray(
 			camera.project_ray_origin(event.position),
