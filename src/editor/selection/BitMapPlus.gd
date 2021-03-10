@@ -45,26 +45,24 @@ func blit_to_image(image: Image, dst: Vector2 = Vector2.ZERO) -> void:
 	image.unlock()
 
 func blend_sum(bitmap: BitMap, dst: Vector2) -> void:
-	var self_size = get_size()
 	var bitmap_size = bitmap.get_size()
-	dst.x = max(dst.x, 0)
-	dst.y = max(dst.y, 0)
-	for x in min(self_size.x - dst.x, bitmap_size.x):
-		for y in min(self_size.y - dst.y, bitmap_size.y):
+	var bounds = Rect2(Vector2.ZERO, get_size())
+	for x in bitmap_size.x:
+		for y in bitmap_size.y:
 			var v = Vector2(x, y)
 			var dst_v = dst + v
-			set_bit(dst_v, get_bit(dst_v) or bitmap.get_bit(v))
+			if bounds.has_point(dst_v):
+				set_bit(dst_v, get_bit(dst_v) or bitmap.get_bit(v))
 
 func blend_difference(bitmap: BitMap, dst: Vector2) -> void:
-	var self_size = get_size()
 	var bitmap_size = bitmap.get_size()
-	dst.x = max(dst.x, 0)
-	dst.y = max(dst.y, 0)
-	for x in min(self_size.x - dst.x, bitmap_size.x):
-		for y in min(self_size.y - dst.y, bitmap_size.y):
+	var bounds = Rect2(Vector2.ZERO, get_size())
+	for x in bitmap_size.x:
+		for y in bitmap_size.y:
 			var v = Vector2(x, y)
 			var dst_v = dst + v
-			set_bit(dst_v, get_bit(dst_v) and not bitmap.get_bit(v))
+			if bounds.has_point(dst_v):
+				set_bit(dst_v, get_bit(dst_v) and not bitmap.get_bit(v))
 
 func create_format(size: Vector2, format: int) -> void:
 	create(size)

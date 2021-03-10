@@ -107,8 +107,8 @@ func drag_selection_moved(uv: Vector2) -> void:
 	update_texture()
 
 func uv_to_position(uv: Vector2) -> Vector2:
-	uv.x = clamp(uv.x, 0, 1)
-	uv.y = clamp(uv.y, 0, 1)
+#	uv.x = clamp(uv.x, 0, 1)
+#	uv.y = clamp(uv.y, 0, 1)
 	return (uv * project.height_image.get_size()).floor()
 
 func mouse_exited_hovering() -> void:
