@@ -12,6 +12,7 @@ export(float) var none_radius_percent: float = 0.5
 export(float) var min_margin: float = 16
 export(int) var point_count: int = 32
 export(float) var wheel_radians_speed: float = 0.1
+export(float) var snap_angle = PI / 8.0
 
 var direction: float = operation.RADIAL_DIRECTION
 var center: Vector2
@@ -79,6 +80,8 @@ func update_size() -> void:
 	inner_radius = radius * 0.5
 
 func set_direction(value: float) -> void:
+	if Input.is_action_pressed("snap_modifier"):
+		value = stepify(value, snap_angle)
 	direction = value
 	operation.direction = value
 	update()
