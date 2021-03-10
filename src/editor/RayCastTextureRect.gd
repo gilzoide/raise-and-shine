@@ -5,8 +5,6 @@ signal position_hovered(uv)
 signal drag_started()
 signal drag_moved(event, uv)
 signal drag_ended()
-signal mouse_entered_texture(uv)
-signal mouse_exited_texture()
 
 const INVALID_UV = Vector2(-1, -1)
 
@@ -27,11 +25,10 @@ func _notification(what: int) -> void:
 		update()
 	elif what == NOTIFICATION_MOUSE_EXIT:
 		stop_dragging()
-		emit_signal("mouse_exited_texture")
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-		if event.is_pressed() and drawn_rect.has_point(event.position):
+		if event.is_pressed():
 			start_dragging()
 		else:
 			stop_dragging()
@@ -51,21 +48,14 @@ func stop_dragging() -> void:
 	emit_signal("drag_ended")
 
 func hover_over(position: Vector2) -> void:
-	if drawn_rect.has_point(position):
-		if last_uv.is_equal_approx(INVALID_UV):
-			emit_signal("mouse_entered_texture", last_uv)
-		last_uv = ((position - drawn_rect.position) / drawn_rect.size)
-		emit_signal("position_hovered", last_uv)
-	else:
-		if not last_uv.is_equal_approx(INVALID_UV):
-			emit_signal("mouse_exited_texture")
-		last_uv = INVALID_UV
+	last_uv = ((position - drawn_rect.position) / drawn_rect.size)
+	emit_signal("position_hovered", last_uv)
+	
 
 func drag_over(event: InputEvent) -> void:
 	var position = event.position
-	if drawn_rect.has_point(position):
-		last_uv = ((position - drawn_rect.position) / drawn_rect.size)
-		emit_signal("drag_moved", event, last_uv)
+	last_uv = ((position - drawn_rect.position) / drawn_rect.size)
+	emit_signal("drag_moved", event, last_uv)
 
 func update_drawn_rect() -> void:
 	# Ref: https://github.com/godotengine/godot/blob/7961a1dea3e7ce8c4e7197a0000e35ab31e9ff2e/scene/gui/texture_rect.cpp#L66-L81
