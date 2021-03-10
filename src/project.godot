@@ -20,11 +20,6 @@ _global_script_classes=[ {
 "path": "res://editor/project/HeightMapData.gd"
 }, {
 "base": "Object",
-"class": "HeightMapProcessing",
-"language": "GDScript",
-"path": "res://editor/operation/HeightMapProcessing.gd"
-}, {
-"base": "Object",
 "class": "MapTypes",
 "language": "GDScript",
 "path": "res://editor/project/MapTypes.gd"
@@ -32,7 +27,6 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "BitMapPlus": "",
 "HeightMapData": "",
-"HeightMapProcessing": "",
 "MapTypes": ""
 }
 

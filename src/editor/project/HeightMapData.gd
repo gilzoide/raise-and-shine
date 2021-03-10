@@ -49,3 +49,25 @@ func create_image() -> Image:
 
 func fill_image(image: Image) -> void:
 	image.create_from_data(int(size.x), int(size.y), false, HEIGHT_IMAGE_FORMAT, luminance_array)
+
+func create_normalmap() -> Image:
+	var normalmap = Image.new()
+	normalmap.create(size.x, size.y, false, Image.FORMAT_RGB8)
+	fill_normalmap(normalmap)
+	return normalmap
+
+func fill_normalmap(normalmap: Image, rect: Rect2 = Rect2(Vector2.ZERO, size)) -> void:
+	var bounds = size
+	var bump_scale = min(bounds.x, bounds.y)
+	normalmap.lock()
+	for x in range(rect.position.x, rect.end.x):
+		for y in range(rect.position.y, rect.end.y):
+			var here = get_value(x, y)
+			var right = get_value(x + 1, y) if x + 1 < bounds.x else here
+			var below = get_value(x, y + 1) if y + 1 < bounds.y else here
+			var up = Vector3(0, 1, (here - below) * bump_scale)
+			var across = Vector3(1, 0, (right - here) * bump_scale)
+			var normal = across.cross(up).normalized()
+			var normal_rgb = normal * 0.5 + Vector3(0.5, 0.5, 0.5)
+			normalmap.set_pixel(x, y, Color(normal_rgb.x, normal_rgb.y, normal_rgb.z, 1))
+	normalmap.unlock()

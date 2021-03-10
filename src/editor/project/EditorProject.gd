@@ -57,7 +57,7 @@ func set_height_image(value: Image) -> void:
 	height_data.copy_from_image(height_image)
 	height_texture.create_from_image(height_image, height_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.HEIGHT_MAP, height_texture)
-	set_normal_image(HeightMapProcessing.new_normalmap_from_heightmap(height_image))
+	set_normal_image(height_data.create_normalmap())
 
 func set_normal_image(value: Image) -> void:
 	normal_image.copy_from(value)
@@ -69,7 +69,7 @@ func apply_operation_to(operation, bitmap: BitMap, rect: Rect2) -> void:
 	height_data.fill_image(height_image)
 	height_texture.set_data(height_image)
 	var changed_rect = rect.grow(1).clip(Rect2(Vector2.ZERO, height_data.size))
-	HeightMapProcessing.recalculate_normals(height_data, normal_image, changed_rect)
+	height_data.fill_normalmap(normal_image, changed_rect)
 	normal_texture.set_data(normal_image)
 	emit_signal("height_changed", height_data, changed_rect)
 
