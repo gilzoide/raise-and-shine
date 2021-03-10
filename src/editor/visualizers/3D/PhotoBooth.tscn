@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/Environment.tres" type="Environment" id=1]
 [ext_resource path="res://editor/visualizers/3D/PlaneMesh.tres" type="PlaneMesh" id=2]
@@ -7,8 +7,12 @@
 [ext_resource path="res://editor/visualizers/3D/AmbientLightWorldEnvironment.gd" type="Script" id=5]
 [ext_resource path="res://editor/visualizers/3D/Plane_heightmapshape.tres" type="Shape" id=6]
 [ext_resource path="res://editor/visualizers/3D/NormalVectorsMultiMeshInstance.tscn" type="PackedScene" id=7]
+[ext_resource path="res://editor/visualizers/3D/PlateBorder.gd" type="Script" id=8]
+[ext_resource path="res://editor/visualizers/3D/PlateBorder_material.tres" type="Material" id=9]
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="ArrayMesh" id=2]
+
+[sub_resource type="BoxShape" id=3]
 extents = Vector3( 1024, 0.1, 1024 )
 
 [node name="PhotoBooth" type="Spatial"]
@@ -24,12 +28,17 @@ material/0 = null
 [node name="NormalVectorsMultiMeshInstance" parent="Plate/Model" instance=ExtResource( 7 )]
 visible = false
 
+[node name="Border" type="MeshInstance" parent="Plate"]
+material_override = ExtResource( 9 )
+mesh = SubResource( 2 )
+script = ExtResource( 8 )
+
 [node name="HeightMapShape" type="CollisionShape" parent="Plate"]
 transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
 shape = ExtResource( 6 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Plate"]
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="Lights" type="Spatial" parent="."]
 

@@ -23,6 +23,7 @@ var alpha_enabled: bool setget set_alpha_enabled, get_alpha_enabled
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_vectors_enabled
 onready var plate = $Plate
+onready var border = $Plate/Border
 onready var heightmapshape_collision = $Plate/HeightMapShape
 onready var lights = $Lights
 onready var ambient_light = $WorldEnvironment
@@ -37,6 +38,7 @@ func _ready() -> void:
 	_err = project.connect("height_changed", self, "update_heightmapshape_values")
 	normal_vectors.plane_size = plane_size
 	normal_vectors.update_all(project.normal_image, project.height_data)
+	border.setup_with_plane_size(plane_size)
 
 func update_plane_dimensions() -> void:
 	var height_map = project.height_image

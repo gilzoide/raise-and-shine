@@ -8,6 +8,7 @@ signal drag_ended()
 
 const INVALID_UV = Vector2(-1, -1)
 
+export(Resource) var settings = preload("res://settings/DefaultSettings.tres")
 export(Texture) var texture: Texture
 var last_uv: Vector2 = INVALID_UV
 var drawn_rect: Rect2
@@ -19,6 +20,7 @@ func _ready() -> void:
 func _draw() -> void:
 	update_drawn_rect()
 	draw_texture_rect(texture, drawn_rect, false)
+	draw_rect(drawn_rect, settings.background_color.inverted(), false)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED:
