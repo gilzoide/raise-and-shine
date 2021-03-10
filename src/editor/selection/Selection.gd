@@ -86,6 +86,13 @@ func drag_height_moved(event: InputEventMouseMotion) -> void:
 
 func drag_selection_moved(uv: Vector2) -> void:
 	var position = uv_to_position(uv)
+	if Input.is_action_pressed("snap_modifier"):
+		var delta_pos: Vector2 = position - drag_start_position
+		var abs_delta_pos = delta_pos.abs()
+		if abs_delta_pos.y > abs_delta_pos.x:
+			position.y -= sign(delta_pos.y) * (abs_delta_pos.y - abs_delta_pos.x)
+		elif abs_delta_pos.x > abs_delta_pos.y:
+			position.x -= sign(delta_pos.x) * (abs_delta_pos.x - abs_delta_pos.y)
 	var rect: Rect2 = Rect2(drag_start_position, Vector2.ONE).expand(position)
 	if Input.is_action_pressed("selection_center_modifier"):
 		var delta_pos = position - drag_start_position
