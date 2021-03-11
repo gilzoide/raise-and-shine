@@ -7,3 +7,7 @@ making it super easy to create normal maps.
 Made with [Godot](https://godotengine.org/), to be launched soon!
 
 ![Pixel art face sprite with a rounded height map](screenshots/rounded-face.gif)
+
+
+### Credits
+- P1_2 texture from Heayale Heale: https://github.com/Artars/HeayaleHeale
