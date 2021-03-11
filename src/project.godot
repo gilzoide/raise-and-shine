@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "BitMap",
-"class": "BitMapPlus",
-"language": "GDScript",
-"path": "res://editor/selection/BitMapPlus.gd"
-}, {
 "base": "Reference",
 "class": "HeightMapData",
 "language": "GDScript",
@@ -23,11 +18,16 @@ _global_script_classes=[ {
 "class": "MapTypes",
 "language": "GDScript",
 "path": "res://editor/project/MapTypes.gd"
+}, {
+"base": "BitMap",
+"class": "SelectionBitMap",
+"language": "GDScript",
+"path": "res://editor/selection/SelectionBitMap.gd"
 } ]
 _global_script_class_icons={
-"BitMapPlus": "",
 "HeightMapData": "",
-"MapTypes": ""
+"MapTypes": "",
+"SelectionBitMap": ""
 }
 
 [application]

@@ -17,8 +17,8 @@ enum SelectionBehaviour {
 }
 
 const INVALID_POSITION = Vector2(-1, -1)
-const SELECTED_PIXEL = BitMapPlus.TRUE_COLOR
-const NOT_SELECTED_PIXEL = BitMapPlus.FALSE_COLOR
+const SELECTED_PIXEL = SelectionBitMap.TRUE_COLOR
+const NOT_SELECTED_PIXEL = SelectionBitMap.FALSE_COLOR
 
 export(float) var drag_height_speed = 0.01
 export(ImageTexture) var selection_texture: ImageTexture = preload("res://textures/Selection_imagetexture.tres")
@@ -30,8 +30,8 @@ export(DragTool) var active_tool := DragTool.BRUSH_RECTANGLE
 
 var selection_start_behaviour = SelectionBehaviour.UNION
 var selection_image: Image = Image.new()
-var selection_bitmap: BitMapPlus = BitMapPlus.new()
-var composed_bitmap: BitMapPlus = BitMapPlus.new()
+var selection_bitmap: SelectionBitMap = SelectionBitMap.new()
+var composed_bitmap: SelectionBitMap = SelectionBitMap.new()
 var selection_rect: Rect2 = Rect2()
 var drag_start_position: Vector2
 var height_changed = false
@@ -58,11 +58,11 @@ func update_with_size(image_or_texture) -> void:
 
 func set_drag_operation_started(button_index: int, uv: Vector2) -> void:
 	if active_tool == DragTool.BRUSH_RECTANGLE:
-		brush.format = BitMapPlus.Format.RECTANGLE
+		brush.format = SelectionBitMap.Format.RECTANGLE
 	elif active_tool == DragTool.BRUSH_ELLIPSE:
-		brush.format = BitMapPlus.Format.ELLIPSE
+		brush.format = SelectionBitMap.Format.ELLIPSE
 	elif active_tool == DragTool.BRUSH_LINE:
-		brush.format = BitMapPlus.Format.LINE
+		brush.format = SelectionBitMap.Format.LINE
 	elif active_tool == DragTool.HEIGHT_EDIT:
 		selection_rect = selection_bitmap.get_true_rect()
 		return

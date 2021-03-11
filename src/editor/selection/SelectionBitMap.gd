@@ -2,7 +2,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
-class_name BitMapPlus
+class_name SelectionBitMap
 
 extends BitMap
 
@@ -32,7 +32,7 @@ func create_image() -> Image:
 	return image
 
 
-func blit(bitmap: BitMap, dst: Vector2 = Vector2.ZERO) -> void:
+func blit(bitmap: BitMap, dst := Vector2.ZERO) -> void:
 	var self_size = get_size()
 	var bitmap_size = bitmap.get_size()
 	dst.x = max(dst.x, 0)
@@ -43,7 +43,7 @@ func blit(bitmap: BitMap, dst: Vector2 = Vector2.ZERO) -> void:
 			set_bit(dst_v, bitmap.get_bit(dst_v))
 
 
-func blit_to_image(image: Image, dst: Vector2 = Vector2.ZERO) -> void:
+func blit_to_image(image: Image, dst := Vector2.ZERO) -> void:
 	var self_size = get_size()
 	var image_size = image.get_size()
 	dst.x = max(dst.x, 0)

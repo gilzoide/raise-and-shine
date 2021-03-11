@@ -4,9 +4,9 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Resource
 
-export(BitMapPlus.Format) var format = BitMapPlus.Format.RECTANGLE
+export(SelectionBitMap.Format) var format = SelectionBitMap.Format.RECTANGLE
 export(Rect2) var rect = Rect2()
-var bitmap: BitMapPlus = BitMapPlus.new()
+var bitmap: SelectionBitMap = SelectionBitMap.new()
 
 
 func set_rect(r: Rect2, line_direction: float) -> void:

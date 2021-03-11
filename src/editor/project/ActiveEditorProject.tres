@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=9 format=2]
 
-[ext_resource path="res://editor/project/EditorProject.gd" type="Script" id=1]
+[ext_resource path="res://editor/project/Project.gd" type="Script" id=1]
 [ext_resource path="res://textures/Albedo_imagetexture.tres" type="Texture" id=2]
 [ext_resource path="res://textures/Height_imagetexture.tres" type="Texture" id=3]
 [ext_resource path="res://textures/Normal_imagetexture.tres" type="Texture" id=4]
