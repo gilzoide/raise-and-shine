@@ -1,3 +1,7 @@
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Resource
 
 signal texture_updated(type, texture)
@@ -13,6 +17,7 @@ export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 
 var height_data: HeightMapData = HeightMapData.new()
 
+
 func _init() -> void:
 	._init()
 	height_image.create(64, 64, false, HeightMapData.HEIGHT_IMAGE_FORMAT)
@@ -20,12 +25,14 @@ func _init() -> void:
 	history.set_heightmapdata(height_data)
 	history.connect("revision_changed", self, "_on_revision_changed")
 
+
 func _on_revision_changed(data: HeightMapData) -> void:
 	height_data = data
 	height_data.fill_image(height_image)
 	height_texture.create_from_image(height_image, height_texture.flags)
 	height_data.fill_normalmap(normal_image)
 	normal_texture.create_from_image(normal_image, normal_texture.flags)
+
 
 func load_image_dialog(type: int) -> void:
 	var method = ""
@@ -38,6 +45,7 @@ func load_image_dialog(type: int) -> void:
 	assert(method != "", "Invalid map type %d" % type)
 	ImageFileDialog.try_load_image(funcref(self, method))
 
+
 func save_image_dialog(type: int) -> void:
 	var image: Image = null
 	if type == MapTypes.Type.ALBEDO_MAP:
@@ -49,10 +57,12 @@ func save_image_dialog(type: int) -> void:
 	assert(image != null, "Invalid map type %d" % type)
 	ImageFileDialog.try_save_image(image)
 
+
 func set_albedo_image(value: Image) -> void:
 	albedo_image = value
 	albedo_texture.create_from_image(albedo_image, albedo_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.ALBEDO_MAP, albedo_texture)
+
 
 func set_height_image(value: Image) -> void:
 	height_image.copy_from(value)
@@ -62,10 +72,12 @@ func set_height_image(value: Image) -> void:
 	emit_signal("texture_updated", MapTypes.Type.HEIGHT_MAP, height_texture)
 	set_normal_image(height_data.create_normalmap())
 
+
 func set_normal_image(value: Image) -> void:
 	normal_image.copy_from(value)
 	normal_texture.create_from_image(normal_image, normal_texture.flags)
 	emit_signal("texture_updated", MapTypes.Type.NORMAL_MAP, normal_texture)
+
 
 func apply_operation_to(operation, bitmap: BitMap, rect: Rect2) -> void:
 	operation.apply(height_data, bitmap, rect)
@@ -75,6 +87,7 @@ func apply_operation_to(operation, bitmap: BitMap, rect: Rect2) -> void:
 	height_data.fill_normalmap(normal_image, changed_rect)
 	normal_texture.set_data(normal_image)
 	emit_signal("height_changed", height_data, changed_rect)
+
 
 func operation_ended() -> void:
 	history.push_heightmapdata(height_data)

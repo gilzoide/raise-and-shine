@@ -1,8 +1,13 @@
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends MultiMeshInstance
 
 export(float) var vector_height: float = 5
 var plane_size: Vector2
 var height_scale: float
+
 
 func _ready() -> void:
 	var vertices = PoolVector3Array()
@@ -13,10 +18,12 @@ func _ready() -> void:
 	arrays[ArrayMesh.ARRAY_VERTEX] = vertices
 	multimesh.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINES, arrays)
 
+
 func update_all(normalmap: Image, heightmap: HeightMapData) -> void:
 	var size = normalmap.get_size()
 	multimesh.instance_count = int(size.x * size.y)
 	update_rect(normalmap, heightmap, Rect2(Vector2.ZERO, size))
+
 
 func update_rect(normalmap: Image, heightmap: HeightMapData, rect: Rect2) -> void:
 	var stride = rect.size.x

@@ -1,3 +1,7 @@
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends HSplitContainer
 
 export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
@@ -12,6 +16,7 @@ onready var orthogonal_editor = $VisualizersContainer/Split/OrthogonalVisualizer
 onready var perspective_editor = $VisualizersContainer/Split/PerspectiveVisualizer
 
 var _dragging := false
+
 
 func _ready() -> void:
 	var _err

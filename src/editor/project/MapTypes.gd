@@ -1,6 +1,10 @@
-extends Object
-
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 class_name MapTypes
+
+extends Object
 
 enum Type {
 	ALBEDO_MAP,
@@ -16,6 +20,7 @@ const ALBEDO_TEXTURE = preload("res://textures/Albedo_imagetexture.tres")
 const HEIGHT_TEXTURE = preload("res://textures/Height_imagetexture.tres")
 const NORMAL_TEXTURE = preload("res://textures/Normal_imagetexture.tres")
 
+
 static func map_name(type: int) -> String:
 	if type == Type.ALBEDO_MAP:
 		return "Albedo"
@@ -26,6 +31,7 @@ static func map_name(type: int) -> String:
 	else:
 		assert(false, "Unknown map type %d" % type)
 		return ""
+
 
 static func map_texture(type: int) -> Texture:
 	if type == Type.ALBEDO_MAP:

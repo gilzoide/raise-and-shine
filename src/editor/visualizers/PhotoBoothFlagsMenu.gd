@@ -1,3 +1,7 @@
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends MenuButton
 
 enum {
@@ -16,6 +20,7 @@ enum {
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
 
 onready var flags_menu_popup = get_popup()
+
 
 func _ready() -> void:
 	flags_menu_popup.hide_on_checkable_item_selection = false
@@ -50,6 +55,7 @@ func _ready() -> void:
 	
 	var _err = flags_menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
 
+
 func _on_menu_popup_id_pressed(id: int) -> void:
 	if id == TOGGLE_ALBEDO:
 		plane_material.set_shader_param("use_albedo", not plane_material.get_shader_param("use_albedo"))
@@ -79,23 +85,30 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		plane_material.set_shader_param("albedo_source", 2)
 		update_albedo_from_check_items()
 
+
 func update_albedo_check_item() -> void:
 	flags_menu_popup.set_item_checked(TOGGLE_ALBEDO, plane_material.get_shader_param("use_albedo"))
+
 
 func update_height_check_item() -> void:
 	flags_menu_popup.set_item_checked(TOGGLE_HEIGHT, plane_material.get_shader_param("use_height"))
 
+
 func update_normal_check_item() -> void:
 	flags_menu_popup.set_item_checked(TOGGLE_NORMAL, plane_material.get_shader_param("use_normal"))
+
 
 func update_lights_check_item() -> void:
 	flags_menu_popup.set_item_checked(TOGGLE_LIGHTS, PhotoBooth.lights_enabled)
 
+
 func update_background_check_item() -> void:
 	flags_menu_popup.set_item_checked(TOGGLE_ALPHA, PhotoBooth.alpha_enabled)
 
+
 func update_normal_vectors_check_item() -> void:
 	flags_menu_popup.set_item_checked(TOGGLE_NORMAL_VECTORS, PhotoBooth.normal_vectors_enabled)
+
 
 func update_albedo_from_check_items() -> void:
 	var current = plane_material.get_shader_param("albedo_source")

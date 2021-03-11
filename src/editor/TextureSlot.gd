@@ -1,3 +1,7 @@
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Control
 
 signal drag_started(button_index, uv)
@@ -27,6 +31,7 @@ onready var title_menu_button = $Title
 onready var menu_popup = title_menu_button.get_popup()
 onready var texture_rect = $TextureRect
 
+
 func _ready() -> void:
 	title_menu_button.text = MapTypes.map_name(type)
 	texture_rect.texture = MapTypes.map_texture(type)
@@ -40,6 +45,7 @@ func _ready() -> void:
 	menu_popup.hide_on_checkable_item_selection = false
 	menu_popup.connect("id_pressed", self, "_on_menu_id_pressed")
 
+
 func _on_menu_id_pressed(id: int) -> void:
 	if id == TOGGLE_FILTER:
 		texture_rect.texture.flags ^= Texture.FLAG_FILTER
@@ -49,19 +55,24 @@ func _on_menu_id_pressed(id: int) -> void:
 	elif id == SAVE_IMAGE_AS:
 		project.save_image_dialog(type)
 
+
 func _on_texture_updated(type_: int, texture: Texture) -> void:
 	if type_ == type:
 		texture_rect.texture = texture
 		texture_rect.update()
 
+
 func update_filter_check_item() -> void:
 	menu_popup.set_item_checked(TOGGLE_FILTER, texture_rect.texture.flags & Texture.FLAG_FILTER)
+
 
 func _on_TextureRect_drag_started(button_index: int, uv: Vector2) -> void:
 	emit_signal("drag_started", button_index, uv)
 
+
 func _on_TextureRect_drag_ended() -> void:
 	emit_signal("drag_ended")
+
 
 func _on_TextureRect_drag_moved(relative_motion: Vector2, uv: Vector2) -> void:
 	emit_signal("drag_moved", relative_motion, uv)

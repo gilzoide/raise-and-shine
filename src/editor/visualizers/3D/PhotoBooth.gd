@@ -1,3 +1,7 @@
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Spatial
 
 signal drag_started(button_index, uv)
@@ -31,6 +35,7 @@ onready var ambient_light = $WorldEnvironment
 onready var normal_vectors = $Plate/Model/NormalVectorsMultiMeshInstance
 onready var plane_size = plane_mesh.size
 
+
 func _ready() -> void:
 	update_plane_dimensions()
 	var _err = project.connect("texture_updated", self, "_on_texture_updated")
@@ -38,6 +43,7 @@ func _ready() -> void:
 	normal_vectors.plane_size = plane_size
 	normal_vectors.update_all(project.normal_image, project.height_data)
 	border.setup_with_plane_size(plane_size)
+
 
 func update_plane_dimensions() -> void:
 	var height_map = project.height_image
@@ -54,38 +60,48 @@ func update_plane_dimensions() -> void:
 	plane_material.set_shader_param("height_scale", height_scale)
 	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
 
+
 func update_heightmapshape_values(height_data: HeightMapData, _rect = null) -> float:
 	var height_scale = min(plane_size.x, plane_size.y) * 0.5
 	heightmapshape_collision.shape.map_data = height_data.scaled(height_scale)
 	return height_scale
 
+
 func _on_texture_updated(type: int, _texture: Texture) -> void:
 	if type == HEIGHT_MAP:
 		update_plane_dimensions()
 
+
 func set_alpha_enabled(value: bool) -> void:
 	plane_material.set_shader_param("use_alpha", value)
+
 
 func get_alpha_enabled() -> bool:
 	return plane_material.get_shader_param("use_alpha")
 
+
 func get_light_nodes() -> Array:
 	return lights.get_children()
+
 
 func set_lights_enabled(value: bool) -> void:
 	for c in lights.get_children():
 		c.visible = value
 
+
 func get_lights_enabled() -> bool:
 	return lights.get_child(0).visible
-	
+
+
 func set_normal_vectors_enabled(value: bool) -> void:
 	normal_vectors.visible = value
 	if normal_vectors.visible:
 		normal_vectors.update_all(project.normal_image, project.height_data)
 
+
 func get_normal_vectors_enabled() -> bool:
 	return normal_vectors.visible
+
 
 func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and (event.button_index == BUTTON_LEFT or event.button_index == BUTTON_RIGHT) and not event.is_echo():
@@ -96,12 +112,15 @@ func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vec
 	elif event is InputEventMouseMotion:
 		emit_signal("drag_moved", event.relative, click_position_to_uv(click_position))
 
+
 func click_position_to_uv(click_position: Vector3) -> Vector2:
 	var local_click_position = plate.to_local(click_position)
 	return Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
 
+
 func stop_dragging() -> void:
 	emit_signal("drag_ended")
+
 
 func _on_Plate_mouse_exited() -> void:
 	stop_dragging()

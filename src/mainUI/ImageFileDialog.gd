@@ -1,3 +1,7 @@
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Node
 
 signal image_loaded(image)
@@ -29,8 +33,10 @@ var success_method: FuncRef
 var image_to_save: Image
 var hovering = false
 
+
 func _ready() -> void:
 	var _err = get_tree().connect("files_dropped", self, "_on_files_dropped")
+
 
 func try_load_image(on_success_method: FuncRef) -> void:
 	success_method = on_success_method
@@ -41,6 +47,7 @@ func try_load_image(on_success_method: FuncRef) -> void:
 		file_dialog.popup_centered_ratio()
 	else:
 		drop_dialog.popup_centered_ratio()
+
 
 func try_save_image(image: Image) -> void:
 	if OS.get_name() != "HTML5":
@@ -66,6 +73,7 @@ func try_save_image(image: Image) -> void:
 		elif OS.shell_open(uri) != OK:
 			image_save_error.popup_centered()
 
+
 func _on_file_selected(path: String) -> void:
 	if file_dialog.mode == FileDialog.MODE_OPEN_FILE:
 		var img = Image.new()
@@ -85,7 +93,6 @@ func _on_file_selected(path: String) -> void:
 			image_save_error.popup_centered()
 
 
-
 func _on_files_dropped(files: PoolStringArray, _screen: int) -> void:
 	if file_dialog.visible or drop_dialog.visible:
 		for f in files:
@@ -94,6 +101,7 @@ func _on_files_dropped(files: PoolStringArray, _screen: int) -> void:
 				file_dialog.hide()
 				drop_dialog.hide()
 				break
+
 
 func _on_popup_hide() -> void:
 	success_method = null

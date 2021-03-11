@@ -1,3 +1,7 @@
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends MenuButton
 
 enum {
@@ -11,6 +15,7 @@ enum {
 export(NodePath) var visualizer_grid_path: NodePath
 onready var visualizer_grid = get_node(visualizer_grid_path)
 onready var menu_popup = get_popup()
+
 
 func _ready() -> void:
 	menu_popup.hide_on_checkable_item_selection = false
@@ -35,6 +40,7 @@ func _ready() -> void:
 	menu_popup.set_item_shortcut(TOGGLE_VIEW_3D, preload("res://shortcuts/ToggleView3D_shortcut.tres"))
 	
 	menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
+
 
 func _on_menu_popup_id_pressed(id: int) -> void:
 	if id == TOGGLE_VIEW_ALBEDO:

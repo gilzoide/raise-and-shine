@@ -1,3 +1,7 @@
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends MenuButton
 
 enum {
@@ -16,6 +20,7 @@ export(Resource) var selection = preload("res://editor/selection/ActiveSelection
 
 onready var menu_popup = get_popup()
 var history_submenu = PopupMenu.new()
+
 
 func _ready() -> void:
 	history_submenu.name = HISTORY_SUBMENU_NAME
@@ -38,6 +43,7 @@ func _ready() -> void:
 	menu_popup.connect("about_to_show", self, "_on_menu_popup_about_to_show")
 	menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
 
+
 func _on_menu_popup_id_pressed(id: int) -> void:
 	if id == UNDO:
 		history.apply_undo()
@@ -50,9 +56,11 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 	elif id == SELECTION_INVERT:
 		selection.invert()
 
+
 func _on_menu_popup_about_to_show() -> void:
 	menu_popup.set_item_disabled(UNDO, not history.can_undo())
 	menu_popup.set_item_disabled(REDO, not history.can_redo())
+
 
 func _on_history_menu_about_to_show() -> void:
 	history_submenu.clear()
@@ -63,6 +71,7 @@ func _on_history_menu_about_to_show() -> void:
 		tex.create_from_image(img)
 		var caption = "*" if history.is_current(id) else ""
 		history_submenu.add_icon_item(tex, caption, id)
+
 
 func _on_history_menu_id_pressed(id: int) -> void:
 	history.set_current_revision(id)

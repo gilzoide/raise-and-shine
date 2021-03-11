@@ -1,3 +1,7 @@
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 tool
 extends Popup
 
@@ -23,8 +27,10 @@ var inner_radius: float
 var outer_radius: float
 var dragging = false
 
+
 func _ready() -> void:
 	update_size()
+
 
 func _draw() -> void:
 	draw_arc(center, inner_radius, 0, TAU, point_count, border_color, line_width)
@@ -37,8 +43,7 @@ func _draw() -> void:
 		var width = outer_radius - 2 * arrow_margin
 		var height = width / arrow.get_size().aspect()
 		draw_texture_rect(arrow, Rect2(arrow_margin, -height * 0.5, width, height), false, selection_color)
-#		var starting_point = center + segment_direction
-#		draw_line(starting_point, starting_point + segment_direction, selection_color, line_width)
+
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED:
@@ -49,6 +54,7 @@ func _notification(what: int) -> void:
 		update()
 	elif what == NOTIFICATION_POPUP_HIDE:
 		dragging = false
+
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -72,6 +78,7 @@ func _gui_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_accept"):
 		hide()
 
+
 func set_direction_from_position(position: Vector2) -> void:
 	var vec: Vector2 = position - center
 	var distance = vec.length()
@@ -81,11 +88,13 @@ func set_direction_from_position(position: Vector2) -> void:
 		set_direction(vec.angle())
 	dragging = true
 
+
 func update_size() -> void:
 	center = rect_size * 0.5
 	radius = min(center.x, center.y) - min_margin
 	inner_radius = radius * inner_radius_percent
 	outer_radius = radius - inner_radius
+
 
 func set_direction(value: float) -> void:
 	if Input.is_action_pressed("snap_modifier"):

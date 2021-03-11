@@ -1,6 +1,10 @@
-extends BitMap
-
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 class_name BitMapPlus
+
+extends BitMap
 
 const TRUE_COLOR = Color.white
 const FALSE_COLOR = Color.black
@@ -11,11 +15,14 @@ enum Format {
 	LINE,
 }
 
+
 func copy_from(bitmap: BitMap) -> void:
 	data = bitmap.data
 
+
 func clear(bit: bool = false) -> void:
 	set_bit_rect(Rect2(Vector2.ZERO, get_size()), bit)
+
 
 func create_image() -> Image:
 	var image = Image.new()
@@ -23,6 +30,7 @@ func create_image() -> Image:
 	image.create(size.x, size.y, false, Image.FORMAT_L8)
 	blit_to_image(image)
 	return image
+
 
 func blit(bitmap: BitMap, dst: Vector2 = Vector2.ZERO) -> void:
 	var self_size = get_size()
@@ -33,6 +41,7 @@ func blit(bitmap: BitMap, dst: Vector2 = Vector2.ZERO) -> void:
 		for y in min(self_size.y - dst.y, bitmap_size.y):
 			var dst_v = Vector2(x, y) + dst
 			set_bit(dst_v, bitmap.get_bit(dst_v))
+
 
 func blit_to_image(image: Image, dst: Vector2 = Vector2.ZERO) -> void:
 	var self_size = get_size()
@@ -45,6 +54,7 @@ func blit_to_image(image: Image, dst: Vector2 = Vector2.ZERO) -> void:
 			image.set_pixel(x, y, TRUE_COLOR if get_bit(Vector2(x, y)) else FALSE_COLOR)
 	image.unlock()
 
+
 func blend_sum(bitmap: BitMap, dst: Vector2) -> void:
 	var bitmap_size = bitmap.get_size()
 	var bounds = Rect2(Vector2.ZERO, get_size())
@@ -55,6 +65,7 @@ func blend_sum(bitmap: BitMap, dst: Vector2) -> void:
 			if bounds.has_point(dst_v):
 				set_bit(dst_v, get_bit(dst_v) or bitmap.get_bit(v))
 
+
 func blend_difference(bitmap: BitMap, dst: Vector2) -> void:
 	var bitmap_size = bitmap.get_size()
 	var bounds = Rect2(Vector2.ZERO, get_size())
@@ -64,6 +75,7 @@ func blend_difference(bitmap: BitMap, dst: Vector2) -> void:
 			var dst_v = dst + v
 			if bounds.has_point(dst_v):
 				set_bit(dst_v, get_bit(dst_v) and not bitmap.get_bit(v))
+
 
 func create_format(size: Vector2, line_direction: float, format: int) -> void:
 	create(size)
@@ -104,12 +116,14 @@ func create_format(size: Vector2, line_direction: float, format: int) -> void:
 	else:
 		assert(false, "FIXME!!!")
 
+
 func invert() -> void:
 	var size = get_size()
 	for x in size.x:
 		for y in size.y:
 			var v = Vector2(x, y)
 			set_bit(v, not get_bit(v))
+
 
 func get_true_rect() -> Rect2:
 	var size = get_size()

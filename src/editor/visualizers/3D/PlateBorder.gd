@@ -1,10 +1,16 @@
+# Copyright (c) 2021 Gil Barbosa Reis.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends MeshInstance
 
 export(Resource) var settings = preload("res://settings/DefaultSettings.tres")
 export(float) var line_width := 1.0
 
+
 func _ready() -> void:
 	update_color()
+
 
 func setup_with_plane_size(size: Vector2) -> void:
 	var half_size = size * 0.5
@@ -33,6 +39,7 @@ func setup_with_plane_size(size: Vector2) -> void:
 	arrays.resize(ArrayMesh.ARRAY_MAX)
 	arrays[ArrayMesh.ARRAY_VERTEX] = vertices
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLE_STRIP, arrays)
+
 
 func update_color() -> void:
 	material_override.albedo_color = settings.background_color.inverted()
