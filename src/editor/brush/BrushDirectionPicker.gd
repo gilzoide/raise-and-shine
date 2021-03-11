@@ -4,20 +4,23 @@ extends Popup
 signal direction_changed(direction)
 
 export(Resource) var operation = preload("res://editor/operation/DragOperation.tres")
-
+export(Texture) var arrow = preload("res://textures/ArrowIcon.svg")
 export(Color) var border_color: Color = Color.white
 export(Color) var selection_color: Color = Color.red
 export(float) var line_width: float = 2
 export(float) var none_radius_percent: float = 0.5
+export(float) var inner_radius_percent: float = 0.4
 export(float) var min_margin: float = 16
 export(int) var point_count: int = 32
 export(float) var wheel_radians_speed: float = 0.1
 export(float) var snap_angle = PI / 8.0
+export(float) var arrow_margin = 4
 
 var direction: float = operation.RADIAL_DIRECTION
 var center: Vector2
 var radius: float
 var inner_radius: float
+var outer_radius: float
 var dragging = false
 
 func _ready() -> void:
@@ -30,8 +33,12 @@ func _draw() -> void:
 		draw_circle(center, inner_radius * none_radius_percent, selection_color)
 	else:
 		var segment_direction = inner_radius * Vector2.RIGHT.rotated(direction)
-		var starting_point = center + segment_direction
-		draw_line(starting_point, starting_point + segment_direction, selection_color, line_width)
+		draw_set_transform(center + segment_direction, direction, Vector2.ONE)
+		var width = outer_radius - 2 * arrow_margin
+		var height = width / arrow.get_size().aspect()
+		draw_texture_rect(arrow, Rect2(arrow_margin, -height * 0.5, width, height), false, selection_color)
+#		var starting_point = center + segment_direction
+#		draw_line(starting_point, starting_point + segment_direction, selection_color, line_width)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED:
@@ -77,7 +84,8 @@ func set_direction_from_position(position: Vector2) -> void:
 func update_size() -> void:
 	center = rect_size * 0.5
 	radius = min(center.x, center.y) - min_margin
-	inner_radius = radius * 0.5
+	inner_radius = radius * inner_radius_percent
+	outer_radius = radius - inner_radius
 
 func set_direction(value: float) -> void:
 	if Input.is_action_pressed("snap_modifier"):

@@ -4,19 +4,20 @@
 [ext_resource path="res://editor/brush/BrushDirectionPicker.gd" type="Script" id=2]
 
 [node name="BrushDirectionPickerButton" type="Button"]
-margin_right = 12.0
-margin_bottom = 20.0
+margin_right = 27.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 30, 30 )
 hint_tooltip = "Choose height tool easing direction.
 Hold Control to snap angle."
 focus_mode = 0
 enabled_focus_mode = 0
-text = "Direction"
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PanelPopup" type="PopupPanel" parent="."]
+visible = true
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_right = 180.0
@@ -26,5 +27,8 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+border_color = Color( 0.74902, 0.74902, 0.74902, 1 )
+selection_color = Color( 1, 1, 1, 1 )
 min_margin = 8.0
 [connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="direction_changed" from="PanelPopup" to="." method="_on_PanelPopup_direction_changed"]
