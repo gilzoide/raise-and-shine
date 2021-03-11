@@ -55,7 +55,7 @@ func set_3d_visible(value: bool) -> void:
 
 func _on_drag_started(button_index, uv) -> void:
 	_dragging = true
-	selection.set_drag_operation_started(uv)
+	selection.set_drag_operation_started(button_index, uv)
 
 
 func _on_drag_moved(relative_motion, uv) -> void:

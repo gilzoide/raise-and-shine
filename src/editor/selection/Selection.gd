@@ -7,7 +7,6 @@ enum DragTool {
 }
 
 enum SelectionBehaviour {
-	REPLACE,
 	UNION,
 	DIFFERENCE,
 }
@@ -22,9 +21,9 @@ export(ShaderMaterial) var selection_material: ShaderMaterial = preload("res://e
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 export(Resource) var drag_operation = preload("res://editor/operation/DragOperation.tres")
-export(DragTool) var active_tool = DragTool.BRUSH_RECTANGLE
+export(DragTool) var active_tool := DragTool.BRUSH_RECTANGLE
 
-var selection_start_behaviour
+var selection_start_behaviour = SelectionBehaviour.UNION
 var selection_image: Image = Image.new()
 var selection_bitmap: BitMapPlus = BitMapPlus.new()
 var composed_bitmap: BitMapPlus = BitMapPlus.new()
@@ -51,7 +50,7 @@ func update_with_size(image_or_texture) -> void:
 func empty() -> bool:
 	return selection_rect.has_no_area()
 
-func set_drag_operation_started(uv: Vector2) -> void:
+func set_drag_operation_started(button_index: int, uv: Vector2) -> void:
 	if active_tool == DragTool.BRUSH_RECTANGLE:
 		brush.format = BitMapPlus.Format.RECTANGLE
 	elif active_tool == DragTool.BRUSH_ELLIPSE:
@@ -60,10 +59,7 @@ func set_drag_operation_started(uv: Vector2) -> void:
 		selection_rect = selection_bitmap.get_true_rect()
 		return
 	
-	selection_start_behaviour = current_selection_behaviour()
-	if selection_start_behaviour == SelectionBehaviour.REPLACE:
-		selection_bitmap.clear()
-	
+	selection_start_behaviour = SelectionBehaviour.DIFFERENCE if button_index == BUTTON_RIGHT else SelectionBehaviour.UNION
 	drag_start_position = uv_to_position(uv)
 
 func set_drag_operation_ended() -> void:
@@ -127,11 +123,3 @@ func invert() -> void:
 
 func update_texture() -> void:
 	selection_texture.set_data(selection_image)
-
-static func current_selection_behaviour() -> int:
-	if Input.is_action_pressed("selection_difference_modifier"):
-		return SelectionBehaviour.DIFFERENCE
-	elif Input.is_action_pressed("selection_union_modifier"):
-		return SelectionBehaviour.UNION
-	else:
-		return SelectionBehaviour.REPLACE
