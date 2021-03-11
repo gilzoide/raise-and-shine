@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://editor/brush/BrushToolbar.gd" type="Script" id=1]
 [ext_resource path="res://editor/brush/BrushDragOperation_buttongroup.tres" type="ButtonGroup" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://shortcuts/SelectionToolHeight_shortcut.tres" type="ShortCut" id=4]
 [ext_resource path="res://shortcuts/SelectionToolRectangle_shortcut.tres" type="ShortCut" id=5]
 [ext_resource path="res://shortcuts/SelectionToolEllipse_shortcut.tres" type="ShortCut" id=6]
+[ext_resource path="res://shortcuts/SelectionToolLine_shortcut.tres" type="ShortCut" id=7]
 
 [node name="BrushToolbar" type="PanelContainer"]
 margin_right = 277.0
@@ -18,7 +19,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 328.0
+margin_right = 371.0
 margin_bottom = 29.0
 
 [node name="Rectangle" type="ToolButton" parent="HBoxContainer"]
@@ -41,9 +42,19 @@ shortcut = ExtResource( 6 )
 group = ExtResource( 2 )
 text = "Ellipse"
 
-[node name="Height" type="ToolButton" parent="HBoxContainer"]
+[node name="Line" type="ToolButton" parent="HBoxContainer"]
 margin_left = 136.0
-margin_right = 190.0
+margin_right = 175.0
+margin_bottom = 22.0
+hint_tooltip = "Enable ellipse selection tool"
+toggle_mode = true
+shortcut = ExtResource( 7 )
+group = ExtResource( 2 )
+text = "Line"
+
+[node name="Height" type="ToolButton" parent="HBoxContainer"]
+margin_left = 179.0
+margin_right = 233.0
 margin_bottom = 22.0
 hint_tooltip = "Enable height edit tool"
 toggle_mode = true
@@ -52,16 +63,17 @@ group = ExtResource( 2 )
 text = "Height"
 
 [node name="EasingPicker" type="OptionButton" parent="HBoxContainer"]
-margin_left = 194.0
-margin_right = 246.0
+margin_left = 237.0
+margin_right = 289.0
 margin_bottom = 22.0
 text = "Flat"
 
 [node name="BrushDirectionPickerButton" parent="HBoxContainer" instance=ExtResource( 3 )]
-margin_left = 250.0
-margin_right = 321.0
+margin_left = 293.0
+margin_right = 364.0
 margin_bottom = 22.0
 [connection signal="pressed" from="HBoxContainer/Rectangle" to="." method="_on_tool_button_pressed" binds= [ 0 ]]
 [connection signal="pressed" from="HBoxContainer/Ellipse" to="." method="_on_tool_button_pressed" binds= [ 1 ]]
-[connection signal="pressed" from="HBoxContainer/Height" to="." method="_on_tool_button_pressed" binds= [ 2 ]]
+[connection signal="pressed" from="HBoxContainer/Line" to="." method="_on_tool_button_pressed" binds= [ 2 ]]
+[connection signal="pressed" from="HBoxContainer/Height" to="." method="_on_tool_button_pressed" binds= [ 3 ]]
 [connection signal="item_selected" from="HBoxContainer/EasingPicker" to="." method="_on_EasingPicker_item_selected"]

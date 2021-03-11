@@ -8,6 +8,7 @@ const FALSE_COLOR = Color.black
 enum Format {
 	RECTANGLE,
 	ELLIPSE,
+	LINE,
 }
 
 func copy_from(bitmap: BitMap) -> void:
@@ -64,7 +65,7 @@ func blend_difference(bitmap: BitMap, dst: Vector2) -> void:
 			if bounds.has_point(dst_v):
 				set_bit(dst_v, get_bit(dst_v) and not bitmap.get_bit(v))
 
-func create_format(size: Vector2, format: int) -> void:
+func create_format(size: Vector2, line_direction: float, format: int) -> void:
 	create(size)
 	if format == Format.RECTANGLE:
 		set_bit_rect(Rect2(Vector2.ZERO, size), true)
@@ -77,6 +78,29 @@ func create_format(size: Vector2, format: int) -> void:
 				var centered_x = x - half_size.x
 				var centered_y = y - half_size.y
 				set_bit(Vector2(x, y), (centered_x * centered_x) / squared_size_x + (centered_y * centered_y) / squared_size_y <= 1.0)
+	elif format == Format.LINE:
+		if is_equal_approx(size.x, 1.0) or is_equal_approx(size.y, 1.0):
+			set_bit_rect(Rect2(Vector2.ZERO, size), true)
+		else:
+			# Bresenham's line algorithm
+			var x0 := 0
+			var y0 := 0 if line_direction > 0 else int(size.y - 1)
+			var x1 := int(size.x - 1)
+			var y1 := int(size.y - 1) if line_direction > 0 else 0
+			var sy := int(line_direction)
+			var dx = int(size.x - 1)
+			var dy = -(size.y - 1)
+			var err = dx + dy
+			while x0 != x1 or y0 != y1:
+				set_bit(Vector2(x0, y0), true)
+				var e2 = 2 * err
+				if e2 >= dy:
+					err += dy
+					x0 += 1
+				if e2 <= dx:
+					err += dx
+					y0 += sy
+			set_bit(Vector2(x0, y0), true)
 	else:
 		assert(false, "FIXME!!!")
 
