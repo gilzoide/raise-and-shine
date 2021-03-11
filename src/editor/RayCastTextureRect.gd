@@ -1,21 +1,15 @@
 tool
 extends Control
 
-signal position_hovered(uv)
-signal drag_started()
-signal drag_moved(event, uv)
+signal drag_started(button_index, uv)
+signal drag_moved(relative_motion, uv)
 signal drag_ended()
 
 const INVALID_UV = Vector2(-1, -1)
 
 export(Resource) var settings = preload("res://settings/DefaultSettings.tres")
 export(Texture) var texture: Texture
-var last_uv: Vector2 = INVALID_UV
 var drawn_rect: Rect2
-var dragging = false
-
-func _ready() -> void:
-	update_drawn_rect()
 
 func _draw() -> void:
 	update_drawn_rect()
@@ -29,35 +23,25 @@ func _notification(what: int) -> void:
 		stop_dragging()
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+	if event is InputEventMouseButton and (event.button_index == BUTTON_LEFT or event.button_index == BUTTON_RIGHT):
 		if event.is_pressed():
-			start_dragging()
+			start_dragging(event)
 		else:
 			stop_dragging()
-			hover_over(event.position)
 	elif event is InputEventMouseMotion:
-		if dragging:
-			drag_over(event)
-		else:
-			hover_over(event.position)
+		drag_move(event)
 
-func start_dragging() -> void:
-	dragging = true
-	emit_signal("drag_started")
+func start_dragging(event: InputEventMouseButton) -> void:
+	emit_signal("drag_started", event.button_index, position_to_uv(event.position))
 
 func stop_dragging() -> void:
-	dragging = false
 	emit_signal("drag_ended")
 
-func hover_over(position: Vector2) -> void:
-	last_uv = ((position - drawn_rect.position) / drawn_rect.size)
-	emit_signal("position_hovered", last_uv)
-	
+func drag_move(event: InputEventMouseMotion) -> void:
+	emit_signal("drag_moved", event.relative, position_to_uv(event.position))
 
-func drag_over(event: InputEvent) -> void:
-	var position = event.position
-	last_uv = ((position - drawn_rect.position) / drawn_rect.size)
-	emit_signal("drag_moved", event, last_uv)
+func position_to_uv(position: Vector2) -> Vector2:
+	return (position - drawn_rect.position) / drawn_rect.size
 
 func update_drawn_rect() -> void:
 	# Ref: https://github.com/godotengine/godot/blob/7961a1dea3e7ce8c4e7197a0000e35ab31e9ff2e/scene/gui/texture_rect.cpp#L66-L81

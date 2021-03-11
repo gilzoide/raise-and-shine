@@ -1,6 +1,7 @@
 extends Spatial
 
-signal drag_started()
+signal drag_started(button_index, uv)
+signal drag_moved(relative_motion, uv)
 signal drag_ended()
 
 const project = preload("res://editor/project/ActiveEditorProject.tres")
@@ -29,8 +30,6 @@ onready var lights = $Lights
 onready var ambient_light = $WorldEnvironment
 onready var normal_vectors = $Plate/Model/NormalVectorsMultiMeshInstance
 onready var plane_size = plane_mesh.size
-var dragging: bool = false
-var dragged_height: bool = false
 
 func _ready() -> void:
 	update_plane_dimensions()
@@ -89,29 +88,19 @@ func get_normal_vectors_enabled() -> bool:
 	return normal_vectors.visible
 
 func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.is_echo():
+	if event is InputEventMouseButton and (event.button_index == BUTTON_LEFT or event.button_index == BUTTON_RIGHT) and not event.is_echo():
 		if event.is_pressed():
-			start_dragging(click_position_to_uv(click_position))
+			emit_signal("drag_started", event.button_index, click_position_to_uv(click_position))
 		else:
 			stop_dragging()
-	elif dragging and event is InputEventMouseMotion:
-		selection.set_drag_hovering(event, click_position_to_uv(click_position))
+	elif event is InputEventMouseMotion:
+		emit_signal("drag_moved", event.relative, click_position_to_uv(click_position))
 
 func click_position_to_uv(click_position: Vector3) -> Vector2:
 	var local_click_position = plate.to_local(click_position)
 	return Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
 
-func start_dragging(uv: Vector2) -> void:
-	dragging = true
-	selection.set_drag_operation_started(uv)
-	emit_signal("drag_started")
-
 func stop_dragging() -> void:
-	if dragged_height:
-		history.push_heightmapdata(project.height_data)
-	dragging = false
-	dragged_height =  false
-	selection.set_drag_operation_ended()
 	emit_signal("drag_ended")
 
 func _on_Plate_mouse_exited() -> void:

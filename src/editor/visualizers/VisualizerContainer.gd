@@ -26,7 +26,7 @@ func _gui_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("visualizer_zoom_down"):
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
 		zoom_by(-factor)
-	elif event is InputEventMouseButton and event.is_pressed() and (event.button_index == BUTTON_RIGHT or event.button_index == BUTTON_MIDDLE):
+	elif event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_MIDDLE:
 		start_panning()
 	elif event is InputEventMouseButton and not event.is_pressed():
 		stop_panning()

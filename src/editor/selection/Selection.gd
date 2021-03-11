@@ -73,14 +73,14 @@ func set_drag_operation_ended() -> void:
 		project.operation_ended()
 		height_changed = false
 
-func set_drag_hovering(event: InputEventMouseMotion, uv: Vector2) -> void:
+func set_drag_hovering(relative_movement: Vector2, uv: Vector2) -> void:
 	if active_tool == DragTool.HEIGHT_EDIT:
-		drag_height_moved(event)
+		drag_height_moved(relative_movement)
 	else:
 		drag_selection_moved(uv)
 
-func drag_height_moved(event: InputEventMouseMotion) -> void:
-	drag_operation.amount = -event.relative.y * drag_height_speed
+func drag_height_moved(relative_movement: Vector2) -> void:
+	drag_operation.amount = -relative_movement.y * drag_height_speed
 	project.apply_operation_to(drag_operation, selection_bitmap, selection_rect)
 	height_changed = true
 

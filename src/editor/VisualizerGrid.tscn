@@ -88,3 +88,12 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="drag_ended" from="MapsContainer/AlbedoMap" to="." method="_on_drag_ended"]
+[connection signal="drag_moved" from="MapsContainer/AlbedoMap" to="." method="_on_drag_moved"]
+[connection signal="drag_started" from="MapsContainer/AlbedoMap" to="." method="_on_drag_started"]
+[connection signal="drag_ended" from="MapsContainer/HeightMap" to="." method="_on_drag_ended"]
+[connection signal="drag_moved" from="MapsContainer/HeightMap" to="." method="_on_drag_moved"]
+[connection signal="drag_started" from="MapsContainer/HeightMap" to="." method="_on_drag_started"]
+[connection signal="drag_ended" from="MapsContainer/NormalMap" to="." method="_on_drag_ended"]
+[connection signal="drag_moved" from="MapsContainer/NormalMap" to="." method="_on_drag_moved"]
+[connection signal="drag_started" from="MapsContainer/NormalMap" to="." method="_on_drag_started"]
