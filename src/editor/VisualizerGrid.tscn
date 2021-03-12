@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://editor/TextureSlot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://editor/visualizers/2D/OrthogonalVisualizer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://editor/VisualizerGrid.gd" type="Script" id=3]
 [ext_resource path="res://editor/visualizers/3D/PerspectiveVisualizer.tscn" type="PackedScene" id=4]
-[ext_resource path="res://editor/visualizers/PhotoBoothFlagsMenu.gd" type="Script" id=5]
 
 [node name="VisualizerGrid" type="HSplitContainer"]
 anchor_right = 1.0
@@ -78,16 +77,6 @@ margin_right = 862.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="PhotoBoothFlagsMenu" type="MenuButton" parent="VisualizersContainer"]
-margin_right = 63.0
-margin_bottom = 20.0
-text = "Options"
-flat = false
-script = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 [connection signal="drag_ended" from="MapsContainer/AlbedoMap" to="." method="_on_drag_ended"]
 [connection signal="drag_moved" from="MapsContainer/AlbedoMap" to="." method="_on_drag_moved"]
 [connection signal="drag_started" from="MapsContainer/AlbedoMap" to="." method="_on_drag_started"]
