@@ -4,4 +4,5 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Resource
 
-export(Color) var background_color: Color = Color("4d4d4d")
+export(Color) var background_color := Color("4d4d4d")
+export(bool) var show_tool_button_text := false
