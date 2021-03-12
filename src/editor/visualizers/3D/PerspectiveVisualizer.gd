@@ -7,6 +7,7 @@ extends "res://editor/visualizers/VisualizerContainer.gd"
 export(float) var min_zoom_distance: float = 128
 export(float) var max_zoom_distance: float = 4
 
+var _zoom_distance := min_zoom_distance
 
 func _process(delta: float) -> void:
 	if has_focus():
@@ -20,6 +21,7 @@ func _process(delta: float) -> void:
 
 
 func update_camera_with_pan(pan: Vector2, angle: float = 0) -> void:
+	pan *= _zoom_distance / min_zoom_distance
 	var pan3d = Vector3(-pan.x, pan.y, 0)
 	var panned: Vector3 = camera.transform.xform(pan3d)
 	var position = panned.normalized() * camera.translation.length()
@@ -29,4 +31,5 @@ func update_camera_with_pan(pan: Vector2, angle: float = 0) -> void:
 
 func set_camera_zoom_percent(percent: float) -> void:
 	var direction = camera.translation.normalized()
-	camera.translation = direction * lerp(min_zoom_distance, max_zoom_distance, percent)
+	_zoom_distance = lerp(min_zoom_distance, max_zoom_distance, percent)
+	camera.translation = direction * _zoom_distance
