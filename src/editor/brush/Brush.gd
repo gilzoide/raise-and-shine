@@ -15,9 +15,10 @@ func set_rect(r: Rect2, line_direction: float = 1.0) -> void:
 		bitmap.create_format(r.size, line_direction, format)
 	rect = r
 
-
 func paint_position(position: Vector2) -> void:
-	bitmap.set_bit(position, true)
+
+	if rect.has_point(position):
+		bitmap.set_bit(position, true)
 
 
 func blit_to_image(image: Image) -> void:

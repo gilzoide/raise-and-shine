@@ -119,6 +119,13 @@ func drag_selection_moved(position: Vector2) -> void:
 	update_selection()
 
 
+func get_cursor_for_active_tool() -> int:
+	if active_tool == DragTool.HEIGHT_EDIT:
+		return Control.CURSOR_VSIZE
+	else:
+		return Control.CURSOR_CROSS
+
+
 func update_selection() -> void:
 	composed_bitmap.copy_from(selection_bitmap)
 	if selection_start_behaviour == SelectionBehaviour.DIFFERENCE:

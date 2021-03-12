@@ -15,7 +15,7 @@ onready var camera: Camera = $ViewportContainer/Viewport/Camera
 onready var height_slider = $HeightDragIndicator
 onready var zoom_slider = $ZoomSlider
 onready var camera_initial_transform: Transform = camera.transform
-var dragging: bool = false
+var dragging := false
 var current_zoom = 0
 
 
@@ -26,10 +26,17 @@ func _gui_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("visualizer_zoom_down"):
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
 		zoom_by(-factor)
-	elif event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_MIDDLE:
-		start_panning()
-	elif event is InputEventMouseButton and not event.is_pressed():
-		stop_panning()
+	elif event.is_action("visualizer_pan_modifier"):
+		if event.is_pressed():
+			set_pan_cursor()
+		else:
+			set_normal_cursor()
+	elif event is InputEventMouseButton:
+		if not event.is_pressed():
+			stop_panning()
+		elif event.button_index == BUTTON_MIDDLE or Input.is_action_pressed("visualizer_pan_modifier"):
+			start_panning()
+			return  # avoid passing this event to `viewport.unhandled_input`
 	if dragging and event is InputEventMouseMotion:
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * mouse_speed
 		update_camera_with_pan(event.relative * factor)
@@ -41,11 +48,21 @@ func _gui_input(event: InputEvent) -> void:
 
 func start_panning() -> void:
 	dragging = true
+	set_pan_cursor()
 	grab_focus()
 
 
 func stop_panning() -> void:
 	dragging = false
+	set_normal_cursor()
+
+
+func set_pan_cursor() -> void:
+	ControlExtras.set_cursor_now(self, Control.CURSOR_MOVE)
+
+
+func set_normal_cursor() -> void:
+	ControlExtras.set_cursor_now(self, Control.CURSOR_ARROW)
 
 
 func zoom_by(factor: float) -> void:
@@ -65,6 +82,10 @@ func _notification(what: int) -> void:
 		set_process(true)
 	elif what == NOTIFICATION_FOCUS_EXIT:
 		set_process(false)
+	elif what == NOTIFICATION_MOUSE_ENTER:
+		grab_focus()
+	elif what == NOTIFICATION_MOUSE_EXIT:
+		release_focus()
 
 
 func update_camera_with_pan(_pan: Vector2) -> void:

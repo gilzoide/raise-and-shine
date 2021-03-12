@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
+"class": "ControlExtras",
+"language": "GDScript",
+"path": "res://mainUI/ControlExtras.gd"
+}, {
+"base": "Reference",
 "class": "HeightMapData",
 "language": "GDScript",
 "path": "res://editor/project/HeightMapData.gd"
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://editor/selection/SelectionBitMap.gd"
 } ]
 _global_script_class_icons={
+"ControlExtras": "",
 "HeightMapData": "",
 "MapTypes": "",
 "SelectionBitMap": ""
