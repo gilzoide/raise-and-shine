@@ -8,6 +8,7 @@ enum DragTool {
 	BRUSH_RECTANGLE,
 	BRUSH_ELLIPSE,
 	BRUSH_LINE,
+	BRUSH_PENCIL,
 	HEIGHT_EDIT,
 }
 
@@ -63,12 +64,16 @@ func set_drag_operation_started(button_index: int, uv: Vector2) -> void:
 		brush.format = SelectionBitMap.Format.ELLIPSE
 	elif active_tool == DragTool.BRUSH_LINE:
 		brush.format = SelectionBitMap.Format.LINE
+	elif active_tool == DragTool.BRUSH_PENCIL:
+		brush.format = SelectionBitMap.Format.PENCIL
+		brush.set_rect(Rect2(Vector2.ZERO, selection_bitmap.get_size()))
 	elif active_tool == DragTool.HEIGHT_EDIT:
 		selection_rect = selection_bitmap.get_true_rect()
 		return
 	
 	selection_start_behaviour = SelectionBehaviour.DIFFERENCE if button_index == BUTTON_RIGHT else SelectionBehaviour.UNION
 	drag_start_position = uv_to_position(uv)
+	drag_selection_moved(drag_start_position)
 
 
 func set_drag_operation_ended() -> void:
@@ -83,7 +88,7 @@ func set_drag_hovering(relative_movement: Vector2, uv: Vector2) -> void:
 	if active_tool == DragTool.HEIGHT_EDIT:
 		drag_height_moved(relative_movement)
 	else:
-		drag_selection_moved(uv)
+		drag_selection_moved(uv_to_position(uv))
 
 
 func drag_height_moved(relative_movement: Vector2) -> void:
@@ -92,28 +97,34 @@ func drag_height_moved(relative_movement: Vector2) -> void:
 	height_changed = true
 
 
-func drag_selection_moved(uv: Vector2) -> void:
-	var position = uv_to_position(uv)
-	var delta_pos = position - drag_start_position
-	var delta_sign = delta_pos.sign()
-	if Input.is_action_pressed("snap_modifier"):
-		var abs_delta_pos = delta_pos.abs()
-		if abs_delta_pos.y > abs_delta_pos.x:
-			position.y = drag_start_position.y + delta_sign.y * abs_delta_pos.x
-		elif abs_delta_pos.x > abs_delta_pos.y:
-			position.x = drag_start_position.x + delta_sign.x * abs_delta_pos.y
-		delta_pos = position - drag_start_position
-	var rect := Rect2(drag_start_position, Vector2.ZERO).expand(position)
-	if Input.is_action_pressed("selection_center_modifier"):
-		rect = rect.expand(drag_start_position - delta_pos)
-	rect.size.x = max(1.0, rect.size.x)
-	rect.size.y = max(1.0, rect.size.y)
-	brush.set_rect(rect, delta_sign.x * delta_sign.y)
+func drag_selection_moved(position: Vector2) -> void:
+	if active_tool == DragTool.BRUSH_PENCIL:
+		brush.paint_position(position)
+	else:
+		var delta_pos = position - drag_start_position
+		var delta_sign = delta_pos.sign()
+		if Input.is_action_pressed("snap_modifier"):
+			var abs_delta_pos = delta_pos.abs()
+			if abs_delta_pos.y > abs_delta_pos.x:
+				position.y = drag_start_position.y + delta_sign.y * abs_delta_pos.x
+			elif abs_delta_pos.x > abs_delta_pos.y:
+				position.x = drag_start_position.x + delta_sign.x * abs_delta_pos.y
+			delta_pos = position - drag_start_position
+		var rect := Rect2(drag_start_position, Vector2.ZERO).expand(position)
+		if Input.is_action_pressed("selection_center_modifier"):
+			rect = rect.expand(drag_start_position - delta_pos)
+		rect.size.x = max(1.0, rect.size.x)
+		rect.size.y = max(1.0, rect.size.y)
+		brush.set_rect(rect, delta_sign.x * delta_sign.y)
+	update_selection()
+
+
+func update_selection() -> void:
 	composed_bitmap.copy_from(selection_bitmap)
 	if selection_start_behaviour == SelectionBehaviour.DIFFERENCE:
-		composed_bitmap.blend_difference(brush.bitmap, rect.position)
+		composed_bitmap.blend_difference(brush.bitmap, brush.rect.position)
 	else:
-		composed_bitmap.blend_sum(brush.bitmap, rect.position)
+		composed_bitmap.blend_sum(brush.bitmap, brush.rect.position)
 	composed_bitmap.blit_to_image(selection_image)
 	update_texture()
 
@@ -124,13 +135,14 @@ func uv_to_position(uv: Vector2) -> Vector2:
 
 func clear(bit: bool = false) -> void:
 	selection_bitmap.clear(bit)
+	composed_bitmap.copy_from(selection_bitmap)
 	selection_image.fill(SELECTED_PIXEL if bit else NOT_SELECTED_PIXEL)
-	selection_rect = Rect2(Vector2.ZERO, selection_bitmap.get_size()) if bit else Rect2()
 	update_texture()
 
 
 func invert() -> void:
 	selection_bitmap.invert()
+	composed_bitmap.copy_from(selection_bitmap)
 	selection_bitmap.blit_to_image(selection_image)
 	update_texture()
 

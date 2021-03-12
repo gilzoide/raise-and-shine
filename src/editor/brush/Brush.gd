@@ -9,10 +9,15 @@ export(Rect2) var rect = Rect2()
 var bitmap: SelectionBitMap = SelectionBitMap.new()
 
 
-func set_rect(r: Rect2, line_direction: float) -> void:
-	if not rect.size.is_equal_approx(r.size) and not r.has_no_area():
+func set_rect(r: Rect2, line_direction: float = 1.0) -> void:
+	assert(not r.has_no_area(), "Trying to set a selection with no area!!!")
+	if format == SelectionBitMap.Format.PENCIL or not rect.size.is_equal_approx(r.size):
 		bitmap.create_format(r.size, line_direction, format)
 	rect = r
+
+
+func paint_position(position: Vector2) -> void:
+	bitmap.set_bit(position, true)
 
 
 func blit_to_image(image: Image) -> void:

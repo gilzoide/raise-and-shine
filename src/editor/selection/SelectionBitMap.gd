@@ -13,6 +13,7 @@ enum Format {
 	RECTANGLE,
 	ELLIPSE,
 	LINE,
+	PENCIL,
 }
 
 
@@ -113,6 +114,9 @@ func create_format(size: Vector2, line_direction: float, format: int) -> void:
 					err += dx
 					y0 += sy
 			set_bit(Vector2(x0, y0), true)
+	elif format == Format.PENCIL:
+		# Pencil will be manually painted
+		pass
 	else:
 		assert(false, "FIXME!!!")
 

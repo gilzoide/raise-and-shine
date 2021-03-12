@@ -2,8 +2,8 @@
 
 [sub_resource type="InputEventKey" id=1]
 pressed = true
-scancode = 53
-unicode = 53
+scancode = 52
+unicode = 52
 
 [resource]
 shortcut = SubResource( 1 )
