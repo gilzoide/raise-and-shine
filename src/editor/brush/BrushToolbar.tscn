@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://editor/brush/BrushToolbar.gd" type="Script" id=1]
 [ext_resource path="res://editor/brush/BrushDragOperation_buttongroup.tres" type="ButtonGroup" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://textures/HeightIcon.svg" type="Texture" id=11]
 [ext_resource path="res://shortcuts/SelectionToolPencil_shortcut.tres" type="ShortCut" id=12]
 [ext_resource path="res://textures/PencilIcon.svg" type="Texture" id=13]
+[ext_resource path="res://mainUI/ToolButtonPresentation.gd" type="Script" id=14]
 
 [node name="BrushToolbar" type="PanelContainer"]
 margin_right = 485.0
@@ -38,6 +39,7 @@ shortcut = ExtResource( 5 )
 group = ExtResource( 2 )
 text = "Rectangle"
 icon = ExtResource( 9 )
+script = ExtResource( 14 )
 
 [node name="Ellipse" type="ToolButton" parent="HBoxContainer"]
 margin_left = 113.0
@@ -49,6 +51,7 @@ shortcut = ExtResource( 6 )
 group = ExtResource( 2 )
 text = "Ellipse"
 icon = ExtResource( 10 )
+script = ExtResource( 14 )
 
 [node name="Line" type="ToolButton" parent="HBoxContainer"]
 margin_left = 206.0
@@ -60,6 +63,7 @@ shortcut = ExtResource( 7 )
 group = ExtResource( 2 )
 text = "Line"
 icon = ExtResource( 8 )
+script = ExtResource( 14 )
 
 [node name="Pencil" type="ToolButton" parent="HBoxContainer"]
 margin_left = 286.0
@@ -71,6 +75,7 @@ shortcut = ExtResource( 12 )
 group = ExtResource( 2 )
 text = "Pencil"
 icon = ExtResource( 13 )
+script = ExtResource( 14 )
 
 [node name="Height" type="ToolButton" parent="HBoxContainer"]
 margin_left = 376.0
@@ -82,6 +87,7 @@ shortcut = ExtResource( 4 )
 group = ExtResource( 2 )
 text = "Height"
 icon = ExtResource( 11 )
+script = ExtResource( 14 )
 
 [node name="EasingPicker" type="OptionButton" parent="HBoxContainer"]
 margin_left = 469.0
