@@ -51,7 +51,10 @@ func start_panning() -> void:
 	dragging = true
 	set_pan_cursor()
 	grab_focus()
-	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+	if OS.get_name() != "HTML5":
+		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 func stop_panning() -> void:
