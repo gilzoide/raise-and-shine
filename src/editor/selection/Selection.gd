@@ -101,6 +101,12 @@ func drag_selection_moved(position: Vector2) -> void:
 	if active_tool == DragTool.BRUSH_PENCIL:
 		brush.paint_position(position)
 	else:
+		# snap to hovered pixel, as `uv_to_position` always floors position
+		if position.x > drag_start_position.x:
+			position.x += 1
+		if position.y > drag_start_position.y:
+			position.y += 1
+		
 		var delta_pos = position - drag_start_position
 		var delta_sign = delta_pos.sign()
 		if Input.is_action_pressed("snap_modifier"):
