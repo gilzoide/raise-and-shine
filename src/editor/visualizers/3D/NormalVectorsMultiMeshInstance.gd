@@ -4,6 +4,8 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends MultiMeshInstance
 
+const PIXEL_CENTER_OFFSET = Vector2(0.5, 0.5)
+
 export(float) var vector_height: float = 5
 var plane_size: Vector2
 var height_scale: float
@@ -11,6 +13,10 @@ var height_scale: float
 
 func _ready() -> void:
 	var vertices = PoolVector3Array()
+	vertices.append(Vector3(-0.5, -0.5, 0))
+	vertices.append(Vector3(0.5, 0.5, 0))
+	vertices.append(Vector3(-0.5, 0.5, 0))
+	vertices.append(Vector3(0.5, -0.5, 0))
 	vertices.append(Vector3(0, 0, 0))
 	vertices.append(Vector3(0, 0, -vector_height))
 	var arrays = []
@@ -26,16 +32,17 @@ func update_all(normalmap: Image, heightmap: HeightMapData) -> void:
 
 
 func update_rect(normalmap: Image, heightmap: HeightMapData, rect: Rect2) -> void:
-	var stride = rect.size.x
-	var half_size = rect.size * 0.5
-	var origin_scale = plane_size / rect.size
+	var map_size = heightmap.size
+	var stride = map_size.x
+	var half_size = map_size * 0.5
+	var origin_scale = plane_size / map_size
 	normalmap.lock()
 	for x in range(rect.position.x, rect.end.x):
 		for y in range(rect.position.y, rect.end.y):
 			var i = y * stride + x
 			var normal_rgb = normalmap.get_pixel(x, y)
 			var normal = Vector3(normal_rgb.r - 0.5, normal_rgb.g - 0.5, normal_rgb.b * 0.5) * 2
-			var origin2d = (Vector2(x, y) - half_size) * origin_scale
+			var origin2d = (Vector2(x, y) + PIXEL_CENTER_OFFSET - half_size) * origin_scale
 			var origin = Vector3(origin2d.x, heightmap.get_value(x, y) * height_scale, origin2d.y)
 			var basis = Basis(normal.cross(Vector3.UP).normalized(), -normal.angle_to(Vector3.UP))
 			var transform = Transform(basis, origin)

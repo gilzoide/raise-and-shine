@@ -39,9 +39,9 @@ onready var plane_size = plane_mesh.size
 func _ready() -> void:
 	update_plane_dimensions()
 	var _err = project.connect("height_texture_changed", self, "_on_texture_updated")
-	_err = project.connect("height_changed", self, "update_heightmapshape_values")
+	_err = project.connect("height_changed", self, "_on_height_changed")
 	normal_vectors.plane_size = plane_size
-	normal_vectors.update_all(project.normal_image, project.height_data)
+	
 	border.setup_with_plane_size(plane_size)
 
 
@@ -61,14 +61,21 @@ func update_plane_dimensions() -> void:
 	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
 
 
-func update_heightmapshape_values(height_data: HeightMapData, _rect = null) -> float:
+func update_heightmapshape_values(height_data: HeightMapData) -> float:
 	var height_scale = min(plane_size.x, plane_size.y) * 0.5
 	heightmapshape_collision.shape.map_data = height_data.scaled(height_scale)
 	return height_scale
 
 
 func _on_texture_updated(_texture: Texture) -> void:
+	normal_vectors.update_all(project.normal_image, project.height_data)
 	update_plane_dimensions()
+
+
+func _on_height_changed(height_data: HeightMapData, rect: Rect2) -> void:
+	var _scale = update_heightmapshape_values(height_data)
+	normal_vectors.update_rect(project.normal_image, project.height_data, rect)
+	
 
 
 func set_alpha_enabled(value: bool) -> void:
