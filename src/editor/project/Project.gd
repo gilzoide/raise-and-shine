@@ -101,5 +101,7 @@ func operation_ended() -> void:
 
 
 func resize_maps(size: Vector2) -> void:
-	height_data.resize(size)
-	set_height_data(height_data)
+	if height_data.size != size:
+		height_data.resize(size)
+		history.push_heightmapdata(height_data)
+		set_height_data(height_data)
