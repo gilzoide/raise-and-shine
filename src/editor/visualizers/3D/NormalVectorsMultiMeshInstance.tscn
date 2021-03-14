@@ -1,10 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/NormalVectorsMultiMeshInstance.gd" type="Script" id=1]
-
-[sub_resource type="SpatialMaterial" id=1]
-flags_unshaded = true
-vertex_color_use_as_albedo = true
+[ext_resource path="res://editor/visualizers/3D/UnshadedVerticesAlbedo_material.tres" type="Material" id=2]
 
 [sub_resource type="ArrayMesh" id=2]
 
@@ -18,6 +15,6 @@ color_array = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 
 [node name="NormalVectorsMultiMeshInstance" type="MultiMeshInstance"]
 layers = 2
-material_override = SubResource( 1 )
+material_override = ExtResource( 2 )
 multimesh = SubResource( 3 )
 script = ExtResource( 1 )

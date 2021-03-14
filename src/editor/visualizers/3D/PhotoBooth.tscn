@@ -8,7 +8,7 @@
 [ext_resource path="res://editor/visualizers/3D/Plane_heightmapshape.tres" type="Shape" id=6]
 [ext_resource path="res://editor/visualizers/3D/NormalVectorsMultiMeshInstance.tscn" type="PackedScene" id=7]
 [ext_resource path="res://editor/visualizers/3D/PlateBorder.gd" type="Script" id=8]
-[ext_resource path="res://editor/visualizers/3D/PlateBorder_material.tres" type="Material" id=9]
+[ext_resource path="res://editor/visualizers/3D/UnshadedVerticesAlbedo_material.tres" type="Material" id=10]
 
 [sub_resource type="ArrayMesh" id=1]
 
@@ -29,7 +29,7 @@ material/0 = null
 visible = false
 
 [node name="Border" type="MeshInstance" parent="Plate"]
-material_override = ExtResource( 9 )
+material_override = ExtResource( 10 )
 mesh = SubResource( 1 )
 script = ExtResource( 8 )
 
