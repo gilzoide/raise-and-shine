@@ -65,13 +65,24 @@ func save_image_dialog(type: int) -> void:
 	ImageFileDialog.try_save_image(image)
 
 
-func set_albedo_image(value: Image) -> void:
+func load_project_dialog() -> void:
+	ImageFileDialog.try_load_image(funcref(self, "on_project_dialog_image"))
+
+
+func on_project_dialog_image(value: Image, _path: String = "") -> void:
+	set_albedo_image(value)
+	var new_height_data = HeightMapData.new()
+	new_height_data.create(value.get_size())
+	set_height_data(new_height_data)
+
+
+func set_albedo_image(value: Image, _path: String = "") -> void:
 	albedo_image = value
 	albedo_texture.create_from_image(albedo_image, albedo_texture.flags)
 	emit_signal("albedo_texture_changed", albedo_texture)
 
 
-func set_height_image(value: Image) -> void:
+func set_height_image(value: Image, _path: String = "") -> void:
 	height_image.copy_from(value)
 	height_image.convert(HeightMapData.HEIGHT_IMAGE_FORMAT)
 	height_data.copy_from_image(height_image)
@@ -80,7 +91,7 @@ func set_height_image(value: Image) -> void:
 	set_normal_image(height_data.create_normalmap())
 
 
-func set_normal_image(value: Image) -> void:
+func set_normal_image(value: Image, _path: String = "") -> void:
 	normal_image.copy_from(value)
 	normal_texture.create_from_image(normal_image, normal_texture.flags)
 	emit_signal("normal_texture_changed", normal_texture)

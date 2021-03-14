@@ -8,9 +8,19 @@ extends Reference
 
 const HEIGHT_IMAGE_FORMAT = Image.FORMAT_L8
 
-var luminance_array: PoolByteArray
-var height_array: PoolRealArray
+var luminance_array := PoolByteArray()
+var height_array := PoolRealArray()
 var size: Vector2 = Vector2.ZERO
+
+
+func create(new_size: Vector2) -> void:
+	size = new_size
+	var pixel_count = int(size.x * size.y)
+	luminance_array.resize(pixel_count)
+	height_array.resize(pixel_count)
+	for i in pixel_count:
+		luminance_array[i] = 0
+		height_array[i] = 0
 
 
 func copy_from(map: HeightMapData) -> void:

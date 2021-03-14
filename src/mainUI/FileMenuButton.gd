@@ -30,7 +30,7 @@ func _ready() -> void:
 
 func _on_item_pressed(id: int) -> void:
 	if id == LOAD:
-		pass
+		project.load_project_dialog()
 	elif id == RESIZE:
 		if size_picker_popup == null:
 			size_picker_popup = load("res://mainUI/SizePickerPopup.tscn").instance()

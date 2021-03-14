@@ -21,6 +21,7 @@ const SAVE_FILTERS = [
 	"*.exr ; OpenEXR",
 	"*.png ; PNG",
 ]
+const OPEN_EXTENSIONS = ["bmp", "dds", "exr", "hdr", "jpg", "jpeg", "png", "tga", "webp"]
 
 const OPEN_TEXT = "You can also drop files to this window\n"
 const SAVE_TEXT = ""
@@ -80,7 +81,7 @@ func _on_file_selected(path: String) -> void:
 		if img.load(path) == OK:
 			emit_signal("image_loaded", img)
 			if success_method:
-				success_method.call_func(img)
+				success_method.call_func(img, path)
 		else:
 			image_load_error.popup_centered()
 	elif file_dialog.mode == FileDialog.MODE_SAVE_FILE:
@@ -96,7 +97,7 @@ func _on_file_selected(path: String) -> void:
 func _on_files_dropped(files: PoolStringArray, _screen: int) -> void:
 	if file_dialog.visible or drop_dialog.visible:
 		for f in files:
-			if f.ends_with(".png") or f.ends_with(".exr"):
+			if f.get_extension() in OPEN_EXTENSIONS:
 				_on_file_selected(f)
 				file_dialog.hide()
 				drop_dialog.hide()
