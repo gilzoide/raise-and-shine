@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://mainUI/SizePicker.tscn" type="PackedScene" id=1]
+[ext_resource path="res://mainUI/SizePickerPopup.gd" type="Script" id=2]
+
+[node name="SizePickerPopup" type="ConfirmationDialog"]
+margin_right = 200.0
+margin_bottom = 106.0
+window_title = "Select new maps size"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SizePicker" parent="." instance=ExtResource( 1 )]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 192.0
+margin_bottom = 70.0
+[connection signal="confirmed" from="." to="." method="_on_confirmed"]

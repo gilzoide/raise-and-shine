@@ -77,11 +77,17 @@ func fill_normalmap(normalmap: Image, rect: Rect2 = Rect2(Vector2.ZERO, size)) -
 	for x in range(rect.position.x, rect.end.x):
 		for y in range(rect.position.y, rect.end.y):
 			var here = get_value(x, y)
-			var right = get_value(x + 1, y) if x + 1 < bounds.x else here
-			var below = get_value(x, y + 1) if y + 1 < bounds.y else here
+			var right = get_value(posmod(x + 1, bounds.x), y)
+			var below = get_value(x, posmod(y + 1, bounds.y))
 			var up = Vector3(0, 1, (here - below) * bump_scale)
 			var across = Vector3(1, 0, (right - here) * bump_scale)
 			var normal = across.cross(up).normalized()
 			var normal_rgb = normal * 0.5 + Vector3(0.5, 0.5, 0.5)
 			normalmap.set_pixel(x, y, Color(normal_rgb.x, normal_rgb.y, normal_rgb.z, 1))
 	normalmap.unlock()
+
+
+func resize(new_size: Vector2) -> void:
+	var image = create_image()
+	image.resize(int(new_size.x), int(new_size.y))
+	copy_from_image(image)

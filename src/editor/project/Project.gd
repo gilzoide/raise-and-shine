@@ -98,3 +98,8 @@ func apply_operation_to(operation, bitmap: BitMap, rect: Rect2) -> void:
 
 func operation_ended() -> void:
 	history.push_heightmapdata(height_data)
+
+
+func resize_maps(size: Vector2) -> void:
+	height_data.resize(size)
+	set_height_data(height_data)
