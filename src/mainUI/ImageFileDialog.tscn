@@ -11,6 +11,7 @@ anchor_top = 0.2
 anchor_right = 0.8
 anchor_bottom = 0.8
 window_title = "Abrir um Arquivo"
+resizable = true
 dialog_text = "You can also drop files to this window
 "
 mode = 0

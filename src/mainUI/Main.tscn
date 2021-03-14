@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://editor/VisualizerGrid.tscn" type="PackedScene" id=2]
 [ext_resource path="res://mainUI/UI_theme.tres" type="Theme" id=3]
 [ext_resource path="res://editor/inspector/LightInspector.tscn" type="PackedScene" id=4]
+[ext_resource path="res://mainUI/HelpMenuButton.gd" type="Script" id=5]
 [ext_resource path="res://editor/brush/BrushToolbar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://mainUI/EditMenuButton.gd" type="Script" id=7]
 [ext_resource path="res://mainUI/ViewMenuButton.gd" type="Script" id=10]
@@ -59,14 +60,22 @@ switch_on_hover = true
 script = ExtResource( 10 )
 visualizer_grid_path = NodePath("../../WorkbenchPanel/HSplitContainer/VisualizerGrid")
 
-[node name="VSeparator" type="VSeparator" parent="MainPanel/MenuBar"]
+[node name="HelpMenuButton" type="MenuButton" parent="MainPanel/MenuBar"]
 margin_left = 125.0
-margin_right = 129.0
+margin_right = 167.0
+margin_bottom = 44.0
+text = "Help"
+switch_on_hover = true
+script = ExtResource( 5 )
+
+[node name="VSeparator" type="VSeparator" parent="MainPanel/MenuBar"]
+margin_left = 171.0
+margin_right = 175.0
 margin_bottom = 44.0
 
 [node name="BrushToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 6 )]
-margin_left = 133.0
-margin_right = 702.0
+margin_left = 179.0
+margin_right = 748.0
 
 [node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]
 anchor_right = 1.0
