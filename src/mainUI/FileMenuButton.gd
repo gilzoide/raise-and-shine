@@ -7,6 +7,7 @@ extends MenuButton
 enum {
 	LOAD,
 	RESIZE,
+	_SEPARATOR_0,
 	QUIT,
 }
 
@@ -17,12 +18,13 @@ var size_picker_popup: Popup = null
 
 func _ready() -> void:
 	var popup = get_popup()
-	popup.add_item("Load", LOAD)
+	popup.add_item("Load texture", LOAD)
 	popup.set_item_shortcut(LOAD, preload("res://shortcuts/FileLoad_shortcut.tres"))
 	
 	popup.add_item("Resize maps", RESIZE)
 	
 	if OS.get_name() != "HTML5":
+		popup.add_separator()
 		popup.add_item("Quit", QUIT)
 		popup.set_item_shortcut(QUIT, load("res://shortcuts/Quit_shortcut.tres"))
 	popup.connect("id_pressed", self, "_on_item_pressed")
