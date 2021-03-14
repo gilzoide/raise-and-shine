@@ -35,7 +35,12 @@ onready var texture_rect = $TextureRect
 func _ready() -> void:
 	title_menu_button.text = MapTypes.map_name(type)
 	texture_rect.texture = MapTypes.map_texture(type)
-	project.connect("texture_updated", self, "_on_texture_updated")
+	if type == MapTypes.Type.ALBEDO_MAP:
+		project.connect("albedo_texture_changed", self, "_on_texture_updated")
+	elif type == MapTypes.Type.HEIGHT_MAP:
+		project.connect("height_texture_changed", self, "_on_texture_updated")
+	elif type == MapTypes.Type.NORMAL_MAP:
+		project.connect("normal_texture_changed", self, "_on_texture_updated")
 	
 	menu_popup.add_check_item("Filter texture", TOGGLE_FILTER)
 	update_filter_check_item()
@@ -56,10 +61,9 @@ func _on_menu_id_pressed(id: int) -> void:
 		project.save_image_dialog(type)
 
 
-func _on_texture_updated(type_: int, texture: Texture) -> void:
-	if type_ == type:
-		texture_rect.texture = texture
-		texture_rect.update()
+func _on_texture_updated(texture: Texture) -> void:
+	texture_rect.texture = texture
+	texture_rect.update()
 
 
 func update_filter_check_item() -> void:

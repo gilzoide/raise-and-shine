@@ -38,7 +38,7 @@ onready var plane_size = plane_mesh.size
 
 func _ready() -> void:
 	update_plane_dimensions()
-	var _err = project.connect("texture_updated", self, "_on_texture_updated")
+	var _err = project.connect("height_texture_changed", self, "_on_texture_updated")
 	_err = project.connect("height_changed", self, "update_heightmapshape_values")
 	normal_vectors.plane_size = plane_size
 	normal_vectors.update_all(project.normal_image, project.height_data)
@@ -67,9 +67,8 @@ func update_heightmapshape_values(height_data: HeightMapData, _rect = null) -> f
 	return height_scale
 
 
-func _on_texture_updated(type: int, _texture: Texture) -> void:
-	if type == HEIGHT_MAP:
-		update_plane_dimensions()
+func _on_texture_updated(_texture: Texture) -> void:
+	update_plane_dimensions()
 
 
 func set_alpha_enabled(value: bool) -> void:

@@ -41,17 +41,17 @@ var height_changed = false
 func _init() -> void:
 	update_with_size(project.height_image)
 	composed_bitmap.create(project.height_image.get_size())
-	project.connect("texture_updated", self, "_on_texture_updated")
+	project.connect("height_texture_changed", self, "_on_texture_updated")
 
 
-func _on_texture_updated(type: int, texture: Texture) -> void:
-	if type == MapTypes.Type.HEIGHT_MAP:
-		update_with_size(texture)
+func _on_texture_updated(texture: Texture) -> void:
+	update_with_size(texture)
 
 
 func update_with_size(image_or_texture) -> void:
 	var size: Vector2 = image_or_texture.get_size()
 	selection_bitmap.create(size)
+	composed_bitmap.create(size)
 	selection_image = selection_bitmap.create_image()
 	selection_texture.create_from_image(selection_image, selection_texture.flags)
 	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
@@ -143,7 +143,7 @@ func update_selection() -> void:
 
 
 func uv_to_position(uv: Vector2) -> Vector2:
-	return (uv * project.height_image.get_size()).floor()
+	return (uv * selection_bitmap.get_size()).floor()
 
 
 func clear(bit: bool = false) -> void:

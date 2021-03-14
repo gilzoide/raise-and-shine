@@ -4,7 +4,9 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Resource
 
-signal texture_updated(type, texture)
+signal albedo_texture_changed(texture)
+signal height_texture_changed(texture)
+signal normal_texture_changed(texture)
 signal height_changed(data, rect)
 
 export(Image) var albedo_image: Image = MapTypes.ALBEDO_IMAGE
@@ -23,15 +25,20 @@ func _init() -> void:
 	height_image.create(64, 64, false, HeightMapData.HEIGHT_IMAGE_FORMAT)
 	set_height_image(height_image)
 	history.set_heightmapdata(height_data)
-	history.connect("revision_changed", self, "_on_revision_changed")
+	history.connect("revision_changed", self, "set_height_data")
 
 
-func _on_revision_changed(data: HeightMapData) -> void:
-	height_data = data
+func set_height_data(data: HeightMapData) -> void:
+	var previous_size = height_texture.get_size()
+	height_data.copy_from(data)
 	height_data.fill_image(height_image)
 	height_texture.create_from_image(height_image, height_texture.flags)
-	height_data.fill_normalmap(normal_image)
+	normal_image = height_data.create_normalmap()
 	normal_texture.create_from_image(normal_image, normal_texture.flags)
+	
+	if previous_size != height_texture.get_size():
+		emit_signal("height_texture_changed", height_texture)
+		emit_signal("normal_texture_changed", normal_texture)
 
 
 func load_image_dialog(type: int) -> void:
@@ -61,7 +68,7 @@ func save_image_dialog(type: int) -> void:
 func set_albedo_image(value: Image) -> void:
 	albedo_image = value
 	albedo_texture.create_from_image(albedo_image, albedo_texture.flags)
-	emit_signal("texture_updated", MapTypes.Type.ALBEDO_MAP, albedo_texture)
+	emit_signal("albedo_texture_changed", albedo_texture)
 
 
 func set_height_image(value: Image) -> void:
@@ -69,14 +76,14 @@ func set_height_image(value: Image) -> void:
 	height_image.convert(HeightMapData.HEIGHT_IMAGE_FORMAT)
 	height_data.copy_from_image(height_image)
 	height_texture.create_from_image(height_image, height_texture.flags)
-	emit_signal("texture_updated", MapTypes.Type.HEIGHT_MAP, height_texture)
+	emit_signal("height_texture_changed", height_texture)
 	set_normal_image(height_data.create_normalmap())
 
 
 func set_normal_image(value: Image) -> void:
 	normal_image.copy_from(value)
 	normal_texture.create_from_image(normal_image, normal_texture.flags)
-	emit_signal("texture_updated", MapTypes.Type.NORMAL_MAP, normal_texture)
+	emit_signal("normal_texture_changed", normal_texture)
 
 
 func apply_operation_to(operation, bitmap: BitMap, rect: Rect2) -> void:
