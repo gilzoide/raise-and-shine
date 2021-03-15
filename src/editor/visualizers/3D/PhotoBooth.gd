@@ -22,7 +22,7 @@ enum {
 }
 
 export(float) var plate_angular_speed = 0.01
-export(float) var plane_subdivide_scale = 2
+export(float) var plane_subdivide_scale = 1
 
 var alpha_enabled: bool setget set_alpha_enabled, get_alpha_enabled
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
@@ -74,14 +74,16 @@ func update_heightmapshape_values(height_data: HeightMapData) -> float:
 	return height_scale
 
 
-func _on_texture_updated(_texture: Texture) -> void:
-	normal_vectors.update_all(project.normal_image, project.height_data)
+func _on_texture_updated(_texture: Texture, empty_data: bool = false) -> void:
 	update_plane_dimensions()
+	if normal_vectors.visible:
+		normal_vectors.update_all(project.normal_image, project.height_data, empty_data)
 
 
 func _on_height_changed(height_data: HeightMapData, rect: Rect2) -> void:
 	var _scale = update_heightmapshape_values(height_data)
-	normal_vectors.update_rect(project.normal_image, project.height_data, rect)
+	if normal_vectors.visible:
+		normal_vectors.update_rect(project.normal_image, project.height_data, rect)
 	
 
 
