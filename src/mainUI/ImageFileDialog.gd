@@ -50,12 +50,13 @@ func try_load_image(on_success_method: FuncRef) -> void:
 		drop_dialog.popup_centered_ratio()
 
 
-func try_save_image(image: Image) -> void:
+func try_save_image(image: Image, filename: String) -> void:
 	if OS.get_name() != "HTML5":
 		image_to_save = image
 		file_dialog.mode = FileDialog.MODE_SAVE_FILE
 		file_dialog.filters = SAVE_FILTERS
 		file_dialog.dialog_text = SAVE_TEXT
+		file_dialog.current_file = filename
 		file_dialog.popup_centered_ratio()
 	else:
 		var bytes = image.save_png_to_buffer()
@@ -69,8 +70,8 @@ func try_save_image(image: Image) -> void:
 					a.setAttribute('download', filename);
 					a.click();
 				}
-				download('%s', 'raise_and_shine_generated.png');
-			""" % uri)
+				download('%s', '%s');
+			""" % [uri, filename])
 		elif OS.shell_open(uri) != OK:
 			image_save_error.popup_centered()
 

@@ -18,6 +18,7 @@ export(ImageTexture) var normal_texture: ImageTexture = MapTypes.NORMAL_TEXTURE
 export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 
 var height_data: HeightMapData = HeightMapData.new()
+var last_loaded_filename := ""
 
 
 func _init() -> void:
@@ -55,21 +56,26 @@ func load_image_dialog(type: int) -> void:
 
 func save_image_dialog(type: int) -> void:
 	var image: Image = null
+	var filename = last_loaded_filename if last_loaded_filename != "" else "raise_and_shine_generated"
 	if type == MapTypes.Type.ALBEDO_MAP:
 		image = albedo_image
 	elif type == MapTypes.Type.HEIGHT_MAP:
 		image = height_image
+		filename += "_height"
 	elif type == MapTypes.Type.NORMAL_MAP:
 		image = normal_image
+		filename += "_normal"
 	assert(image != null, "Invalid map type %d" % type)
-	ImageFileDialog.try_save_image(image)
+	filename += ".png"
+	ImageFileDialog.try_save_image(image, filename)
 
 
 func load_project_dialog() -> void:
 	ImageFileDialog.try_load_image(funcref(self, "on_project_dialog_image"))
 
 
-func on_project_dialog_image(value: Image, _path: String = "") -> void:
+func on_project_dialog_image(value: Image, path: String = "") -> void:
+	last_loaded_filename = path.get_file().get_basename()
 	set_albedo_image(value)
 	var new_height_data = HeightMapData.new()
 	new_height_data.create(value.get_size())
