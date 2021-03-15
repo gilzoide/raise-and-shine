@@ -101,24 +101,29 @@ func drag_selection_moved(position: Vector2) -> void:
 	if active_tool == DragTool.BRUSH_PENCIL:
 		brush.paint_position(position)
 	else:
-		# snap to hovered pixel, as `uv_to_position` always floors position
+		var pivot_point = drag_start_position
+		# snap rect to hovered pixel, as `uv_to_position` always floors position
 		if position.x > drag_start_position.x:
 			position.x += 1
+		else:
+			pivot_point.x += 1
 		if position.y > drag_start_position.y:
 			position.y += 1
+		else:
+			pivot_point.y += 1
 		
-		var delta_pos = position - drag_start_position
+		var delta_pos = position - pivot_point
 		var delta_sign = delta_pos.sign()
 		if Input.is_action_pressed("snap_modifier"):
 			var abs_delta_pos = delta_pos.abs()
 			if abs_delta_pos.y > abs_delta_pos.x:
-				position.y = drag_start_position.y + delta_sign.y * abs_delta_pos.x
+				position.y = pivot_point.y + delta_sign.y * abs_delta_pos.x
 			elif abs_delta_pos.x > abs_delta_pos.y:
-				position.x = drag_start_position.x + delta_sign.x * abs_delta_pos.y
-			delta_pos = position - drag_start_position
-		var rect := Rect2(drag_start_position, Vector2.ZERO).expand(position)
+				position.x = pivot_point.x + delta_sign.x * abs_delta_pos.y
+			delta_pos = position - pivot_point
+		var rect := Rect2(pivot_point, Vector2.ZERO).expand(position)
 		if Input.is_action_pressed("selection_center_modifier"):
-			rect = rect.expand(drag_start_position - delta_pos)
+			rect = rect.expand(pivot_point - delta_pos)
 		rect.size.x = max(1.0, rect.size.x)
 		rect.size.y = max(1.0, rect.size.y)
 		brush.set_rect(rect, delta_sign.x * delta_sign.y)
