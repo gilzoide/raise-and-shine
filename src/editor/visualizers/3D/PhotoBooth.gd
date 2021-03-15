@@ -33,16 +33,14 @@ onready var heightmapshape_collision = $Plate/HeightMapShape
 onready var lights = $Lights
 onready var ambient_light = $WorldEnvironment
 onready var normal_vectors = $Plate/Model/NormalVectorsMultiMeshInstance
-onready var plane_size = plane_mesh.size
+onready var initial_plane_size := plane_mesh.size
+onready var plane_size := initial_plane_size
 
 
 func _ready() -> void:
 	update_plane_dimensions()
 	var _err = project.connect("height_texture_changed", self, "_on_texture_updated")
 	_err = project.connect("height_changed", self, "_on_height_changed")
-	normal_vectors.plane_size = plane_size
-	
-	border.setup_with_plane_size(plane_size)
 
 
 func update_plane_dimensions() -> void:
@@ -50,11 +48,20 @@ func update_plane_dimensions() -> void:
 	var size = height_map.get_size()
 	plane_mesh.subdivide_width = size.x * plane_subdivide_scale
 	plane_mesh.subdivide_depth = size.y * plane_subdivide_scale
+	if size.x > size.y:
+		plane_size.x = initial_plane_size.x
+		plane_size.y = initial_plane_size.y / size.aspect()
+	else:
+		plane_size.x = initial_plane_size.x * size.aspect()
+		plane_size.y = initial_plane_size.y
+	plane_mesh.size = plane_size
+	normal_vectors.plane_size = plane_size
+	border.setup_with_plane_size(plane_size)
 	var plane_heightmapshape = heightmapshape_collision.shape
-	plane_heightmapshape.map_width = size.x
-	plane_heightmapshape.map_depth = size.y
-	heightmapshape_collision.scale.x = plane_size.x / (size.x - 1)
-	heightmapshape_collision.scale.z = plane_size.y / (size.y - 1)
+	plane_heightmapshape.map_width = max(size.x, 2)
+	plane_heightmapshape.map_depth = max(size.y, 2)
+	heightmapshape_collision.scale.x = plane_size.x / max(size.x - 1, 1)
+	heightmapshape_collision.scale.z = plane_size.y / max(size.y - 1, 1)
 	var height_scale = update_heightmapshape_values(project.height_data)
 	normal_vectors.height_scale = height_scale
 	plane_material.set_shader_param("height_scale", height_scale)

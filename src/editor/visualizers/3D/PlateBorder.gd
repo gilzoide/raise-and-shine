@@ -13,6 +13,9 @@ func _ready() -> void:
 
 
 func setup_with_plane_size(size: Vector2) -> void:
+	var surface_count = mesh.get_surface_count()
+	if surface_count > 0:
+		mesh.surface_remove(surface_count - 1)
 	var half_size = size * 0.5
 	var inner_x = half_size.x
 	var outer_x = half_size.x + line_width
