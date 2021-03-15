@@ -1,4 +1,4 @@
-extends ToolButton
+extends Button
 
 export(Resource) var settings = preload("res://settings/DefaultSettings.tres")
 
