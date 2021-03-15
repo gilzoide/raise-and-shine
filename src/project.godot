@@ -49,6 +49,11 @@ ImageFileDialog="*res://mainUI/ImageFileDialog.tscn"
 PhotoBooth="*res://editor/visualizers/3D/PhotoBooth.tscn"
 LightEditorPopup="*res://editor/LightEditorPopup.tscn"
 
+[display]
+
+window/dpi/allow_hidpi=true
+window/energy_saving/keep_screen_on=false
+
 [editor_plugins]
 
 enabled=PoolStringArray( "key_shortcut_creator" )
