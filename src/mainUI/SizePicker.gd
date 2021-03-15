@@ -40,19 +40,21 @@ func update_values() -> void:
 
 
 func _on_WidthSpinBox_value_changed(value: float) -> void:
-	width = int(value)
-	if keep_aspect:
-		height = int(width / aspect)
-		height_picker.value = height
-	emit_signal("width_changed", width)
+	if not is_equal_approx(value, width):
+		width = int(value)
+		if keep_aspect:
+			height = int(width / aspect)
+			height_picker.value = height
+		emit_signal("width_changed", width)
 
 
 func _on_HeightSpinBox_value_changed(value: float) -> void:
-	height = int(value)
-	if keep_aspect:
-		width = int(aspect * height)
-		width_picker.value = width
-	emit_signal("height_changed", height)
+	if not is_equal_approx(value, height):
+		height = int(value)
+		if keep_aspect:
+			width = int(aspect * height)
+			width_picker.value = width
+		emit_signal("height_changed", height)
 
 
 func _on_AspectCheckButton_toggled(button_pressed: bool) -> void:
