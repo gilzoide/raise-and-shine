@@ -44,7 +44,7 @@ func _init() -> void:
 	project.connect("height_texture_changed", self, "_on_texture_updated")
 
 
-func _on_texture_updated(texture: Texture) -> void:
+func _on_texture_updated(texture: Texture, _empty_data: bool = false) -> void:
 	update_with_size(texture)
 
 

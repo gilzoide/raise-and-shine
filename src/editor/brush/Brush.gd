@@ -16,7 +16,6 @@ func set_rect(r: Rect2, line_direction: float = 1.0) -> void:
 	rect = r
 
 func paint_position(position: Vector2) -> void:
-
 	if rect.has_point(position):
 		bitmap.set_bit(position, true)
 

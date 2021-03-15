@@ -5,7 +5,7 @@
 extends Resource
 
 signal albedo_texture_changed(texture)
-signal height_texture_changed(texture)
+signal height_texture_changed(texture, empty_data)
 signal normal_texture_changed(texture)
 signal height_changed(data, rect)
 
@@ -29,16 +29,22 @@ func _init() -> void:
 	history.connect("revision_changed", self, "set_height_data")
 
 
-func set_height_data(data: HeightMapData) -> void:
+func set_height_data(data: HeightMapData, empty_data: bool = false) -> void:
 	var previous_size = height_texture.get_size()
 	height_data.copy_from(data)
-	height_data.fill_image(height_image)
+	if empty_data:
+		height_image.create(int(data.size.x), int(data.size.y), false, HeightMapData.HEIGHT_IMAGE_FORMAT)
+		height_image.fill(HeightMapData.EMPTY_HEIGHT_COLOR)
+		normal_image.create(int(data.size.x), int(data.size.y), false, HeightMapData.NORMAL_IMAGE_FORMAT)
+		normal_image.fill(HeightMapData.EMPTY_NORMAL_COLOR)
+	else:
+		height_data.fill_image(height_image)
+		normal_image = height_data.create_normalmap()
 	height_texture.create_from_image(height_image, height_texture.flags)
-	normal_image = height_data.create_normalmap()
 	normal_texture.create_from_image(normal_image, normal_texture.flags)
 	
 	if previous_size != height_texture.get_size():
-		emit_signal("height_texture_changed", height_texture)
+		emit_signal("height_texture_changed", height_texture, empty_data)
 		emit_signal("normal_texture_changed", normal_texture)
 
 
@@ -79,7 +85,7 @@ func on_project_dialog_image(value: Image, path: String = "") -> void:
 	set_albedo_image(value)
 	var new_height_data = HeightMapData.new()
 	new_height_data.create(value.get_size())
-	set_height_data(new_height_data)
+	set_height_data(new_height_data, true)
 
 
 func set_albedo_image(value: Image, _path: String = "") -> void:
@@ -93,7 +99,7 @@ func set_height_image(value: Image, _path: String = "") -> void:
 	height_image.convert(HeightMapData.HEIGHT_IMAGE_FORMAT)
 	height_data.copy_from_image(height_image)
 	height_texture.create_from_image(height_image, height_texture.flags)
-	emit_signal("height_texture_changed", height_texture)
+	emit_signal("height_texture_changed", height_texture, false)
 	set_normal_image(height_data.create_normalmap())
 
 

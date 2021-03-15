@@ -7,6 +7,9 @@ class_name HeightMapData
 extends Reference
 
 const HEIGHT_IMAGE_FORMAT = Image.FORMAT_L8
+const NORMAL_IMAGE_FORMAT = Image.FORMAT_RGB8
+const EMPTY_HEIGHT_COLOR = Color(0, 0, 0)
+const EMPTY_NORMAL_COLOR = Color(0.5, 0.5, 1)
 
 var luminance_array := PoolByteArray()
 var height_array := PoolRealArray()
@@ -75,7 +78,7 @@ func fill_image(image: Image) -> void:
 
 func create_normalmap() -> Image:
 	var normalmap = Image.new()
-	normalmap.create(size.x, size.y, false, Image.FORMAT_RGB8)
+	normalmap.create(size.x, size.y, false, NORMAL_IMAGE_FORMAT)
 	fill_normalmap(normalmap)
 	return normalmap
 

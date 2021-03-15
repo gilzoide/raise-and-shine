@@ -25,10 +25,26 @@ func _ready() -> void:
 	multimesh.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINES, arrays)
 
 
-func update_all(normalmap: Image, heightmap: HeightMapData) -> void:
+func update_all(normalmap: Image, heightmap: HeightMapData, empty_data: bool = false) -> void:
 	var size = normalmap.get_size()
 	multimesh.instance_count = int(size.x * size.y)
-	update_rect(normalmap, heightmap, Rect2(Vector2.ZERO, size))
+	if empty_data:
+		reset_all(heightmap.size)
+	else:
+		update_rect(normalmap, heightmap, Rect2(Vector2.ZERO, size))
+
+
+func reset_all(map_size: Vector2) -> void:
+	var stride = map_size.x
+	var half_size = map_size * 0.5
+	var origin_scale = plane_size / map_size
+	for x in map_size.x:
+		for y in map_size.y:
+			var i = y * stride + x
+			var origin2d = (Vector2(x, y) + PIXEL_CENTER_OFFSET - half_size) * origin_scale
+			var origin = Vector3(origin2d.x, 0, origin2d.y)
+			multimesh.set_instance_transform(i, Transform(Basis.IDENTITY, origin))
+			multimesh.set_instance_color(i, HeightMapData.EMPTY_NORMAL_COLOR)
 
 
 func update_rect(normalmap: Image, heightmap: HeightMapData, rect: Rect2) -> void:
