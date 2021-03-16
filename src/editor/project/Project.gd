@@ -116,11 +116,12 @@ func apply_operation_to(operation) -> void:
 	var changed_rect = operation.cached_rect.grow(1).clip(Rect2(Vector2.ZERO, height_data.size))
 	height_data.fill_normalmap(normal_image, changed_rect)
 	normal_texture.set_data(normal_image)
-	emit_signal("height_changed", height_data, changed_rect)
 
 
-func height_operation_ended() -> void:
+func height_operation_ended(operation) -> void:
 	history.push_heightmapdata(height_data)
+	var changed_rect = operation.cached_rect.grow(1).clip(Rect2(Vector2.ZERO, height_data.size))
+	emit_signal("height_changed", height_data, changed_rect)
 
 
 func resize_maps(size: Vector2) -> void:

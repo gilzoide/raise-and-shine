@@ -49,7 +49,7 @@ func set_drag_operation_started(button_index: int, uv: Vector2) -> void:
 func set_drag_operation_ended() -> void:
 	update_selection_bitmap()
 	if height_changed:
-		project.height_operation_ended()
+		project.height_operation_ended(drag_operation)
 		height_changed = false
 
 
