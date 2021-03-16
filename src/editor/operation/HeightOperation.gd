@@ -86,15 +86,14 @@ func recalculate_easing() -> void:
 			else:
 				v.z = get_direction_depth(normalized_delta, ease_func, direction)
 			cached_target[i] = v
+	is_easing_dirty = false
 
 
 func apply(heightmap: HeightMapData) -> void:
 	if is_easing_dirty:
 		recalculate_easing()
 	for v in cached_target:
-		var height = heightmap.get_value(v.x, v.y)
-		height = clamp(height + amount * v.z, 0, 1)
-		heightmap.set_value(v.x, v.y, height)
+		heightmap.increment_value(v.x, v.y, amount * v.z)
 
 
 static func is_radial_direction(value: float) -> bool:

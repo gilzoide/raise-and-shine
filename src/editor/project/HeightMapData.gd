@@ -42,19 +42,21 @@ func copy_from_image(image: Image) -> void:
 		height_array[i] = (luminance_array[i] / 255.0)
 
 
-func get_index(x: int, y: int) -> int:
-	return int(y * size.x + x)
-
-
 func get_value(x: int, y: int) -> float:
-	var index = get_index(x, y)
-	return height_array[index]
+	return height_array[y * size.x + x]
 
 
 func set_value(x: int, y: int, value: float) -> void:
-	var index = get_index(x, y)
+	var index = y * size.x + x
 	height_array[index] = value
 	luminance_array[index] = int(value * 255)
+
+
+func increment_value(x: int, y: int, increment: float) -> void:
+	var index = y * size.x + x
+	var height = clamp(height_array[index] + increment, 0, 1)
+	height_array[index] = height
+	luminance_array[index] = int(height * 255)
 
 
 func scaled(scale: float) -> PoolRealArray:
