@@ -12,11 +12,6 @@ enum DragTool {
 	HEIGHT_EDIT,
 }
 
-enum SelectionBehaviour {
-	UNION,
-	DIFFERENCE,
-}
-
 
 export(float) var drag_height_speed = 0.01
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
@@ -27,23 +22,9 @@ var selection_image: Image
 var selection_rect: Rect2 = Rect2()
 var drag_start_position: Vector2
 var height_changed = false
-var selection_size: Vector2
  
 # TODO: fill bitmap from selection snapshot
 var selection_bitmap := SelectionBitMap.new()
-
-
-func _init() -> void:
-	update_with_size(project.height_image.get_size())
-	project.connect("height_texture_changed", self, "_on_texture_updated")
-
-
-func _on_texture_updated(texture: Texture, _empty_data: bool = false) -> void:
-	update_with_size(texture.get_size())
-
-
-func update_with_size(size: Vector2) -> void:
-	selection_size = size
 
 
 func set_drag_operation_started(button_index: int, uv: Vector2) -> void:

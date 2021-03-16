@@ -33,8 +33,8 @@ func _draw() -> void:
 		draw_set_transform(center, 0, center)
 		draw_circle(Vector2.ZERO, 1, SELECTED_COLOR)
 	elif format == Format.LINE:
-		var from = Vector2.ZERO if line_direction >= 0 else Vector2(0, rect_size.y - 1)
-		var to = rect_size - Vector2.ONE if line_direction >= 0 else Vector2(rect_size.x - 1, 0)
+		var from = Vector2.ZERO if line_direction >= 0 else Vector2(0, rect_size.y)
+		var to = rect_size if line_direction >= 0 else Vector2(rect_size.x, 0)
 		draw_line(from, to, SELECTED_COLOR)
 
 
