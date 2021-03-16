@@ -17,68 +17,55 @@ enum SelectionBehaviour {
 	DIFFERENCE,
 }
 
-const INVALID_POSITION = Vector2(-1, -1)
-const SELECTED_PIXEL = SelectionBitMap.TRUE_COLOR
-const NOT_SELECTED_PIXEL = SelectionBitMap.FALSE_COLOR
 
 export(float) var drag_height_speed = 0.01
-export(ImageTexture) var selection_texture: ImageTexture = preload("res://textures/Selection_imagetexture.tres")
-export(ShaderMaterial) var selection_material: ShaderMaterial = preload("res://editor/visualizers/2D/ShowSelection_material.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
-export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 export(Resource) var drag_operation = preload("res://editor/operation/DragOperation.tres")
 export(DragTool) var active_tool := DragTool.BRUSH_RECTANGLE
 
-var selection_start_behaviour = SelectionBehaviour.UNION
-var selection_image: Image = Image.new()
-var selection_bitmap: SelectionBitMap = SelectionBitMap.new()
-var composed_bitmap: SelectionBitMap = SelectionBitMap.new()
+var selection_image: Image
 var selection_rect: Rect2 = Rect2()
 var drag_start_position: Vector2
 var height_changed = false
+var selection_size: Vector2
+ 
+# TODO: fill bitmap from selection snapshot
+var selection_bitmap := SelectionBitMap.new()
 
 
 func _init() -> void:
-	update_with_size(project.height_image)
-	composed_bitmap.create(project.height_image.get_size())
+	update_with_size(project.height_image.get_size())
 	project.connect("height_texture_changed", self, "_on_texture_updated")
 
 
 func _on_texture_updated(texture: Texture, _empty_data: bool = false) -> void:
-	update_with_size(texture)
+	update_with_size(texture.get_size())
 
 
-func update_with_size(image_or_texture) -> void:
-	var size: Vector2 = image_or_texture.get_size()
-	selection_bitmap.create(size)
-	composed_bitmap.create(size)
-	selection_image = selection_bitmap.create_image()
-	selection_texture.create_from_image(selection_image, selection_texture.flags)
-	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
+func update_with_size(size: Vector2) -> void:
+	selection_size = size
 
 
 func set_drag_operation_started(button_index: int, uv: Vector2) -> void:
+	var is_union = button_index != BUTTON_RIGHT
 	if active_tool == DragTool.BRUSH_RECTANGLE:
-		brush.format = SelectionBitMap.Format.RECTANGLE
+		SelectionDrawer.set_format(SelectionCanvasItem.Format.RECTANGLE, is_union)
 	elif active_tool == DragTool.BRUSH_ELLIPSE:
-		brush.format = SelectionBitMap.Format.ELLIPSE
+		SelectionDrawer.set_format(SelectionCanvasItem.Format.ELLIPSE, is_union)
 	elif active_tool == DragTool.BRUSH_LINE:
-		brush.format = SelectionBitMap.Format.LINE
+		SelectionDrawer.set_format(SelectionCanvasItem.Format.LINE, is_union)
 	elif active_tool == DragTool.BRUSH_PENCIL:
-		brush.format = SelectionBitMap.Format.PENCIL
-		brush.set_rect(Rect2(Vector2.ZERO, selection_bitmap.get_size()))
+		SelectionDrawer.set_format(SelectionCanvasItem.Format.PENCIL, is_union)
 	elif active_tool == DragTool.HEIGHT_EDIT:
 		selection_rect = selection_bitmap.get_true_rect()
 		return
 	
-	selection_start_behaviour = SelectionBehaviour.DIFFERENCE if button_index == BUTTON_RIGHT else SelectionBehaviour.UNION
 	drag_start_position = uv_to_position(uv)
 	drag_selection_moved(drag_start_position)
 
 
 func set_drag_operation_ended() -> void:
-	selection_bitmap.copy_from(composed_bitmap)
-	brush.blit_to_image(selection_image)
+	update_selection_bitmap()
 	if height_changed:
 		project.operation_ended()
 		height_changed = false
@@ -99,7 +86,7 @@ func drag_height_moved(relative_movement: Vector2) -> void:
 
 func drag_selection_moved(position: Vector2) -> void:
 	if active_tool == DragTool.BRUSH_PENCIL:
-		brush.paint_position(position)
+		SelectionDrawer.paint_position(position)
 	else:
 		var pivot_point = drag_start_position
 		# snap rect to hovered pixel, as `uv_to_position` always floors position
@@ -126,8 +113,7 @@ func drag_selection_moved(position: Vector2) -> void:
 			rect = rect.expand(pivot_point - delta_pos)
 		rect.size.x = max(1.0, rect.size.x)
 		rect.size.y = max(1.0, rect.size.y)
-		brush.set_rect(rect, delta_sign.x * delta_sign.y)
-	update_selection()
+		SelectionDrawer.update_selection_rect(rect, delta_sign.x * delta_sign.y)
 
 
 func get_cursor_for_active_tool() -> int:
@@ -137,33 +123,20 @@ func get_cursor_for_active_tool() -> int:
 		return Control.CURSOR_CROSS
 
 
-func update_selection() -> void:
-	composed_bitmap.copy_from(selection_bitmap)
-	if selection_start_behaviour == SelectionBehaviour.DIFFERENCE:
-		composed_bitmap.blend_difference(brush.bitmap, brush.rect.position)
-	else:
-		composed_bitmap.blend_sum(brush.bitmap, brush.rect.position)
-	composed_bitmap.blit_to_image(selection_image)
-	update_texture()
-
-
 func uv_to_position(uv: Vector2) -> Vector2:
-	return (uv * selection_bitmap.get_size()).floor()
+	return (uv * SelectionDrawer.size).floor()
 
 
 func clear(bit: bool = false) -> void:
-	selection_bitmap.clear(bit)
-	composed_bitmap.copy_from(selection_bitmap)
-	selection_image.fill(SELECTED_PIXEL if bit else NOT_SELECTED_PIXEL)
-	update_texture()
+	SelectionDrawer.clear(bit)
+	update_selection_bitmap()
 
 
 func invert() -> void:
-	selection_bitmap.invert()
-	composed_bitmap.copy_from(selection_bitmap)
-	selection_bitmap.blit_to_image(selection_image)
-	update_texture()
+	SelectionDrawer.invert()
+	update_selection_bitmap()
 
 
-func update_texture() -> void:
-	selection_texture.set_data(selection_image)
+func update_selection_bitmap() -> void:
+	yield(VisualServer, "frame_post_draw")
+	selection_image = SelectionDrawer.take_snapshot()
