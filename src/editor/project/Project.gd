@@ -119,7 +119,7 @@ func apply_operation_to(operation, bitmap: BitMap, rect: Rect2) -> void:
 	emit_signal("height_changed", height_data, changed_rect)
 
 
-func operation_ended() -> void:
+func height_operation_ended() -> void:
 	history.push_heightmapdata(height_data)
 
 

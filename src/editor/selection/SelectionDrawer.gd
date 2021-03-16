@@ -86,7 +86,6 @@ func invert() -> void:
 	current_selection.update()
 
 
-func take_snapshot() -> Image:
+func take_snapshot() -> void:
 	snapshot_image = get_texture().get_data()
 	snapshot_texture.set_data(snapshot_image)
-	return snapshot_image

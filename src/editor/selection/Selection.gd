@@ -18,12 +18,8 @@ export(Resource) var project = preload("res://editor/project/ActiveEditorProject
 export(Resource) var drag_operation = preload("res://editor/operation/DragOperation.tres")
 export(DragTool) var active_tool := DragTool.BRUSH_RECTANGLE
 
-var selection_image: Image
-var selection_rect: Rect2 = Rect2()
 var drag_start_position: Vector2
 var height_changed = false
- 
-# TODO: fill bitmap from selection snapshot
 var selection_bitmap := SelectionBitMap.new()
 
 
@@ -38,7 +34,7 @@ func set_drag_operation_started(button_index: int, uv: Vector2) -> void:
 	elif active_tool == DragTool.BRUSH_PENCIL:
 		SelectionDrawer.set_format(SelectionCanvasItem.Format.PENCIL, is_union)
 	elif active_tool == DragTool.HEIGHT_EDIT:
-		selection_rect = selection_bitmap.get_true_rect()
+		selection_bitmap.create_from_image(SelectionDrawer.snapshot_image)
 		return
 	
 	drag_start_position = uv_to_position(uv)
@@ -48,7 +44,7 @@ func set_drag_operation_started(button_index: int, uv: Vector2) -> void:
 func set_drag_operation_ended() -> void:
 	update_selection_bitmap()
 	if height_changed:
-		project.operation_ended()
+		project.height_operation_ended()
 		height_changed = false
 
 
@@ -61,7 +57,7 @@ func set_drag_hovering(relative_movement: Vector2, uv: Vector2) -> void:
 
 func drag_height_moved(relative_movement: Vector2) -> void:
 	drag_operation.amount = -relative_movement.y * drag_height_speed
-	project.apply_operation_to(drag_operation, selection_bitmap, selection_rect)
+	project.apply_operation_to(drag_operation, selection_bitmap, selection_bitmap.true_rect)
 	height_changed = true
 
 
@@ -120,4 +116,4 @@ func invert() -> void:
 
 func update_selection_bitmap() -> void:
 	yield(VisualServer, "frame_post_draw")
-	selection_image = SelectionDrawer.take_snapshot()
+	SelectionDrawer.take_snapshot()

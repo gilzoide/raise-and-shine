@@ -14,7 +14,6 @@ enum Format {
 	RECTANGLE,
 	ELLIPSE,
 	LINE,
-	
 	PENCIL,
 }
 
