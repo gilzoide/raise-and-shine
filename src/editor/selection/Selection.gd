@@ -23,7 +23,16 @@ var height_changed = false
 var selection_bitmap := SelectionBitMap.new()
 
 
+func set_active_tool(new_tool: int) -> void:
+	active_tool = new_tool
+	if active_tool == DragTool.HEIGHT_EDIT:
+		selection_bitmap.create_from_image(SelectionDrawer.snapshot_image)
+
+
 func set_drag_operation_started(button_index: int, uv: Vector2) -> void:
+	if active_tool == DragTool.HEIGHT_EDIT:
+		return
+	
 	var is_union = button_index != BUTTON_RIGHT
 	if active_tool == DragTool.BRUSH_RECTANGLE:
 		SelectionDrawer.set_format(SelectionCanvasItem.Format.RECTANGLE, is_union)
@@ -33,9 +42,6 @@ func set_drag_operation_started(button_index: int, uv: Vector2) -> void:
 		SelectionDrawer.set_format(SelectionCanvasItem.Format.LINE, is_union)
 	elif active_tool == DragTool.BRUSH_PENCIL:
 		SelectionDrawer.set_format(SelectionCanvasItem.Format.PENCIL, is_union)
-	elif active_tool == DragTool.HEIGHT_EDIT:
-		selection_bitmap.create_from_image(SelectionDrawer.snapshot_image)
-		return
 	
 	drag_start_position = uv_to_position(uv)
 	drag_selection_moved(drag_start_position)
