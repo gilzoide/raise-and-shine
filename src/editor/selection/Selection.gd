@@ -20,13 +20,12 @@ export(DragTool) var active_tool := DragTool.BRUSH_RECTANGLE
 
 var drag_start_position: Vector2
 var height_changed = false
-var selection_bitmap := SelectionBitMap.new()
 
 
 func set_active_tool(new_tool: int) -> void:
 	active_tool = new_tool
 	if active_tool == DragTool.HEIGHT_EDIT:
-		selection_bitmap.create_from_image(SelectionDrawer.snapshot_image)
+		drag_operation.cache_target_from_selection(SelectionDrawer.snapshot_image)
 
 
 func set_drag_operation_started(button_index: int, uv: Vector2) -> void:
@@ -63,7 +62,7 @@ func set_drag_hovering(relative_movement: Vector2, uv: Vector2) -> void:
 
 func drag_height_moved(relative_movement: Vector2) -> void:
 	drag_operation.amount = -relative_movement.y * drag_height_speed
-	project.apply_operation_to(drag_operation, selection_bitmap, selection_bitmap.true_rect)
+	project.apply_operation_to(drag_operation)
 	height_changed = true
 
 
@@ -123,3 +122,5 @@ func invert() -> void:
 func update_selection_bitmap() -> void:
 	yield(VisualServer, "frame_post_draw")
 	SelectionDrawer.take_snapshot()
+	if active_tool == DragTool.HEIGHT_EDIT:
+		drag_operation.cache_target_from_selection(SelectionDrawer.snapshot_image)

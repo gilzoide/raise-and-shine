@@ -4,12 +4,6 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Resource
 
-enum Operation {
-	INCREASE_BY,
-	DECREASE_BY,
-	SET_VALUE,
-}
-
 enum Easing {
 	FLAT,
 	LINEAR,
@@ -20,67 +14,95 @@ enum Easing {
 	CIRCULAR_OUT,
 }
 
+const EASING_FUNC_NAMES = [
+	"flat",
+	"ease_linear",
+	"ease_in",
+	"ease_out",
+	"ease_inout",
+	"ease_in_circular",
+	"ease_out_circular",
+]
+
 const RADIAL_DIRECTION = NAN
 const PIXEL_CENTER_OFFSET = Vector2(0.5, 0.5)
 
-export(Operation) var type = Operation.INCREASE_BY
-export(float) var amount = 0.1
-export(Easing) var easing = Easing.FLAT
-export(float) var direction = RADIAL_DIRECTION
+export(float) var amount := 0.1
+export(Easing) var easing := Easing.FLAT
+export(float) var direction := RADIAL_DIRECTION
+
+var cached_target: PoolVector3Array
+var cached_rect: Rect2
+var is_easing_dirty := false
 
 
-func apply(heightmap: HeightMapData, mask: BitMap, rect: Rect2) -> void:
-	offset_by(heightmap, mask, rect, amount)
+func set_easing(value: int) -> void:
+	is_easing_dirty = value != easing
+	easing = value
 
 
-func offset_by(heightmap: HeightMapData, mask: BitMap, rect: Rect2, value: float) -> void:
-	var ease_func = easing_func(easing)
-	var half_size = rect.size * 0.5
-	var center = rect.position + half_size
-	for x in range(rect.position.x, rect.end.x):
-		for y in range(rect.position.y, rect.end.y):
-			var v = Vector2(x, y)
-			if mask.get_bit(v):
-				var height = heightmap.get_value(x, y)
-				var depth
-				if easing == Easing.FLAT:
-					depth = 1.0
-				else:
-					var normalized_delta = (v + PIXEL_CENTER_OFFSET - center) / half_size
-					if is_radial_direction(direction):
-						depth = get_brush_depth(normalized_delta.length(), ease_func)
-					else:
-						depth = get_direction_depth(normalized_delta, ease_func, direction)
-				height = clamp(height + value * depth, 0, 1)
-				heightmap.set_value(x, y, height)
+func set_direction(value: float) -> void:
+	is_easing_dirty = value != direction
+	direction = value
 
 
-func easing_func(easing_: int) -> FuncRef:
-	if easing_ == Easing.FLAT:
-		return funcref(self, "flat")
-	elif easing_ == Easing.LINEAR:
-		return funcref(self, "ease_linear")
-	elif easing_ == Easing.EASE_IN:
-		return funcref(self, "ease_in")
-	elif easing_ == Easing.EASE_OUT:
-		return funcref(self, "ease_out")
-	elif easing_ == Easing.EASE_INOUT:
-		return funcref(self, "ease_inout")
-	elif easing_ == Easing.CIRCULAR_IN:
-		return funcref(self, "ease_in_circular")
-	elif easing_ == Easing.CIRCULAR_OUT:
-		return funcref(self, "ease_out_circular")
+func cache_target_from_selection(image: Image) -> void:
+	cached_target.resize(0)
+	var size = image.get_size()
+	var min_x = size.x
+	var min_y = size.y
+	var max_x = -1
+	var max_y = -1
+	image.lock()
+	for x in size.x:
+		for y in size.y:
+			if image.get_pixel(x, y).r > 0.5:
+				cached_target.append(Vector3(x, y, 1.0))
+				min_x = min(x, min_x)
+				min_y = min(y, min_y)
+				max_x = max(x, max_x)
+				max_y = max(y, max_y)
+	image.unlock()
+	cached_rect = Rect2(min_x, min_y, max_x - min_x + 1, max_y - min_y + 1)
+	if easing != Easing.FLAT:
+		recalculate_easing()
+
+
+func recalculate_easing() -> void:
+	if easing == Easing.FLAT:
+		for i in cached_target.size():
+			var v = cached_target[i]
+			v.z = 1.0
+			cached_target[i] = v
 	else:
-		assert(false, "FIXME!!!")
-		return null
+		var ease_func = funcref(self, EASING_FUNC_NAMES[easing])
+		var half_size = cached_rect.size * 0.5
+		var center = cached_rect.position + half_size
+		for i in cached_target.size():
+			var v = cached_target[i]
+			var normalized_delta = (Vector2(v.x, v.y) + PIXEL_CENTER_OFFSET - center) / half_size
+			if is_radial_direction(direction):
+				v.z = get_brush_depth(normalized_delta.length(), ease_func)
+			else:
+				v.z = get_direction_depth(normalized_delta, ease_func, direction)
+			cached_target[i] = v
+
+
+func apply(heightmap: HeightMapData) -> void:
+	if is_easing_dirty:
+		recalculate_easing()
+	for v in cached_target:
+		var height = heightmap.get_value(v.x, v.y)
+		height = clamp(height + amount * v.z, 0, 1)
+		heightmap.set_value(v.x, v.y, height)
 
 
 static func is_radial_direction(value: float) -> bool:
 	return is_nan(value)
 
 
-static func get_direction_depth(normalized_delta: Vector2, ease_func: FuncRef, direction_: float) -> float:
-	var delta_factor = -cos(direction_ - normalized_delta.angle())
+static func get_direction_depth(normalized_delta: Vector2, ease_func: FuncRef, direction: float) -> float:
+	var delta_factor = -cos(direction - normalized_delta.angle())
 	var percent_from_highest = delta_factor * normalized_delta.length() * 0.5 + 0.5
 	return get_brush_depth(percent_from_highest, ease_func)
 

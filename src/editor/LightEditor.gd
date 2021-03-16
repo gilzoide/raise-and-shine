@@ -21,8 +21,8 @@ func set_energy(value: float) -> void:
 	energy_slider.value = value
 
 
-func _on_ColorPicker_color_changed(color_: Color) -> void:
-	emit_signal("color_changed", color_)
+func _on_ColorPicker_color_changed(color: Color) -> void:
+	emit_signal("color_changed", color)
 
 
 func _on_energy_value_changed(value: float) -> void:

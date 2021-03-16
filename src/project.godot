@@ -24,11 +24,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://editor/project/MapTypes.gd"
 }, {
-"base": "BitMap",
-"class": "SelectionBitMap",
-"language": "GDScript",
-"path": "res://editor/selection/SelectionBitMap.gd"
-}, {
 "base": "Control",
 "class": "SelectionCanvasItem",
 "language": "GDScript",
@@ -38,7 +33,6 @@ _global_script_class_icons={
 "ControlExtras": "",
 "HeightMapData": "",
 "MapTypes": "",
-"SelectionBitMap": "",
 "SelectionCanvasItem": ""
 }
 
@@ -55,6 +49,10 @@ SelectionDrawer="*res://editor/selection/SelectionDrawer.tscn"
 PhotoBooth="*res://editor/visualizers/3D/PhotoBooth.tscn"
 LightEditorPopup="*res://editor/LightEditorPopup.tscn"
 ImageFileDialog="*res://mainUI/ImageFileDialog.tscn"
+
+[debug]
+
+gdscript/warnings/shadowed_variable=false
 
 [display]
 

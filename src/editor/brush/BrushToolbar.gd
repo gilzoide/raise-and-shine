@@ -23,7 +23,7 @@ func _ready() -> void:
 
 
 func _on_EasingPicker_item_selected(index: int) -> void:
-	operation.easing = index
+	operation.set_easing(index)
 
 
 func _on_tool_button_pressed(op: int) -> void:
