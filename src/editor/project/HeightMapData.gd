@@ -52,11 +52,13 @@ func set_value(x: int, y: int, value: float) -> void:
 	luminance_array[index] = int(value * 255)
 
 
-func increment_value(x: int, y: int, increment: float) -> void:
-	var index = y * size.x + x
-	var height = clamp(height_array[index] + increment, 0, 1)
-	height_array[index] = height
-	luminance_array[index] = int(height * 255)
+func increment_all_values(values: PoolVector2Array, amount: float) -> void:
+	for index_depth in values:
+		var index = index_depth.x
+		var depth = index_depth.y
+		var height = clamp(height_array[index] + depth * amount, 0, 1)
+		height_array[index] = height
+		luminance_array[index] = int(height * 255)
 
 
 func scaled(scale: float) -> PoolRealArray:
@@ -88,12 +90,13 @@ func create_normalmap() -> Image:
 func fill_normalmap(normalmap: Image, rect: Rect2 = Rect2(Vector2.ZERO, size)) -> void:
 	var bounds = size
 	var bump_scale = min(bounds.x, bounds.y)
+	var stride = size.x
 	normalmap.lock()
 	for x in range(rect.position.x, rect.end.x):
 		for y in range(rect.position.y, rect.end.y):
-			var here = get_value(x, y)
-			var right = get_value(posmod(x + 1, bounds.x), y)
-			var below = get_value(x, posmod(y + 1, bounds.y))
+			var here = height_array[y * stride + x]
+			var right = height_array[y * stride + posmod(x + 1, bounds.x)]
+			var below = height_array[posmod(y + 1, bounds.y) * stride + x]
 			var up = Vector3(0, 1, (here - below) * bump_scale)
 			var across = Vector3(1, 0, (right - here) * bump_scale)
 			var normal = across.cross(up).normalized()

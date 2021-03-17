@@ -31,7 +31,8 @@ export(float) var amount := 0.1
 export(Easing) var easing := Easing.FLAT
 export(float) var direction := RADIAL_DIRECTION
 
-var cached_target: PoolVector3Array
+var cached_positions: PoolVector2Array
+var cached_target: PoolVector2Array  # x is height index, y is easing depth
 var cached_rect: Rect2
 var is_easing_dirty := false
 
@@ -47,8 +48,10 @@ func set_direction(value: float) -> void:
 
 
 func cache_target_from_selection(image: Image) -> void:
+	cached_positions.resize(0)
 	cached_target.resize(0)
 	var size = image.get_size()
+	var stride = size.x
 	var min_x = size.x
 	var min_y = size.y
 	var max_x = -1
@@ -57,7 +60,9 @@ func cache_target_from_selection(image: Image) -> void:
 	for x in size.x:
 		for y in size.y:
 			if image.get_pixel(x, y).r > 0.5:
-				cached_target.append(Vector3(x, y, 1.0))
+				cached_positions.append(Vector2(x, y))
+				var index = y * stride + x
+				cached_target.append(Vector2(index, 1.0))
 				min_x = min(x, min_x)
 				min_y = min(y, min_y)
 				max_x = max(x, max_x)
@@ -72,19 +77,21 @@ func recalculate_easing() -> void:
 	if easing == Easing.FLAT:
 		for i in cached_target.size():
 			var v = cached_target[i]
-			v.z = 1.0
+			v.y = 1.0
 			cached_target[i] = v
 	else:
 		var ease_func = funcref(self, EASING_FUNC_NAMES[easing])
 		var half_size = cached_rect.size * 0.5
 		var center = cached_rect.position + half_size
-		for i in cached_target.size():
+		var is_radial = is_radial_direction(direction)
+		for i in cached_positions.size():
+			var pos = cached_positions[i]
 			var v = cached_target[i]
-			var normalized_delta = (Vector2(v.x, v.y) + PIXEL_CENTER_OFFSET - center) / half_size
-			if is_radial_direction(direction):
-				v.z = get_brush_depth(normalized_delta.length(), ease_func)
+			var normalized_delta = (pos + PIXEL_CENTER_OFFSET - center) / half_size
+			if is_radial:
+				v.y = get_brush_depth(normalized_delta.length(), ease_func)
 			else:
-				v.z = get_direction_depth(normalized_delta, ease_func, direction)
+				v.y = get_direction_depth(normalized_delta, ease_func, direction)
 			cached_target[i] = v
 	is_easing_dirty = false
 
@@ -92,8 +99,7 @@ func recalculate_easing() -> void:
 func apply(heightmap: HeightMapData) -> void:
 	if is_easing_dirty:
 		recalculate_easing()
-	for v in cached_target:
-		heightmap.increment_value(v.x, v.y, amount * v.z)
+	heightmap.increment_all_values(cached_target, amount)
 
 
 static func is_radial_direction(value: float) -> bool:
