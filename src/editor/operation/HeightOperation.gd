@@ -27,7 +27,6 @@ const EASING_FUNC_NAMES = [
 const RADIAL_DIRECTION = NAN
 const PIXEL_CENTER_OFFSET = Vector2(0.5, 0.5)
 
-export(float) var amount := 0.1
 export(Easing) var easing := Easing.FLAT
 export(float) var direction := RADIAL_DIRECTION
 
@@ -96,7 +95,7 @@ func recalculate_easing() -> void:
 	is_easing_dirty = false
 
 
-func apply(heightmap: HeightMapData) -> void:
+func apply(heightmap: HeightMapData, amount: float) -> void:
 	if is_easing_dirty:
 		recalculate_easing()
 	heightmap.increment_all_values(cached_target, amount)

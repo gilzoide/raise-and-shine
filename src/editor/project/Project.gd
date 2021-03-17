@@ -109,8 +109,8 @@ func set_normal_image(value: Image, _path: String = "") -> void:
 	emit_signal("normal_texture_changed", normal_texture)
 
 
-func apply_operation_to(operation) -> void:
-	operation.apply(height_data)
+func apply_operation(operation, amount: float) -> void:
+	operation.apply(height_data, amount)
 	height_data.fill_image(height_image)
 	height_texture.set_data(height_image)
 	var changed_rect = operation.cached_rect.grow(1).clip(Rect2(Vector2.ZERO, height_data.size))

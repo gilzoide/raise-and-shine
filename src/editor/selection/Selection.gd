@@ -61,8 +61,7 @@ func set_drag_hovering(relative_movement: Vector2, uv: Vector2) -> void:
 
 
 func drag_height_moved(relative_movement: Vector2) -> void:
-	drag_operation.amount = -relative_movement.y * drag_height_speed
-	project.apply_operation_to(drag_operation)
+	project.apply_operation(drag_operation, -relative_movement.y * drag_height_speed)
 	height_changed = true
 
 

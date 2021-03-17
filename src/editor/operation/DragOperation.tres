@@ -4,6 +4,5 @@
 
 [resource]
 script = ExtResource( 1 )
-amount = 0.1
 easing = 0
 direction = nan
