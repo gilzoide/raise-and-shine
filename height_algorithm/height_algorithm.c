@@ -10,9 +10,8 @@
 const godot_gdnative_core_api_struct *api = NULL;
 const godot_gdnative_ext_nativescript_api_struct *nativescript_api = NULL;
 
-godot_method_bind *OBJECT_GET = NULL;
-godot_method_bind *OBJECT_SET = NULL;
-
+godot_string GET_NAME;
+godot_string SET_NAME;
 godot_variant HEIGHT_ARRAY_NAME;
 godot_variant LUMINANCE_ARRAY_NAME;
 
@@ -47,17 +46,17 @@ GDCALLINGCONV void null_destructor(godot_object *p_instance, void *p_method_data
 // Methods
 ///////////////////////////////////////////////////////////////////////////////
 GDCALLINGCONV godot_variant apply_height_increments(godot_object *p_instance, void *p_method_data,
-        void *p_user_data, int p_num_args, godot_variant **p_args) {
+        void *p_user_data, int argc, godot_variant **argv) {
     godot_variant_call_error error;
 
     // *arguments*
-    godot_object *height_data = api->godot_variant_as_object(p_args[0]);
-    godot_pool_vector2_array values = api->godot_variant_as_pool_vector2_array(p_args[1]);
-    double amount = api->godot_variant_as_real(p_args[2]);
+    godot_variant *height_data = argv[0];
+    godot_pool_vector2_array values = api->godot_variant_as_pool_vector2_array(argv[1]);
+    double amount = api->godot_variant_as_real(argv[2]);
 
     // var height_array = height_data.get(HEIGHT_ARRAY_NAME)
-    godot_variant height_array_variant = api->godot_method_bind_call(
-        OBJECT_GET, height_data,
+    godot_variant height_array_variant = api->godot_variant_call(
+        height_data, &GET_NAME,
         (const godot_variant *[]){ &HEIGHT_ARRAY_NAME }, 1,
         &error
     );
@@ -67,8 +66,8 @@ GDCALLINGCONV godot_variant apply_height_increments(godot_object *p_instance, vo
     godot_real *height_ptr = api->godot_pool_real_array_write_access_ptr(height_array_access);
 
     // var luminance_array = height_data.get(LUMINANCE_ARRAY_NAME)
-    godot_variant luminance_array_variant = api->godot_method_bind_call(
-        OBJECT_GET, height_data,
+    godot_variant luminance_array_variant = api->godot_variant_call(
+        height_data, &GET_NAME,
         (const godot_variant *[]){ &LUMINANCE_ARRAY_NAME }, 1,
         &error
     );
@@ -93,8 +92,8 @@ GDCALLINGCONV godot_variant apply_height_increments(godot_object *p_instance, vo
     // height_data.set(HEIGHT_ARRAY_NAME, height_array)
     api->godot_variant_destroy(&height_array_variant);
     api->godot_variant_new_pool_real_array(&height_array_variant, &height_array);
-    api->godot_method_bind_call(
-        OBJECT_SET, height_data,
+    api->godot_variant_call(
+        height_data, &SET_NAME,
         (const godot_variant *[]){ &HEIGHT_ARRAY_NAME, &height_array_variant }, 2,
         &error
     );
@@ -102,8 +101,8 @@ GDCALLINGCONV godot_variant apply_height_increments(godot_object *p_instance, vo
     // height_data.set(LUMINANCE_ARRAY_NAME, luminance_array)
     api->godot_variant_destroy(&luminance_array_variant);
     api->godot_variant_new_pool_byte_array(&luminance_array_variant, &luminance_array);
-    api->godot_method_bind_call(
-        OBJECT_SET, height_data,
+    api->godot_variant_call(
+        height_data, &SET_NAME,
         (const godot_variant *[]){ &LUMINANCE_ARRAY_NAME, &luminance_array_variant }, 2,
         &error
     );
@@ -133,8 +132,8 @@ GDCALLINGCONV godot_variant apply_height_increments(godot_object *p_instance, vo
 ///////////////////////////////////////////////////////////////////////////////
 void GDN_EXPORT godot_gdnative_init(godot_gdnative_init_options *p_options) {
     api = p_options->api_struct;
-    OBJECT_GET = api->godot_method_bind_get_method("Object", "get");
-    OBJECT_SET = api->godot_method_bind_get_method("Object", "set");
+    GET_NAME = STR("get");
+    SET_NAME = STR("set");
 
     godot_string height_array_name = STR("height_array");
     api->godot_variant_new_string(&HEIGHT_ARRAY_NAME, &height_array_name);
@@ -158,8 +157,8 @@ void GDN_EXPORT godot_gdnative_init(godot_gdnative_init_options *p_options) {
 void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_options *p_options) {
     api->godot_variant_destroy(&LUMINANCE_ARRAY_NAME);
     api->godot_variant_destroy(&HEIGHT_ARRAY_NAME);
-    OBJECT_SET = NULL;
-    OBJECT_GET = NULL;
+    api->godot_string_destroy(&SET_NAME);
+    api->godot_string_destroy(&GET_NAME);
     nativescript_api = NULL;
     api = NULL;
 }
