@@ -35,7 +35,6 @@ var cached_target: PoolVector2Array  # x is height index, y is easing depth
 var cached_rect: Rect2
 var is_easing_dirty := false
 
-
 func set_easing(value: int) -> void:
 	is_easing_dirty = value != easing
 	easing = value
@@ -93,12 +92,6 @@ func recalculate_easing() -> void:
 				v.y = get_direction_depth(normalized_delta, ease_func, direction)
 			cached_target[i] = v
 	is_easing_dirty = false
-
-
-func apply(heightmap: HeightMapData, amount: float) -> void:
-	if is_easing_dirty:
-		recalculate_easing()
-	heightmap.increment_all_values(cached_target, amount)
 
 
 static func is_radial_direction(value: float) -> bool:

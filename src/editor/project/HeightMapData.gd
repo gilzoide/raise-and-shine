@@ -52,15 +52,6 @@ func set_value(x: int, y: int, value: float) -> void:
 	luminance_array[index] = int(value * 255)
 
 
-func increment_all_values(values: PoolVector2Array, amount: float) -> void:
-	for index_depth in values:
-		var index = index_depth.x
-		var depth = index_depth.y
-		var height = clamp(height_array[index] + depth * amount, 0, 1)
-		height_array[index] = height
-		luminance_array[index] = int(height * 255)
-
-
 func scaled(scale: float) -> PoolRealArray:
 	var result = PoolRealArray()
 	var float_count = int(size.x * size.y)

@@ -18,6 +18,7 @@ export(ImageTexture) var normal_texture: ImageTexture = MapTypes.NORMAL_TEXTURE
 export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 
 var height_data: HeightMapData = HeightMapData.new()
+var height_algorithm
 var last_loaded_filename := ""
 
 
@@ -27,6 +28,14 @@ func _init() -> void:
 	set_height_image(height_image)
 	history.set_heightmapdata(height_data)
 	history.connect("revision_changed", self, "set_height_data")
+	
+	var height_algorithm_gdnative = preload("res://native/HeightAlgorithm_gdnativelibrary.tres")
+	if height_algorithm_gdnative.get_current_library_path() != "":
+		height_algorithm = load("res://native/HeightAlgorithm_nativescript.gdns").new()
+		print_debug("Using GDNative height_algorithm ", height_algorithm)
+	else:
+		height_algorithm = load("res://editor/operation/HeightAlgorithm.gd").new()
+		print_debug("Using GDScript height_algorithm ", height_algorithm)
 
 
 func set_height_data(data: HeightMapData, empty_data: bool = false) -> void:
@@ -110,7 +119,9 @@ func set_normal_image(value: Image, _path: String = "") -> void:
 
 
 func apply_operation(operation, amount: float) -> void:
-	operation.apply(height_data, amount)
+	if operation.is_easing_dirty:
+		operation.recalculate_easing()
+	height_algorithm.apply_height_increments(height_data, operation.cached_target, amount)
 	height_data.fill_image(height_image)
 	height_texture.set_data(height_image)
 	var changed_rect = operation.cached_rect.grow(1).clip(Rect2(Vector2.ZERO, height_data.size))

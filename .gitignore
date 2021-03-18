@@ -9,3 +9,9 @@ data_*/
 
 build/
 logs/
+
+# GDNative products
+src/native/*.dll
+src/native/*.dylib
+src/native/*.so
+src/native/*.wasm

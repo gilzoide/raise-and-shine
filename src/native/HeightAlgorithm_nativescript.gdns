@@ -1,0 +1,7 @@
+[gd_resource type="NativeScript" load_steps=2 format=2]
+
+[ext_resource path="res://native/HeightAlgorithm_gdnativelibrary.tres" type="GDNativeLibrary" id=1]
+
+[resource]
+class_name = "HeightAlgorithm"
+library = ExtResource( 1 )

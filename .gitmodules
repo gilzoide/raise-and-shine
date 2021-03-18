@@ -1,0 +1,3 @@
+[submodule "height_algorithm/godot-headers"]
+	path = height_algorithm/godot-headers
+	url = https://github.com/godotengine/godot-headers.git
