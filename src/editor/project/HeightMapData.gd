@@ -71,29 +71,11 @@ func fill_image(image: Image) -> void:
 	image.create_from_data(int(size.x), int(size.y), false, HEIGHT_IMAGE_FORMAT, luminance_array)
 
 
-func create_normalmap() -> Image:
+func create_normalmap(algorithm) -> Image:
 	var normalmap = Image.new()
 	normalmap.create(size.x, size.y, false, NORMAL_IMAGE_FORMAT)
-	fill_normalmap(normalmap)
+	algorithm.fill_normalmap(height_array, normalmap, Rect2(Vector2.ZERO, size))
 	return normalmap
-
-
-func fill_normalmap(normalmap: Image, rect: Rect2 = Rect2(Vector2.ZERO, size)) -> void:
-	var bounds = size
-	var bump_scale = min(bounds.x, bounds.y)
-	var stride = size.x
-	normalmap.lock()
-	for x in range(rect.position.x, rect.end.x):
-		for y in range(rect.position.y, rect.end.y):
-			var here = height_array[y * stride + x]
-			var right = height_array[y * stride + posmod(x + 1, bounds.x)]
-			var below = height_array[posmod(y + 1, bounds.y) * stride + x]
-			var up = Vector3(0, 1, (here - below) * bump_scale)
-			var across = Vector3(1, 0, (right - here) * bump_scale)
-			var normal = across.cross(up).normalized()
-			var normal_rgb = normal * 0.5 + Vector3(0.5, 0.5, 0.5)
-			normalmap.set_pixel(x, y, Color(normal_rgb.x, normal_rgb.y, normal_rgb.z, 1))
-	normalmap.unlock()
 
 
 func resize(new_size: Vector2) -> void:
