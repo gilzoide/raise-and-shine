@@ -26,10 +26,8 @@ func _init() -> void:
 	var height_algorithm_gdnative = preload("res://native/HeightAlgorithm_gdnativelibrary.tres")
 	if height_algorithm_gdnative.get_current_library_path() != "":
 		height_algorithm = load("res://native/HeightAlgorithm_nativescript.gdns").new()
-		print_debug("Using GDNative height_algorithm ", height_algorithm)
 	else:
 		height_algorithm = load("res://editor/operation/HeightAlgorithm.gd").new()
-		print_debug("Using GDScript height_algorithm ", height_algorithm)
 	
 	height_image.create(64, 64, false, HeightMapData.HEIGHT_IMAGE_FORMAT)
 	set_height_image(height_image)

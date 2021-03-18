@@ -4,7 +4,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #include <gdnative_api_struct.gen.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 const godot_gdnative_core_api_struct *api = NULL;
@@ -31,15 +30,18 @@ godot_variant LUMINANCE_ARRAY_NAME;
 #define MAX(a, b) (a > b ? a : b)
 #define CLAMP(x, min, max) (MIN(max, MAX(min, x)))
 
+#ifdef NDEBUG
+void print_if_error(godot_variant_call_error *error, const char *method, int line) {}
+#else
+#include <stdio.h>
 void print_if_error(godot_variant_call_error *error, const char *method, int line) {
-#ifdef DEBUG
     char msg[1024];
     if(error->error != GODOT_CALL_ERROR_CALL_OK) {
         sprintf(msg, "code: %d", error->error);
         api->godot_print_error(msg, method, __FILE__, line);
     }
-#endif
 }
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // Class ctor/dtor
