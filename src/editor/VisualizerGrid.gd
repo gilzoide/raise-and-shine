@@ -60,7 +60,7 @@ func set_3d_visible(value: bool) -> void:
 
 func _on_drag_started(button_index, uv) -> void:
 	_dragging = true
-	ControlExtras.set_cursor_now(self, selection.get_cursor_for_active_tool())
+	ControlExtras.set_cursor(self, selection.get_cursor_for_active_tool())
 	selection.set_drag_operation_started(button_index, uv)
 
 
@@ -71,5 +71,5 @@ func _on_drag_moved(relative_motion, uv) -> void:
 
 func _on_drag_ended() -> void:
 	_dragging = false
-	ControlExtras.set_cursor_now(self, Control.CURSOR_ARROW)
+	ControlExtras.set_cursor(self, Control.CURSOR_ARROW)
 	selection.set_drag_operation_ended()

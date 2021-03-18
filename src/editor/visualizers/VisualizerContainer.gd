@@ -17,6 +17,7 @@ onready var zoom_slider = $ZoomSlider
 onready var camera_initial_transform: Transform = camera.transform
 var dragging := false
 var current_zoom = 0
+var in_notification := false
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -49,8 +50,8 @@ func _gui_input(event: InputEvent) -> void:
 
 func start_panning() -> void:
 	dragging = true
-	set_pan_cursor()
 	grab_focus()
+	set_pan_cursor()
 	if OS.get_name() != "HTML5":
 		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 	else:
@@ -64,11 +65,11 @@ func stop_panning() -> void:
 
 
 func set_pan_cursor() -> void:
-	ControlExtras.set_cursor_now(self, Control.CURSOR_MOVE)
+	ControlExtras.set_cursor(self, Control.CURSOR_MOVE, not in_notification)
 
 
 func set_normal_cursor() -> void:
-	ControlExtras.set_cursor_now(self, Control.CURSOR_ARROW)
+	ControlExtras.set_cursor(self, Control.CURSOR_ARROW, not in_notification)
 
 
 func zoom_by(factor: float) -> void:
@@ -82,6 +83,7 @@ func zoom_to(zoom: float) -> void:
 
 
 func _notification(what: int) -> void:
+	in_notification = true
 	if what == NOTIFICATION_MOUSE_EXIT:
 		stop_panning()
 	elif what == NOTIFICATION_FOCUS_ENTER:
@@ -92,6 +94,7 @@ func _notification(what: int) -> void:
 		grab_focus()
 	elif what == NOTIFICATION_MOUSE_EXIT:
 		release_focus()
+	in_notification = false
 
 
 func update_camera_with_pan(_pan: Vector2) -> void:
