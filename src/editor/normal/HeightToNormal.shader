@@ -2,8 +2,6 @@ shader_type canvas_item;
 
 uniform float bump_scale = 1;
 
-varying float height;
-
 void fragment() {
 	vec2 uv_offset = TEXTURE_PIXEL_SIZE;
 	float here = texture(TEXTURE, UV).r;
@@ -13,5 +11,5 @@ void fragment() {
 	vec3 across = vec3(1, 0, (right - here) * bump_scale);
 	vec3 normal = normalize(cross(across, up));
 	
-	COLOR.rgb = normal + 0.5;
+	COLOR.rgb = normal * 0.5 + 0.5;
 }

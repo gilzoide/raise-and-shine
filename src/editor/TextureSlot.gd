@@ -61,8 +61,7 @@ func _on_menu_id_pressed(id: int) -> void:
 		project.save_image_dialog(type)
 
 
-func _on_texture_updated(texture: Texture, _empty_data: bool = false) -> void:
-	texture_rect.texture = texture
+func _on_texture_updated(_texture: Texture, _empty_data: bool = false) -> void:
 	texture_rect.update()
 
 

@@ -40,7 +40,7 @@ onready var plane_size := initial_plane_size
 func _ready() -> void:
 	update_plane_dimensions()
 	var _err = project.connect("height_texture_changed", self, "_on_texture_updated")
-	_err = project.connect("height_changed", self, "_on_height_changed")
+	_err = project.connect("operation_ended", self, "_on_operation_ended")
 
 
 func update_plane_dimensions() -> void:
@@ -81,10 +81,10 @@ func _on_texture_updated(_texture: Texture, empty_data: bool = false) -> void:
 		normal_vectors.update_all(project.normal_image, project.height_data, empty_data)
 
 
-func _on_height_changed(height_data: HeightMapData, rect: Rect2) -> void:
+func _on_operation_ended(operation, height_data: HeightMapData) -> void:
 	var _scale = update_heightmapshape_values(height_data)
 	if normal_vectors.visible:
-		normal_vectors.update_rect(project.normal_image, project.height_data, rect)
+		normal_vectors.update_rect(project.normal_image, project.height_data, operation.cached_rect)
 	
 
 

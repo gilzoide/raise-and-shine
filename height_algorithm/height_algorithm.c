@@ -270,19 +270,19 @@ void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_options *p_opt
 
 void GDN_EXPORT godot_nativescript_init(void *p_handle) {
     nativescript_api->godot_nativescript_register_class(
-        p_handle, "HeightAlgorithm", "Reference",
+        p_handle, "HeightAlgorithm_native", "Reference",
         (godot_instance_create_func){ &null_constructor, NULL, NULL },
         (godot_instance_destroy_func){ &null_destructor, NULL, NULL }
     );
 
     nativescript_api->godot_nativescript_register_method(
-        p_handle, "HeightAlgorithm", "apply_height_increments",
+        p_handle, "HeightAlgorithm_native", "apply_height_increments",
         (godot_method_attributes){ GODOT_METHOD_RPC_MODE_DISABLED },
         (godot_instance_method){ &apply_height_increments, NULL, NULL }
     );
 
     nativescript_api->godot_nativescript_register_method(
-        p_handle, "HeightAlgorithm", "fill_normalmap",
+        p_handle, "HeightAlgorithm_native", "fill_normalmap",
         (godot_method_attributes){ GODOT_METHOD_RPC_MODE_DISABLED },
         (godot_instance_method){ &fill_normalmap, NULL, NULL }
     );

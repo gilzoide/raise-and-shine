@@ -2,6 +2,8 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
+class_name HeightAlgorithm
+
 extends Reference
 
 
@@ -34,3 +36,12 @@ func fill_normalmap(height_array: PoolRealArray, normalmap: Image, rect: Rect2) 
 			var normal_rgb = normal * 0.5 + Vector3(0.5, 0.5, 0.5)
 			normalmap.set_pixel(x, y, Color(normal_rgb.x, normal_rgb.y, normal_rgb.z, 1))
 	normalmap.unlock()
+
+
+static func fill_height_image(image: Image, height_array: PoolRealArray) -> void:
+	var size = image.get_size()
+	assert(height_array.size() == size.x * size.y, "Image is incompatible with height array!")
+	var stream_peer = StreamPeerBuffer.new()
+	for height in height_array:
+		stream_peer.put_float(height)
+	image.create_from_data(size.x, size.y, false, Image.FORMAT_RF, stream_peer.data_array)

@@ -7,7 +7,8 @@ extends Resource
 signal albedo_texture_changed(texture)
 signal height_texture_changed(texture, empty_data)
 signal normal_texture_changed(texture)
-signal height_changed(data, rect)
+signal operation_applied(operation, height_data)
+signal operation_ended(operation, height_data)
 
 export(Image) var albedo_image: Image = MapTypes.ALBEDO_IMAGE
 export(Image) var height_image: Image = MapTypes.HEIGHT_IMAGE
@@ -23,11 +24,11 @@ var last_loaded_filename := ""
 
 
 func _init() -> void:
-	var height_algorithm_gdnative = preload("res://native/HeightAlgorithm_gdnativelibrary.tres")
-	if height_algorithm_gdnative.get_current_library_path() != "":
-		height_algorithm = load("res://native/HeightAlgorithm_nativescript.gdns").new()
+	var height_algorithm_nativescript = preload("res://native/HeightAlgorithm_nativescript.gdns")
+	if height_algorithm_nativescript.can_instance():
+		height_algorithm = height_algorithm_nativescript.new()
 	else:
-		height_algorithm = load("res://editor/operation/HeightAlgorithm.gd").new()
+		height_algorithm = HeightAlgorithm.new()
 	
 	height_image.create(64, 64, false, HeightMapData.HEIGHT_IMAGE_FORMAT)
 	set_height_image(height_image)
@@ -36,7 +37,6 @@ func _init() -> void:
 
 
 func set_height_data(data: HeightMapData, empty_data: bool = false) -> void:
-	var previous_size = height_texture.get_size()
 	height_data.copy_from(data)
 	if empty_data:
 		height_image.create(int(data.size.x), int(data.size.y), false, HeightMapData.HEIGHT_IMAGE_FORMAT)
@@ -49,9 +49,8 @@ func set_height_data(data: HeightMapData, empty_data: bool = false) -> void:
 	height_texture.create_from_image(height_image, height_texture.flags)
 	normal_texture.create_from_image(normal_image, normal_texture.flags)
 	
-	if previous_size != height_texture.get_size():
-		emit_signal("height_texture_changed", height_texture, empty_data)
-		emit_signal("normal_texture_changed", normal_texture)
+	emit_signal("height_texture_changed", height_texture, empty_data)
+	emit_signal("normal_texture_changed", normal_texture)
 
 
 func load_image_dialog(type: int) -> void:
@@ -121,15 +120,12 @@ func apply_operation(operation, amount: float) -> void:
 	height_algorithm.apply_height_increments(height_data, operation.cached_target, amount)
 	height_data.fill_image(height_image)
 	height_texture.set_data(height_image)
-	var changed_rect = operation.cached_rect.grow(1).clip(Rect2(Vector2.ZERO, height_data.size))
-	height_algorithm.fill_normalmap(height_data.height_array, normal_image, changed_rect)
-	normal_texture.set_data(normal_image)
+	emit_signal("operation_applied", operation, height_data)
 
 
 func height_operation_ended(operation) -> void:
 	history.push_heightmapdata(height_data)
-	var changed_rect = operation.cached_rect.grow(1).clip(Rect2(Vector2.ZERO, height_data.size))
-	emit_signal("height_changed", height_data, changed_rect)
+	emit_signal("operation_ended", operation, height_data)
 
 
 func resize_maps(size: Vector2) -> void:

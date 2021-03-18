@@ -39,7 +39,7 @@ static func map_texture(type: int) -> Texture:
 	elif type == Type.HEIGHT_MAP:
 		return HEIGHT_TEXTURE
 	elif type == Type.NORMAL_MAP:
-		return NORMAL_TEXTURE
+		return NormalDrawer.get_texture()
 	else:
 		assert(false, "Unknown map type %d" % type)
 		return null

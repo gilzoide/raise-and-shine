@@ -3,5 +3,5 @@
 [ext_resource path="res://native/HeightAlgorithm_gdnativelibrary.tres" type="GDNativeLibrary" id=1]
 
 [resource]
-class_name = "HeightAlgorithm"
+class_name = "HeightAlgorithm_native"
 library = ExtResource( 1 )
