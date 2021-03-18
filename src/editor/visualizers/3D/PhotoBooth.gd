@@ -45,15 +45,16 @@ func _ready() -> void:
 
 func update_plane_dimensions() -> void:
 	var height_map = project.height_image
+	var albedo_size = project.albedo_image.get_size()
+	if albedo_size.x > albedo_size.y:
+		plane_size.x = initial_plane_size.x
+		plane_size.y = initial_plane_size.y / albedo_size.aspect()
+	else:
+		plane_size.x = initial_plane_size.x * albedo_size.aspect()
+		plane_size.y = initial_plane_size.y
 	var size = height_map.get_size()
 	plane_mesh.subdivide_width = size.x * plane_subdivide_scale
 	plane_mesh.subdivide_depth = size.y * plane_subdivide_scale
-	if size.x > size.y:
-		plane_size.x = initial_plane_size.x
-		plane_size.y = initial_plane_size.y / size.aspect()
-	else:
-		plane_size.x = initial_plane_size.x * size.aspect()
-		plane_size.y = initial_plane_size.y
 	plane_mesh.size = plane_size
 	normal_vectors.plane_size = plane_size
 	border.setup_with_plane_size(plane_size)
