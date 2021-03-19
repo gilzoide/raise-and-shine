@@ -14,6 +14,7 @@ export(Image) var albedo_image: Image = MapTypes.ALBEDO_IMAGE
 export(Image) var height_image: Image = MapTypes.HEIGHT_IMAGE
 export(Image) var normal_image: Image = MapTypes.NORMAL_IMAGE
 export(ImageTexture) var albedo_texture: ImageTexture = MapTypes.ALBEDO_TEXTURE
+export(ImageTexture) var albedo_srgb_texture: ImageTexture = MapTypes.ALBEDO_SRGB_TEXTURE
 export(ImageTexture) var height_texture: ImageTexture = MapTypes.HEIGHT_TEXTURE
 export(ImageTexture) var normal_texture: ImageTexture = MapTypes.NORMAL_TEXTURE
 export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
@@ -94,8 +95,11 @@ func on_project_dialog_image(value: Image, path: String = "") -> void:
 
 
 func set_albedo_image(value: Image, _path: String = "") -> void:
-	albedo_image = value
+	albedo_image.copy_from(value)
 	albedo_texture.create_from_image(albedo_image, albedo_texture.flags)
+	if OS.get_current_video_driver() == OS.VIDEO_DRIVER_GLES3:
+		albedo_image.convert(Image.FORMAT_RGBAH)
+		albedo_srgb_texture.create_from_image(albedo_image, albedo_srgb_texture.flags)
 	emit_signal("albedo_texture_changed", albedo_texture)
 
 

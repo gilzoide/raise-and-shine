@@ -30,6 +30,7 @@ func _on_normal_texture_changed(texture: Texture) -> void:
 	current_normal.texture = texture
 	current_normal.visible = true
 	current_normal.update()
+	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	redraw()
 	yield(VisualServer, "frame_post_draw")
 	current_normal.visible = false
@@ -50,6 +51,7 @@ func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 	else:
 		project.height_data.fill_image(height_map_image)
 	height_map_texture.create_from_image(height_map_image, 0)
+	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	update_height_in_rect(Rect2(Vector2.ZERO, size))
 
 

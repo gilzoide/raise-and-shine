@@ -38,6 +38,7 @@ onready var plane_size := initial_plane_size
 
 
 func _ready() -> void:
+	plane_material.set_shader_param("normal_map", NormalDrawer.get_texture())
 	update_plane_dimensions()
 	var _err = project.connect("height_texture_changed", self, "_on_texture_updated")
 	_err = project.connect("operation_ended", self, "_on_operation_ended")
