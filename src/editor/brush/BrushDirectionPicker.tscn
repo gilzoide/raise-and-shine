@@ -10,7 +10,6 @@ rect_min_size = Vector2( 30, 30 )
 hint_tooltip = "Choose height tool easing direction.
 Hold Control to snap angle."
 focus_mode = 0
-enabled_focus_mode = 0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -29,5 +28,6 @@ __meta__ = {
 border_color = Color( 0.74902, 0.74902, 0.74902, 1 )
 selection_color = Color( 1, 1, 1, 1 )
 min_margin = 8.0
+
 [connection signal="pressed" from="." to="." method="_on_pressed"]
 [connection signal="direction_changed" from="PanelPopup" to="." method="_on_PanelPopup_direction_changed"]
