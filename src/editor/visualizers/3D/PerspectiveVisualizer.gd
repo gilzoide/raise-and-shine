@@ -9,6 +9,11 @@ export(float) var max_zoom_distance: float = 4
 
 var _zoom_distance := min_zoom_distance
 
+func _ready() -> void:
+	update_camera_with_pan(Vector2(0, -80))
+	camera_initial_transform = camera.global_transform
+
+
 func _process(delta: float) -> void:
 	if has_focus():
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * delta
