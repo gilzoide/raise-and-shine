@@ -11,6 +11,7 @@ var height_map_texture = ImageTexture.new()
 
 
 func _ready() -> void:
+	get_texture().flags = Texture.FLAG_FILTER
 	height_map_rect.texture = height_map_texture
 	_on_height_texture_changed(project.height_texture)
 	project.connect("height_texture_changed", self, "_on_height_texture_changed")
