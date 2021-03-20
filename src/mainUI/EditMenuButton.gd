@@ -64,8 +64,8 @@ func _on_menu_popup_about_to_show() -> void:
 
 func _on_history_menu_about_to_show() -> void:
 	history_submenu.clear()
-	for i in range(history.list.size()):
-		var id = history.list.size() - i - 1
+	for i in range(history.height_history.size()):
+		var id = history.height_history.size() - i - 1
 		var img = history.get_revision(id).create_image()
 		var tex = ImageTexture.new()
 		tex.create_from_image(img)

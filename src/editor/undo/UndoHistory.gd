@@ -6,57 +6,64 @@ extends Resource
 
 signal revision_changed(image)
 
-export(int) var history_limit = 16
-var list = [HeightMapData.new()]
-var current_revision = 0
+const CHANGE_HEIGHT_ACTION_NAME = "Change height"
+
+var undoredo = UndoRedo.new()
+
+var height_history = []
+var current_height = -1
 
 
-func set_heightmapdata(data: HeightMapData) -> void:
-	var last = list[-1]
-	last.copy_from(data)
+func _init() -> void:
+	undoredo.connect("version_changed", self, "_on_version_changed")
 
 
-func push_heightmapdata(data: HeightMapData) -> void:
-	if current_revision < list.size() - 1:
-		list.resize(current_revision + 1)
-	var mapdata
-	if list.size() > history_limit:
-		mapdata = list.pop_front()
+func _on_version_changed() -> void:
+	set_current_revision(current_height)
+
+
+func push_heightmapdata(data: HeightMapData, is_first: bool = false) -> void:
+	var new_data = HeightMapData.new()
+	new_data.copy_from(data)
+	height_history.resize(current_height + 1)
+	height_history.append(new_data)
+	if is_first:
+		current_height = 0
 	else:
-		mapdata = HeightMapData.new()
-	mapdata.copy_from(data)
-	list.push_back(mapdata)
-	current_revision = list.size() - 1
+		undoredo.create_action(CHANGE_HEIGHT_ACTION_NAME)
+		undoredo.add_do_property(self, "current_height", current_height + 1)
+		undoredo.add_undo_property(self, "current_height", current_height)
+		undoredo.commit_action()
 
 
 func set_current_revision(id: int) -> void:
 	var data = get_revision(id)
 	if data != null:
-		current_revision = id
+		current_height = id
 		emit_signal("revision_changed", data)
 
 
 func apply_undo() -> void:
-	set_current_revision(current_revision - 1)
+	undoredo.undo()
 
 
 func apply_redo() -> void:
-	set_current_revision(current_revision + 1)
+	undoredo.redo()
 
 
 func can_undo() -> bool:
-	return current_revision >= 1
+	return undoredo.has_undo()
 
 
 func can_redo() -> bool:
-	return current_revision < list.size() - 1
+	return undoredo.has_redo()
 
 
 func get_revision(id: int) -> HeightMapData:
-	if id >= 0 and id < list.size():
-		return list[id]
+	if id >= 0 and id < height_history.size():
+		return height_history[id]
 	return null
 
 
 func is_current(id: int) -> bool:
-	return id == current_revision
+	return id == current_height
