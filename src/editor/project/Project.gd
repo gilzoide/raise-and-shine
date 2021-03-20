@@ -33,8 +33,12 @@ func _init() -> void:
 	
 	height_image.create(64, 64, false, HeightMapData.HEIGHT_IMAGE_FORMAT)
 	set_height_image(height_image)
-	history.push_heightmapdata(height_data, true)
-	history.connect("revision_changed", self, "set_height_data")
+	history.init_heightmap(height_data)
+	history.connect("revision_changed", self, "_on_history_revision_changed")
+
+
+func _on_history_revision_changed(revision) -> void:
+	set_height_data(revision.heightmap)
 
 
 func set_height_data(data: HeightMapData, empty_data: bool = false) -> void:

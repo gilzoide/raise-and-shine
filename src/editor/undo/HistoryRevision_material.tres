@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://textures/Selection_imagetexture.tres" type="Texture" id=1]
+[ext_resource path="res://editor/visualizers/2D/ShowSelection.shader" type="Shader" id=2]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource( 2 )
+shader_param/selection_texture_pixel_size = Vector2( 0.016, 0.016 )
+shader_param/selection_pixel_width = 1.0
+shader_param/selection_map = ExtResource( 1 )

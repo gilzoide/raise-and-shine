@@ -47,6 +47,17 @@ func set_format(format: int, is_union: bool) -> void:
 		active_brush.rect_size = size
 
 
+func set_selection(selection: Image) -> void:
+	snapshot_image.copy_from(selection)
+	snapshot_texture.create_from_image(snapshot_image, snapshot_texture.flags)
+	if active_brush.format == SelectionCanvasItem.Format.PENCIL:
+		pencil_image.fill(active_brush.UNSELECTED_COLOR)
+		pencil_texture.set_data(pencil_image)
+	else:
+		active_brush.rect_size = Vector2.ZERO
+	redraw()
+
+
 func update_selection_rect(rect: Rect2, line_direction: float = 1.0) -> void:
 	active_brush.rect_position = rect.position
 	active_brush.rect_size = rect.size

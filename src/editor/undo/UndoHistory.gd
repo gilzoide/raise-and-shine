@@ -4,66 +4,82 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Resource
 
-signal revision_changed(image)
+signal revision_changed(revision)
+signal revision_added(revision)
 
-const CHANGE_HEIGHT_ACTION_NAME = "Change height"
+class Revision:
+	extends Reference
+	var id: int
+	var heightmap = HeightMapData.new()
+	var selection = Image.new()
 
-var undoredo = UndoRedo.new()
-
-var height_history = []
-var current_height = -1
-
-
-func _init() -> void:
-	undoredo.connect("version_changed", self, "_on_version_changed")
+var revision_history = [ Revision.new() ]
+var current_revision = 0
 
 
 func _on_version_changed() -> void:
-	set_current_revision(current_height)
+	set_current_revision(current_revision)
 
 
-func push_heightmapdata(data: HeightMapData, is_first: bool = false) -> void:
-	var new_data = HeightMapData.new()
-	new_data.copy_from(data)
-	height_history.resize(current_height + 1)
-	height_history.append(new_data)
-	if is_first:
-		current_height = 0
-	else:
-		undoredo.create_action(CHANGE_HEIGHT_ACTION_NAME)
-		undoredo.add_do_property(self, "current_height", current_height + 1)
-		undoredo.add_undo_property(self, "current_height", current_height)
-		undoredo.commit_action()
+func init_heightmap(data: HeightMapData) -> void:
+	revision_history[0].heightmap.copy_from(data)
+
+
+func init_selection(selection: Image) -> void:
+	revision_history[0].selection.copy_from(selection)
+
+
+func push_heightmapdata(data: HeightMapData) -> void:
+	revision_history.resize(current_revision + 1)
+	var new_revision = Revision.new()
+	new_revision.heightmap.copy_from(data)
+	new_revision.selection = revision_history[-1].selection
+	revision_history.append(new_revision)
+	current_revision = revision_history.size() - 1
+	new_revision.id = current_revision
+	emit_signal("revision_added", new_revision)
+
+
+func push_selection(selection: Image) -> void:
+	revision_history.resize(current_revision + 1)
+	var new_revision = Revision.new()
+	new_revision.heightmap = revision_history[-1].heightmap
+	new_revision.selection.copy_from(selection)
+	revision_history.append(new_revision)
+	current_revision = revision_history.size() - 1
+	new_revision.id = current_revision
+	emit_signal("revision_added", new_revision)
 
 
 func set_current_revision(id: int) -> void:
-	var data = get_revision(id)
-	if data != null:
-		current_height = id
-		emit_signal("revision_changed", data)
+	var revision = get_revision(id)
+	if revision != null:
+		assert(revision.id == id, "FIXME!!!")
+		current_revision = id
+		emit_signal("revision_changed", revision)
 
 
 func apply_undo() -> void:
-	undoredo.undo()
+	set_current_revision(current_revision - 1)
 
 
 func apply_redo() -> void:
-	undoredo.redo()
+	set_current_revision(current_revision + 1)
 
 
 func can_undo() -> bool:
-	return undoredo.has_undo()
+	return current_revision > 0
 
 
 func can_redo() -> bool:
-	return undoredo.has_redo()
+	return current_revision < revision_history.size() - 1
 
 
-func get_revision(id: int) -> HeightMapData:
-	if id >= 0 and id < height_history.size():
-		return height_history[id]
+func get_revision(id: int) -> Revision:
+	if id >= 0 and id < revision_history.size():
+		return revision_history[id]
 	return null
 
 
 func is_current(id: int) -> bool:
-	return id == current_height
+	return id == current_revision
