@@ -12,14 +12,6 @@ enum DragTool {
 	HEIGHT_EDIT,
 }
 
-enum SelectionState {
-	NONE,
-	DRAG,
-	CLEAR_FALSE,
-	CLEAR_TRUE,
-	INVERT,
-}
-
 
 export(float) var drag_height_speed = 0.01
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
@@ -29,7 +21,7 @@ export(DragTool) var active_tool := DragTool.BRUSH_RECTANGLE
 
 var drag_start_position: Vector2
 var height_changed = false
-var last_selection_state = SelectionState.CLEAR_FALSE
+var selection_changed = false
 
 
 func _init() -> void:
@@ -67,7 +59,7 @@ func set_drag_operation_started(button_index: int, uv: Vector2) -> void:
 
 
 func set_drag_operation_ended() -> void:
-	update_selection_bitmap(last_selection_state)
+	update_selection_bitmap()
 	if height_changed:
 		project.height_operation_ended(drag_operation)
 		height_changed = false
@@ -115,7 +107,7 @@ func drag_selection_moved(position: Vector2) -> void:
 		rect.size.x = max(1.0, rect.size.x)
 		rect.size.y = max(1.0, rect.size.y)
 		SelectionDrawer.update_selection_rect(rect, delta_sign.x * delta_sign.y)
-	last_selection_state = SelectionState.DRAG
+	selection_changed = true
 
 
 func get_cursor_for_active_tool() -> int:
@@ -131,19 +123,19 @@ func uv_to_position(uv: Vector2) -> Vector2:
 
 func clear(bit: bool = false) -> void:
 	SelectionDrawer.clear(bit)
-	update_selection_bitmap(SelectionState.CLEAR_TRUE if bit else SelectionState.CLEAR_FALSE)
+	update_selection_bitmap()
 
 
 func invert() -> void:
 	SelectionDrawer.invert()
-	update_selection_bitmap(SelectionState.INVERT)
+	update_selection_bitmap()
 
 
-func update_selection_bitmap(source: int) -> void:
+func update_selection_bitmap() -> void:
 	yield(VisualServer, "frame_post_draw")
 	SelectionDrawer.take_snapshot()
-	if source != SelectionState.NONE and ((source != SelectionState.CLEAR_FALSE and source != SelectionState.CLEAR_TRUE) or source != last_selection_state):
+	if selection_changed:
 		history.push_selection(SelectionDrawer.snapshot_image)
-		last_selection_state = SelectionState.NONE if source == SelectionState.DRAG else source
+		selection_changed = false
 	if active_tool == DragTool.HEIGHT_EDIT:
 		drag_operation.cache_target_from_selection(SelectionDrawer.snapshot_image)
