@@ -39,6 +39,6 @@ func _draw() -> void:
 
 func set_selection_union(is_union: bool) -> void:
 	if is_union:
-		material.blend_mode = CanvasItemMaterial.BLEND_MODE_MIX
+		material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	else:
 		material.blend_mode = CanvasItemMaterial.BLEND_MODE_SUB

@@ -8,6 +8,7 @@ export(Resource) var project = preload("res://editor/project/ActiveEditorProject
 export(ShaderMaterial) var selection_material = preload("res://editor/visualizers/2D/ShowSelection_material.tres")
 export(ShaderMaterial) var plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
 
+onready var background = $Background
 onready var current_selection = $CurrentSelection
 onready var active_brush = $ActiveBrush
 
@@ -18,6 +19,7 @@ var pencil_texture := ImageTexture.new()
 
 
 func _ready() -> void:
+	background.color = SelectionCanvasItem.UNSELECTED_COLOR
 	_on_texture_changed(project.height_texture)
 	var _err = project.connect("height_texture_changed", self, "_on_texture_changed")
 	var texture = get_texture()
@@ -30,7 +32,7 @@ func _ready() -> void:
 func _on_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
 	size = texture.get_size()
 	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
-	current_selection.rect_position = Vector2.ZERO
+	background.rect_size = size
 	current_selection.rect_size = size
 	snapshot_image = get_texture().get_data()
 	snapshot_texture.create_from_image(snapshot_image, 0)
@@ -86,15 +88,14 @@ func clear(bit: bool = false) -> void:
 
 
 func invert() -> void:
-	current_selection.format = SelectionCanvasItem.Format.RECTANGLE
-	current_selection.update()
-	active_brush.format = SelectionCanvasItem.Format.TEXTURE
-	active_brush.texture = snapshot_texture
-	active_brush.set_selection_union(false)
-	update_selection_rect(Rect2(Vector2.ZERO, size))
+	background.color = SelectionCanvasItem.SELECTED_COLOR
+	current_selection.set_selection_union(false)
+	active_brush.rect_size = Vector2.ZERO
+	redraw()
 	yield(VisualServer, "frame_post_draw")
-	current_selection.format = SelectionCanvasItem.Format.TEXTURE
-	current_selection.update()
+	background.color = SelectionCanvasItem.UNSELECTED_COLOR
+	current_selection.set_selection_union(true)
+	
 
 
 func take_snapshot() -> void:
