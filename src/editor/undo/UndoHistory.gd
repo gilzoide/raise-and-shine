@@ -17,10 +17,6 @@ var revision_history = [ Revision.new() ]
 var current_revision = 0
 
 
-func _on_version_changed() -> void:
-	set_current_revision(current_revision)
-
-
 func init_heightmap(data: HeightMapData) -> void:
 	revision_history[0].heightmap.copy_from(data)
 
