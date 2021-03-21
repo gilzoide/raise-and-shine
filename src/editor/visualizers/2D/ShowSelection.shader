@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+render_mode unshaded;
+
 uniform sampler2D selection_map;
 uniform vec2 selection_texture_pixel_size;
 uniform float selection_pixel_width = 0.2;
