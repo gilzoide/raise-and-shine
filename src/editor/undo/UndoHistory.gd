@@ -4,8 +4,8 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Resource
 
-signal revision_changed(revision)
 signal revision_added(revision)
+signal revision_changed(revision)
 
 class Revision:
 	extends Reference

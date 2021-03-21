@@ -18,6 +18,9 @@ func _ready() -> void:
 
 
 func _on_history_revision_added(revision) -> void:
+	for i in range(0, revision_container.get_child_count() - revision.id):
+		var child = revision_container.get_child(i)
+		revision_container.remove_child(child)
 	add_revision(revision, true)
 
 
