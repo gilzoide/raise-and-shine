@@ -30,11 +30,12 @@ export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 onready var title_menu_button = $Title
 onready var menu_popup = title_menu_button.get_popup()
 onready var texture_rect = $TextureRect
-
+var textures
 
 func _ready() -> void:
 	title_menu_button.text = MapTypes.map_name(type)
-	texture_rect.texture = MapTypes.map_texture(type)
+	textures = MapTypes.map_textures(type)
+	texture_rect.texture = textures[0]
 	if type == MapTypes.Type.ALBEDO_MAP:
 		project.connect("albedo_texture_changed", self, "_on_texture_updated")
 	elif type == MapTypes.Type.HEIGHT_MAP:
@@ -53,7 +54,8 @@ func _ready() -> void:
 
 func _on_menu_id_pressed(id: int) -> void:
 	if id == TOGGLE_FILTER:
-		texture_rect.texture.flags ^= Texture.FLAG_FILTER
+		for t in textures:
+			t.flags ^= Texture.FLAG_FILTER
 		update_filter_check_item()
 	elif id == LOAD_IMAGE:
 		project.load_image_dialog(type)
@@ -66,7 +68,7 @@ func _on_texture_updated(_texture: Texture, _empty_data: bool = false) -> void:
 
 
 func update_filter_check_item() -> void:
-	menu_popup.set_item_checked(TOGGLE_FILTER, texture_rect.texture.flags & Texture.FLAG_FILTER)
+	menu_popup.set_item_checked(TOGGLE_FILTER, textures[0].flags & Texture.FLAG_FILTER)
 
 
 func _on_TextureRect_drag_started(button_index: int, uv: Vector2) -> void:

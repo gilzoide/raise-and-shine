@@ -34,17 +34,17 @@ static func map_name(type: int) -> String:
 		return ""
 
 
-static func map_texture(type: int) -> Texture:
+static func map_textures(type: int) -> Array:
 	if type == Type.ALBEDO_MAP:
 		if OS.get_current_video_driver() == OS.VIDEO_DRIVER_GLES3:
-			return ALBEDO_SRGB_TEXTURE
+			return [ALBEDO_SRGB_TEXTURE, ALBEDO_TEXTURE]
 		else:
-			return ALBEDO_TEXTURE
+			return [ALBEDO_TEXTURE]
 	elif type == Type.HEIGHT_MAP:
-		return HEIGHT_TEXTURE
+		return [HEIGHT_TEXTURE]
 	elif type == Type.NORMAL_MAP:
-		return NormalDrawer.get_texture()
+		return [NormalDrawer.get_texture(), NORMAL_TEXTURE]
 	else:
 		assert(false, "Unknown map type %d" % type)
-		return null
+		return []
 
