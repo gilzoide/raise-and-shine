@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://editor/VisualizerGrid.tscn" type="PackedScene" id=2]
@@ -7,7 +7,13 @@
 [ext_resource path="res://mainUI/HelpMenuButton.gd" type="Script" id=5]
 [ext_resource path="res://editor/brush/BrushToolbar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://mainUI/EditMenuButton.gd" type="Script" id=7]
+[ext_resource path="res://editor/undo/HistoryTab.tscn" type="PackedScene" id=8]
+[ext_resource path="res://textures/RedoToolIcon.svg" type="Texture" id=9]
 [ext_resource path="res://mainUI/ViewMenuButton.gd" type="Script" id=10]
+[ext_resource path="res://textures/UndoToolIcon.svg" type="Texture" id=11]
+[ext_resource path="res://mainUI/ToolButtonPresentation.gd" type="Script" id=12]
+[ext_resource path="res://shortcuts/RedoShortcut.tres" type="ShortCut" id=13]
+[ext_resource path="res://shortcuts/UndoShortcut.tres" type="ShortCut" id=14]
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -73,9 +79,29 @@ margin_left = 171.0
 margin_right = 175.0
 margin_bottom = 44.0
 
-[node name="BrushToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 6 )]
+[node name="UndoButton" type="ToolButton" parent="MainPanel/MenuBar"]
 margin_left = 179.0
-margin_right = 743.0
+margin_right = 260.0
+margin_bottom = 44.0
+hint_tooltip = "Undo"
+shortcut = ExtResource( 14 )
+text = "Undo"
+icon = ExtResource( 11 )
+script = ExtResource( 12 )
+
+[node name="RedoButton" type="ToolButton" parent="MainPanel/MenuBar"]
+margin_left = 264.0
+margin_right = 343.0
+margin_bottom = 44.0
+hint_tooltip = "Redo"
+shortcut = ExtResource( 13 )
+text = "Redo"
+icon = ExtResource( 9 )
+script = ExtResource( 12 )
+
+[node name="BrushToolbar" parent="MainPanel/MenuBar" instance=ExtResource( 6 )]
+margin_left = 347.0
+margin_right = 909.0
 
 [node name="WorkbenchPanel" type="PanelContainer" parent="MainPanel"]
 anchor_right = 1.0
@@ -93,6 +119,7 @@ margin_top = 7.0
 margin_right = 1017.0
 margin_bottom = 553.0
 mouse_filter = 1
+split_offset = -20
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -100,12 +127,13 @@ __meta__ = {
 [node name="VisualizerGrid" parent="MainPanel/WorkbenchPanel/HSplitContainer" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 848.0
+margin_right = 828.0
 margin_bottom = 546.0
 size_flags_horizontal = 3
+split_offset = -20
 
 [node name="TabContainer" type="TabContainer" parent="MainPanel/WorkbenchPanel/HSplitContainer"]
-margin_left = 860.0
+margin_left = 840.0
 margin_right = 1010.0
 margin_bottom = 546.0
 rect_min_size = Vector2( 150, 0 )
@@ -115,3 +143,13 @@ margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+
+[node name="History" parent="MainPanel/WorkbenchPanel/HSplitContainer/TabContainer" instance=ExtResource( 8 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[connection signal="pressed" from="MainPanel/MenuBar/UndoButton" to="MainPanel/MenuBar/EditMenuButton" method="call_undo"]
+[connection signal="pressed" from="MainPanel/MenuBar/RedoButton" to="MainPanel/MenuBar/EditMenuButton" method="call_redo"]

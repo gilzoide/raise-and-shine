@@ -35,11 +35,19 @@ func _ready() -> void:
 	menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
 
 
+func call_undo() -> void:
+	history.apply_undo()
+
+
+func call_redo() -> void:
+	history.apply_redo()
+
+
 func _on_menu_popup_id_pressed(id: int) -> void:
 	if id == UNDO:
-		history.apply_undo()
+		call_undo()
 	elif id == REDO:
-		history.apply_redo()
+		call_redo()
 	elif id == SELECTION_CLEAR:
 		selection.clear(false)
 	elif id == SELECTION_ALL:
