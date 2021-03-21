@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://editor/VisualizerGrid.tscn" type="PackedScene" id=2]
@@ -12,8 +12,6 @@
 [ext_resource path="res://mainUI/ViewMenuButton.gd" type="Script" id=10]
 [ext_resource path="res://textures/UndoToolIcon.svg" type="Texture" id=11]
 [ext_resource path="res://mainUI/ToolButtonPresentation.gd" type="Script" id=12]
-[ext_resource path="res://shortcuts/RedoShortcut.tres" type="ShortCut" id=13]
-[ext_resource path="res://shortcuts/UndoShortcut.tres" type="ShortCut" id=14]
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -84,7 +82,6 @@ margin_left = 179.0
 margin_right = 260.0
 margin_bottom = 44.0
 hint_tooltip = "Undo"
-shortcut = ExtResource( 14 )
 text = "Undo"
 icon = ExtResource( 11 )
 script = ExtResource( 12 )
@@ -94,7 +91,6 @@ margin_left = 264.0
 margin_right = 343.0
 margin_bottom = 44.0
 hint_tooltip = "Redo"
-shortcut = ExtResource( 13 )
 text = "Redo"
 icon = ExtResource( 9 )
 script = ExtResource( 12 )
