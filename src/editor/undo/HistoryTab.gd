@@ -21,6 +21,7 @@ func _on_history_revision_added(revision) -> void:
 	for i in range(0, revision_container.get_child_count() - revision.id):
 		var child = revision_container.get_child(i)
 		revision_container.remove_child(child)
+		child.queue_free()
 	add_revision(revision, true)
 
 
@@ -41,6 +42,7 @@ func _notification(what: int) -> void:
 func refresh_all() -> void:
 	for c in revision_container.get_children():
 		revision_container.remove_child(c)
+		c.queue_free()
 	var current = history.current_revision
 	for i in history.revision_history.size():
 		add_revision(history.revision_history[i], i == current)
