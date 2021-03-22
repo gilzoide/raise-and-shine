@@ -46,7 +46,8 @@ func _on_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
 	var new_size = texture.get_size()
 	if size != new_size:
 		update_with_size(new_size)
-	snapshot_image.fill(SelectionCanvasItem.UNSELECTED_COLOR)
+	var format = snapshot_image.get_format()
+	snapshot_image.create(int(size.x), int(size.y), false, format)
 	snapshot_texture.create_from_image(snapshot_image, 0)
 	active_brush.rect_size = size if active_brush.format == SelectionCanvasItem.Format.PENCIL else Vector2.ZERO
 	redraw()
