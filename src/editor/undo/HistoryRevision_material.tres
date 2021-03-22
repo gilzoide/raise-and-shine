@@ -7,5 +7,5 @@
 resource_local_to_scene = true
 shader = ExtResource( 2 )
 shader_param/selection_texture_pixel_size = Vector2( 0.016, 0.016 )
-shader_param/selection_pixel_width = 1.0
+shader_param/selection_pixel_width = 0.5
 shader_param/selection_map = ExtResource( 1 )
