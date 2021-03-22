@@ -9,6 +9,7 @@
 margin_right = 397.0
 margin_bottom = 219.0
 rect_min_size = Vector2( 128, 128 )
+mouse_filter = 1
 size_flags_horizontal = 3
 script = ExtResource( 3 )
 __meta__ = {
