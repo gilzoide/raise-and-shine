@@ -4,6 +4,8 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Viewport
 
+signal snapshot_updated()
+
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(ShaderMaterial) var selection_material = preload("res://editor/visualizers/2D/ShowSelection_material.tres")
 export(ShaderMaterial) var plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
@@ -20,24 +22,35 @@ var pencil_texture := ImageTexture.new()
 
 func _ready() -> void:
 	background.color = SelectionCanvasItem.UNSELECTED_COLOR
-	_on_texture_changed(project.height_texture)
-	var _err = project.connect("height_texture_changed", self, "_on_texture_changed")
+	update_with_size(project.height_texture.get_size())
 	var texture = get_texture()
 	texture.flags = 0
-	selection_material.set_shader_param("selection_map", texture)
-	plane_material.set_shader_param("selection_map", texture)
+	snapshot_image = texture.get_data()
+	snapshot_texture.create_from_image(snapshot_image, 0)
 	current_selection.texture = snapshot_texture
+	plane_material.set_shader_param("selection_map", texture)
+	selection_material.set_shader_param("selection_map", texture)
+	project.connect("height_texture_changed", self, "_on_texture_changed")
+
+
+func update_with_size(new_size: Vector2) -> void:
+	size = new_size
+	background.rect_size = size
+	current_selection.rect_size = size
+	pencil_image.create(int(size.x), int(size.y), false, Image.FORMAT_L8)
+	pencil_texture.create_from_image(pencil_image, 0)
+	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
 
 
 func _on_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
-	size = texture.get_size()
-	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
-	background.rect_size = size
-	current_selection.rect_size = size
-	snapshot_image = get_texture().get_data()
+	var new_size = texture.get_size()
+	if size != new_size:
+		update_with_size(new_size)
+	snapshot_image.fill(SelectionCanvasItem.UNSELECTED_COLOR)
 	snapshot_texture.create_from_image(snapshot_image, 0)
-	pencil_image.create(int(size.x), int(size.y), false, Image.FORMAT_L8)
-	pencil_texture.create_from_image(pencil_image, 0)
+	active_brush.rect_size = size if active_brush.format == SelectionCanvasItem.Format.PENCIL else Vector2.ZERO
+	redraw()
+	emit_signal("snapshot_updated")
 
 
 func set_format(format: int, is_union: bool) -> void:
@@ -50,14 +63,16 @@ func set_format(format: int, is_union: bool) -> void:
 
 
 func set_selection(selection: Image) -> void:
+	var new_size = selection.get_size()
+	if size != new_size:
+		update_with_size(new_size)
+	var format = snapshot_image.get_format()
 	snapshot_image.copy_from(selection)
+	snapshot_image.convert(format)
 	snapshot_texture.create_from_image(snapshot_image, snapshot_texture.flags)
-	if active_brush.format == SelectionCanvasItem.Format.PENCIL:
-		pencil_image.fill(active_brush.UNSELECTED_COLOR)
-		pencil_texture.set_data(pencil_image)
-	else:
-		active_brush.rect_size = Vector2.ZERO
+	active_brush.rect_size = size if active_brush.format == SelectionCanvasItem.Format.PENCIL else Vector2.ZERO
 	redraw()
+	emit_signal("snapshot_updated")
 
 
 func update_selection_rect(rect: Rect2, line_direction: float = 1.0) -> void:
@@ -99,5 +114,7 @@ func invert() -> void:
 
 
 func take_snapshot() -> void:
+	yield(VisualServer, "frame_post_draw")
 	snapshot_image = get_texture().get_data()
 	snapshot_texture.set_data(snapshot_image)
+	emit_signal("snapshot_updated")

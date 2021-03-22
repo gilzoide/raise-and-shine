@@ -96,6 +96,7 @@ func on_project_dialog_image(value: Image, path: String = "") -> void:
 	var new_height_data = HeightMapData.new()
 	new_height_data.create(value.get_size())
 	set_height_data(new_height_data, true)
+	history.push_revision(height_data, height_image)
 
 
 func set_albedo_image(value: Image, _path: String = "") -> void:

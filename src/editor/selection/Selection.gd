@@ -132,8 +132,8 @@ func invert() -> void:
 
 
 func update_selection_bitmap() -> void:
-	yield(VisualServer, "frame_post_draw")
 	SelectionDrawer.take_snapshot()
+	yield(SelectionDrawer, "snapshot_updated")
 	if selection_changed:
 		history.push_selection(SelectionDrawer.snapshot_image)
 		selection_changed = false

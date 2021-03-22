@@ -25,21 +25,18 @@ func init_selection(selection: Image) -> void:
 	revision_history[0].selection.copy_from(selection)
 
 
-func push_heightmapdata(data: HeightMapData) -> void:
-	revision_history.resize(current_revision + 1)
-	var new_revision = Revision.new()
-	new_revision.heightmap.copy_from(data)
-	new_revision.selection = revision_history[-1].selection
-	revision_history.append(new_revision)
-	current_revision = revision_history.size() - 1
-	new_revision.id = current_revision
-	emit_signal("revision_added", new_revision)
+func push_heightmapdata(heightmap: HeightMapData) -> void:
+	push_revision(heightmap, revision_history[-1].selection)
 
 
 func push_selection(selection: Image) -> void:
+	push_revision(revision_history[-1].heightmap, selection)
+
+
+func push_revision(heightmap: HeightMapData, selection: Image) -> void:
 	revision_history.resize(current_revision + 1)
 	var new_revision = Revision.new()
-	new_revision.heightmap = revision_history[-1].heightmap
+	new_revision.heightmap.copy_from(heightmap)
 	new_revision.selection.copy_from(selection)
 	revision_history.append(new_revision)
 	current_revision = revision_history.size() - 1
@@ -48,6 +45,8 @@ func push_selection(selection: Image) -> void:
 
 
 func set_current_revision(id: int) -> void:
+	if id == current_revision:
+		return
 	var revision = get_revision(id)
 	if revision != null:
 		assert(revision.id == id, "FIXME!!!")
