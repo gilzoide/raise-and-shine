@@ -30,11 +30,19 @@ godot_variant LUMINANCE_ARRAY_NAME;
 #define MAX(a, b) (a > b ? a : b)
 #define CLAMP(x, min, max) (MIN(max, MAX(min, x)))
 
+static inline godot_int posmod(godot_int p_x, godot_int p_y) {
+    godot_int value = p_x % p_y;
+    if ((value < 0 && p_y > 0) || (value > 0 && p_y < 0)) {
+        value += p_y;
+    }
+    return value;
+}
+
 #ifdef NDEBUG
-void print_if_error(godot_variant_call_error *error, const char *method, int line) {}
+static void print_if_error(godot_variant_call_error *error, const char *method, int line) {}
 #else
 #include <stdio.h>
-void print_if_error(godot_variant_call_error *error, const char *method, int line) {
+static void print_if_error(godot_variant_call_error *error, const char *method, int line) {
     char msg[1024];
     if(error->error != GODOT_CALL_ERROR_CALL_OK) {
         sprintf(msg, "code: %d", error->error);
@@ -154,19 +162,19 @@ GDCALLINGCONV godot_variant fill_normalmap(godot_object *p_instance, void *p_met
         &error
     );
     print_if_error(&error, "normalmap.get_size", __LINE__);
-    godot_vector2 size = api->godot_variant_as_vector2(&size_variant);
-    godot_int size_x = (godot_int) api->godot_vector2_get_x(&size);
-    godot_int size_y = (godot_int) api->godot_vector2_get_y(&size);
-    godot_int bump_scale = MIN(size_x, size_y);
-    godot_int stride = size_x;
+    const godot_vector2 size = api->godot_variant_as_vector2(&size_variant);
+    const godot_int size_x = (godot_int) api->godot_vector2_get_x(&size);
+    const godot_int size_y = (godot_int) api->godot_vector2_get_y(&size);
+    const godot_int bump_scale = MIN(size_x, size_y);
+    const godot_int stride = size_x;
 
-    godot_vector2 rect_position = api->godot_rect2_get_position(&rect);
-    godot_int rect_x = (godot_int) api->godot_vector2_get_x(&rect_position);
-    godot_int rect_y = (godot_int) api->godot_vector2_get_y(&rect_position);
+    const godot_vector2 rect_position = api->godot_rect2_get_position(&rect);
+    const godot_int rect_x = (godot_int) api->godot_vector2_get_x(&rect_position);
+    const godot_int rect_y = (godot_int) api->godot_vector2_get_y(&rect_position);
 
-    godot_vector2 rect_size = api->godot_rect2_get_size(&rect);
-    godot_int rect_end_x = rect_x + (godot_int) api->godot_vector2_get_x(&rect_size);
-    godot_int rect_end_y = rect_y + (godot_int) api->godot_vector2_get_y(&rect_size);
+    const godot_vector2 rect_size = api->godot_rect2_get_size(&rect);
+    const godot_int rect_end_x = rect_x + (godot_int) api->godot_vector2_get_x(&rect_size);
+    const godot_int rect_end_y = rect_y + (godot_int) api->godot_vector2_get_y(&rect_size);
 
     // *algorithm*
     api->godot_variant_call(
@@ -177,13 +185,25 @@ GDCALLINGCONV godot_variant fill_normalmap(godot_object *p_instance, void *p_met
     print_if_error(&error, "normalmap.lock", __LINE__);
     for(godot_int x = rect_x; x < rect_end_x; x++) {
         for(godot_int y = rect_y; y < rect_end_y; y++) {
-            godot_real here = height_ptr[y * stride + x];
-			godot_real right = height_ptr[y * stride + ((x + 1) % size_x)];
-			godot_real below = height_ptr[((y + 1) % size_y) * stride + x];
-            godot_vector3 up, across;
-            api->godot_vector3_new(&up, 0, 1, (here - below) * bump_scale);
-            api->godot_vector3_new(&across, 1, 0, (right - here) * bump_scale);
-            godot_vector3 normal = api->godot_vector3_cross(&across, &up);
+            godot_int x_left = posmod(x - 1, size_x);
+            godot_int x_right = posmod(x + 1, size_x);
+            godot_int y_top = posmod(y - 1, size_y);
+            godot_int y_bottom = posmod(y + 1, size_y);
+            
+            // Ref: https://github.com/Scrawk/Terrain-Topology-Algorithms/blob/afe65384254462073f41984c4c8e7e029275d830/Assets/TerrainTopology/Scripts/CreateTopolgy.cs#L162
+            godot_real z1 = height_ptr[y_bottom * stride + x_left];
+            godot_real z2 = height_ptr[y_bottom * stride + x];
+            godot_real z3 = height_ptr[y_bottom * stride + x_right];
+            godot_real z4 = height_ptr[y * stride + x_left];
+            godot_real z6 = height_ptr[y * stride + x_right];
+            godot_real z7 = height_ptr[y_top * stride + x_left];
+            godot_real z8 = height_ptr[y_top * stride + x];
+            godot_real z9 = height_ptr[y_top * stride + x_right];
+
+            godot_real zx = (z3 + z6 + z9 - z1 - z4 - z7) / 6.0 * bump_scale;
+            godot_real zy = (z1 + z2 + z3 - z7 - z8 - z9) / 6.0 * bump_scale;
+            godot_vector3 normal;
+            api->godot_vector3_new(&normal, -zx, zy, 1.0);
             normal = api->godot_vector3_normalized(&normal);
             godot_color normal_rgb;
             api->godot_color_new_rgb(

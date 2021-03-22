@@ -23,16 +23,30 @@ func apply_height_increments(height_data: HeightMapData, values: PoolVector2Arra
 func fill_normalmap(height_array: PoolRealArray, normalmap: Image, rect: Rect2) -> void:
 	var size = normalmap.get_size()
 	var bump_scale = min(size.x, size.y)
+	var diff_scale_factor = 1.0 / 6.0 * bump_scale
 	var stride = size.x
 	normalmap.lock()
 	for x in range(rect.position.x, rect.end.x):
 		for y in range(rect.position.y, rect.end.y):
-			var here = height_array[y * stride + x]
-			var right = height_array[y * stride + posmod(x + 1, size.x)]
-			var below = height_array[posmod(y + 1, size.y) * stride + x]
-			var up = Vector3(0, 1, (here - below) * bump_scale)
-			var across = Vector3(1, 0, (right - here) * bump_scale)
-			var normal = across.cross(up).normalized()
+			var x_left = posmod(x - 1, size.x)
+			var x_right = posmod(x + 1, size.x)
+			var y_top = posmod(y - 1, size.y)
+			var y_bottom = posmod(y + 1, size.y)
+			
+			# Ref: https://github.com/Scrawk/Terrain-Topology-Algorithms/blob/afe65384254462073f41984c4c8e7e029275d830/Assets/TerrainTopology/Scripts/CreateTopolgy.cs#L162
+			var z1 = height_array[y_bottom * stride + x_left]
+			var z2 = height_array[y_bottom * stride + x]
+			var z3 = height_array[y_bottom * stride + x_right]
+			var z4 = height_array[y * stride + x_left]
+			var z6 = height_array[y * stride + x_right]
+			var z7 = height_array[y_top * stride + x_left]
+			var z8 = height_array[y_top * stride + x]
+			var z9 = height_array[y_top * stride + x_right]
+
+			var zx = (z3 + z6 + z9 - z1 - z4 - z7) * diff_scale_factor
+			var zy = (z1 + z2 + z3 - z7 - z8 - z9) * diff_scale_factor
+			var normal = Vector3(-zx, zy, 1.0).normalized()
+
 			var normal_rgb = normal * 0.5 + Vector3(0.5, 0.5, 0.5)
 			normalmap.set_pixel(x, y, Color(normal_rgb.x, normal_rgb.y, normal_rgb.z, 1))
 	normalmap.unlock()
