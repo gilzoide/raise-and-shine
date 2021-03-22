@@ -1,13 +1,29 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://debug/teste_quadrado.png" type="Texture" id=1]
 [ext_resource path="res://editor/normal/HeightToNormal_material.tres" type="Material" id=2]
+[ext_resource path="res://debug/hemicircle.png" type="Texture" id=3]
 
-[node name="HeightToNormal" type="TextureRect"]
-material = ExtResource( 2 )
+[node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="HeightToNormal" type="TextureRect" parent="."]
+material = ExtResource( 2 )
+anchor_right = 0.5
+anchor_bottom = 1.0
 texture = ExtResource( 1 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HeightToNormal_2" type="TextureRect" parent="."]
+material = ExtResource( 2 )
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
 stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
