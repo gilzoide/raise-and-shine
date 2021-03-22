@@ -54,13 +54,13 @@ static void print_if_error(godot_variant_call_error *error, const char *method, 
 ///////////////////////////////////////////////////////////////////////////////
 // Class ctor/dtor
 ///////////////////////////////////////////////////////////////////////////////
-GDCALLINGCONV void *null_constructor(godot_object *p_instance, void *p_method_data) { return NULL; }
-GDCALLINGCONV void null_destructor(godot_object *p_instance, void *p_method_data, void *p_user_data) {}
+static GDCALLINGCONV void *null_constructor(godot_object *p_instance, void *p_method_data) { return NULL; }
+static GDCALLINGCONV void null_destructor(godot_object *p_instance, void *p_method_data, void *p_user_data) {}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Methods
 ///////////////////////////////////////////////////////////////////////////////
-GDCALLINGCONV godot_variant apply_height_increments(godot_object *p_instance, void *p_method_data,
+static GDCALLINGCONV godot_variant apply_height_increments(godot_object *p_instance, void *p_method_data,
         void *p_user_data, int argc, godot_variant **argv) {
     godot_variant_call_error error;
 
@@ -142,7 +142,7 @@ GDCALLINGCONV godot_variant apply_height_increments(godot_object *p_instance, vo
     return ret;
 }
 
-GDCALLINGCONV godot_variant fill_normalmap(godot_object *p_instance, void *p_method_data,
+static GDCALLINGCONV godot_variant fill_normalmap(godot_object *p_instance, void *p_method_data,
         void *p_user_data, int argc, godot_variant **argv) {
     godot_variant_call_error error;
 
@@ -245,7 +245,7 @@ GDCALLINGCONV godot_variant fill_normalmap(godot_object *p_instance, void *p_met
 ///////////////////////////////////////////////////////////////////////////////
 // API initialization
 ///////////////////////////////////////////////////////////////////////////////
-void GDN_EXPORT godot_gdnative_init(godot_gdnative_init_options *p_options) {
+GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *p_options) {
     api = p_options->api_struct;
     GET_NAME = STR("get");
     GET_SIZE_NAME = STR("get_size");
@@ -273,7 +273,7 @@ void GDN_EXPORT godot_gdnative_init(godot_gdnative_init_options *p_options) {
     }
 }
 
-void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_options *p_options) {
+GDN_EXPORT void godot_gdnative_terminate(godot_gdnative_terminate_options *p_options) {
     api->godot_variant_destroy(&LUMINANCE_ARRAY_NAME);
     api->godot_variant_destroy(&HEIGHT_ARRAY_NAME);
 
@@ -288,7 +288,7 @@ void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_options *p_opt
     api = NULL;
 }
 
-void GDN_EXPORT godot_nativescript_init(void *p_handle) {
+GDN_EXPORT void godot_nativescript_init(void *p_handle) {
     nativescript_api->godot_nativescript_register_class(
         p_handle, "HeightAlgorithm_native", "Reference",
         (godot_instance_create_func){ &null_constructor, NULL, NULL },
