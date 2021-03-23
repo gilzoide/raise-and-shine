@@ -6,10 +6,11 @@ extends MenuButton
 
 enum {
 	LOAD,
-	RESIZE,
 	EXPORT_HEIGHT,
 	EXPORT_NORMAL,
 	_SEPARATOR_0,
+	RESIZE,
+	_SEPARATOR_1,
 	QUIT,
 }
 
@@ -26,11 +27,12 @@ func _ready() -> void:
 	Load a texture to be used as albedo.
 	Empty height and normal maps will be created with the same dimensions as the loaded texture.
 	""")
-	
-	popup.add_item("Resize maps", RESIZE)
-	
 	popup.add_item("Export height map", EXPORT_HEIGHT)
 	popup.add_item("Export normal map", EXPORT_NORMAL)
+	
+	popup.add_separator()
+	
+	popup.add_item("Resize maps", RESIZE)
 	
 	if OS.get_name() != "HTML5":
 		popup.add_separator()
@@ -43,15 +45,15 @@ func _ready() -> void:
 func _on_item_pressed(id: int) -> void:
 	if id == LOAD:
 		project.load_project_dialog()
+	elif id == EXPORT_HEIGHT:
+		project.save_image_dialog(MapTypes.Type.HEIGHT_MAP)
+	elif id == EXPORT_NORMAL:
+		project.save_image_dialog(MapTypes.Type.NORMAL_MAP)
 	elif id == RESIZE:
 		if size_picker_popup == null:
 			size_picker_popup = load("res://mainUI/SizePickerPopup.tscn").instance()
 			add_child(size_picker_popup)
 		var _err = size_picker_popup.connect("size_confirmed", project, "resize_maps", [], CONNECT_ONESHOT)
 		size_picker_popup.popup_with_size(project.height_image.get_size())
-	elif id == EXPORT_HEIGHT:
-		project.save_image_dialog(MapTypes.Type.HEIGHT_MAP)
-	elif id == EXPORT_NORMAL:
-		project.save_image_dialog(MapTypes.Type.NORMAL_MAP)
 	elif id == QUIT:
 		get_tree().quit()
