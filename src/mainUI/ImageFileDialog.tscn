@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://mainUI/ImageFileDialog.gd" type="Script" id=1]
+[ext_resource path="res://fonts/DroidSans.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+use_filter = true
+font_data = ExtResource( 2 )
 
 [node name="ImageFileDialog" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -28,14 +34,35 @@ anchor_left = 0.2
 anchor_top = 0.2
 anchor_right = 0.8
 anchor_bottom = 0.8
+rect_min_size = Vector2( 300, 200 )
 window_title = "Drop image file"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="DropDialog"]
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.8
+custom_fonts/font = SubResource( 1 )
 text = "Drop image file here"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label_2" type="Label" parent="DropDialog"]
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_bottom = -16.0
+text = "Supported file types: bmp, dds, exr, hdr, jpg, jpeg, png, tga, webp"
+valign = 2
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ImageLoadErrorDialog" type="AcceptDialog" parent="."]
 anchor_left = 0.5
@@ -66,6 +93,7 @@ dialog_text = "Failed to save image =("
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]
 [connection signal="popup_hide" from="FileDialog" to="." method="_on_popup_hide"]
 [connection signal="popup_hide" from="DropDialog" to="." method="_on_popup_hide"]
