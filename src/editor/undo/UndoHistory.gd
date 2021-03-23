@@ -26,11 +26,11 @@ func init_selection(selection: Image) -> void:
 
 
 func push_heightmapdata(heightmap: HeightMapData) -> void:
-	push_revision(heightmap, revision_history[-1].selection)
+	push_revision(heightmap, revision_history[max(0, current_revision - 1)].selection)
 
 
 func push_selection(selection: Image) -> void:
-	push_revision(revision_history[-1].heightmap, selection)
+	push_revision(revision_history[max(0, current_revision - 1)].heightmap, selection)
 
 
 func push_revision(heightmap: HeightMapData, selection: Image) -> void:
