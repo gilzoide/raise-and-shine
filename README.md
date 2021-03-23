@@ -11,4 +11,4 @@ Made with [Godot](https://godotengine.org/), to be launched soon!
 
 ### Credits
 - P1_2 texture from Heayale Heale: https://github.com/Artars/HeayaleHeale
-- Undo and Redo icons from Material Design Icons: https://github.com/Templarian/MaterialDesign
+- Undo, Redo, Context Menu icons from Material Design Icons: https://github.com/Templarian/MaterialDesign

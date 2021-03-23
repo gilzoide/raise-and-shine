@@ -5,7 +5,7 @@
 [ext_resource path="res://editor/visualizers/2D/ShowSelection_material.tres" type="Material" id=5]
 [ext_resource path="res://textures/Albedo_imagetexture.tres" type="Texture" id=6]
 
-[node name="TextureSlot" type="Control"]
+[node name="TextureSlot" type="TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
@@ -14,31 +14,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="MenuButton" parent="."]
-anchor_right = 1.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 32 )
-mouse_filter = 1
-size_flags_horizontal = 0
-size_flags_vertical = 0
-button_mask = 3
-text = "TITLE"
-flat = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="TextureRect" type="Control" parent="."]
 material = ExtResource( 5 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 4.0
 margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
 mouse_filter = 1
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 texture = ExtResource( 6 )
+
+[node name="PopupMenu" type="PopupMenu" parent="TextureRect"]
+hide_on_checkable_item_selection = false
+
 [connection signal="drag_ended" from="TextureRect" to="." method="_on_TextureRect_drag_ended"]
 [connection signal="drag_moved" from="TextureRect" to="." method="_on_TextureRect_drag_moved"]
 [connection signal="drag_started" from="TextureRect" to="." method="_on_TextureRect_drag_started"]
