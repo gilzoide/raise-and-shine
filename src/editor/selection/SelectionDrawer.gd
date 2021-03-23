@@ -6,18 +6,21 @@ extends Viewport
 
 signal snapshot_updated()
 
+const PENCIL_IMAGE_FORMAT = Image.FORMAT_L8
+const PENCIL_TEXTURE_FLAGS = 0
+
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(ShaderMaterial) var selection_material = preload("res://editor/visualizers/2D/ShowSelection_material.tres")
 export(ShaderMaterial) var plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
-
-onready var background = $Background
-onready var current_selection = $CurrentSelection
-onready var active_brush = $ActiveBrush
 
 var snapshot_image := Image.new()
 var snapshot_texture := ImageTexture.new()
 var pencil_image := Image.new()
 var pencil_texture := ImageTexture.new()
+
+onready var background = $Background
+onready var current_selection = $CurrentSelection
+onready var active_brush = $ActiveBrush
 
 
 func _ready() -> void:
@@ -37,9 +40,13 @@ func update_with_size(new_size: Vector2) -> void:
 	size = new_size
 	background.rect_size = size
 	current_selection.rect_size = size
-	pencil_image.create(int(size.x), int(size.y), false, Image.FORMAT_L8)
-	pencil_texture.create_from_image(pencil_image, 0)
+	clear_pencil_texture()
 	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
+
+
+func clear_pencil_texture() -> void:
+	pencil_image.create(int(size.x), int(size.y), false, PENCIL_IMAGE_FORMAT)
+	pencil_texture.create_from_image(pencil_image, PENCIL_TEXTURE_FLAGS)
 
 
 func _on_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
@@ -58,6 +65,7 @@ func set_format(format: int, is_union: bool) -> void:
 	active_brush.format = format
 	active_brush.set_selection_union(is_union)
 	if format == SelectionCanvasItem.Format.PENCIL:
+		clear_pencil_texture()
 		active_brush.texture = pencil_texture
 		active_brush.rect_position = Vector2.ZERO
 		active_brush.rect_size = size
