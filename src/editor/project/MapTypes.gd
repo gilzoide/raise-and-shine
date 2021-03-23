@@ -12,10 +12,6 @@ enum Type {
 	NORMAL_MAP,
 }
 
-const ALBEDO_IMAGE = preload("res://textures/P1_2_Hair.png")
-const HEIGHT_IMAGE = preload("res://textures/P1_2_Hair_height.png")
-const NORMAL_IMAGE = preload("res://textures/P1_2_Hair_normal.png")
-
 const ALBEDO_TEXTURE = preload("res://textures/Albedo_imagetexture.tres")
 const ALBEDO_SRGB_TEXTURE = preload("res://textures/Albedo_SRGB_imagetexture.tres")
 const HEIGHT_TEXTURE = preload("res://textures/Height_imagetexture.tres")

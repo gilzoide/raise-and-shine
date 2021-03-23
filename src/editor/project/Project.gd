@@ -10,9 +10,9 @@ signal normal_texture_changed(texture)
 signal operation_applied(operation, height_data)
 signal operation_ended(operation, height_data)
 
-export(Image) var albedo_image: Image = MapTypes.ALBEDO_IMAGE
-export(Image) var height_image: Image = MapTypes.HEIGHT_IMAGE
-export(Image) var normal_image: Image = MapTypes.NORMAL_IMAGE
+export(Image) var albedo_image: Image = preload("res://textures/P1_2_Hair.png")
+export(Image) var height_image: Image = Image.new()
+export(Image) var normal_image: Image = Image.new()
 export(ImageTexture) var albedo_texture: ImageTexture = MapTypes.ALBEDO_TEXTURE
 export(ImageTexture) var albedo_srgb_texture: ImageTexture = MapTypes.ALBEDO_SRGB_TEXTURE
 export(ImageTexture) var height_texture: ImageTexture = MapTypes.HEIGHT_TEXTURE
@@ -31,7 +31,8 @@ func _init() -> void:
 	else:
 		height_algorithm = HeightAlgorithm.new()
 	
-	height_image.create(64, 64, false, HeightMapData.HEIGHT_IMAGE_FORMAT)
+	var albedo_size = albedo_image.get_size()
+	height_image.create(albedo_size.x, albedo_size.y, false, HeightMapData.HEIGHT_IMAGE_FORMAT)
 	set_height_image(height_image)
 	history.init_heightmap(height_data)
 	history.connect("revision_changed", self, "_on_history_revision_changed")
