@@ -121,7 +121,6 @@ theme = ExtResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
-split_offset = -20
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -129,16 +128,16 @@ __meta__ = {
 [node name="VisualizerGrid" parent="MainPanel/VBoxContainer/WorkbenchPanel/HSplitContainer" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 842.0
+margin_right = 847.0
 margin_bottom = 556.0
 size_flags_horizontal = 3
 split_offset = -20
 
 [node name="TabContainer" type="TabContainer" parent="MainPanel/VBoxContainer/WorkbenchPanel/HSplitContainer"]
-margin_left = 854.0
+margin_left = 859.0
 margin_right = 1024.0
 margin_bottom = 556.0
-rect_min_size = Vector2( 150, 0 )
+rect_min_size = Vector2( 165, 0 )
 drag_to_rearrange_enabled = true
 
 [node name="Lights" parent="MainPanel/VBoxContainer/WorkbenchPanel/HSplitContainer/TabContainer" instance=ExtResource( 4 )]
