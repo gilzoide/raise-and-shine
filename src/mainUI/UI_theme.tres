@@ -4,7 +4,5 @@
 [ext_resource path="res://textures/ContextMenuHighlightIcon.svg" type="Texture" id=2]
 
 [resource]
-HSplitContainer/constants/autohide = 0
 TabContainer/icons/menu = ExtResource( 1 )
 TabContainer/icons/menu_highlight = ExtResource( 2 )
-VSplitContainer/constants/autohide = 0
