@@ -6,3 +6,4 @@
 script = ExtResource( 1 )
 background_color = Color( 0.301961, 0.301961, 0.301961, 1 )
 show_tool_button_text = false
+skip_onboarding_at_startup = false
