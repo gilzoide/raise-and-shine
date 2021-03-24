@@ -48,7 +48,7 @@ func _on_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
 	var format = snapshot_image.get_format()
 	snapshot_image.create(int(size.x), int(size.y), false, format)
 	snapshot_texture.create_from_image(snapshot_image, 0)
-	active_brush.rect_size = size if active_brush.format == SelectionCanvasItem.Format.PENCIL else Vector2.ZERO
+	active_brush.rect_size = Vector2.ZERO
 	redraw()
 	emit_signal("snapshot_updated")
 
@@ -56,9 +56,6 @@ func _on_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
 func set_format(format: int, is_union: bool) -> void:
 	active_brush.format = format
 	active_brush.set_selection_union(is_union)
-	if format == SelectionCanvasItem.Format.PENCIL:
-		active_brush.rect_position = Vector2.ZERO
-		active_brush.rect_size = size
 
 
 func set_selection(selection: Image) -> void:
@@ -69,7 +66,7 @@ func set_selection(selection: Image) -> void:
 	snapshot_image.copy_from(selection)
 	snapshot_image.convert(format)
 	snapshot_texture.create_from_image(snapshot_image, snapshot_texture.flags)
-	active_brush.rect_size = size if active_brush.format == SelectionCanvasItem.Format.PENCIL else Vector2.ZERO
+	active_brush.rect_size = Vector2.ZERO
 	redraw()
 	emit_signal("snapshot_updated")
 
