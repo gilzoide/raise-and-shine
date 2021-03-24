@@ -19,11 +19,12 @@ enum Format {
 
 export(Format) var format = Format.TEXTURE
 var texture: Texture
+var points: PoolVector2Array
 var line_direction: float
 
 
 func _draw() -> void:
-	if format == Format.TEXTURE or format == Format.PENCIL:
+	if format == Format.TEXTURE:
 		draw_texture(texture, Vector2.ZERO)
 	elif format == Format.RECTANGLE:
 		draw_rect(Rect2(Vector2.ZERO, rect_size), SELECTED_COLOR)
@@ -35,6 +36,18 @@ func _draw() -> void:
 		var from = Vector2.ZERO if line_direction >= 0 else Vector2(0, rect_size.y)
 		var to = rect_size if line_direction >= 0 else Vector2(rect_size.x, 0)
 		draw_line(from, to, SELECTED_COLOR)
+	elif format == Format.PENCIL:
+		draw_polyline(points, SELECTED_COLOR)
+
+
+func paint_position(pos: Vector2) -> void:
+	points.append(pos)
+	if points.size() == 1:
+		points.append(pos + Vector2.ONE)
+
+
+func clear_positions() -> void:
+	points.resize(0)
 
 
 func set_selection_union(is_union: bool) -> void:

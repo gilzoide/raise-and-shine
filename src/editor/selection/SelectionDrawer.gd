@@ -15,8 +15,6 @@ export(ShaderMaterial) var plane_material = preload("res://editor/visualizers/3D
 
 var snapshot_image := Image.new()
 var snapshot_texture := ImageTexture.new()
-var pencil_image := Image.new()
-var pencil_texture := ImageTexture.new()
 
 onready var background = $Background
 onready var current_selection = $CurrentSelection
@@ -40,8 +38,6 @@ func update_with_size(new_size: Vector2) -> void:
 	size = new_size
 	background.rect_size = size
 	current_selection.rect_size = size
-	pencil_image.create(int(size.x), int(size.y), false, PENCIL_IMAGE_FORMAT)
-	pencil_texture.create_from_image(pencil_image, PENCIL_TEXTURE_FLAGS)
 	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
 
 
@@ -61,9 +57,6 @@ func set_format(format: int, is_union: bool) -> void:
 	active_brush.format = format
 	active_brush.set_selection_union(is_union)
 	if format == SelectionCanvasItem.Format.PENCIL:
-		pencil_image.fill(SelectionCanvasItem.UNSELECTED_COLOR)
-		pencil_texture.set_data(pencil_image)
-		active_brush.texture = pencil_texture
 		active_brush.rect_position = Vector2.ZERO
 		active_brush.rect_size = size
 
@@ -90,10 +83,7 @@ func update_selection_rect(rect: Rect2, line_direction: float = 1.0) -> void:
 
 func paint_position(position: Vector2) -> void:
 	if Rect2(Vector2.ZERO, size).has_point(position):
-		pencil_image.lock()
-		pencil_image.set_pixelv(position, SelectionCanvasItem.SELECTED_COLOR)
-		pencil_image.unlock()
-		pencil_texture.set_data(pencil_image)
+		active_brush.paint_position(position)
 		redraw()
 
 
@@ -116,11 +106,11 @@ func invert() -> void:
 	yield(VisualServer, "frame_post_draw")
 	background.color = SelectionCanvasItem.UNSELECTED_COLOR
 	current_selection.set_selection_union(true)
-	
 
 
 func take_snapshot() -> void:
 	yield(VisualServer, "frame_post_draw")
 	snapshot_image = get_texture().get_data()
 	snapshot_texture.set_data(snapshot_image)
+	active_brush.clear_positions()
 	emit_signal("snapshot_updated")
