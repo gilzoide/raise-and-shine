@@ -14,6 +14,9 @@ margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Title" type="HBoxContainer" parent="."]
 anchor_right = 1.0

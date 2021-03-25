@@ -1,10 +1,17 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://fonts/DroidSans_32.tres" type="DynamicFont" id=1]
 [ext_resource path="res://help/OnboardingTabWelcome.tscn" type="PackedScene" id=2]
 [ext_resource path="res://help/OnboardingTabSelection.tscn" type="PackedScene" id=3]
 [ext_resource path="res://mainUI/TabContainerNextPrevious.gd" type="Script" id=4]
 [ext_resource path="res://help/OnboardingWindow.gd" type="Script" id=5]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+bg_color = Color( 0.145098, 0.145098, 0.164706, 1 )
 
 [node name="Onboarding" type="VBoxContainer"]
 anchor_right = 1.0
@@ -35,19 +42,23 @@ margin_right = 990.0
 margin_bottom = 572.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Welcome" parent="Center/Slides" instance=ExtResource( 2 )]
+margin_left = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
 
 [node name="Selecting" parent="Center/Slides" instance=ExtResource( 3 )]
 visible = false
-margin_left = 4.0
+margin_left = 8.0
 margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_right = -8.0
+margin_bottom = -8.0
 
 [node name="RightButton" type="Button" parent="Center"]
 margin_left = 994.0

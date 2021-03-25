@@ -8,7 +8,11 @@
 [ext_resource path="res://fonts/DroidSans_32.tres" type="DynamicFont" id=6]
 [ext_resource path="res://textures/MouseLeftButtonIcon.svg" type="Texture" id=7]
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="StyleBoxFlat" id=2]
 content_margin_left = 6.0
 content_margin_right = 12.0
 draw_center = false
@@ -21,99 +25,28 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[sub_resource type="CanvasItemMaterial" id=2]
-blend_mode = 1
-light_mode = 1
-
-[node name="SelectionDemonstration" type="VBoxContainer"]
+[node name="SelectionDemonstration" type="Container"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/separation = 16
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+modifier = 0
 
-[node name="ControlIcons" type="HBoxContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 48.0
-alignment = 1
-
-[node name="MouseIcon" type="TextureRect" parent="ControlIcons"]
-margin_left = 434.0
-margin_right = 482.0
-margin_bottom = 48.0
-texture = ExtResource( 7 )
-
-[node name="PlusSign" type="Label" parent="ControlIcons"]
-margin_left = 486.0
-margin_top = 5.0
-margin_right = 512.0
-margin_bottom = 43.0
-custom_fonts/font = ExtResource( 6 )
-text = "+ "
-
-[node name="Key" type="PanelContainer" parent="ControlIcons"]
-margin_left = 516.0
-margin_right = 590.0
-margin_bottom = 48.0
-custom_styles/panel = SubResource( 1 )
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ControlIcons/Key"]
-margin_left = 6.0
-margin_top = 2.0
-margin_right = 62.0
-margin_bottom = 46.0
-
-[node name="KeyIcon" type="TextureRect" parent="ControlIcons/Key/HBoxContainer"]
-margin_right = 24.0
-margin_bottom = 44.0
-texture = ExtResource( 5 )
-stretch_mode = 4
-
-[node name="KeyLabel" type="Label" parent="ControlIcons/Key/HBoxContainer"]
-margin_left = 28.0
-margin_right = 56.0
-margin_bottom = 44.0
-size_flags_vertical = 1
-text = "Shift"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Fill" type="Control" parent="."]
-margin_top = 64.0
-margin_right = 1024.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Fill"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 16.0
-margin_right = -16.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment_vertical = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Animation" type="ColorRect" parent="Fill/AspectRatioContainer"]
-margin_left = 228.0
-margin_right = 764.0
+[node name="Animation" type="ColorRect" parent="."]
+margin_left = 244.0
+margin_right = 780.0
 margin_bottom = 536.0
+size_flags_vertical = 3
 color = Color( 0, 0, 0, 1 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SelectionCanvasItem" type="Control" parent="Fill/AspectRatioContainer/Animation"]
-material = SubResource( 2 )
+[node name="SelectionCanvasItem" type="Control" parent="Animation"]
+material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
@@ -122,8 +55,64 @@ __meta__ = {
 }
 format = 1
 
-[node name="CursorIcon" type="Sprite" parent="Fill/AspectRatioContainer/Animation"]
+[node name="CursorIcon" type="Sprite" parent="Animation"]
 position = Vector2( 23.2492, 23.0683 )
 texture = ExtResource( 2 )
 centered = false
 offset = Vector2( -7.02563, -3.16498 )
+
+[node name="ControlIcons" type="HBoxContainer" parent="."]
+margin_top = 552.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MouseIcon" type="TextureRect" parent="ControlIcons"]
+margin_left = 488.0
+margin_right = 536.0
+margin_bottom = 48.0
+texture = ExtResource( 7 )
+
+[node name="PlusSign" type="Label" parent="ControlIcons"]
+visible = false
+margin_left = 244.0
+margin_top = 281.0
+margin_right = 270.0
+margin_bottom = 319.0
+custom_fonts/font = ExtResource( 6 )
+text = "+ "
+
+[node name="Key" type="PanelContainer" parent="ControlIcons"]
+visible = false
+margin_left = 274.0
+margin_right = 348.0
+margin_bottom = 600.0
+custom_styles/panel = SubResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ControlIcons/Key"]
+margin_left = 6.0
+margin_top = 2.0
+margin_right = 62.0
+margin_bottom = 598.0
+
+[node name="KeyIcon" type="TextureRect" parent="ControlIcons/Key/HBoxContainer"]
+margin_right = 24.0
+margin_bottom = 596.0
+texture = ExtResource( 5 )
+stretch_mode = 4
+
+[node name="KeyLabel" type="Label" parent="ControlIcons/Key/HBoxContainer"]
+margin_left = 28.0
+margin_right = 56.0
+margin_bottom = 596.0
+size_flags_vertical = 1
+text = "Shift"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

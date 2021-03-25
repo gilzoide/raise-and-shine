@@ -2,33 +2,26 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
-extends Control
+tool
+extends Container
 
-enum Modifier {
-	NONE,
-	SHIFT,
-	CONTROL,
-}
+export(float) var spacing = 16
 
-export(Modifier) var modifier = Modifier.NONE
+onready var _animation = $Animation
+onready var _control_icons = $ControlIcons
+onready var _control_mouse_icon = $ControlIcons/MouseIcon
 
-onready var _animation = $Fill/AspectRatioContainer/Animation
-onready var _key_plus_sign = $ControlIcons/PlusSign
-onready var _key_rect = $ControlIcons/Key
-onready var _key_icon = $ControlIcons/Key/HBoxContainer/KeyIcon
-onready var _key_label = $ControlIcons/Key/HBoxContainer/KeyLabel
 
-func _ready() -> void:
-	_animation.modifier = modifier
-	if modifier == Modifier.NONE:
-		_key_plus_sign.visible = false
-		_key_rect.visible = false
-	elif modifier == Modifier.SHIFT:
-		_key_icon.texture = load("res://textures/ShiftKeyIcon.svg")
-		_key_label.text = "Shift"
-	elif modifier == Modifier.CONTROL:
-		_key_icon.texture = load("res://textures/ControlKeyIcon.svg")
-		_key_label.text = "Ctrl"
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_SORT_CHILDREN:
+		var mouse_icon_size = _control_mouse_icon.texture.get_size()
+		var sparing_height = rect_size.y - mouse_icon_size.y - spacing
+		var animation_side = min(sparing_height, rect_size.x)
+		var animation_origin = Vector2(rect_size.x - animation_side, 0) * 0.5
+		var animation_rect = Rect2(animation_origin, Vector2(animation_side, animation_side))
+		fit_child_in_rect(_animation, animation_rect)
+		var controls_rect = Rect2(0, animation_rect.end.y + spacing, rect_size.x, mouse_icon_size.y)
+		fit_child_in_rect(_control_icons, controls_rect)
 
 
 func set_format(format: int) -> void:
