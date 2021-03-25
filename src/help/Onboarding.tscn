@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://fonts/DroidSans_32.tres" type="DynamicFont" id=1]
+[ext_resource path="res://help/OnboardingTabWelcome.tscn" type="PackedScene" id=2]
+[ext_resource path="res://help/OnboardingTabSelection.tscn" type="PackedScene" id=3]
+[ext_resource path="res://mainUI/TabContainerNextPrevious.gd" type="Script" id=4]
+[ext_resource path="res://help/OnboardingWindow.gd" type="Script" id=5]
+
+[node name="Onboarding" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Center" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 572.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LeftButton" type="Button" parent="Center"]
+margin_right = 30.0
+margin_bottom = 572.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 1 )
+button_mask = 0
+text = "<"
+flat = true
+
+[node name="Slides" type="TabContainer" parent="Center"]
+margin_left = 34.0
+margin_right = 990.0
+margin_bottom = 572.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Welcome" parent="Center/Slides" instance=ExtResource( 2 )]
+
+[node name="Selecting" parent="Center/Slides" instance=ExtResource( 3 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="RightButton" type="Button" parent="Center"]
+margin_left = 994.0
+margin_right = 1024.0
+margin_bottom = 572.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 1 )
+text = ">"
+flat = true
+
+[node name="ShowOnStartCheckBox" type="CheckBox" parent="."]
+margin_left = 910.0
+margin_top = 576.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 8
+pressed = true
+text = "Show on start"
+
+[connection signal="pressed" from="Center/LeftButton" to="Center/Slides" method="select_previous_tab"]
+[connection signal="pressed" from="Center/RightButton" to="Center/Slides" method="select_next_tab"]

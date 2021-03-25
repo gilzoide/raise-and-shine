@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://settings/SettingsResource.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+background_color = Color( 0.301961, 0.301961, 0.301961, 1 )
+show_tool_button_text = true
+skip_onboarding_at_startup = false
