@@ -1,10 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://editor/selection/SelectionCanvasItem.gd" type="Script" id=1]
 [ext_resource path="res://textures/CursorIcon.svg" type="Texture" id=2]
 [ext_resource path="res://help/SelectionDemonstrationAnimation.gd" type="Script" id=3]
 [ext_resource path="res://help/SelectionDemonstration.gd" type="Script" id=4]
-[ext_resource path="res://textures/ShiftKeyIcon.svg" type="Texture" id=5]
+[ext_resource path="res://help/KeyboardKeyRect.tscn" type="PackedScene" id=5]
 [ext_resource path="res://fonts/DroidSans_32.tres" type="DynamicFont" id=6]
 [ext_resource path="res://textures/MouseLeftButtonIcon.svg" type="Texture" id=7]
 
@@ -12,19 +12,6 @@
 resource_local_to_scene = true
 blend_mode = 1
 light_mode = 1
-
-[sub_resource type="StyleBoxFlat" id=2]
-content_margin_left = 6.0
-content_margin_right = 12.0
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
 
 [node name="SelectionDemonstration" type="Container"]
 anchor_right = 1.0
@@ -99,33 +86,5 @@ margin_bottom = 319.0
 custom_fonts/font = ExtResource( 6 )
 text = "+ "
 
-[node name="Key" type="PanelContainer" parent="ControlIcons"]
+[node name="Key" parent="ControlIcons" instance=ExtResource( 5 )]
 visible = false
-margin_left = 274.0
-margin_right = 348.0
-margin_bottom = 600.0
-custom_styles/panel = SubResource( 2 )
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ControlIcons/Key"]
-margin_left = 6.0
-margin_top = 2.0
-margin_right = 62.0
-margin_bottom = 598.0
-
-[node name="KeyIcon" type="TextureRect" parent="ControlIcons/Key/HBoxContainer"]
-margin_right = 24.0
-margin_bottom = 596.0
-texture = ExtResource( 5 )
-stretch_mode = 4
-
-[node name="KeyLabel" type="Label" parent="ControlIcons/Key/HBoxContainer"]
-margin_left = 28.0
-margin_right = 56.0
-margin_bottom = 596.0
-size_flags_vertical = 1
-text = "Shift"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
