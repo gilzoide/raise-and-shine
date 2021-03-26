@@ -1,0 +1,15 @@
+[gd_resource type="Theme" load_steps=4 format=2]
+
+[ext_resource path="res://fonts/DroidSans_24.tres" type="DynamicFont" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.145098, 0.145098, 0.164706, 1 )
+border_width_top = 20
+expand_margin_top = 20.0
+
+[resource]
+TabContainer/fonts/font = ExtResource( 1 )
+TabContainer/styles/panel = SubResource( 2 )
+WindowDialog/styles/panel = SubResource( 1 )

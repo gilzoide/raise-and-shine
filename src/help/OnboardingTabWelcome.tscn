@@ -10,16 +10,13 @@ font_data = ExtResource( 2 )
 [node name="Welcome" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Title" type="HBoxContainer" parent="."]
 anchor_right = 1.0
+margin_top = 24.0
 margin_bottom = 66.0
 alignment = 1
 __meta__ = {
@@ -27,23 +24,31 @@ __meta__ = {
 }
 
 [node name="Icon" type="TextureRect" parent="Title"]
-margin_left = 249.0
-margin_right = 313.0
+margin_left = 253.0
+margin_right = 317.0
 margin_bottom = 66.0
 texture = ExtResource( 1 )
 stretch_mode = 6
 
 [node name="Space" type="Control" parent="Title"]
-margin_left = 317.0
-margin_right = 337.0
+margin_left = 321.0
+margin_right = 341.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 20, 0 )
 
 [node name="Label" type="Label" parent="Title"]
-margin_left = 341.0
-margin_right = 767.0
+margin_left = 345.0
+margin_right = 771.0
 margin_bottom = 66.0
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
 text = "Raise and Shine"
 valign = 2
+
+[node name="HSeparator" type="HSeparator" parent="."]
+anchor_right = 1.0
+margin_top = 100.0
+margin_bottom = 99.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

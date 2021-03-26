@@ -26,6 +26,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
+visible = false
 margin_right = 1024.0
 margin_bottom = 38.0
 custom_fonts/font = ExtResource( 14 )
@@ -33,21 +34,20 @@ text = "Selecting"
 align = 1
 
 [node name="HSeparator" type="HSeparator" parent="."]
-margin_top = 42.0
 margin_right = 1024.0
-margin_bottom = 46.0
+margin_bottom = 4.0
 
 [node name="_Spacing_0" type="Control" parent="."]
-margin_top = 50.0
+margin_top = 8.0
 margin_right = 1024.0
-margin_bottom = 66.0
+margin_bottom = 24.0
 rect_min_size = Vector2( 0, 16 )
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 margin_left = 316.0
-margin_top = 70.0
+margin_top = 28.0
 margin_right = 708.0
-margin_bottom = 114.0
+margin_bottom = 72.0
 rect_min_size = Vector2( 0, 44 )
 size_flags_horizontal = 4
 
@@ -114,13 +114,13 @@ script = ExtResource( 8 )
 settings = ExtResource( 13 )
 
 [node name="_Spacing_1" type="Control" parent="."]
-margin_top = 118.0
+margin_top = 76.0
 margin_right = 1024.0
-margin_bottom = 150.0
+margin_bottom = 108.0
 rect_min_size = Vector2( 0, 32 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_top = 154.0
+margin_top = 112.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
@@ -131,7 +131,7 @@ custom_constants/separation = 16
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 330.0
-margin_bottom = 446.0
+margin_bottom = 488.0
 size_flags_horizontal = 3
 
 [node name="ShiftSelection" parent="HBoxContainer" instance=ExtResource( 15 )]
@@ -139,7 +139,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 346.0
 margin_right = 677.0
-margin_bottom = 446.0
+margin_bottom = 488.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -148,18 +148,18 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 693.0
 margin_right = 1024.0
-margin_bottom = 446.0
+margin_bottom = 488.0
 size_flags_horizontal = 3
 
-[connection signal="pressed" from="PanelContainer/HBoxContainer/Rectangle" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 1 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Rectangle" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 1 ]]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Rectangle" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 1 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Rectangle" to="HBoxContainer/ShiftSelection" method="set_format" binds= [ 1 ]]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/Ellipse" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 2 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Ellipse" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 2 ]]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Ellipse" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 2 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Ellipse" to="HBoxContainer/ShiftSelection" method="set_format" binds= [ 2 ]]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/Line" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 3 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Line" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 3 ]]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Line" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 3 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Line" to="HBoxContainer/ShiftSelection" method="set_format" binds= [ 3 ]]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/Pencil" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 4 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Pencil" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 4 ]]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Pencil" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 4 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Pencil" to="HBoxContainer/ShiftSelection" method="set_format" binds= [ 4 ]]
