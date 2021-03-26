@@ -37,8 +37,9 @@ func _draw() -> void:
 		var to = rect_size if line_direction >= 0 else Vector2(rect_size.x, 0)
 		draw_line(from, to, SELECTED_COLOR)
 	elif format == Format.PENCIL:
-		draw_set_transform(-rect_position, 0, Vector2.ONE)
-		draw_polyline(points, SELECTED_COLOR)
+		if points.size() >= 2:
+			draw_set_transform(-rect_position, 0, Vector2.ONE)
+			draw_polyline(points, SELECTED_COLOR)
 
 
 func paint_position(pos: Vector2) -> void:
