@@ -40,12 +40,16 @@ func _gui_input(event: InputEvent) -> void:
 			return  # avoid passing this event to `viewport.unhandled_input`
 	if dragging and event is InputEventMouseMotion:
 		ControlExtras.wrap_mouse_motion_if_needed(self, event)
-		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * mouse_speed
-		update_camera_with_pan(event.relative * factor)
+		pan_by_mouse(event.relative, Input.is_action_pressed("visualizer_3d_faster"))
 	elif event.is_action_pressed("visualizer_reset"):
 		reset_camera()
 	else:
 		viewport.unhandled_input(event)
+
+
+func pan_by_mouse(relative: Vector2, faster: bool = false) -> void:
+	var factor = (faster_factor if faster else 1.0) * mouse_speed
+	update_camera_with_pan(relative * factor)
 
 
 func start_panning() -> void:

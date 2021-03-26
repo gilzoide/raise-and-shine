@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://fonts/DroidSans_32.tres" type="DynamicFont" id=1]
 [ext_resource path="res://help/OnboardingTabWelcome.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://mainUI/Help_theme.tres" type="Theme" id=7]
 [ext_resource path="res://shortcuts/OnboardingPrevious_shortcut.tres" type="ShortCut" id=8]
 [ext_resource path="res://shortcuts/OnboardingNext_shortcut.tres" type="ShortCut" id=9]
+[ext_resource path="res://help/OnboardingTabHeight.tscn" type="PackedScene" id=10]
+[ext_resource path="res://help/OnboardingTabPreview.tscn" type="PackedScene" id=11]
 
 [node name="Onboarding" type="VBoxContainer"]
 anchor_right = 1.0
@@ -57,19 +59,13 @@ margin_top = 39.0
 visible = false
 margin_top = 39.0
 
-[node name="Preview" type="Label" parent="Center/Slides"]
+[node name="Preview" parent="Center/Slides" instance=ExtResource( 11 )]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
 margin_top = 39.0
-text = "TODO"
 
-[node name="Push Heights" type="Label" parent="Center/Slides"]
+[node name="Push Heights" parent="Center/Slides" instance=ExtResource( 10 )]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
 margin_top = 39.0
-text = "TODO"
 
 [node name="Open & Save" type="Label" parent="Center/Slides"]
 visible = false

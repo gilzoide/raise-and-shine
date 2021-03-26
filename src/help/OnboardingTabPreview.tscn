@@ -1,0 +1,159 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://editor/visualizers/2D/OrthogonalVisualizer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://help/KeyboardKeyRect.tscn" type="PackedScene" id=2]
+[ext_resource path="res://fonts/DroidSans_32.tres" type="DynamicFont" id=3]
+[ext_resource path="res://textures/MouseLeftButtonIcon.svg" type="Texture" id=4]
+[ext_resource path="res://textures/MouseMiddleButtonIcon.svg" type="Texture" id=5]
+[ext_resource path="res://help/CursorIcon.tscn" type="PackedScene" id=6]
+[ext_resource path="res://help/PanningDemonstrationAnimation.gd" type="Script" id=7]
+[ext_resource path="res://textures/MouseWheelArrowIcon.svg" type="Texture" id=8]
+[ext_resource path="res://help/ZoomDemonstrationAnimation.gd" type="Script" id=9]
+
+[node name="Preview" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator" type="HSeparator" parent="."]
+margin_right = 1024.0
+margin_bottom = 4.0
+
+[node name="GridContainer" type="GridContainer" parent="."]
+margin_top = 8.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/hseparation = 16
+columns = 2
+
+[node name="PanAnimation" type="Control" parent="GridContainer"]
+margin_right = 504.0
+margin_bottom = 524.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 7 )
+animation_duration = 10.0
+radius_percent = 0.3
+
+[node name="OrthogonalVisualizer" parent="GridContainer/PanAnimation" instance=ExtResource( 1 )]
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Viewport" parent="GridContainer/PanAnimation/OrthogonalVisualizer/ViewportContainer" index="0"]
+size = Vector2( 504, 524 )
+
+[node name="ZoomSlider" parent="GridContainer/PanAnimation/OrthogonalVisualizer" index="2"]
+mouse_filter = 2
+
+[node name="CursorIcon" parent="GridContainer/PanAnimation" instance=ExtResource( 6 )]
+position = Vector2( 214.96, 309.713 )
+
+[node name="ZoomAnimation" type="Control" parent="GridContainer"]
+margin_left = 520.0
+margin_right = 1024.0
+margin_bottom = 524.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 9 )
+
+[node name="OrthogonalVisualizer" parent="GridContainer/ZoomAnimation" instance=ExtResource( 1 )]
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="_Spacing_0" type="Control" parent="GridContainer"]
+margin_top = 528.0
+margin_right = 504.0
+margin_bottom = 544.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="_Spacing_1" type="Control" parent="GridContainer"]
+margin_left = 520.0
+margin_top = 528.0
+margin_right = 1024.0
+margin_bottom = 544.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="PanControls" type="VBoxContainer" parent="GridContainer"]
+margin_top = 548.0
+margin_right = 504.0
+margin_bottom = 592.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GridContainer/PanControls"]
+margin_right = 504.0
+margin_bottom = 44.0
+alignment = 1
+
+[node name="MouseMiddleButton" type="TextureRect" parent="GridContainer/PanControls/HBoxContainer"]
+margin_left = 76.0
+margin_right = 108.0
+margin_bottom = 44.0
+texture = ExtResource( 5 )
+
+[node name="Or" type="Label" parent="GridContainer/PanControls/HBoxContainer"]
+margin_left = 112.0
+margin_top = 3.0
+margin_right = 219.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 3 )
+text = "    OR    "
+align = 1
+
+[node name="Key" parent="GridContainer/PanControls/HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 223.0
+margin_right = 354.0
+margin_bottom = 44.0
+texture = null
+title = "         Space         "
+
+[node name="PlusSign" type="Label" parent="GridContainer/PanControls/HBoxContainer"]
+margin_left = 358.0
+margin_top = 3.0
+margin_right = 392.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 3 )
+text = " + "
+
+[node name="MouseLeftButton" type="TextureRect" parent="GridContainer/PanControls/HBoxContainer"]
+margin_left = 396.0
+margin_right = 428.0
+margin_bottom = 44.0
+texture = ExtResource( 4 )
+
+[node name="ZoomControls" type="VBoxContainer" parent="GridContainer"]
+margin_left = 520.0
+margin_top = 548.0
+margin_right = 1024.0
+margin_bottom = 592.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GridContainer/ZoomControls"]
+margin_right = 504.0
+margin_bottom = 44.0
+custom_constants/separation = 2
+alignment = 1
+
+[node name="MouseMiddleButton" type="TextureRect" parent="GridContainer/ZoomControls/HBoxContainer"]
+margin_left = 236.0
+margin_right = 268.0
+margin_bottom = 44.0
+texture = ExtResource( 5 )
+
+[node name="TextureRect" type="TextureRect" parent="GridContainer/ZoomControls/HBoxContainer/MouseMiddleButton"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 2.0
+margin_top = -3.0
+margin_right = 12.0
+margin_bottom = 19.0
+texture = ExtResource( 8 )
+stretch_mode = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[editable path="GridContainer/PanAnimation/OrthogonalVisualizer"]

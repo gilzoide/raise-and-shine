@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://editor/selection/SelectionCanvasItem.gd" type="Script" id=1]
-[ext_resource path="res://textures/CursorIcon.svg" type="Texture" id=2]
+[ext_resource path="res://help/CursorIcon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://help/SelectionDemonstrationAnimation.gd" type="Script" id=3]
 [ext_resource path="res://help/SelectionDemonstration.gd" type="Script" id=4]
 [ext_resource path="res://help/KeyboardKeyRect.tscn" type="PackedScene" id=5]
@@ -22,9 +22,9 @@ __meta__ = {
 }
 
 [node name="Animation" type="ColorRect" parent="."]
-margin_left = 244.0
-margin_right = 780.0
-margin_bottom = 536.0
+margin_left = 242.0
+margin_right = 782.0
+margin_bottom = 540.0
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 1 )
 script = ExtResource( 3 )
@@ -55,14 +55,10 @@ __meta__ = {
 }
 format = 1
 
-[node name="CursorIcon" type="Sprite" parent="Animation"]
-position = Vector2( 23.2492, 23.0683 )
-texture = ExtResource( 2 )
-centered = false
-offset = Vector2( -7.02563, -3.16498 )
+[node name="CursorIcon" parent="Animation" instance=ExtResource( 2 )]
 
 [node name="ControlIcons" type="HBoxContainer" parent="."]
-margin_top = 552.0
+margin_top = 556.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
@@ -72,9 +68,9 @@ __meta__ = {
 }
 
 [node name="MouseIcon" type="TextureRect" parent="ControlIcons"]
-margin_left = 488.0
-margin_right = 536.0
-margin_bottom = 48.0
+margin_left = 496.0
+margin_right = 528.0
+margin_bottom = 44.0
 texture = ExtResource( 7 )
 
 [node name="PlusSign" type="Label" parent="ControlIcons"]
@@ -84,7 +80,7 @@ margin_top = 281.0
 margin_right = 270.0
 margin_bottom = 319.0
 custom_fonts/font = ExtResource( 6 )
-text = "+ "
+text = " + "
 
 [node name="Key" parent="ControlIcons" instance=ExtResource( 5 )]
 visible = false
