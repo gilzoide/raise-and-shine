@@ -20,6 +20,9 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 margin_right = 180.0
 margin_bottom = 180.0
+hint_tooltip = "Click the outer circle for choosing the direction.
+Click the inner circle for radial direction.
+Hold Control to snap angle."
 focus_mode = 2
 script = ExtResource( 2 )
 __meta__ = {
