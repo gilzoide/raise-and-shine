@@ -9,6 +9,7 @@
 [ext_resource path="res://textures/MouseLeftButtonIcon.svg" type="Texture" id=7]
 
 [sub_resource type="CanvasItemMaterial" id=1]
+resource_local_to_scene = true
 blend_mode = 1
 light_mode = 1
 
@@ -32,7 +33,6 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-modifier = 0
 
 [node name="Animation" type="ColorRect" parent="."]
 margin_left = 244.0
@@ -44,6 +44,19 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ActiveSelection" type="Control" parent="Animation"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -16.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+format = 2
 
 [node name="SelectionCanvasItem" type="Control" parent="Animation"]
 material = SubResource( 1 )

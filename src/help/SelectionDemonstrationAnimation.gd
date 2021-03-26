@@ -15,16 +15,15 @@ export(Curve) var animation_curve: Curve = preload("res://help/SelectionDemonstr
 export(float) var animation_duration = 2
 export(Vector2) var starting_position = Vector2(0.5, 0.5)
 export(Vector2) var end_position = Vector2(0.9, 0.7)
-export(bool) var union_selection = true
 
 var _timer = 0
 
 onready var _canvas_item = $SelectionCanvasItem
+onready var _active_selection = $ActiveSelection
 onready var _cursor = $CursorIcon
 
 func _ready() -> void:
 	_update_canvas_item_position()
-	_canvas_item.set_selection_union(union_selection)
 
 
 func _notification(what: int) -> void:
@@ -58,6 +57,11 @@ func _process(delta: float) -> void:
 		size.y = max(1.0, size.y)
 		_canvas_item.rect_size = size
 	_canvas_item.update()
+
+
+func set_selection_union(is_union: bool) -> void:
+	_canvas_item.set_selection_union(is_union)
+	_active_selection.visible = not is_union
 
 
 func set_format(format: int) -> void:

@@ -6,10 +6,16 @@ tool
 extends Container
 
 export(float) var spacing = 16
+export(bool) var union_selection = true
 
 onready var _animation = $Animation
 onready var _control_icons = $ControlIcons
 onready var _control_mouse_icon = $ControlIcons/MouseIcon
+
+
+func _ready() -> void:
+	_control_mouse_icon.flip_h = not union_selection
+	_animation.set_selection_union(union_selection)
 
 
 func _notification(what: int) -> void:

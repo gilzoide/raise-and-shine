@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://fonts/DroidSans_32.tres" type="DynamicFont" id=1]
 [ext_resource path="res://help/OnboardingTabWelcome.tscn" type="PackedScene" id=2]
-[ext_resource path="res://help/OnboardingTabSelection.tscn" type="PackedScene" id=3]
+[ext_resource path="res://help/OnboardingTabSelecting.tscn" type="PackedScene" id=3]
 [ext_resource path="res://mainUI/TabContainerNextPrevious.gd" type="Script" id=4]
 [ext_resource path="res://help/OnboardingWindow.gd" type="Script" id=5]
+[ext_resource path="res://help/OnboardingTabUnselecting.tscn" type="PackedScene" id=6]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 8.0
@@ -54,6 +55,13 @@ margin_right = -8.0
 margin_bottom = -8.0
 
 [node name="Selecting" parent="Center/Slides" instance=ExtResource( 3 )]
+visible = false
+margin_left = 8.0
+margin_top = 32.0
+margin_right = -8.0
+margin_bottom = -8.0
+
+[node name="Unselecting" parent="Center/Slides" instance=ExtResource( 6 )]
 visible = false
 margin_left = 8.0
 margin_top = 32.0

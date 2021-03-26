@@ -151,15 +151,15 @@ margin_right = 1024.0
 margin_bottom = 446.0
 size_flags_horizontal = 3
 
-[connection signal="pressed" from="PanelContainer/HBoxContainer/Rectangle" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 1 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Rectangle" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 1 ]]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Rectangle" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 1 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Rectangle" to="HBoxContainer/ShiftSelection" method="set_format" binds= [ 1 ]]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/Ellipse" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 2 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Ellipse" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 2 ]]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Ellipse" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 2 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Ellipse" to="HBoxContainer/ShiftSelection" method="set_format" binds= [ 2 ]]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/Line" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 3 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Line" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 3 ]]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Line" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 3 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Line" to="HBoxContainer/ShiftSelection" method="set_format" binds= [ 3 ]]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/Pencil" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 4 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Pencil" to="HBoxContainer/NormalSelection" method="set_format" binds= [ 4 ]]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Pencil" to="HBoxContainer/ControlSelection" method="set_format" binds= [ 4 ]]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Pencil" to="HBoxContainer/ShiftSelection" method="set_format" binds= [ 4 ]]
