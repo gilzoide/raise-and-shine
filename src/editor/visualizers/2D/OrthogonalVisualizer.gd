@@ -19,8 +19,10 @@ func _process(delta: float) -> void:
 
 
 func update_camera_with_pan(pan: Vector2) -> void:
-	pan *= camera.size / min_zoom_size
-	camera.translate_object_local(Vector3(-pan.x, pan.y, 0))
+	var projected_zero = camera.project_position(Vector2.ZERO, 0)
+	var projected_pan = camera.project_position(pan, 0)
+	var projected_delta = projected_zero - projected_pan
+	camera.translate_object_local(Vector3(projected_delta.x, projected_delta.y, 0))
 
 
 func set_camera_zoom_percent(percent: float) -> void:

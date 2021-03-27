@@ -6,4 +6,3 @@
 [node name="OrthogonalVisualizer" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 speed = 100.0
-mouse_speed = 0.5

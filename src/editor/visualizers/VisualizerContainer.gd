@@ -6,7 +6,6 @@ extends Control
 
 export(float) var speed: float = 1
 export(float) var faster_factor: float = 5
-export(float) var mouse_speed: float = 0.01
 export(float) var zoom_speed: float = 0.01
 export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
 
@@ -48,7 +47,7 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func pan_by_mouse(relative: Vector2, faster: bool = false) -> void:
-	var factor = (faster_factor if faster else 1.0) * mouse_speed
+	var factor = (faster_factor if faster else 1.0)
 	update_camera_with_pan(relative * factor)
 
 

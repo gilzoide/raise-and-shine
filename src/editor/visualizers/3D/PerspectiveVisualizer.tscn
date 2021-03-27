@@ -6,7 +6,6 @@
 [node name="PerspectiveVisualizer" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 speed = 100.0
-mouse_speed = 1.0
 
 [node name="Camera" parent="ViewportContainer/Viewport" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 128 )

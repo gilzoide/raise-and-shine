@@ -6,9 +6,6 @@
 
 [node name="SelectionHelpDemonstration" instance=ExtResource( 1 )]
 
-[node name="Label" parent="." index="0"]
-text = "Unselecting"
-
 [node name="Rectangle" parent="PanelContainer/HBoxContainer" index="0"]
 group = SubResource( 1 )
 
