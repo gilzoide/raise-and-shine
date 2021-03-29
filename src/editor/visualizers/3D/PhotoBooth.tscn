@@ -48,5 +48,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -94.8735, -2.40635, 0 )
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 1 )
 script = ExtResource( 5 )
+
 [connection signal="input_event" from="Plate" to="." method="_on_Plate_input_event"]
 [connection signal="mouse_exited" from="Plate" to="." method="_on_Plate_mouse_exited"]

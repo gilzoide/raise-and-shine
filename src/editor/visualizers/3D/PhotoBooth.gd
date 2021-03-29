@@ -15,12 +15,6 @@ const plane_mesh = preload("res://editor/visualizers/3D/PlaneMesh.tres")
 const operation = preload("res://editor/operation/DragOperation.tres")
 const selection = preload("res://editor/selection/ActiveSelection.tres")
 
-enum {
-	ALBEDO_MAP,
-	HEIGHT_MAP,
-	NORMAL_MAP,
-}
-
 export(float) var plate_angular_speed = 0.01
 export(float) var plane_subdivide_scale = 1
 

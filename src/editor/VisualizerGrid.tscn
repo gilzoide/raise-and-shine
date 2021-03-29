@@ -56,6 +56,7 @@ size_flags_vertical = 3
 [node name="Split" type="VSplitContainer" parent="VisualizersContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_bottom = -1.0
 mouse_filter = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -65,18 +66,19 @@ __meta__ = {
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 862.0
-margin_bottom = 294.0
+margin_bottom = 293.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PerspectiveVisualizer" parent="VisualizersContainer/Split" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 306.0
+margin_top = 305.0
 margin_right = 862.0
-margin_bottom = 600.0
+margin_bottom = 599.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
 [connection signal="drag_ended" from="MapsContainer/AlbedoMap" to="." method="_on_drag_ended"]
 [connection signal="drag_moved" from="MapsContainer/AlbedoMap" to="." method="_on_drag_moved"]
 [connection signal="drag_started" from="MapsContainer/AlbedoMap" to="." method="_on_drag_started"]
