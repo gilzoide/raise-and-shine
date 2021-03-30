@@ -10,10 +10,13 @@ onready var _animation_container = $PerspectiveVisualizer
 onready var _model = $PerspectiveVisualizer/ViewportContainer/Viewport/Model
 onready var _material: ShaderMaterial = _model.material_override
 onready var _cursor_icon = $PerspectiveVisualizer/CursorIcon
+onready var _operation: HeightOperation = $PanelContainer/HBoxContainer/BrushDirectionPickerButton.operation
 
 
 func _ready() -> void:
 	set_process(false)
+	var _err = _operation.connect("changed", self, "update_material_operation")
+	update_material_operation()
 
 
 func _notification(what: int) -> void:
@@ -33,3 +36,10 @@ func _process(delta: float) -> void:
 	var percent = clamp(_timer / animation_duration, 0, 1)
 	_cursor_icon.position = _animation_container.rect_size * lerp(Vector2(0.7, 0.7), Vector2(0.7, 0.3), percent)
 	_material.set_shader_param("height", percent)
+
+
+func update_material_operation() -> void:
+	_material.set_shader_param("is_flat", _operation.is_flat)
+	_material.set_shader_param("direction", _operation.direction)
+	_material.set_shader_param("control1", _operation.bezier.control1)
+	_material.set_shader_param("control2", _operation.bezier.control2)

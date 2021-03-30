@@ -17,7 +17,7 @@
 [ext_resource path="res://mainUI/ToolButtons_theme.tres" type="Theme" id=15]
 
 [node name="BrushToolbar" type="PanelContainer"]
-margin_right = 485.0
+margin_right = 521.0
 margin_bottom = 44.0
 script = ExtResource( 1 )
 __meta__ = {
@@ -27,7 +27,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 570.0
+margin_right = 514.0
 margin_bottom = 37.0
 
 [node name="Rectangle" type="Button" parent="HBoxContainer"]
@@ -95,15 +95,9 @@ text = "Height"
 icon = ExtResource( 11 )
 script = ExtResource( 14 )
 
-[node name="EasingPicker" type="OptionButton" parent="HBoxContainer"]
-margin_left = 477.0
-margin_right = 529.0
-margin_bottom = 30.0
-text = "Flat"
-
 [node name="BrushDirectionPickerButton" parent="HBoxContainer" instance=ExtResource( 3 )]
-margin_left = 533.0
-margin_right = 563.0
+margin_left = 477.0
+margin_right = 507.0
 margin_bottom = 30.0
 
 [connection signal="pressed" from="HBoxContainer/Rectangle" to="." method="_on_tool_button_pressed" binds= [ 0 ]]
@@ -111,4 +105,3 @@ margin_bottom = 30.0
 [connection signal="pressed" from="HBoxContainer/Line" to="." method="_on_tool_button_pressed" binds= [ 2 ]]
 [connection signal="pressed" from="HBoxContainer/Pencil" to="." method="_on_tool_button_pressed" binds= [ 3 ]]
 [connection signal="pressed" from="HBoxContainer/Height" to="." method="_on_tool_button_pressed" binds= [ 4 ]]
-[connection signal="item_selected" from="HBoxContainer/EasingPicker" to="." method="_on_EasingPicker_item_selected"]

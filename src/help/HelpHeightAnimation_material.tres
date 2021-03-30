@@ -8,3 +8,7 @@ shader_param/albedo = Color( 0, 0, 0, 1 )
 shader_param/selection_radius = 0.3
 shader_param/height_scale = 64.0
 shader_param/height = 0.4
+shader_param/is_flat = true
+shader_param/direction = null
+shader_param/control1 = Vector2( 0, 0 )
+shader_param/control2 = Vector2( 1, 1 )

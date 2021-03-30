@@ -106,7 +106,7 @@ script = ExtResource( 12 )
 
 [node name="BrushToolbar" parent="MainPanel/VBoxContainer/MenuBar" instance=ExtResource( 6 )]
 margin_left = 347.0
-margin_right = 924.0
+margin_right = 868.0
 
 [node name="WorkbenchPanel" type="Control" parent="MainPanel/VBoxContainer"]
 margin_top = 44.0

@@ -9,6 +9,13 @@ export(Texture) var arrow = preload("res://textures/ArrowIcon.svg")
 export(float) var circle_margin = 4
 
 onready var popup: Popup = $PanelPopup
+onready var flat_checkbox = $PanelPopup/VBoxContainer/FlatCheckBox
+onready var controls_container = $PanelPopup/VBoxContainer/HBoxContainer
+onready var bezier_curve = $PanelPopup/VBoxContainer/HBoxContainer/AspectRatioContainer/Panel/CubicBezierEdit.curve
+onready var direction_chooser = $PanelPopup/VBoxContainer/HBoxContainer/DirectionChooser
+
+func _ready() -> void:
+	flat_checkbox.pressed = operation.is_flat
 
 
 func _draw() -> void:
@@ -24,8 +31,19 @@ func _draw() -> void:
 func _on_pressed() -> void:
 	var global_rect = get_global_rect()
 	var point = Vector2(global_rect.position.x, global_rect.position.y + global_rect.size.y)
+	controls_container.visible = not flat_checkbox.pressed
 	popup.popup(Rect2(point, popup.rect_size))
 
 
-func _on_PanelPopup_direction_changed(_direction) -> void:
+func _on_direction_changed(direction) -> void:
+	operation.set_direction(direction)
 	update()
+
+
+func _on_FlatCheckBox_toggled(button_pressed: bool) -> void:
+	operation.set_flat(button_pressed)
+	controls_container.visible = not operation.is_flat
+
+
+func _on_control_changed() -> void:
+	operation.bezier.copy_from(bezier_curve)

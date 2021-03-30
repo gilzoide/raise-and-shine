@@ -14,6 +14,21 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://mainUI/ControlExtras.gd"
 }, {
+"base": "Resource",
+"class": "CubicBezierCurve",
+"language": "GDScript",
+"path": "res://addons/cubic_bezier_controls/cubic_bezier_curve.gd"
+}, {
+"base": "CubicBezierRect",
+"class": "CubicBezierEdit",
+"language": "GDScript",
+"path": "res://addons/cubic_bezier_controls/cubic_bezier_edit.gd"
+}, {
+"base": "Control",
+"class": "CubicBezierRect",
+"language": "GDScript",
+"path": "res://addons/cubic_bezier_controls/cubic_bezier_rect.gd"
+}, {
 "base": "Reference",
 "class": "HeightAlgorithm",
 "language": "GDScript",
@@ -23,6 +38,11 @@ _global_script_classes=[ {
 "class": "HeightMapData",
 "language": "GDScript",
 "path": "res://editor/project/HeightMapData.gd"
+}, {
+"base": "Resource",
+"class": "HeightOperation",
+"language": "GDScript",
+"path": "res://editor/operation/HeightOperation.gd"
 }, {
 "base": "Object",
 "class": "MapTypes",
@@ -36,8 +56,12 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "ControlExtras": "",
+"CubicBezierCurve": "",
+"CubicBezierEdit": "",
+"CubicBezierRect": "",
 "HeightAlgorithm": "",
 "HeightMapData": "",
+"HeightOperation": "",
 "MapTypes": "",
 "SelectionCanvasItem": ""
 }
@@ -68,7 +92,7 @@ window/energy_saving/keep_screen_on=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "key_shortcut_creator" )
+enabled=PoolStringArray( "res://addons/cubic_bezier_controls/plugin.cfg", "res://addons/key_shortcut_creator/plugin.cfg" )
 
 [input]
 

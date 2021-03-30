@@ -3,11 +3,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 tool
-extends Popup
+extends Control
 
 signal direction_changed(direction)
 
-export(Resource) var operation = preload("res://editor/operation/DragOperation.tres")
 export(Texture) var arrow = preload("res://textures/ArrowIcon.svg")
 export(Color) var border_color: Color = Color.white
 export(Color) var selection_color: Color = Color.red
@@ -20,7 +19,7 @@ export(float) var wheel_radians_speed: float = 0.1
 export(float) var snap_angle = PI / 8.0
 export(float) var arrow_margin = 4
 
-var direction: float = operation.RADIAL_DIRECTION
+var direction: float = HeightOperation.RADIAL_DIRECTION
 var center: Vector2
 var radius: float
 var inner_radius: float
@@ -35,7 +34,7 @@ func _ready() -> void:
 func _draw() -> void:
 	draw_arc(center, inner_radius, 0, TAU, point_count, border_color, line_width)
 	draw_arc(center, radius, 0, TAU, point_count, border_color, line_width)
-	if operation.is_radial_direction(direction):
+	if HeightOperation.is_radial_direction(direction):
 		draw_circle(center, inner_radius * none_radius_percent, selection_color)
 	else:
 		var segment_direction = inner_radius * Vector2.RIGHT.rotated(direction)
@@ -49,23 +48,23 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED:
 		update_size()
 		update()
-	elif what == NOTIFICATION_POST_POPUP:
-		direction = operation.direction
-		update()
-	elif what == NOTIFICATION_POPUP_HIDE:
-		dragging = false
+	elif what == NOTIFICATION_VISIBILITY_CHANGED:
+		if visible:
+			update()
+		else:
+			dragging = false
 
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == BUTTON_WHEEL_DOWN:
-				if operation.is_radial_direction(direction):
+				if HeightOperation.is_radial_direction(direction):
 					set_direction(0)
 				else:
 					set_direction(direction + wheel_radians_speed)
 			elif event.button_index == BUTTON_WHEEL_UP:
-				if operation.is_radial_direction(direction):
+				if HeightOperation.is_radial_direction(direction):
 					set_direction(0)
 				else:
 					set_direction(direction - wheel_radians_speed)
@@ -83,7 +82,7 @@ func set_direction_from_position(position: Vector2) -> void:
 	var vec: Vector2 = position - center
 	var distance = vec.length()
 	if distance <= inner_radius:
-		set_direction(operation.RADIAL_DIRECTION)
+		set_direction(HeightOperation.RADIAL_DIRECTION)
 	elif distance <= radius:
 		set_direction(vec.angle())
 	dragging = true
@@ -100,6 +99,5 @@ func set_direction(value: float) -> void:
 	if Input.is_action_pressed("snap_modifier"):
 		value = stepify(value, snap_angle)
 	direction = value
-	operation.set_direction(value)
-	update()
 	emit_signal("direction_changed", value)
+	update()

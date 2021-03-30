@@ -1,13 +1,21 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://editor/brush/BrushDirectionPickerButton.gd" type="Script" id=1]
 [ext_resource path="res://editor/brush/BrushDirectionPicker.gd" type="Script" id=2]
+[ext_resource path="res://addons/cubic_bezier_controls/cubic_bezier_edit.gd" type="Script" id=3]
+[ext_resource path="res://addons/cubic_bezier_controls/cubic_bezier_curve.gd" type="Script" id=4]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+script = ExtResource( 4 )
+control1 = Vector2( 0, 0 )
+control2 = Vector2( 1, 1 )
 
 [node name="BrushDirectionPickerButton" type="Button"]
 margin_right = 27.0
 margin_bottom = 27.0
 rect_min_size = Vector2( 30, 30 )
-hint_tooltip = "Choose height tool easing direction.
+hint_tooltip = "Choose height tool curve and direction.
 Hold Control to snap angle."
 focus_mode = 0
 script = ExtResource( 1 )
@@ -18,19 +26,78 @@ __meta__ = {
 [node name="PanelPopup" type="PopupPanel" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_right = 180.0
+margin_right = 300.0
 margin_bottom = 180.0
 hint_tooltip = "Click the outer circle for choosing the direction.
 Click the inner circle for radial direction.
 Hold Control to snap angle."
 focus_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelPopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FlatCheckBox" type="CheckButton" parent="PanelPopup/VBoxContainer"]
+margin_right = 292.0
+margin_bottom = 40.0
+text = "Flat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelPopup/VBoxContainer"]
+margin_top = 44.0
+margin_right = 292.0
+margin_bottom = 172.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="PanelPopup/VBoxContainer/HBoxContainer"]
+margin_right = 144.0
+margin_bottom = 128.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="PanelPopup/VBoxContainer/HBoxContainer/AspectRatioContainer"]
+margin_left = 8.0
+margin_right = 136.0
+margin_bottom = 128.0
+rect_clip_content = true
+
+[node name="CubicBezierEdit" type="Control" parent="PanelPopup/VBoxContainer/HBoxContainer/AspectRatioContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+curve = SubResource( 1 )
+handle_radius = 7.0
+
+[node name="DirectionChooser" type="Control" parent="PanelPopup/VBoxContainer/HBoxContainer"]
+margin_left = 148.0
+margin_right = 292.0
+margin_bottom = 128.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-border_color = Color( 0.74902, 0.74902, 0.74902, 1 )
-selection_color = Color( 1, 1, 1, 1 )
-min_margin = 8.0
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]
-[connection signal="direction_changed" from="PanelPopup" to="." method="_on_PanelPopup_direction_changed"]
+[connection signal="toggled" from="PanelPopup/VBoxContainer/FlatCheckBox" to="." method="_on_FlatCheckBox_toggled"]
+[connection signal="control1_changed" from="PanelPopup/VBoxContainer/HBoxContainer/AspectRatioContainer/Panel/CubicBezierEdit" to="." method="_on_control_changed"]
+[connection signal="control2_changed" from="PanelPopup/VBoxContainer/HBoxContainer/AspectRatioContainer/Panel/CubicBezierEdit" to="." method="_on_control_changed"]
+[connection signal="direction_changed" from="PanelPopup/VBoxContainer/HBoxContainer/DirectionChooser" to="." method="_on_direction_changed"]
