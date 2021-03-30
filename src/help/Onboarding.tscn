@@ -67,13 +67,6 @@ margin_top = 39.0
 visible = false
 margin_top = 39.0
 
-[node name="Open & Save" type="Label" parent="Center/Slides"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 39.0
-text = "TODO"
-
 [node name="RightButton" type="Button" parent="Center"]
 margin_left = 994.0
 margin_right = 1024.0

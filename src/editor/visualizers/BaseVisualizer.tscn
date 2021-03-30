@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://editor/visualizers/VisualizerContainer.gd" type="Script" id=1]
-[ext_resource path="res://editor/visualizers/HeightDragIndicator.tscn" type="PackedScene" id=2]
 
 [node name="BaseVisualizer" type="Control"]
 anchor_right = 1.0
@@ -36,9 +35,6 @@ current = true
 size = 150.0
 far = 200.0
 
-[node name="HeightDragIndicator" parent="." instance=ExtResource( 2 )]
-visible = false
-
 [node name="ZoomSlider" type="VSlider" parent="."]
 anchor_top = 0.1
 anchor_bottom = 0.9
@@ -49,4 +45,5 @@ margin_bottom = -8.0
 hint_tooltip = "Zoom level"
 max_value = 1.0
 step = 0.01
+
 [connection signal="value_changed" from="ZoomSlider" to="." method="zoom_to"]

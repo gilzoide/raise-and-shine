@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://mainUI/ToolButtonPresentation.gd" type="Script" id=1]
 [ext_resource path="res://mainUI/ToolButtons_theme.tres" type="Theme" id=2]
@@ -7,10 +7,31 @@
 [ext_resource path="res://textures/HeightIcon.svg" type="Texture" id=5]
 [ext_resource path="res://editor/brush/BrushDirectionPicker.tscn" type="PackedScene" id=6]
 [ext_resource path="res://settings/HelpSettings.tres" type="Resource" id=7]
+[ext_resource path="res://editor/visualizers/3D/PerspectiveVisualizer.tscn" type="PackedScene" id=8]
+[ext_resource path="res://help/HelpHeightAnimation_material.tres" type="Material" id=9]
+[ext_resource path="res://help/CursorIcon.tscn" type="PackedScene" id=10]
+[ext_resource path="res://editor/operation/HeightOperation.gd" type="Script" id=11]
+[ext_resource path="res://editor/visualizers/PhotoBoothModel.tscn" type="PackedScene" id=14]
+[ext_resource path="res://textures/MouseLeftButtonIcon.svg" type="Texture" id=15]
+[ext_resource path="res://help/OnboardingTabHeight.gd" type="Script" id=16]
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 11 )
+easing = 0
+direction = nan
+
+[sub_resource type="World" id=2]
+
+[sub_resource type="PlaneMesh" id=3]
+size = Vector2( 128, 128 )
+subdivide_width = 64
+subdivide_depth = 64
 
 [node name="Push Heights" type="VBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_constants/separation = 0
+script = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -19,11 +40,17 @@ __meta__ = {
 margin_right = 1024.0
 margin_bottom = 4.0
 
+[node name="_Spacing_0" type="Control" parent="."]
+margin_top = 4.0
+margin_right = 1024.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 16 )
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
 margin_left = 414.0
-margin_top = 8.0
+margin_top = 20.0
 margin_right = 609.0
-margin_bottom = 52.0
+margin_bottom = 64.0
 rect_min_size = Vector2( 0, 44 )
 size_flags_horizontal = 4
 
@@ -58,3 +85,48 @@ margin_left = 151.0
 margin_right = 181.0
 margin_bottom = 30.0
 focus_mode = 2
+operation = SubResource( 4 )
+
+[node name="_Spacing_1" type="Control" parent="."]
+margin_top = 64.0
+margin_right = 1024.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 0, 32 )
+
+[node name="PerspectiveVisualizer" parent="." instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 96.0
+margin_right = 1024.0
+margin_bottom = 540.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Viewport" parent="PerspectiveVisualizer/ViewportContainer" index="0"]
+size = Vector2( 1024, 444 )
+own_world = true
+world = SubResource( 2 )
+
+[node name="Model" parent="PerspectiveVisualizer/ViewportContainer/Viewport" index="1" instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, -3.02394e-06, -1, 0, 1, -3.02394e-06, 0, 0, 0 )
+material_override = ExtResource( 9 )
+mesh = SubResource( 3 )
+
+[node name="CursorIcon" parent="PerspectiveVisualizer" instance=ExtResource( 10 )]
+position = Vector2( 704.671, 265.723 )
+
+[node name="_Spacing_2" type="Control" parent="."]
+margin_top = 540.0
+margin_right = 1024.0
+margin_bottom = 556.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="MouseIcon" type="TextureRect" parent="."]
+margin_left = 496.0
+margin_top = 556.0
+margin_right = 528.0
+margin_bottom = 600.0
+size_flags_horizontal = 4
+texture = ExtResource( 15 )
+
+[editable path="PerspectiveVisualizer"]

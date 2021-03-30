@@ -22,7 +22,7 @@ var alpha_enabled: bool setget set_alpha_enabled, get_alpha_enabled
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_vectors_enabled
 onready var plate = $Plate
-onready var border = $Plate/Border
+onready var border = $Plate/Model/Border
 onready var heightmapshape_collision = $Plate/HeightMapShape
 onready var lights = $Lights
 onready var ambient_light = $WorldEnvironment
@@ -35,6 +35,7 @@ func _ready() -> void:
 	plane_material.set_shader_param("normal_map", NormalDrawer.get_texture())
 	update_plane_dimensions()
 	var _err = project.connect("height_texture_changed", self, "_on_texture_updated")
+	_err = project.connect("albedo_texture_changed", self, "_on_texture_updated")
 	_err = project.connect("operation_ended", self, "_on_operation_ended")
 
 

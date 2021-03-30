@@ -1,9 +1,6 @@
-[gd_resource type="PlaneMesh" load_steps=2 format=2]
-
-[ext_resource path="res://editor/visualizers/3D/Plane_material.tres" type="Material" id=1]
+[gd_resource type="PlaneMesh" format=2]
 
 [resource]
-material = ExtResource( 1 )
 size = Vector2( 128, 128 )
 subdivide_width = 64
 subdivide_depth = 64

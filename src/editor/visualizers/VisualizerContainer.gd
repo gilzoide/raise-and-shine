@@ -11,7 +11,6 @@ export(Resource) var selection = preload("res://editor/selection/ActiveSelection
 
 onready var viewport: Viewport = $ViewportContainer/Viewport
 onready var camera: Camera = $ViewportContainer/Viewport/Camera
-onready var height_slider = $HeightDragIndicator
 onready var zoom_slider = $ZoomSlider
 onready var camera_initial_transform: Transform = camera.transform
 var dragging := false
