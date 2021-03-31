@@ -1,6 +1,7 @@
 extends Button
 
 signal moved(relative)
+signal reset()
 
 var _moving = false
 
@@ -13,6 +14,8 @@ func _ready() -> void:
 func _gui_input(event: InputEvent) -> void:
 	if _moving and event is InputEventMouseMotion:
 		emit_signal("moved", event.relative)
+	elif event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and not event.is_pressed():
+		emit_signal("reset")
 
 
 func _on_button_down() -> void:
@@ -27,3 +30,4 @@ func _on_button_down() -> void:
 func _on_button_up() -> void:
 	_moving = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	warp_mouse(rect_size * 0.5)
