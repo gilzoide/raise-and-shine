@@ -70,3 +70,7 @@ func _on_EnergySlider_gui_input(event: InputEvent) -> void:
 func _on_MoveButton_moved(relative) -> void:
 	var relative3d = Vector3(relative.x, -relative.y, 0)
 	light.translate(relative3d)
+
+
+func _on_MoveButton_reset() -> void:
+	light.translation = Vector3.ZERO

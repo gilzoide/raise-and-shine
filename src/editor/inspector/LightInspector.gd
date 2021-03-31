@@ -7,6 +7,7 @@ extends Control
 const light_inspector_item: PackedScene = preload("res://editor/inspector/LightInspectorItem.tscn")
 
 onready var container = $VBoxContainer
+onready var add_light_button = $VBoxContainer/AddLightButton
 
 
 func _ready() -> void:
@@ -20,4 +21,10 @@ func add_item_for_light(light, index: int) -> void:
 	var new_item = light_inspector_item.instance()
 	new_item.light = light
 	container.add_child(new_item)
+	container.move_child(new_item, container.get_child_count() - 2)
 	new_item.set_name_index(index)
+
+
+func _on_AddLightButton_pressed() -> void:
+	var light = PhotoBooth.add_light()
+	add_item_for_light(light, light.get_position_in_parent() + 1)

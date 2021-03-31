@@ -14,6 +14,7 @@ const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres"
 const plane_mesh = preload("res://editor/visualizers/3D/PlaneMesh.tres")
 const operation = preload("res://editor/operation/DragOperation.tres")
 const selection = preload("res://editor/selection/ActiveSelection.tres")
+const LightPoint = preload("res://editor/visualizers/LightPoint.tscn")
 
 export(float) var plate_angular_speed = 0.01
 export(float) var plane_subdivide_scale = 1
@@ -97,12 +98,17 @@ func get_light_nodes() -> Array:
 
 
 func set_lights_enabled(value: bool) -> void:
-	for c in lights.get_children():
-		c.visible = value
+	lights.visible = value
 
 
 func get_lights_enabled() -> bool:
-	return lights.get_child(0).visible
+	return lights.visible
+
+
+func add_light():
+	var new_light = LightPoint.instance()
+	lights.add_child(new_light)
+	return new_light
 
 
 func set_normal_vectors_enabled(value: bool) -> void:

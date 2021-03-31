@@ -51,7 +51,8 @@ margin_bottom = 74.0
 [node name="MoveButton" type="Button" parent="Footer"]
 margin_right = 36.0
 margin_bottom = 30.0
-hint_tooltip = "Move the light by holding this button and moving mouse."
+hint_tooltip = "Move the light by holding this button and moving mouse.
+Right click to reset position."
 icon = ExtResource( 2 )
 script = ExtResource( 3 )
 
@@ -76,5 +77,6 @@ margin_bottom = 82.0
 [connection signal="toggled" from="Header/CheckButton" to="." method="_on_CheckButton_toggled"]
 [connection signal="color_changed" from="Header/ColorPickerButton" to="." method="_on_ColorPickerButton_color_changed"]
 [connection signal="moved" from="Footer/MoveButton" to="." method="_on_MoveButton_moved"]
+[connection signal="reset" from="Footer/MoveButton" to="." method="_on_MoveButton_reset"]
 [connection signal="gui_input" from="Footer/EnergySlider" to="." method="_on_EnergySlider_gui_input"]
 [connection signal="value_changed" from="Footer/EnergySlider" to="." method="_on_EnergySlider_value_changed"]
