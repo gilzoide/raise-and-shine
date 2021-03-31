@@ -83,7 +83,7 @@ func set_direction_from_position(position: Vector2) -> void:
 	var distance = vec.length()
 	if distance <= inner_radius:
 		set_direction(HeightOperation.RADIAL_DIRECTION)
-	elif distance <= radius:
+	else:
 		set_direction(vec.angle())
 	dragging = true
 

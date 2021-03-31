@@ -31,8 +31,7 @@ control2 = Vector2( 1, 1 )
 margin_right = 74.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 30, 30 )
-hint_tooltip = "Choose height tool curve and direction.
-Hold Control to snap angle."
+hint_tooltip = "Choose height tool curve and direction."
 focus_mode = 0
 custom_constants/hseparation = 8
 text = "Curve"
@@ -86,6 +85,7 @@ __meta__ = {
 margin_left = 169.0
 margin_right = 272.0
 margin_bottom = 40.0
+hint_tooltip = "Toggle between flat or curved height tool."
 size_flags_horizontal = 4
 text = "Flat"
 
@@ -115,6 +115,7 @@ size_flags_vertical = 3
 [node name="CubicBezierEdit" type="Control" parent="PanelPopup/VBoxContainer/HBoxContainer/AspectRatioContainer/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+hint_tooltip = "Click anywhere to move closest curve handle or drag them with mouse."
 size_flags_horizontal = 3
 script = ExtResource( 3 )
 __meta__ = {
@@ -126,6 +127,7 @@ curve = SubResource( 2 )
 margin_top = 190.0
 margin_right = 219.0
 margin_bottom = 212.0
+hint_tooltip = "Collection of curve presets."
 text = "Presets"
 align = 0
 script = ExtResource( 11 )
@@ -265,6 +267,8 @@ curve = ExtResource( 6 )
 margin_left = 223.0
 margin_right = 442.0
 margin_bottom = 212.0
+hint_tooltip = "Choose curve direction with mouse.
+Hold Control to snap angle."
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 2 )
