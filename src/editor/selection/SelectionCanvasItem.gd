@@ -43,8 +43,8 @@ func _draw() -> void:
 
 
 func paint_position(pos: Vector2) -> void:
-	points.append(pos)
-	if points.size() == 1:
+	points.append(pos + Vector2(0.5, 0.5))
+	if points.size() <= 1:
 		points.append(pos + Vector2.ONE)
 
 
