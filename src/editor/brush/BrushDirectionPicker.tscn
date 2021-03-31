@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://editor/brush/BrushDirectionPickerButton.gd" type="Script" id=1]
 [ext_resource path="res://editor/brush/BrushDirectionPicker.gd" type="Script" id=2]
@@ -12,47 +12,50 @@
 [ext_resource path="res://addons/cubic_bezier_controls/easings/ease_linear.tres" type="Resource" id=10]
 [ext_resource path="res://editor/brush/PresetsButton.gd" type="Script" id=11]
 [ext_resource path="res://editor/brush/HeightOperation_canvasitem.shader" type="Shader" id=12]
+[ext_resource path="res://textures/CursorIcon.svg" type="Texture" id=13]
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 12 )
 shader_param/is_flat = true
 shader_param/direction = 0.67
 shader_param/control1 = Vector2( 0, 0 )
 shader_param/control2 = Vector2( 1, 1 )
 
-[sub_resource type="Resource" id=1]
+[sub_resource type="Resource" id=2]
 resource_local_to_scene = true
 script = ExtResource( 4 )
 control1 = Vector2( 0, 0 )
 control2 = Vector2( 1, 1 )
 
 [node name="BrushDirectionPickerButton" type="Button"]
-margin_right = 27.0
-margin_bottom = 27.0
+margin_right = 74.0
+margin_bottom = 30.0
 rect_min_size = Vector2( 30, 30 )
 hint_tooltip = "Choose height tool curve and direction.
 Hold Control to snap angle."
 focus_mode = 0
+custom_constants/hseparation = 8
+text = "Curve"
+icon = ExtResource( 13 )
+align = 2
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Preview" type="ColorRect" parent="."]
-material = SubResource( 2 )
-anchor_right = 1.0
+material = SubResource( 1 )
 anchor_bottom = 1.0
-margin_left = 2.0
-margin_top = 2.0
-margin_right = -2.0
-margin_bottom = -2.0
+margin_left = 6.0
+margin_top = 3.0
+margin_right = 30.0
+margin_bottom = -3.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PanelPopup" type="PopupPanel" parent="."]
-visible = true
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -225.0
@@ -67,28 +70,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="Control" parent="PanelPopup"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelPopup"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 4.0
 margin_right = -4.0
 margin_bottom = -4.0
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="FlatCheckBox" type="CheckButton" parent="PanelPopup/VBoxContainer"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -51.0
-margin_right = 52.0
+margin_left = 169.0
+margin_right = 272.0
 margin_bottom = 40.0
 size_flags_horizontal = 4
 text = "Flat"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelPopup/VBoxContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 40.0
-margin_bottom = -1.0
+margin_top = 50.0
+margin_right = 442.0
+margin_bottom = 262.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -97,13 +101,13 @@ __meta__ = {
 
 [node name="AspectRatioContainer" type="VBoxContainer" parent="PanelPopup/VBoxContainer/HBoxContainer"]
 margin_right = 219.0
-margin_bottom = 221.0
+margin_bottom = 212.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Panel" type="Panel" parent="PanelPopup/VBoxContainer/HBoxContainer/AspectRatioContainer"]
 margin_right = 219.0
-margin_bottom = 195.0
+margin_bottom = 186.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -116,12 +120,12 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-curve = SubResource( 1 )
+curve = SubResource( 2 )
 
 [node name="PresetsButton" type="ToolButton" parent="PanelPopup/VBoxContainer/HBoxContainer/AspectRatioContainer"]
-margin_top = 199.0
+margin_top = 190.0
 margin_right = 219.0
-margin_bottom = 221.0
+margin_bottom = 212.0
 text = "Presets"
 align = 0
 script = ExtResource( 11 )
@@ -260,7 +264,7 @@ curve = ExtResource( 6 )
 [node name="DirectionChooser" type="Control" parent="PanelPopup/VBoxContainer/HBoxContainer"]
 margin_left = 223.0
 margin_right = 442.0
-margin_bottom = 221.0
+margin_bottom = 212.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 2 )
@@ -273,7 +277,7 @@ line_width = 4.0
 
 [node name="Preview_2" type="ColorRect" parent="PanelPopup/VBoxContainer/HBoxContainer/DirectionChooser"]
 show_behind_parent = true
-material = SubResource( 2 )
+material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2

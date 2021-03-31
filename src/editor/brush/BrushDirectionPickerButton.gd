@@ -5,6 +5,7 @@
 extends Button
 
 export(Resource) var operation = preload("res://editor/operation/DragOperation.tres")
+export(Resource) var settings = preload("res://settings/DefaultSettings.tres")
 export(Texture) var arrow = preload("res://textures/ArrowIcon.svg")
 export(float) var circle_margin = 4
 
@@ -20,17 +21,9 @@ func _ready() -> void:
 	flat_checkbox.pressed = operation.is_flat
 	var _err = operation.connect("changed", self, "update_material_operation")
 	update_material_operation()
+	if not settings.show_tool_button_text:
+		text = ""
 
-
-func _draw() -> void:
-	var center = rect_size * 0.5
-	if operation.is_radial_direction(operation.direction):
-		draw_circle(center, min(center.x, center.y) - circle_margin, Color.white)
-	else:
-		draw_set_transform(center, operation.direction, Vector2.ONE)
-		var arrow_size = arrow.get_size()
-		draw_texture_rect(arrow, Rect2(-arrow_size * 0.5, arrow_size), false)
-	
 
 func _on_pressed() -> void:
 	var global_rect = get_global_rect()
