@@ -53,6 +53,16 @@ _global_script_classes=[ {
 "class": "SelectionCanvasItem",
 "language": "GDScript",
 "path": "res://editor/selection/SelectionCanvasItem.gd"
+}, {
+"base": "Control",
+"class": "Toast",
+"language": "GDScript",
+"path": "res://addons/toast/toast_script.gd"
+}, {
+"base": "Resource",
+"class": "ToastStyle",
+"language": "GDScript",
+"path": "res://addons/toast/style_resource/toast_style.gd"
 } ]
 _global_script_class_icons={
 "ControlExtras": "",
@@ -63,7 +73,9 @@ _global_script_class_icons={
 "HeightMapData": "",
 "HeightOperation": "",
 "MapTypes": "",
-"SelectionCanvasItem": ""
+"SelectionCanvasItem": "",
+"Toast": "",
+"ToastStyle": ""
 }
 
 [application]
@@ -92,7 +104,7 @@ window/energy_saving/keep_screen_on=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/cubic_bezier_controls/plugin.cfg", "res://addons/key_shortcut_creator/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/cubic_bezier_controls/plugin.cfg", "res://addons/key_shortcut_creator/plugin.cfg", "res://addons/toast/plugin.cfg" )
 
 [input]
 

@@ -16,6 +16,10 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func _on_button_down() -> void:
+	var toast = Toast.new("Hold down and move light with mouse", Toast.LENGTH_LONG)
+	get_tree().root.add_child(toast)
+	toast.show()
+	
 	_moving = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
