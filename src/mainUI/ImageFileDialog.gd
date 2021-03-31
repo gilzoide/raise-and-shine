@@ -21,15 +21,23 @@ const SAVE_FILTERS = [
 	"*.exr ; OpenEXR",
 	"*.png ; PNG",
 ]
-const OPEN_EXTENSIONS = ["bmp", "dds", "exr", "hdr", "jpg", "jpeg", "png", "tga", "webp"]
+const OPEN_EXTENSIONS = PoolStringArray([
+	"bmp",
+	"dds",
+	"exr",
+	"hdr",
+	"jpg",
+	"jpeg",
+	"png",
+	"tga",
+	"webp",
+])
 
 const OPEN_TEXT = "You can also drop files to this window\n"
 const SAVE_TEXT = ""
 
 onready var file_dialog = $FileDialog
 onready var drop_dialog = $DropDialog
-onready var image_load_error = $ImageLoadErrorDialog
-onready var image_save_error = $ImageSaveErrorDialog
 var success_method: FuncRef
 var image_to_save: Image
 var hovering = false
@@ -73,7 +81,7 @@ func try_save_image(image: Image, filename: String) -> void:
 				download('%s', '%s');
 			""" % [uri, filename])
 		elif OS.shell_open(uri) != OK:
-			image_save_error.popup_centered()
+			_show_toast("Failed to save image =(")
 
 
 func _on_file_selected(path: String) -> void:
@@ -84,7 +92,7 @@ func _on_file_selected(path: String) -> void:
 			if success_method:
 				success_method.call_func(img, path)
 		else:
-			image_load_error.popup_centered()
+			_show_toast("Failed to load image =(")
 	elif file_dialog.mode == FileDialog.MODE_SAVE_FILE:
 		var res = ERR_FILE_UNRECOGNIZED
 		if path.ends_with(".png"):
@@ -92,7 +100,7 @@ func _on_file_selected(path: String) -> void:
 		elif path.ends_with(".exr"):
 			res = image_to_save.save_exr(path)
 		if res != OK:
-			image_save_error.popup_centered()
+			_show_toast("Failed to save image =(")
 
 
 func _on_files_dropped(files: PoolStringArray, _screen: int) -> void:
@@ -103,6 +111,15 @@ func _on_files_dropped(files: PoolStringArray, _screen: int) -> void:
 				file_dialog.hide()
 				drop_dialog.hide()
 				break
+	
+	var err_msg = "Invalid image file\nRecognized extensions: %s" % OPEN_EXTENSIONS.join(', ')
+	_show_toast(err_msg)
+
+
+func _show_toast(msg: String) -> void:
+	var toast = Toast.new(msg, Toast.LENGTH_LONG)
+	add_child(toast)
+	toast.show()
 
 
 func _on_popup_hide() -> void:

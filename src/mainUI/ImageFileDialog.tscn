@@ -59,36 +59,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ImageLoadErrorDialog" type="AcceptDialog" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -299.2
-margin_top = -172.0
-margin_right = 299.2
-margin_bottom = 144.0
-window_title = "Alerta!"
-dialog_text = "Failed to load image =("
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ImageSaveErrorDialog" type="AcceptDialog" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -299.2
-margin_top = -172.0
-margin_right = 299.2
-margin_bottom = 144.0
-window_title = "Alerta!"
-dialog_text = "Failed to save image =("
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]
 [connection signal="popup_hide" from="FileDialog" to="." method="_on_popup_hide"]
 [connection signal="popup_hide" from="DropDialog" to="." method="_on_popup_hide"]
