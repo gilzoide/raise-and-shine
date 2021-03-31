@@ -13,9 +13,13 @@ onready var flat_checkbox = $PanelPopup/VBoxContainer/FlatCheckBox
 onready var controls_container = $PanelPopup/VBoxContainer/HBoxContainer
 onready var bezier_curve = $PanelPopup/VBoxContainer/HBoxContainer/AspectRatioContainer/Panel/CubicBezierEdit.curve
 onready var direction_chooser = $PanelPopup/VBoxContainer/HBoxContainer/DirectionChooser
+onready var preview_material = $Preview.material
+
 
 func _ready() -> void:
 	flat_checkbox.pressed = operation.is_flat
+	var _err = operation.connect("changed", self, "update_material_operation")
+	update_material_operation()
 
 
 func _draw() -> void:
@@ -30,7 +34,7 @@ func _draw() -> void:
 
 func _on_pressed() -> void:
 	var global_rect = get_global_rect()
-	var point = Vector2(global_rect.position.x, global_rect.position.y + global_rect.size.y)
+	var point = Vector2(global_rect.position.x - popup.rect_size.x * 0.5, global_rect.position.y + global_rect.size.y)
 	controls_container.visible = not flat_checkbox.pressed
 	popup.popup(Rect2(point, popup.rect_size))
 
@@ -47,3 +51,15 @@ func _on_FlatCheckBox_toggled(button_pressed: bool) -> void:
 
 func _on_control_changed() -> void:
 	operation.bezier.copy_from(bezier_curve)
+
+
+func _on_preset_chosen(curve) -> void:
+	bezier_curve.copy_from(curve)
+	operation.bezier.copy_from(curve)
+
+
+func update_material_operation() -> void:
+	preview_material.set_shader_param("is_flat", operation.is_flat)
+	preview_material.set_shader_param("direction", operation.direction)
+	preview_material.set_shader_param("control1", operation.bezier.control1)
+	preview_material.set_shader_param("control2", operation.bezier.control2)
