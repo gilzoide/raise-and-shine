@@ -4,10 +4,11 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Control
 
-onready var label = $Title
-onready var check_button = $CheckButton
-onready var energy_slider = $EnergySlider
-onready var color_picker = $ColorPickerButton
+onready var label = $Header/Title
+onready var check_button = $Header/CheckButton
+onready var color_picker = $Header/ColorPickerButton
+onready var move_button = $Footer/MoveButton
+onready var energy_slider = $Footer/EnergySlider
 var light: Node
 
 
@@ -37,6 +38,7 @@ func set_name_index(index: int):
 	else:
 		label.visible = true
 		check_button.visible = false
+		move_button.visible = false
 		label.text = "Ambient"
 
 
@@ -58,3 +60,13 @@ func _on_ColorPickerButton_color_changed(color: Color) -> void:
 
 func _on_CheckButton_toggled(button_pressed: bool) -> void:
 	light.visible = button_pressed
+
+
+func _on_EnergySlider_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and not event.is_pressed():
+		energy_slider.value = 1
+
+
+func _on_MoveButton_moved(relative) -> void:
+	var relative3d = Vector3(relative.x, -relative.y, 0)
+	light.translate(relative3d)
