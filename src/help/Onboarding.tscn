@@ -88,3 +88,4 @@ text = "Show on start"
 
 [connection signal="pressed" from="Center/LeftButton" to="Center/Slides" method="select_previous_tab"]
 [connection signal="pressed" from="Center/RightButton" to="Center/Slides" method="select_next_tab"]
+[connection signal="toggled" from="ShowOnStartCheckBox" to="." method="_on_ShowOnStartCheckBox_toggled"]
