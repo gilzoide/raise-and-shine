@@ -12,6 +12,7 @@ const PENCIL_TEXTURE_FLAGS = 0
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(ShaderMaterial) var selection_material = preload("res://editor/visualizers/2D/ShowSelection_material.tres")
 export(ShaderMaterial) var plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
+export(ShaderMaterial) var quad_material = preload("res://editor/visualizers/3D/Quad_material.tres")
 
 var snapshot_image := Image.new()
 var snapshot_texture := ImageTexture.new()
@@ -30,6 +31,7 @@ func _ready() -> void:
 	snapshot_texture.create_from_image(snapshot_image, 0)
 	current_selection.texture = snapshot_texture
 	plane_material.set_shader_param("selection_map", texture)
+	quad_material.set_shader_param("selection_map", texture)
 	selection_material.set_shader_param("selection_map", texture)
 	project.connect("height_texture_changed", self, "_on_texture_changed")
 
@@ -38,7 +40,10 @@ func update_with_size(new_size: Vector2) -> void:
 	size = new_size
 	background.rect_size = size
 	current_selection.rect_size = size
-	selection_material.set_shader_param("selection_texture_pixel_size", Vector2(1.0 / size.x, 1.0 / size.y))
+	var inv_size = Vector2(1.0 / size.x, 1.0 / size.y)
+	selection_material.set_shader_param("selection_texture_pixel_size", inv_size)
+	plane_material.set_shader_param("selection_texture_pixel_size", inv_size)
+	quad_material.set_shader_param("selection_texture_pixel_size", inv_size)
 
 
 func _on_texture_changed(texture: Texture, _empty_data: bool = false) -> void:

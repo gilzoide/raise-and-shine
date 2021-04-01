@@ -9,7 +9,7 @@
 [resource]
 shader = ExtResource( 1 )
 shader_param/use_albedo = true
-shader_param/use_height = true
+shader_param/use_height = false
 shader_param/use_normal = true
 shader_param/use_alpha = true
 shader_param/albedo_source = 0

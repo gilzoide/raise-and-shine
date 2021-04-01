@@ -11,6 +11,7 @@ signal drag_ended()
 const project = preload("res://editor/project/ActiveEditorProject.tres")
 const history = preload("res://editor/undo/UndoHistory.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
+const quad_material = preload("res://editor/visualizers/3D/Quad_material.tres")
 const operation = preload("res://editor/operation/DragOperation.tres")
 const selection = preload("res://editor/selection/ActiveSelection.tres")
 const LightPoint = preload("res://editor/visualizers/LightPoint.tscn")
@@ -23,7 +24,8 @@ var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_vectors_enabled
 onready var plate = $Plate
 onready var plane_mesh_instance = $Plate/Model
-onready var border = $Plate/Model/Border
+onready var quad_mesh_instance = $Plate/QuadModel
+onready var border = $Plate/Border
 onready var lights = $Lights
 onready var ambient_light = $WorldEnvironment
 onready var normal_vectors = $Plate/Model/NormalVectorsMultiMeshInstance
@@ -64,7 +66,10 @@ func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 	plane_mesh.size = plane_size
 	plane_mesh_instance.mesh = plane_mesh
 	
-	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
+	var quad_mesh = QuadMesh.new()
+	quad_mesh.size = plane_size
+	quad_mesh_instance.mesh = quad_mesh
+	
 	normal_vectors.set_map_size(size)
 
 

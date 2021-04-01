@@ -184,7 +184,8 @@ snap_modifier={
 [layer_names]
 
 3d_render/layer_1="General"
-3d_render/layer_2="NormalVectors"
+3d_render/layer_2="PerspectiveOnly"
+3d_render/layer_3="OrthoOnly"
 
 [node]
 

@@ -16,7 +16,7 @@ uniform bool use_normal = true;
 uniform bool use_alpha = true;
 uniform int albedo_source = 0;
 uniform float selection_pixel_width = 0.5;
-uniform vec2 TEXTURE_PIXEL_SIZE;
+uniform vec2 selection_texture_pixel_size;
 uniform float height_scale = 0.2;
 
 varying float height;
@@ -50,7 +50,7 @@ void fragment() {
 		+ float(albedo_source == ALBEDO_FROM_HEIGHT) * vec4(height, height, height, 1)
 		+ float(albedo_source == ALBEDO_FROM_NORMAL) * vec4(normal, 1);
 	
-	vec2 uv_offset = TEXTURE_PIXEL_SIZE * selection_pixel_width;
+	vec2 uv_offset = selection_texture_pixel_size * selection_pixel_width;
 	bool this_is_selection = texture(selection_map, UV).r > 0.5;
 	bool this_is_border = (this_is_selection) && is_any_neighbour_not_selection(selection_map, UV, uv_offset);
 	vec4 selection_color = vec4(vec3(1) - color.rgb, 1);
