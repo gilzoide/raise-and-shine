@@ -1,7 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://editor/visualizers/3D/NormalVectorsMultiMeshInstance.gd" type="Script" id=1]
-[ext_resource path="res://editor/visualizers/3D/UnshadedVerticesAlbedo_material.tres" type="Material" id=2]
+[ext_resource path="res://editor/visualizers/3D/normal_vectors/NormalVectors.shader" type="Shader" id=1]
+[ext_resource path="res://editor/visualizers/3D/normal_vectors/NormalVectorsMultiMeshInstance.gd" type="Script" id=2]
+[ext_resource path="res://textures/Height_imagetexture.tres" type="Texture" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/plane_size = null
+shader_param/height_scale = 1.0
+shader_param/height_map = ExtResource( 3 )
 
 [sub_resource type="ArrayMesh" id=2]
 
@@ -15,6 +22,8 @@ color_array = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 
 [node name="NormalVectorsMultiMeshInstance" type="MultiMeshInstance"]
 layers = 2
-material_override = ExtResource( 2 )
+material_override = SubResource( 1 )
+cast_shadow = 0
+generate_lightmap = false
 multimesh = SubResource( 3 )
-script = ExtResource( 1 )
+script = ExtResource( 2 )

@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/Environment.tres" type="Environment" id=1]
 [ext_resource path="res://editor/visualizers/PhotoBoothModel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://editor/visualizers/3D/PhotoBooth.gd" type="Script" id=3]
 [ext_resource path="res://editor/visualizers/LightPoint.tscn" type="PackedScene" id=4]
 [ext_resource path="res://editor/visualizers/3D/AmbientLightWorldEnvironment.gd" type="Script" id=5]
-[ext_resource path="res://editor/visualizers/3D/Plane_heightmapshape.tres" type="Shape" id=6]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 1024, 0.1, 1024 )
@@ -17,10 +16,6 @@ script = ExtResource( 3 )
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 
 [node name="Model" parent="Plate" instance=ExtResource( 2 )]
-
-[node name="HeightMapShape" type="CollisionShape" parent="Plate"]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
-shape = ExtResource( 6 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Plate"]
 shape = SubResource( 1 )

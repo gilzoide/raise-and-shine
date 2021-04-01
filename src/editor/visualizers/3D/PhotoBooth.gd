@@ -11,7 +11,6 @@ signal drag_ended()
 const project = preload("res://editor/project/ActiveEditorProject.tres")
 const history = preload("res://editor/undo/UndoHistory.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
-const plane_mesh = preload("res://editor/visualizers/3D/PlaneMesh.tres")
 const operation = preload("res://editor/operation/DragOperation.tres")
 const selection = preload("res://editor/selection/ActiveSelection.tres")
 const LightPoint = preload("res://editor/visualizers/LightPoint.tscn")
@@ -23,66 +22,50 @@ var alpha_enabled: bool setget set_alpha_enabled, get_alpha_enabled
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_vectors_enabled
 onready var plate = $Plate
+onready var plane_mesh_instance = $Plate/Model
 onready var border = $Plate/Model/Border
-onready var heightmapshape_collision = $Plate/HeightMapShape
 onready var lights = $Lights
 onready var ambient_light = $WorldEnvironment
 onready var normal_vectors = $Plate/Model/NormalVectorsMultiMeshInstance
-onready var initial_plane_size := plane_mesh.size
-onready var plane_size := initial_plane_size
+onready var initial_plane_size = plane_mesh_instance.mesh.size
+onready var plane_size = initial_plane_size
 
 
 func _ready() -> void:
 	plane_material.set_shader_param("normal_map", NormalDrawer.get_texture())
-	update_plane_dimensions()
-	var _err = project.connect("height_texture_changed", self, "_on_texture_updated")
-	_err = project.connect("albedo_texture_changed", self, "_on_texture_updated")
-	_err = project.connect("operation_ended", self, "_on_operation_ended")
+	_on_albedo_texture_changed(project.albedo_texture)
+	_on_height_texture_changed(project.height_texture)
+	var _err = project.connect("height_texture_changed", self, "_on_height_texture_changed")
+	_err = project.connect("albedo_texture_changed", self, "_on_albedo_texture_changed")
 
 
-func update_plane_dimensions() -> void:
-	var height_map = project.height_image
-	var albedo_size = project.albedo_image.get_size()
+func _on_albedo_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
+	var albedo_size = texture.get_size()
 	if albedo_size.x > albedo_size.y:
 		plane_size.x = initial_plane_size.x
 		plane_size.y = initial_plane_size.y / albedo_size.aspect()
 	else:
 		plane_size.x = initial_plane_size.x * albedo_size.aspect()
 		plane_size.y = initial_plane_size.y
-	var size = height_map.get_size()
+	
+	border.setup_with_plane_size(plane_size)
+	normal_vectors.set_plane_size(plane_size)
+	
+	var height_scale = min(plane_size.x, plane_size.y) * 0.5
+	plane_material.set_shader_param("height_scale", height_scale)
+	normal_vectors.set_height_scale(height_scale)
+
+
+func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
+	var size = texture.get_size()
+	var plane_mesh = PlaneMesh.new()
 	plane_mesh.subdivide_width = size.x * plane_subdivide_scale
 	plane_mesh.subdivide_depth = size.y * plane_subdivide_scale
 	plane_mesh.size = plane_size
-	normal_vectors.plane_size = plane_size
-	border.setup_with_plane_size(plane_size)
-	var plane_heightmapshape = heightmapshape_collision.shape
-	plane_heightmapshape.map_width = max(size.x, 2)
-	plane_heightmapshape.map_depth = max(size.y, 2)
-	heightmapshape_collision.scale.x = plane_size.x / max(size.x - 1, 1)
-	heightmapshape_collision.scale.z = plane_size.y / max(size.y - 1, 1)
-	var height_scale = update_heightmapshape_values(project.height_data)
-	normal_vectors.height_scale = height_scale
-	plane_material.set_shader_param("height_scale", height_scale)
-	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
-
-
-func update_heightmapshape_values(height_data: HeightMapData) -> float:
-	var height_scale = min(plane_size.x, plane_size.y) * 0.5
-	heightmapshape_collision.shape.map_data = height_data.scaled(height_scale)
-	return height_scale
-
-
-func _on_texture_updated(_texture: Texture, empty_data: bool = false) -> void:
-	update_plane_dimensions()
-	if normal_vectors.visible:
-		normal_vectors.update_all(project.normal_image, project.height_data, empty_data)
-
-
-func _on_operation_ended(operation, height_data: HeightMapData) -> void:
-	var _scale = update_heightmapshape_values(height_data)
-	if normal_vectors.visible:
-		normal_vectors.update_rect(project.normal_image, project.height_data, operation.cached_rect)
+	plane_mesh_instance.mesh = plane_mesh
 	
+	plane_material.set_shader_param("TEXTURE_PIXEL_SIZE", Vector2.ONE / size)
+	normal_vectors.set_map_size(size)
 
 
 func set_alpha_enabled(value: bool) -> void:
@@ -113,8 +96,6 @@ func add_light():
 
 func set_normal_vectors_enabled(value: bool) -> void:
 	normal_vectors.visible = value
-	if normal_vectors.visible:
-		normal_vectors.update_all(project.normal_image, project.height_data)
 
 
 func get_normal_vectors_enabled() -> bool:
