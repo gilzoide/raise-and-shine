@@ -125,7 +125,9 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		PhotoBooth.lights_enabled = not PhotoBooth.lights_enabled
 		update_lights_check_item()
 	elif id == TOGGLE_ALPHA:
-		PhotoBooth.alpha_enabled = not PhotoBooth.alpha_enabled
+		var value = not plane_material.get_shader_param("use_alpha")
+		plane_material.set_shader_param("use_alpha", value)
+		quad_material.set_shader_param("use_alpha", value)
 		update_background_check_item()
 #	elif id == TOGGLE_NORMAL_VECTORS:
 #		PhotoBooth.normal_vectors_enabled = not PhotoBooth.normal_vectors_enabled
@@ -160,7 +162,7 @@ func update_lights_check_item() -> void:
 
 
 func update_background_check_item() -> void:
-	menu_popup.set_item_checked(TOGGLE_ALPHA, PhotoBooth.alpha_enabled)
+	menu_popup.set_item_checked(TOGGLE_ALPHA, plane_material.get_shader_param("use_alpha"))
 
 
 #func update_normal_vectors_check_item() -> void:

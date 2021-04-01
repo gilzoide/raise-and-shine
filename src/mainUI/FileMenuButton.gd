@@ -27,6 +27,9 @@ func _ready() -> void:
 	popup.add_item("Export height map", EXPORT_HEIGHT)
 	popup.add_item("Export normal map", EXPORT_NORMAL)
 	popup.add_item("Export illuminated texture", EXPORT_LIT)
+	popup.set_item_tooltip(EXPORT_LIT, """
+	Export illuminated texture preview the same way as it appears in the 2D visualization.
+	""")
 	
 	if OS.get_name() != "HTML5":
 		popup.add_separator()

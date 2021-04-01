@@ -19,7 +19,6 @@ const LightPoint = preload("res://editor/visualizers/LightPoint.tscn")
 export(float) var plate_angular_speed = 0.01
 export(float) var plane_subdivide_scale = 1
 
-var alpha_enabled: bool setget set_alpha_enabled, get_alpha_enabled
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_vectors_enabled
 
@@ -74,14 +73,6 @@ func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 	quad_mesh_instance.mesh = quad_mesh
 	
 	normal_vectors.set_map_size(size)
-
-
-func set_alpha_enabled(value: bool) -> void:
-	plane_material.set_shader_param("use_alpha", value)
-
-
-func get_alpha_enabled() -> bool:
-	return plane_material.get_shader_param("use_alpha")
 
 
 func get_light_nodes() -> Array:
