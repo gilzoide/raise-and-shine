@@ -85,6 +85,7 @@ func try_save_image(image: Image, filename: String) -> void:
 
 
 func _on_file_selected(path: String) -> void:
+	Input.set_default_cursor_shape(Input.CURSOR_WAIT)
 	if file_dialog.mode == FileDialog.MODE_OPEN_FILE:
 		var img = Image.new()
 		if img.load(path) == OK:
@@ -101,6 +102,7 @@ func _on_file_selected(path: String) -> void:
 			res = image_to_save.save_exr(path)
 		if res != OK:
 			_show_toast("Failed to save image =(")
+	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 
 
 func _on_files_dropped(files: PoolStringArray, _screen: int) -> void:
@@ -110,10 +112,9 @@ func _on_files_dropped(files: PoolStringArray, _screen: int) -> void:
 				_on_file_selected(f)
 				file_dialog.hide()
 				drop_dialog.hide()
-				break
-	
-	var err_msg = "Invalid image file\nRecognized extensions: %s" % OPEN_EXTENSIONS.join(', ')
-	_show_toast(err_msg)
+				return
+		var err_msg = "Invalid image file\nRecognized extensions: %s" % OPEN_EXTENSIONS.join(', ')
+		_show_toast(err_msg)
 
 
 func _show_toast(msg: String) -> void:
