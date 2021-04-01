@@ -34,5 +34,7 @@ multimesh = SubResource( 3 )
 
 [node name="Border" type="MeshInstance" parent="."]
 material_override = ExtResource( 4 )
+cast_shadow = 0
+generate_lightmap = false
 mesh = SubResource( 4 )
 script = ExtResource( 3 )

@@ -16,6 +16,8 @@ script = ExtResource( 3 )
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 
 [node name="Model" parent="Plate" instance=ExtResource( 2 )]
+cast_shadow = 0
+generate_lightmap = false
 
 [node name="CollisionShape" type="CollisionShape" parent="Plate"]
 shape = SubResource( 1 )
