@@ -80,6 +80,7 @@ func drag_height_moved(relative_movement: Vector2) -> void:
 func drag_selection_moved(position: Vector2) -> void:
 	if active_tool == DragTool.BRUSH_PENCIL:
 		SelectionDrawer.paint_position(position)
+		selection_changed = selection_changed or Rect2(Vector2.ZERO, SelectionDrawer.size).has_point(position)
 	else:
 		var pivot_point = drag_start_position
 		# snap rect to hovered pixel, as `uv_to_position` always floors position
@@ -107,7 +108,7 @@ func drag_selection_moved(position: Vector2) -> void:
 		rect.size.x = max(1.0, rect.size.x)
 		rect.size.y = max(1.0, rect.size.y)
 		SelectionDrawer.update_selection_rect(rect, delta_sign.x * delta_sign.y)
-	selection_changed = true
+		selection_changed = rect.intersects(Rect2(Vector2.ZERO, SelectionDrawer.size))
 
 
 func get_cursor_for_active_tool() -> int:
