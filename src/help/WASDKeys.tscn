@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://help/KeyboardKeyRect.tscn" type="PackedScene" id=1]
+
+[node name="GridContainer" type="GridContainer"]
+margin_right = 140.0
+margin_bottom = 92.0
+rect_min_size = Vector2( 132, 88 )
+columns = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+margin_right = 44.0
+margin_bottom = 44.0
+
+[node name="W" parent="." instance=ExtResource( 1 )]
+margin_left = 48.0
+margin_right = 92.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = null
+title = "W"
+
+[node name="Control_2" type="Control" parent="."]
+margin_left = 96.0
+margin_right = 140.0
+margin_bottom = 44.0
+
+[node name="A" parent="." instance=ExtResource( 1 )]
+margin_top = 48.0
+margin_right = 44.0
+margin_bottom = 92.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = null
+title = "A"
+
+[node name="S" parent="." instance=ExtResource( 1 )]
+margin_left = 48.0
+margin_top = 48.0
+margin_right = 92.0
+margin_bottom = 92.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = null
+title = "S"
+
+[node name="D" parent="." instance=ExtResource( 1 )]
+margin_left = 96.0
+margin_top = 48.0
+margin_right = 140.0
+margin_bottom = 92.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = null
+title = "D"

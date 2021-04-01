@@ -32,7 +32,7 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		if not onboarding_popup:
 			onboarding_popup = load("res://help/OnboardingPopup.tscn").instance()
 			add_child(onboarding_popup)
-		onboarding_popup.popup_centered_ratio(0.9)
+		onboarding_popup.popup_centered_ratio(0.91)
 	elif id == ABOUT:
 		if about_popup == null:
 			about_popup = load("res://mainUI/AboutPopup.tscn").instance()

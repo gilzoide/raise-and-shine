@@ -99,6 +99,7 @@ gdscript/warnings/shadowed_variable=false
 
 [display]
 
+window/size/test_width=800
 window/dpi/allow_hidpi=true
 window/energy_saving/keep_screen_on=false
 

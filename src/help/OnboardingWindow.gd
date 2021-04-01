@@ -6,7 +6,7 @@ extends Control
 
 export(Resource) var settings = preload("res://settings/DefaultSettings.tres")
 
-onready var show_on_startup_checkbox: CheckBox = $ShowOnStartCheckBox
+onready var show_on_startup_checkbox: CheckBox = $Footer/ShowOnStartCheckBox
 
 
 func _ready() -> void:

@@ -4,7 +4,7 @@
 [ext_resource path="res://help/KeyboardKeyRect.gd" type="Script" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
-content_margin_left = 6.0
+content_margin_left = 12.0
 content_margin_right = 12.0
 draw_center = false
 border_width_left = 2
@@ -17,8 +17,9 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [node name="Key" type="PanelContainer"]
-margin_right = 74.0
-margin_bottom = 48.0
+margin_right = 56.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 44, 44 )
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
@@ -28,21 +29,19 @@ texture = ExtResource( 1 )
 title = "Shift"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 6.0
+margin_left = 12.0
 margin_top = 2.0
-margin_right = 62.0
-margin_bottom = 46.0
+margin_right = 44.0
+margin_bottom = 42.0
 
 [node name="KeyIcon" type="TextureRect" parent="HBoxContainer"]
-margin_right = 24.0
-margin_bottom = 44.0
-texture = ExtResource( 1 )
+margin_bottom = 40.0
 stretch_mode = 4
 
 [node name="KeyLabel" type="Label" parent="HBoxContainer"]
-margin_left = 28.0
-margin_right = 56.0
-margin_bottom = 44.0
+margin_left = 4.0
+margin_right = 32.0
+margin_bottom = 40.0
 size_flags_vertical = 1
 text = "Shift"
 align = 1

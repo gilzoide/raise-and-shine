@@ -22,7 +22,7 @@ __meta__ = {
 }
 
 [node name="Center" type="HBoxContainer" parent="."]
-margin_right = 1024.0
+margin_right = 800.0
 margin_bottom = 572.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -32,14 +32,13 @@ margin_right = 30.0
 margin_bottom = 572.0
 focus_mode = 0
 custom_fonts/font = ExtResource( 1 )
-button_mask = 0
 shortcut = ExtResource( 8 )
 text = "<"
 flat = true
 
 [node name="Slides" type="TabContainer" parent="Center"]
 margin_left = 34.0
-margin_right = 990.0
+margin_right = 766.0
 margin_bottom = 572.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -68,8 +67,8 @@ visible = false
 margin_top = 39.0
 
 [node name="RightButton" type="Button" parent="Center"]
-margin_left = 994.0
-margin_right = 1024.0
+margin_left = 770.0
+margin_right = 800.0
 margin_bottom = 572.0
 focus_mode = 0
 custom_fonts/font = ExtResource( 1 )
@@ -77,15 +76,26 @@ shortcut = ExtResource( 9 )
 text = ">"
 flat = true
 
-[node name="ShowOnStartCheckBox" type="CheckBox" parent="."]
-margin_left = 910.0
+[node name="Footer" type="Control" parent="."]
 margin_top = 576.0
-margin_right = 1024.0
+margin_right = 800.0
 margin_bottom = 600.0
+rect_min_size = Vector2( 0, 24 )
+
+[node name="ShowOnStartCheckBox" type="CheckBox" parent="Footer"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -114.0
+margin_top = -24.0
 size_flags_horizontal = 8
 pressed = true
 text = "Show on start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="pressed" from="Center/LeftButton" to="Center/Slides" method="select_previous_tab"]
 [connection signal="pressed" from="Center/RightButton" to="Center/Slides" method="select_next_tab"]
-[connection signal="toggled" from="ShowOnStartCheckBox" to="." method="_on_ShowOnStartCheckBox_toggled"]
+[connection signal="toggled" from="Footer/ShowOnStartCheckBox" to="." method="_on_ShowOnStartCheckBox_toggled"]

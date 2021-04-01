@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://editor/visualizers/2D/OrthogonalVisualizer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://help/KeyboardKeyRect.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://help/PanningDemonstrationAnimation.gd" type="Script" id=7]
 [ext_resource path="res://textures/MouseWheelArrowIcon.svg" type="Texture" id=8]
 [ext_resource path="res://help/ZoomDemonstrationAnimation.gd" type="Script" id=9]
+[ext_resource path="res://help/WASDKeys.tscn" type="PackedScene" id=10]
 
 [node name="Preview" type="VBoxContainer"]
 anchor_right = 1.0
@@ -32,7 +33,7 @@ columns = 2
 
 [node name="PanAnimation" type="Control" parent="GridContainer"]
 margin_right = 504.0
-margin_bottom = 524.0
+margin_bottom = 424.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 7 )
@@ -45,9 +46,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Viewport" parent="GridContainer/PanAnimation/OrthogonalVisualizer/ViewportContainer" index="0"]
-size = Vector2( 504, 524 )
+size = Vector2( 504, 424 )
 
-[node name="ZoomSlider" parent="GridContainer/PanAnimation/OrthogonalVisualizer" index="2"]
+[node name="ZoomSlider" parent="GridContainer/PanAnimation/OrthogonalVisualizer" index="1"]
 mouse_filter = 2
 
 [node name="CursorIcon" parent="GridContainer/PanAnimation" instance=ExtResource( 6 )]
@@ -56,7 +57,7 @@ position = Vector2( 214.96, 309.713 )
 [node name="ZoomAnimation" type="Control" parent="GridContainer"]
 margin_left = 520.0
 margin_right = 1024.0
-margin_bottom = 524.0
+margin_bottom = 424.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 9 )
@@ -67,22 +68,23 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="_Spacing_0" type="Control" parent="GridContainer"]
-margin_top = 528.0
+margin_top = 428.0
 margin_right = 504.0
-margin_bottom = 544.0
+margin_bottom = 444.0
 rect_min_size = Vector2( 0, 16 )
 
 [node name="_Spacing_1" type="Control" parent="GridContainer"]
 margin_left = 520.0
-margin_top = 528.0
+margin_top = 428.0
 margin_right = 1024.0
-margin_bottom = 544.0
+margin_bottom = 444.0
 rect_min_size = Vector2( 0, 16 )
 
 [node name="PanControls" type="VBoxContainer" parent="GridContainer"]
-margin_top = 548.0
+margin_top = 448.0
 margin_right = 504.0
 margin_bottom = 592.0
+custom_constants/separation = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GridContainer/PanControls"]
 margin_right = 504.0
@@ -90,44 +92,65 @@ margin_bottom = 44.0
 alignment = 1
 
 [node name="MouseMiddleButton" type="TextureRect" parent="GridContainer/PanControls/HBoxContainer"]
-margin_left = 76.0
-margin_right = 108.0
+margin_left = 73.0
+margin_right = 105.0
 margin_bottom = 44.0
 texture = ExtResource( 5 )
 
 [node name="Or" type="Label" parent="GridContainer/PanControls/HBoxContainer"]
-margin_left = 112.0
+margin_left = 109.0
 margin_top = 3.0
-margin_right = 219.0
+margin_right = 216.0
 margin_bottom = 41.0
 custom_fonts/font = ExtResource( 3 )
 text = "    OR    "
 align = 1
 
 [node name="Key" parent="GridContainer/PanControls/HBoxContainer" instance=ExtResource( 2 )]
-margin_left = 223.0
-margin_right = 354.0
-margin_bottom = 44.0
+margin_left = 220.0
+margin_right = 357.0
 texture = null
 title = "         Space         "
 
 [node name="PlusSign" type="Label" parent="GridContainer/PanControls/HBoxContainer"]
-margin_left = 358.0
+margin_left = 361.0
 margin_top = 3.0
-margin_right = 392.0
+margin_right = 395.0
 margin_bottom = 41.0
 custom_fonts/font = ExtResource( 3 )
 text = " + "
 
 [node name="MouseLeftButton" type="TextureRect" parent="GridContainer/PanControls/HBoxContainer"]
-margin_left = 396.0
-margin_right = 428.0
+margin_left = 399.0
+margin_right = 431.0
 margin_bottom = 44.0
 texture = ExtResource( 4 )
 
+[node name="HBoxContainer_2" type="HBoxContainer" parent="GridContainer/PanControls"]
+margin_top = 52.0
+margin_right = 504.0
+margin_bottom = 144.0
+rect_min_size = Vector2( 0, 44 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Or" type="Label" parent="GridContainer/PanControls/HBoxContainer_2"]
+margin_left = 142.0
+margin_top = 27.0
+margin_right = 217.0
+margin_bottom = 65.0
+custom_fonts/font = ExtResource( 3 )
+text = "OR    "
+align = 1
+
+[node name="GridContainer" parent="GridContainer/PanControls/HBoxContainer_2" instance=ExtResource( 10 )]
+margin_left = 221.0
+margin_right = 361.0
+
 [node name="ZoomControls" type="VBoxContainer" parent="GridContainer"]
 margin_left = 520.0
-margin_top = 548.0
+margin_top = 448.0
 margin_right = 1024.0
 margin_bottom = 592.0
 
@@ -155,5 +178,32 @@ stretch_mode = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Control" type="Control" parent="GridContainer/ZoomControls"]
+margin_top = 48.0
+margin_right = 504.0
+margin_bottom = 96.0
+size_flags_vertical = 3
+
+[node name="HBoxContainer_2" type="HBoxContainer" parent="GridContainer/ZoomControls"]
+margin_top = 100.0
+margin_right = 504.0
+margin_bottom = 144.0
+custom_constants/separation = 2
+alignment = 1
+
+[node name="Key" parent="GridContainer/ZoomControls/HBoxContainer_2" instance=ExtResource( 2 )]
+margin_left = 170.0
+margin_right = 214.0
+texture = null
+title = "F"
+
+[node name="Label" type="Label" parent="GridContainer/ZoomControls/HBoxContainer_2"]
+margin_left = 216.0
+margin_top = 3.0
+margin_right = 333.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 3 )
+text = " to reset"
 
 [editable path="GridContainer/PanAnimation/OrthogonalVisualizer"]
