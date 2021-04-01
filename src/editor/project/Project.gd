@@ -140,12 +140,12 @@ func apply_operation(operation, amount: float) -> void:
 
 
 func height_operation_ended(operation) -> void:
-	history.push_heightmapdata(height_data)
+	history.push_revision(height_data, SelectionDrawer.snapshot_image)
 	emit_signal("operation_ended", operation, height_data)
 
 
 func resize_maps(size: Vector2) -> void:
 	if height_data.size != size:
 		height_data.resize(size)
-		history.push_heightmapdata(height_data)
+		history.push_revision(height_data, SelectionDrawer.snapshot_image)
 		set_height_data(height_data)

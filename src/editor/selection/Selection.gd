@@ -135,7 +135,7 @@ func update_selection_bitmap() -> void:
 	SelectionDrawer.take_snapshot()
 	yield(SelectionDrawer, "snapshot_updated")
 	if selection_changed:
-		history.push_selection(SelectionDrawer.snapshot_image)
+		history.push_revision(project.height_data, SelectionDrawer.snapshot_image)
 		selection_changed = false
 	if active_tool == DragTool.HEIGHT_EDIT:
 		drag_operation.cache_target_from_selection(SelectionDrawer.snapshot_image)

@@ -25,14 +25,6 @@ func init_selection(selection: Image) -> void:
 	revision_history[0].selection.copy_from(selection)
 
 
-func push_heightmapdata(heightmap: HeightMapData) -> void:
-	push_revision(heightmap, revision_history[max(0, current_revision - 1)].selection)
-
-
-func push_selection(selection: Image) -> void:
-	push_revision(revision_history[max(0, current_revision - 1)].heightmap, selection)
-
-
 func push_revision(heightmap: HeightMapData, selection: Image) -> void:
 	revision_history.resize(current_revision + 1)
 	var new_revision = Revision.new()
