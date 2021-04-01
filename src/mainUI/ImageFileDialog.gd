@@ -92,6 +92,7 @@ func _on_file_selected(path: String) -> void:
 			emit_signal("image_loaded", img)
 			if success_method:
 				success_method.call_func(img, path)
+			_show_toast("Image loaded")
 		else:
 			_show_toast("Failed to load image =(")
 	elif file_dialog.mode == FileDialog.MODE_SAVE_FILE:
@@ -100,7 +101,9 @@ func _on_file_selected(path: String) -> void:
 			res = image_to_save.save_png(path)
 		elif path.ends_with(".exr"):
 			res = image_to_save.save_exr(path)
-		if res != OK:
+		if res == OK:
+			_show_toast("Image saved at \"%s\"" % path)
+		else:
 			_show_toast("Failed to save image =(")
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 

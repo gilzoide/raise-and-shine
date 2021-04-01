@@ -29,7 +29,7 @@ generate_lightmap = false
 
 [node name="QuadModel" type="MeshInstance" parent="Plate"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
-layers = 4
+layers = 12
 material_override = ExtResource( 6 )
 cast_shadow = 0
 generate_lightmap = false
@@ -58,6 +58,23 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -94.8735, -2.40635, 0 )
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 1 )
 script = ExtResource( 5 )
+
+[node name="ScreenshotViewport" type="Viewport" parent="."]
+size = Vector2( 64, 64 )
+transparent_bg = true
+handle_input_locally = false
+hdr = false
+render_target_v_flip = true
+render_target_update_mode = 0
+gui_disable_input = true
+
+[node name="Camera" type="Camera" parent="ScreenshotViewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150 )
+cull_mask = 8
+projection = 1
+current = true
+size = 150.0
+far = 200.0
 
 [connection signal="input_event" from="Plate" to="." method="_on_Plate_input_event"]
 [connection signal="mouse_exited" from="Plate" to="." method="_on_Plate_mouse_exited"]

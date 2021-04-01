@@ -6,3 +6,6 @@
 [node name="OrthogonalVisualizer" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 speed = 100.0
+
+[node name="Camera" parent="ViewportContainer/Viewport" index="0"]
+cull_mask = 1048565

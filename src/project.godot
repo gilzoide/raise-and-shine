@@ -186,6 +186,7 @@ snap_modifier={
 3d_render/layer_1="General"
 3d_render/layer_2="PerspectiveOnly"
 3d_render/layer_3="OrthoOnly"
+3d_render/layer_4="Screenshot"
 
 [node]
 

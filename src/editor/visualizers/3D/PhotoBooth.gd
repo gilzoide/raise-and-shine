@@ -31,7 +31,8 @@ onready var ambient_light = $WorldEnvironment
 onready var normal_vectors = $Plate/Model/NormalVectorsMultiMeshInstance
 onready var initial_plane_size = plane_mesh_instance.mesh.size
 onready var plane_size = initial_plane_size
-
+onready var screenshot_viewport = $ScreenshotViewport
+onready var screenshot_camera = $ScreenshotViewport/Camera
 
 func _ready() -> void:
 	plane_material.set_shader_param("normal_map", NormalDrawer.get_texture())
@@ -128,3 +129,11 @@ func stop_dragging() -> void:
 
 func _on_Plate_mouse_exited() -> void:
 	stop_dragging()
+
+
+func take_screenshot() -> void:
+	screenshot_camera.size = plane_size.x
+	screenshot_viewport.render_target_update_mode = Viewport.UPDATE_ONCE
+	yield(VisualServer, "frame_post_draw")
+	var image = screenshot_viewport.get_texture().get_data()
+	project.save_image_dialog(image, "_lit")

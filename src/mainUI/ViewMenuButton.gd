@@ -25,6 +25,7 @@ enum {
 
 export(NodePath) var visualizer_grid_path: NodePath
 export(ShaderMaterial) var plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
+export(ShaderMaterial) var quad_material = preload("res://editor/visualizers/3D/Quad_material.tres")
 onready var visualizer_grid = get_node(visualizer_grid_path)
 onready var menu_popup = get_popup()
 
@@ -107,13 +108,18 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		visualizer_grid.set_3d_visible(not is_visible)
 		menu_popup.set_item_checked(TOGGLE_VIEW_3D, not is_visible)
 	elif id == TOGGLE_ALBEDO:
-		plane_material.set_shader_param("use_albedo", not plane_material.get_shader_param("use_albedo"))
+		var value = not plane_material.get_shader_param("use_albedo")
+		plane_material.set_shader_param("use_albedo", value)
+		quad_material.set_shader_param("use_albedo", value)
 		update_albedo_check_item()
 	elif id == TOGGLE_HEIGHT:
 		plane_material.set_shader_param("use_height", not plane_material.get_shader_param("use_height"))
+		# quad_material never uses height, that's why it exists in the first place
 		update_height_check_item()
 	elif id == TOGGLE_NORMAL:
-		plane_material.set_shader_param("use_normal", not plane_material.get_shader_param("use_normal"))
+		var value = not plane_material.get_shader_param("use_normal")
+		plane_material.set_shader_param("use_normal", value)
+		quad_material.set_shader_param("use_normal", value)
 		update_normal_check_item()
 	elif id == TOGGLE_LIGHTS:
 		PhotoBooth.lights_enabled = not PhotoBooth.lights_enabled
@@ -126,12 +132,15 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 #		update_normal_vectors_check_item()
 	elif id == ALBEDO_FROM_ALBEDO:
 		plane_material.set_shader_param("albedo_source", 0)
+		quad_material.set_shader_param("albedo_source", 0)
 		update_albedo_from_check_items()
 	elif id == ALBEDO_FROM_HEIGHT:
 		plane_material.set_shader_param("albedo_source", 1)
+		quad_material.set_shader_param("albedo_source", 1)
 		update_albedo_from_check_items()
 	elif id == ALBEDO_FROM_NORMAL:
 		plane_material.set_shader_param("albedo_source", 2)
+		quad_material.set_shader_param("albedo_source", 2)
 		update_albedo_from_check_items()
 
 func update_albedo_check_item() -> void:

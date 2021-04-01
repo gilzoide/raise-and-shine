@@ -8,6 +8,7 @@ enum {
 	LOAD,
 	EXPORT_HEIGHT,
 	EXPORT_NORMAL,
+	EXPORT_LIT,
 	_SEPARATOR_0,
 	QUIT,
 }
@@ -25,6 +26,7 @@ func _ready() -> void:
 	""")
 	popup.add_item("Export height map", EXPORT_HEIGHT)
 	popup.add_item("Export normal map", EXPORT_NORMAL)
+	popup.add_item("Export illuminated texture", EXPORT_LIT)
 	
 	if OS.get_name() != "HTML5":
 		popup.add_separator()
@@ -38,8 +40,10 @@ func _on_item_pressed(id: int) -> void:
 	if id == LOAD:
 		project.load_project_dialog()
 	elif id == EXPORT_HEIGHT:
-		project.save_image_dialog(MapTypes.Type.HEIGHT_MAP)
+		project.save_image_dialog_type(MapTypes.Type.HEIGHT_MAP)
 	elif id == EXPORT_NORMAL:
-		project.save_image_dialog(MapTypes.Type.NORMAL_MAP)
+		project.save_image_dialog_type(MapTypes.Type.NORMAL_MAP)
+	elif id == EXPORT_LIT:
+		PhotoBooth.take_screenshot()
 	elif id == QUIT:
 		get_tree().quit()

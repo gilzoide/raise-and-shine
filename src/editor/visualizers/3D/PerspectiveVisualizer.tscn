@@ -9,6 +9,6 @@ speed = 100.0
 
 [node name="Camera" parent="ViewportContainer/Viewport" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 128 )
-cull_mask = 1048571
+cull_mask = 1048563
 projection = 0
 far = 500.0

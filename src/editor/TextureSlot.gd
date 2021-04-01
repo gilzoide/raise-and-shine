@@ -59,7 +59,7 @@ func _on_menu_id_pressed(id: int) -> void:
 	elif id == LOAD_IMAGE:
 		project.load_image_dialog(type)
 	elif id == SAVE_IMAGE_AS:
-		project.save_image_dialog(type)
+		project.save_image_dialog_type(type)
 
 
 func _on_texture_updated(_texture: Texture, _empty_data: bool = false) -> void:
