@@ -22,6 +22,8 @@ export(float) var plane_subdivide_scale = 1
 var alpha_enabled: bool setget set_alpha_enabled, get_alpha_enabled
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_vectors_enabled
+
+var albedo_size: Vector2
 onready var plate = $Plate
 onready var plane_mesh_instance = $Plate/Model
 onready var quad_mesh_instance = $Plate/QuadModel
@@ -43,7 +45,7 @@ func _ready() -> void:
 
 
 func _on_albedo_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
-	var albedo_size = texture.get_size()
+	albedo_size = texture.get_size()
 	if albedo_size.x > albedo_size.y:
 		plane_size.x = initial_plane_size.x
 		plane_size.y = initial_plane_size.y / albedo_size.aspect()
@@ -132,7 +134,8 @@ func _on_Plate_mouse_exited() -> void:
 
 
 func take_screenshot() -> void:
-	screenshot_camera.size = plane_size.x
+	screenshot_viewport.size = albedo_size
+	screenshot_camera.size = plane_size.y
 	screenshot_viewport.render_target_update_mode = Viewport.UPDATE_ONCE
 	yield(VisualServer, "frame_post_draw")
 	var image = screenshot_viewport.get_texture().get_data()

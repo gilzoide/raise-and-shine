@@ -127,6 +127,7 @@ func _show_toast(msg: String) -> void:
 
 
 func _on_popup_hide() -> void:
+	file_dialog.deselect_items()
 	success_method = null
 	image_to_save = null
 	hovering = false
