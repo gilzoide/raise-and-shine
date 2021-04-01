@@ -7,8 +7,9 @@ class_name ControlExtras
 const WRAP_MOUSE_META_KEY = "ControlExtras.wrap_mouse"
 
 static func set_cursor(control: Control, cursor: int, now: bool = true):
+	var previous = control.mouse_default_cursor_shape
 	control.mouse_default_cursor_shape = cursor
-	if now:
+	if now and previous != cursor:
 		update_cursor(control)
 
 
