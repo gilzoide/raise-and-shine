@@ -11,8 +11,8 @@ enum {
 
 export(Resource) var settings = preload("res://settings/DefaultSettings.tres")
 
-var about_popup: Popup = null
-var onboarding_popup: Popup = null
+var AboutPopup: PackedScene = null
+var OnboardingPopup: PackedScene = null
 
 onready var menu_popup = get_popup()
 
@@ -29,12 +29,16 @@ func _ready() -> void:
 
 func _on_menu_popup_id_pressed(id: int) -> void:
 	if id == HELP:
-		if not onboarding_popup:
-			onboarding_popup = load("res://help/OnboardingPopup.tscn").instance()
-			add_child(onboarding_popup)
-		onboarding_popup.popup_centered_ratio(0.91)
+		if not OnboardingPopup:
+			OnboardingPopup = load("res://help/OnboardingPopup.tscn")
+		var popup: Popup = OnboardingPopup.instance()
+		add_child(popup)
+		var _err = popup.connect("popup_hide", popup, "queue_free", [], CONNECT_ONESHOT)
+		popup.popup_centered_ratio(0.91)
 	elif id == ABOUT:
-		if about_popup == null:
-			about_popup = load("res://mainUI/AboutPopup.tscn").instance()
-			add_child(about_popup)
-		about_popup.popup_centered()
+		if not AboutPopup:
+			AboutPopup = load("res://mainUI/AboutPopup.tscn")
+		var popup: Popup = AboutPopup.instance()
+		add_child(popup)
+		var _err = popup.connect("popup_hide", popup, "queue_free", [], CONNECT_ONESHOT)
+		popup.popup_centered()
