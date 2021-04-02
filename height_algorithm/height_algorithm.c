@@ -4,6 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #include <gdnative_api_struct.gen.h>
+#include <string.h>
 #include <stdlib.h>
 
 const godot_gdnative_core_api_struct *api = NULL;
@@ -242,6 +243,35 @@ static GDCALLINGCONV godot_variant fill_normalmap(godot_object *p_instance, void
     return ret;
 }
 
+static GDCALLINGCONV godot_variant pool_real_to_byte(godot_object *p_instance, void *p_method_data,
+        void *p_user_data, int argc, godot_variant **argv) {
+    godot_pool_real_array real_array = api->godot_variant_as_pool_real_array(argv[0]);
+    godot_pool_real_array_read_access *real_read_access = api->godot_pool_real_array_read(&real_array);
+
+    // create byte array
+    godot_int real_size = api->godot_pool_real_array_size(&real_array);
+    size_t byte_size = real_size * sizeof(godot_real); 
+    
+    godot_pool_byte_array byte_array;
+    api->godot_pool_byte_array_new(&byte_array);
+    api->godot_pool_byte_array_resize(&byte_array, byte_size);
+    godot_pool_byte_array_write_access *byte_write_access = api->godot_pool_byte_array_write(&byte_array);
+
+    // copy memory
+    void *dst = api->godot_pool_byte_array_write_access_ptr(byte_write_access);
+    const void *src = api->godot_pool_real_array_read_access_ptr(real_read_access);
+    memcpy(dst, src, byte_size);
+
+    // cleanup
+    api->godot_pool_byte_array_write_access_destroy(byte_write_access);
+    api->godot_pool_real_array_read_access_destroy(real_read_access);
+    api->godot_pool_real_array_destroy(&real_array);
+
+    godot_variant result;
+    api->godot_variant_new_pool_byte_array(&result, &byte_array);
+    return result;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // API initialization
 ///////////////////////////////////////////////////////////////////////////////
@@ -306,4 +336,11 @@ GDN_EXPORT void godot_nativescript_init(void *p_handle) {
         (godot_method_attributes){ GODOT_METHOD_RPC_MODE_DISABLED },
         (godot_instance_method){ &fill_normalmap, NULL, NULL }
     );
+
+    nativescript_api->godot_nativescript_register_method(
+        p_handle, "HeightAlgorithm_native", "pool_real_to_byte",
+        (godot_method_attributes){ GODOT_METHOD_RPC_MODE_DISABLED },
+        (godot_instance_method){ &pool_real_to_byte, NULL, NULL }
+    );
+
 }

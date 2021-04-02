@@ -50,8 +50,8 @@ func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 	height_map_rect.rect_size = size
 	height_to_normal_material.set_shader_param("bump_scale", min(size.x, size.y))
 	if is_gles3:
-		height_map_image.create(size.x, size.y, false, Image.FORMAT_RF)
-		HeightAlgorithm.fill_height_image(height_map_image, project.height_data.height_array)
+		var data = project.height_algorithm.pool_real_to_byte(project.height_data.height_array)
+		height_map_image.create_from_data(size.x, size.y, false, Image.FORMAT_RF, data)
 	else:
 		project.height_data.fill_image(height_map_image)
 	height_map_texture.create_from_image(height_map_image, 0)
@@ -61,7 +61,8 @@ func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 
 func _on_operation_applied(operation, height_data: HeightMapData) -> void:
 	if is_gles3:
-		HeightAlgorithm.fill_height_image(height_map_image, height_data.height_array)
+		var data = project.height_algorithm.pool_real_to_byte(height_data.height_array)
+		height_map_image.create_from_data(size.x, size.y, false, Image.FORMAT_RF, data)
 	else:
 		height_data.fill_image(height_map_image)
 	height_map_texture.set_data(height_map_image)

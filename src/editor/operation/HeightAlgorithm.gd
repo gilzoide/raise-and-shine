@@ -52,10 +52,8 @@ func fill_normalmap(height_array: PoolRealArray, normalmap: Image, rect: Rect2) 
 	normalmap.unlock()
 
 
-static func fill_height_image(image: Image, height_array: PoolRealArray) -> void:
-	var size = image.get_size()
-	assert(height_array.size() == size.x * size.y, "Image is incompatible with height array!")
+func pool_real_to_byte(real_array: PoolRealArray) -> PoolByteArray:
 	var stream_peer = StreamPeerBuffer.new()
-	for height in height_array:
+	for height in real_array.size():
 		stream_peer.put_float(height)
-	image.create_from_data(size.x, size.y, false, Image.FORMAT_RF, stream_peer.data_array)
+	return stream_peer.data_array
