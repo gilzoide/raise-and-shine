@@ -22,7 +22,8 @@ export(float) var plane_subdivide_scale = 1
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_vectors_enabled
 
-var albedo_size: Vector2
+var _albedo_size: Vector2
+var _height_size: Vector2
 onready var plate = $Plate
 onready var plane_mesh_instance = $Plate/Model
 onready var quad_mesh_instance = $Plate/QuadModel
@@ -44,12 +45,16 @@ func _ready() -> void:
 
 
 func _on_albedo_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
-	albedo_size = texture.get_size()
-	if albedo_size.x > albedo_size.y:
+	var new_size = texture.get_size()
+	if new_size.is_equal_approx(_albedo_size):
+		return
+	
+	_albedo_size = new_size
+	if new_size.x > new_size.y:
 		plane_size.x = initial_plane_size.x
-		plane_size.y = initial_plane_size.y / albedo_size.aspect()
+		plane_size.y = initial_plane_size.y / new_size.aspect()
 	else:
-		plane_size.x = initial_plane_size.x * albedo_size.aspect()
+		plane_size.x = initial_plane_size.x * new_size.aspect()
 		plane_size.y = initial_plane_size.y
 	
 	border.setup_with_plane_size(plane_size)
@@ -61,10 +66,14 @@ func _on_albedo_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 
 
 func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
-	var size = texture.get_size()
+	var new_size = texture.get_size()
+	if new_size.is_equal_approx(_height_size):
+		return
+	
+	_height_size = new_size
 	var plane_mesh = PlaneMesh.new()
-	plane_mesh.subdivide_width = size.x * plane_subdivide_scale
-	plane_mesh.subdivide_depth = size.y * plane_subdivide_scale
+	plane_mesh.subdivide_width = new_size.x * plane_subdivide_scale
+	plane_mesh.subdivide_depth = new_size.y * plane_subdivide_scale
 	plane_mesh.size = plane_size
 	plane_mesh_instance.mesh = plane_mesh
 	
@@ -72,7 +81,7 @@ func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 	quad_mesh.size = plane_size
 	quad_mesh_instance.mesh = quad_mesh
 	
-	normal_vectors.set_map_size(size)
+	normal_vectors.set_map_size(new_size)
 
 
 func get_light_nodes() -> Array:
@@ -125,7 +134,7 @@ func _on_Plate_mouse_exited() -> void:
 
 
 func take_screenshot() -> void:
-	screenshot_viewport.size = albedo_size
+	screenshot_viewport.size = _albedo_size
 	screenshot_camera.size = plane_size.y
 	screenshot_viewport.render_target_update_mode = Viewport.UPDATE_ONCE
 	yield(VisualServer, "frame_post_draw")
