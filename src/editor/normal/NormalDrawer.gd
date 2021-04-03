@@ -76,7 +76,7 @@ func _on_operation_ended(operation, height_data: HeightMapData) -> void:
 	else:
 		var changed_rect = operation.cached_rect.grow(1).clip(Rect2(Vector2.ZERO, size))
 		project.height_algorithm.fill_normalmap(height_data.height_array, project.normal_image, changed_rect)
-		project.normal_texture.set_data(project.normal_image)
+		project.normal_texture.create_from_image(project.normal_image, project.normal_texture.flags)
 		_on_normal_texture_changed(project.normal_texture)
 
 
