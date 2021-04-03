@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://changelog/ChangelogVersion.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+build_number = 1
+date = "2021-04-03"
+description = "Welcome to open beta!"
+added = PoolStringArray(  )
+changed = PoolStringArray(  )
+fixed = PoolStringArray(  )
+removed = PoolStringArray(  )

@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://fonts/DroidSans_32.tres" type="DynamicFont" id=1]
-[ext_resource path="res://help/OnboardingTabWelcome.tscn" type="PackedScene" id=2]
+[ext_resource path="res://help/OnboardingTabNews.tscn" type="PackedScene" id=2]
 [ext_resource path="res://help/OnboardingTabSelecting.tscn" type="PackedScene" id=3]
 [ext_resource path="res://mainUI/TabContainerNextPrevious.gd" type="Script" id=4]
 [ext_resource path="res://help/OnboardingWindow.gd" type="Script" id=5]
@@ -22,7 +22,7 @@ __meta__ = {
 }
 
 [node name="Center" type="HBoxContainer" parent="."]
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 572.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -38,7 +38,7 @@ flat = true
 
 [node name="Slides" type="TabContainer" parent="Center"]
 margin_left = 34.0
-margin_right = 766.0
+margin_right = 990.0
 margin_bottom = 572.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -47,7 +47,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Welcome" parent="Center/Slides" instance=ExtResource( 2 )]
+[node name="News" parent="Center/Slides" instance=ExtResource( 2 )]
 margin_top = 39.0
 
 [node name="Select" parent="Center/Slides" instance=ExtResource( 3 )]
@@ -67,8 +67,8 @@ visible = false
 margin_top = 39.0
 
 [node name="RightButton" type="Button" parent="Center"]
-margin_left = 770.0
-margin_right = 800.0
+margin_left = 994.0
+margin_right = 1024.0
 margin_bottom = 572.0
 focus_mode = 0
 custom_fonts/font = ExtResource( 1 )
@@ -78,7 +78,7 @@ flat = true
 
 [node name="Footer" type="Control" parent="."]
 margin_top = 576.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 0, 24 )
 
