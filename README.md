@@ -4,7 +4,8 @@ Height map editor with automatic Normal map generation for 2D textures.
 It counts with a 3D visualization of the height and dynamic lighting preview,
 making it super easy to create normal maps.
 
-Made with [Godot](https://godotengine.org/), to be launched soon!
+Made with [Godot](https://godotengine.org/), currently on open beta!
+Run it on you browser: https://gilzoide.itch.io/raise-and-shine
 
 ![Pixel art wink face with a rounded height map](screenshots/wink-lit.png)
 ![](screenshots/lights-up.gif)
