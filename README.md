@@ -13,5 +13,5 @@ Made with [Godot](https://godotengine.org/), to be launched soon!
 ### Credits
 - **P1_2** texture from Heayale Heale: https://github.com/Artars/HeayaleHeale
 - Several icons from Material Design Icons: https://github.com/Templarian/MaterialDesign
-- **Libre Baskerville** font by Pablo Impallari: https://www.fontspace.com/libre-baskerville-font-f15705
 - **Noto Sans** font by Google: https://www.fontspace.com/noto-sans-font-f22281
+- **Roboto** font by Christian Robertson: https://fonts.google.com/specimen/Roboto
