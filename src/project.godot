@@ -84,6 +84,8 @@ config/name="Raise and Shine"
 config/description="Edit height maps and generate normal maps for 2D sprites"
 run/main_scene="res://mainUI/Main.tscn"
 config/icon="res://icon.png"
+config/macos_native_icon="res://icon.icns"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
