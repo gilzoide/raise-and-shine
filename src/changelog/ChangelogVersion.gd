@@ -14,7 +14,7 @@ const BBCODE_FMT = """
 
 export(int) var build_number = CURRENT_VERSION
 export(String) var date = DATE_FMT.format(OS.get_date())
-export(String) var description = ""
+export(String, MULTILINE) var description = ""
 export(PoolStringArray) var added = PoolStringArray()
 export(PoolStringArray) var changed = PoolStringArray()
 export(PoolStringArray) var fixed = PoolStringArray()

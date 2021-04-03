@@ -6,7 +6,13 @@
 script = ExtResource( 1 )
 build_number = 1
 date = "2021-04-03"
-description = "Welcome to open beta!"
+description = "Welcome to open beta!
+
+We hope you enjoy Raise and Shine as much as we enjoy making it! =D
+
+Feel free to to post [url=https://itch.io/t/1299103/ideas-and-suggestions-]ideas and suggestions[/url], [url=https://itch.io/t/1299126/bug-tracker-]bug reports[/url] and
+[url=https://itch.io/t/1299149/show-your-creation-]share your creations[/url] at our [url=https://gilzoide.itch.io/raise-and-shine/community]discussion board[/url]!
+"
 added = PoolStringArray(  )
 changed = PoolStringArray(  )
 fixed = PoolStringArray(  )
