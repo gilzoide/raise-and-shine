@@ -5,11 +5,9 @@
 extends MenuButton
 
 enum {
-	TOGGLE_VIEW_ALBEDO,
-	TOGGLE_VIEW_HEIGHT,
-	TOGGLE_VIEW_NORMAL,
-	TOGGLE_VIEW_2D,
-	TOGGLE_VIEW_3D,
+	FILTER_ALBEDO,
+	FILTER_HEIGHT,
+	FILTER_NORMAL,
 	_SEPARATOR_0,
 	TOGGLE_ALBEDO,
 	TOGGLE_HEIGHT,
@@ -23,34 +21,20 @@ enum {
 	ALBEDO_FROM_NORMAL,
 }
 
-export(NodePath) var visualizer_grid_path: NodePath
 export(ShaderMaterial) var plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
 export(ShaderMaterial) var quad_material = preload("res://editor/visualizers/3D/Quad_material.tres")
-onready var visualizer_grid = get_node(visualizer_grid_path)
 onready var menu_popup = get_popup()
 
 
 func _ready() -> void:
 	menu_popup.hide_on_checkable_item_selection = false
-	menu_popup.add_check_item("Show albedo map", TOGGLE_VIEW_ALBEDO)
-	menu_popup.set_item_checked(TOGGLE_VIEW_ALBEDO, true)
-	menu_popup.set_item_shortcut(TOGGLE_VIEW_ALBEDO, preload("res://shortcuts/ToggleViewAlbedo_shortcut.tres"))
 	
-	menu_popup.add_check_item("Show height map", TOGGLE_VIEW_HEIGHT)
-	menu_popup.set_item_checked(TOGGLE_VIEW_HEIGHT, true)
-	menu_popup.set_item_shortcut(TOGGLE_VIEW_HEIGHT, preload("res://shortcuts/ToggleViewHeight_shortcut.tres"))
-	
-	menu_popup.add_check_item("Show normal map", TOGGLE_VIEW_NORMAL)
-	menu_popup.set_item_checked(TOGGLE_VIEW_NORMAL, true)
-	menu_popup.set_item_shortcut(TOGGLE_VIEW_NORMAL, preload("res://shortcuts/ToggleViewNormal_shortcut.tres"))
-	
-	menu_popup.add_check_item("Show 2D visualizer", TOGGLE_VIEW_2D)
-	menu_popup.set_item_checked(TOGGLE_VIEW_2D, true)
-	menu_popup.set_item_shortcut(TOGGLE_VIEW_2D, preload("res://shortcuts/ToggleView2D_shortcut.tres"))
-	
-	menu_popup.add_check_item("Show 3D visualizer", TOGGLE_VIEW_3D)
-	menu_popup.set_item_checked(TOGGLE_VIEW_3D, true)
-	menu_popup.set_item_shortcut(TOGGLE_VIEW_3D, preload("res://shortcuts/ToggleView3D_shortcut.tres"))
+	menu_popup.add_check_item("Filter albedo map", FILTER_ALBEDO)
+	update_filter_map_check_item(FILTER_ALBEDO, MapTypes.Type.ALBEDO_MAP)
+	menu_popup.add_check_item("Filter height map", FILTER_HEIGHT)
+	update_filter_map_check_item(FILTER_HEIGHT, MapTypes.Type.HEIGHT_MAP)
+	menu_popup.add_check_item("Filter normal map", FILTER_NORMAL)
+	update_filter_map_check_item(FILTER_NORMAL, MapTypes.Type.NORMAL_MAP)
 	
 	menu_popup.add_separator()  # _SEPARATOR_0
 	
@@ -87,26 +71,12 @@ func _ready() -> void:
 
 
 func _on_menu_popup_id_pressed(id: int) -> void:
-	if id == TOGGLE_VIEW_ALBEDO:
-		var is_visible = menu_popup.is_item_checked(TOGGLE_VIEW_ALBEDO)
-		visualizer_grid.set_albedo_visible(not is_visible)
-		menu_popup.set_item_checked(TOGGLE_VIEW_ALBEDO, not is_visible)
-	elif id == TOGGLE_VIEW_HEIGHT:
-		var is_visible = menu_popup.is_item_checked(TOGGLE_VIEW_HEIGHT)
-		visualizer_grid.set_height_visible(not is_visible)
-		menu_popup.set_item_checked(TOGGLE_VIEW_HEIGHT, not is_visible)
-	elif id == TOGGLE_VIEW_NORMAL:
-		var is_visible = menu_popup.is_item_checked(TOGGLE_VIEW_NORMAL)
-		visualizer_grid.set_normal_visible(not is_visible)
-		menu_popup.set_item_checked(TOGGLE_VIEW_NORMAL, not is_visible)
-	elif id == TOGGLE_VIEW_2D:
-		var is_visible = menu_popup.is_item_checked(TOGGLE_VIEW_2D)
-		visualizer_grid.set_2d_visible(not is_visible)
-		menu_popup.set_item_checked(TOGGLE_VIEW_2D, not is_visible)
-	elif id == TOGGLE_VIEW_3D:
-		var is_visible = menu_popup.is_item_checked(TOGGLE_VIEW_3D)
-		visualizer_grid.set_3d_visible(not is_visible)
-		menu_popup.set_item_checked(TOGGLE_VIEW_3D, not is_visible)
+	if id == FILTER_ALBEDO:
+		toggle_filter_map(FILTER_ALBEDO, MapTypes.Type.ALBEDO_MAP)
+	elif id == FILTER_HEIGHT:
+		toggle_filter_map(FILTER_HEIGHT, MapTypes.Type.HEIGHT_MAP)
+	elif id == FILTER_NORMAL:
+		toggle_filter_map(FILTER_NORMAL, MapTypes.Type.NORMAL_MAP)
 	elif id == TOGGLE_ALBEDO:
 		var value = not plane_material.get_shader_param("use_albedo")
 		plane_material.set_shader_param("use_albedo", value)
@@ -144,6 +114,19 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		plane_material.set_shader_param("albedo_source", 2)
 		quad_material.set_shader_param("albedo_source", 2)
 		update_albedo_from_check_items()
+
+
+func toggle_filter_map(id: int, maptype: int) -> void:
+	var maps = MapTypes.map_textures(maptype)
+	for m in maps:
+		m.flags ^= Texture.FLAG_FILTER
+	update_filter_map_check_item(id, maptype)
+
+
+func update_filter_map_check_item(id: int, maptype: int) -> void:
+	var maps = MapTypes.map_textures(maptype)
+	menu_popup.set_item_checked(id, bool(maps[0].flags & Texture.FLAG_FILTER))
+
 
 func update_albedo_check_item() -> void:
 	menu_popup.set_item_checked(TOGGLE_ALBEDO, plane_material.get_shader_param("use_albedo"))

@@ -1,7 +1,7 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
-[ext_resource path="res://editor/VisualizerGrid.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/dockable_container/dockable_container.gd" type="Script" id=2]
 [ext_resource path="res://mainUI/UI_theme.tres" type="Theme" id=3]
 [ext_resource path="res://editor/inspector/LightInspector.tscn" type="PackedScene" id=4]
 [ext_resource path="res://mainUI/HelpMenuButton.gd" type="Script" id=5]
@@ -12,6 +12,73 @@
 [ext_resource path="res://mainUI/ViewMenuButton.gd" type="Script" id=10]
 [ext_resource path="res://textures/UndoToolIcon.svg" type="Texture" id=11]
 [ext_resource path="res://mainUI/ToolButtonPresentation.gd" type="Script" id=12]
+[ext_resource path="res://addons/dockable_container/layout_panel.gd" type="Script" id=13]
+[ext_resource path="res://addons/dockable_container/layout_split.gd" type="Script" id=14]
+[ext_resource path="res://editor/visualizers/3D/PerspectiveVisualizer.tscn" type="PackedScene" id=15]
+[ext_resource path="res://editor/visualizers/2D/OrthogonalVisualizer.tscn" type="PackedScene" id=16]
+[ext_resource path="res://editor/TextureSlot.tscn" type="PackedScene" id=17]
+
+[sub_resource type="Resource" id=1]
+resource_name = "Tabs"
+script = ExtResource( 13 )
+names = PoolStringArray( "2D", "3D" )
+current_tab = 0
+
+[sub_resource type="Resource" id=4]
+resource_name = "Tabs"
+script = ExtResource( 13 )
+names = PoolStringArray( "Lights", "History" )
+current_tab = 0
+
+[sub_resource type="Resource" id=5]
+resource_name = "Split"
+script = ExtResource( 14 )
+split = 2
+percent = 0.773885
+first = SubResource( 1 )
+second = SubResource( 4 )
+
+[sub_resource type="Resource" id=6]
+resource_name = "Tabs"
+script = ExtResource( 13 )
+names = PoolStringArray( "Albedo" )
+current_tab = 0
+
+[sub_resource type="Resource" id=7]
+resource_name = "Tabs"
+script = ExtResource( 13 )
+names = PoolStringArray( "Height" )
+current_tab = 0
+
+[sub_resource type="Resource" id=8]
+resource_name = "Tabs"
+script = ExtResource( 13 )
+names = PoolStringArray( "Normal" )
+current_tab = 0
+
+[sub_resource type="Resource" id=9]
+resource_name = "Split"
+script = ExtResource( 14 )
+split = 3
+percent = 0.5
+first = SubResource( 7 )
+second = SubResource( 8 )
+
+[sub_resource type="Resource" id=10]
+resource_name = "Split"
+script = ExtResource( 14 )
+split = 3
+percent = 0.333
+first = SubResource( 6 )
+second = SubResource( 9 )
+
+[sub_resource type="Resource" id=11]
+resource_name = "Split"
+script = ExtResource( 14 )
+split = 0
+percent = 0.207589
+first = SubResource( 5 )
+second = SubResource( 10 )
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -71,7 +138,6 @@ margin_bottom = 44.0
 text = "View"
 switch_on_hover = true
 script = ExtResource( 10 )
-visualizer_grid_path = NodePath("../../WorkbenchPanel/HSplitContainer/VisualizerGrid")
 
 [node name="HelpMenuButton" type="MenuButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 125.0
@@ -108,7 +174,7 @@ script = ExtResource( 12 )
 margin_left = 347.0
 margin_right = 918.0
 
-[node name="WorkbenchPanel" type="Control" parent="MainPanel/VBoxContainer"]
+[node name="WorkbenchPanel" type="Container" parent="MainPanel/VBoxContainer"]
 margin_top = 44.0
 margin_right = 1024.0
 margin_bottom = 600.0
@@ -116,39 +182,51 @@ mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 3 )
+script = ExtResource( 2 )
+layout = SubResource( 11 )
 
-[node name="HSplitContainer" type="HSplitContainer" parent="MainPanel/VBoxContainer/WorkbenchPanel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VisualizerGrid" parent="MainPanel/VBoxContainer/WorkbenchPanel/HSplitContainer" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 847.0
-margin_bottom = 556.0
-size_flags_horizontal = 3
-split_offset = -20
-
-[node name="TabContainer" type="TabContainer" parent="MainPanel/VBoxContainer/WorkbenchPanel/HSplitContainer"]
-margin_left = 859.0
-margin_right = 1024.0
-margin_bottom = 556.0
-rect_min_size = Vector2( 165, 0 )
-drag_to_rearrange_enabled = true
-
-[node name="Lights" parent="MainPanel/VBoxContainer/WorkbenchPanel/HSplitContainer/TabContainer" instance=ExtResource( 4 )]
+[node name="Albedo" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
 margin_left = 4.0
+margin_top = 32.0
+margin_right = -774.0
+margin_bottom = -380.852
+
+[node name="Height" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
+margin_left = 4.0
+margin_top = 223.148
+margin_right = -774.0
+margin_bottom = -192.426
+type = 1
+
+[node name="Normal" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
+margin_left = 4.0
+margin_top = 411.574
+margin_right = -774.0
+margin_bottom = -4.0
+type = 2
+
+[node name="2D" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 16 )]
+margin_left = 270.0
+margin_top = 32.0
+margin_right = -181.395
+margin_bottom = -4.0
+
+[node name="3D" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 15 )]
+visible = false
+margin_left = 270.0
+margin_top = 32.0
+margin_right = -181.395
+margin_bottom = -4.0
+
+[node name="Lights" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 4 )]
+margin_left = 862.605
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="History" parent="MainPanel/VBoxContainer/WorkbenchPanel/HSplitContainer/TabContainer" instance=ExtResource( 8 )]
+[node name="History" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 8 )]
 visible = false
-margin_left = 4.0
+margin_left = 862.605
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0

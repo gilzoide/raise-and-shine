@@ -13,6 +13,7 @@ onready var viewport: Viewport = $ViewportContainer/Viewport
 onready var camera: Camera = $ViewportContainer/Viewport/Camera
 onready var zoom_slider = $ZoomSlider
 onready var camera_initial_transform: Transform = camera.transform
+var panning := false
 var dragging := false
 var current_zoom = 0
 var in_notification := false
@@ -30,19 +31,30 @@ func _gui_input(event: InputEvent) -> void:
 			set_pan_cursor()
 		else:
 			set_normal_cursor()
-	elif event is InputEventMouseButton:
-		if not event.is_pressed():
-			stop_panning()
-		elif event.button_index == BUTTON_MIDDLE or Input.is_action_pressed("visualizer_pan_modifier"):
-			start_panning()
-			return  # avoid passing this event to `viewport.unhandled_input`
-	if dragging and event is InputEventMouseMotion:
-		ControlExtras.wrap_mouse_motion_if_needed(self, event)
-		pan_by_mouse(event.relative, Input.is_action_pressed("visualizer_3d_faster"))
 	elif event.is_action_pressed("visualizer_reset"):
 		reset_camera()
-	else:
-		viewport.unhandled_input(event)
+	elif event is InputEventMouseButton:
+		if event.is_pressed():
+			if event.button_index == BUTTON_MIDDLE or Input.is_action_pressed("visualizer_pan_modifier"):
+				start_panning()
+				return  # avoid processing input in viewport
+			elif event.button_index == BUTTON_LEFT or event.button_index == BUTTON_RIGHT:
+				start_dragging(event.button_index)
+		else:
+			if panning:
+				stop_panning()
+			if dragging:
+				stop_dragging()
+	elif event is InputEventMouseMotion:
+		if panning:
+			ControlExtras.wrap_mouse_motion_if_needed(self, event)
+			pan_by_mouse(event.relative, Input.is_action_pressed("visualizer_3d_faster"))
+			return  # avoid processing input in viewport
+		if dragging:
+			ControlExtras.wrap_mouse_motion_if_needed(self, event)
+			selection.set_drag_hovering(event.relative, PhotoBooth.last_hovered_uv)
+	viewport.unhandled_input(event)
+	
 
 
 func pan_by_mouse(relative: Vector2, faster: bool = false) -> void:
@@ -51,7 +63,7 @@ func pan_by_mouse(relative: Vector2, faster: bool = false) -> void:
 
 
 func start_panning() -> void:
-	dragging = true
+	panning = true
 	grab_focus()
 	set_pan_cursor()
 	if OS.get_name() != "HTML5":
@@ -61,13 +73,29 @@ func start_panning() -> void:
 
 
 func stop_panning() -> void:
-	dragging = false
+	panning = false
 	set_normal_cursor()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
+func start_dragging(button_index: int) -> void:
+	dragging = true
+	set_drag_cursor()
+	selection.set_drag_operation_started(button_index, PhotoBooth.last_hovered_uv)
+
+
+func stop_dragging() -> void:
+	dragging = false
+	set_normal_cursor()
+	selection.set_drag_operation_ended()
+
+
 func set_pan_cursor() -> void:
 	ControlExtras.set_cursor(self, Control.CURSOR_MOVE, not in_notification)
+
+
+func set_drag_cursor() -> void:
+	ControlExtras.set_cursor(self, selection.get_cursor_for_active_tool(), not in_notification)
 
 
 func set_normal_cursor() -> void:

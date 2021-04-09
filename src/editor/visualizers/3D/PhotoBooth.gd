@@ -4,10 +4,6 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Spatial
 
-signal drag_started(button_index, uv)
-signal drag_moved(relative_motion, uv)
-signal drag_ended()
-
 const project = preload("res://editor/project/ActiveEditorProject.tres")
 const history = preload("res://editor/undo/UndoHistory.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
@@ -21,6 +17,7 @@ export(float) var plane_subdivide_scale = 1
 
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_vectors_enabled
+var last_hovered_uv: Vector2
 
 var _albedo_size: Vector2
 var _height_size: Vector2
@@ -111,26 +108,13 @@ func get_normal_vectors_enabled() -> bool:
 
 
 func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	if event is InputEventMouseButton and (event.button_index == BUTTON_LEFT or event.button_index == BUTTON_RIGHT) and not event.is_echo():
-		if event.is_pressed():
-			emit_signal("drag_started", event.button_index, click_position_to_uv(click_position))
-		else:
-			stop_dragging()
-	elif event is InputEventMouseMotion:
-		emit_signal("drag_moved", event.relative, click_position_to_uv(click_position))
+	if event is InputEventMouse:
+		last_hovered_uv = click_position_to_uv(click_position)
 
 
 func click_position_to_uv(click_position: Vector3) -> Vector2:
 	var local_click_position = plate.to_local(click_position)
 	return Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
-
-
-func stop_dragging() -> void:
-	emit_signal("drag_ended")
-
-
-func _on_Plate_mouse_exited() -> void:
-	stop_dragging()
 
 
 func take_screenshot() -> void:

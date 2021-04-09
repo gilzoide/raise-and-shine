@@ -9,12 +9,12 @@
 [ext_resource path="res://editor/visualizers/3D/UnshadedVerticesAlbedo_material.tres" type="Material" id=8]
 [ext_resource path="res://editor/visualizers/3D/PlateBorder.gd" type="Script" id=9]
 
-[sub_resource type="QuadMesh" id=2]
+[sub_resource type="QuadMesh" id=1]
 size = Vector2( 128, 128 )
 
-[sub_resource type="ArrayMesh" id=3]
+[sub_resource type="ArrayMesh" id=2]
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="BoxShape" id=3]
 extents = Vector3( 1024, 0.1, 1024 )
 
 [node name="PhotoBooth" type="Spatial"]
@@ -33,7 +33,7 @@ layers = 12
 material_override = ExtResource( 6 )
 cast_shadow = 0
 generate_lightmap = false
-mesh = SubResource( 2 )
+mesh = SubResource( 1 )
 skeleton = NodePath("")
 software_skinning_transform_normals = false
 material/0 = null
@@ -42,13 +42,13 @@ material/0 = null
 material_override = ExtResource( 8 )
 cast_shadow = 0
 generate_lightmap = false
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 skeleton = NodePath("")
 software_skinning_transform_normals = false
 script = ExtResource( 9 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Plate"]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="Lights" type="Spatial" parent="."]
 
@@ -77,4 +77,3 @@ size = 150.0
 far = 200.0
 
 [connection signal="input_event" from="Plate" to="." method="_on_Plate_input_event"]
-[connection signal="mouse_exited" from="Plate" to="." method="_on_Plate_mouse_exited"]
