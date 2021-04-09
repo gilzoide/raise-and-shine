@@ -6,10 +6,15 @@ extends MenuButton
 
 enum {
 	LOAD,
+	_SEPARATOR_0,
+	LOAD_HEIGHT,
+	LOAD_NORMAL,
+	_SEPARATOR_1,
+	EXPORT_ALBEDO,
 	EXPORT_HEIGHT,
 	EXPORT_NORMAL,
 	EXPORT_LIT,
-	_SEPARATOR_0,
+	_SEPARATOR_2,
 	QUIT,
 }
 
@@ -24,6 +29,15 @@ func _ready() -> void:
 	Open image to be used as albedo.
 	Empty height and normal maps will be created with the same dimensions as the loaded image.
 	""")
+	
+	popup.add_separator()  # _SEPARATOR_0
+	
+	popup.add_item("Load height map", LOAD_HEIGHT)
+	popup.add_item("Load normal map", LOAD_NORMAL)
+	
+	popup.add_separator()  # _SEPARATOR_1
+	
+	popup.add_item("Export albedo map", EXPORT_ALBEDO)
 	popup.add_item("Export height map", EXPORT_HEIGHT)
 	popup.add_item("Export normal map", EXPORT_NORMAL)
 	popup.add_item("Export illuminated texture", EXPORT_LIT)
@@ -32,7 +46,7 @@ func _ready() -> void:
 	""")
 	
 	if OS.get_name() != "HTML5":
-		popup.add_separator()
+		popup.add_separator()  # _SEPARATOR_2
 		popup.add_item("Quit", QUIT)
 		popup.set_item_shortcut(QUIT, load("res://shortcuts/Quit_shortcut.tres"))
 		popup.set_item_tooltip(QUIT, "Quit the application.")
@@ -42,6 +56,12 @@ func _ready() -> void:
 func _on_item_pressed(id: int) -> void:
 	if id == LOAD:
 		project.load_project_dialog()
+	elif id == LOAD_HEIGHT:
+		project.load_image_dialog(MapTypes.Type.HEIGHT_MAP)
+	elif id == LOAD_NORMAL:
+		project.load_image_dialog(MapTypes.Type.NORMAL_MAP)
+	elif id == EXPORT_ALBEDO:
+		project.save_image_dialog_type(MapTypes.Type.ALBEDO_MAP)
 	elif id == EXPORT_HEIGHT:
 		project.save_image_dialog_type(MapTypes.Type.HEIGHT_MAP)
 	elif id == EXPORT_NORMAL:
