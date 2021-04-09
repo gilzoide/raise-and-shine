@@ -4,7 +4,7 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends "res://editor/visualizers/VisualizerContainer.gd"
 
-export(float) var min_zoom_distance: float = 128
+export(float) var min_zoom_distance: float = 200
 export(float) var max_zoom_distance: float = 4
 export(Vector2) var initial_pan = Vector2(0, -80)
 

@@ -33,7 +33,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150 )
 cull_mask = 1048567
 projection = 1
 current = true
-size = 150.0
+size = 200.0
 far = 200.0
 
 [node name="ZoomSlider" type="VSlider" parent="."]
