@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://addons/dockable_container/dockable_container.gd" type="Script" id=2]
@@ -12,73 +12,10 @@
 [ext_resource path="res://mainUI/ViewMenuButton.gd" type="Script" id=10]
 [ext_resource path="res://textures/UndoToolIcon.svg" type="Texture" id=11]
 [ext_resource path="res://mainUI/ToolButtonPresentation.gd" type="Script" id=12]
-[ext_resource path="res://addons/dockable_container/layout_panel.gd" type="Script" id=13]
-[ext_resource path="res://addons/dockable_container/layout_split.gd" type="Script" id=14]
+[ext_resource path="res://mainUI/DefaultLayout.tres" type="Resource" id=13]
 [ext_resource path="res://editor/visualizers/3D/PerspectiveVisualizer.tscn" type="PackedScene" id=15]
 [ext_resource path="res://editor/visualizers/2D/OrthogonalVisualizer.tscn" type="PackedScene" id=16]
 [ext_resource path="res://editor/TextureSlot.tscn" type="PackedScene" id=17]
-
-[sub_resource type="Resource" id=1]
-resource_name = "Tabs"
-script = ExtResource( 13 )
-names = PoolStringArray( "2D", "3D" )
-current_tab = 0
-
-[sub_resource type="Resource" id=4]
-resource_name = "Tabs"
-script = ExtResource( 13 )
-names = PoolStringArray( "Lights", "History" )
-current_tab = 0
-
-[sub_resource type="Resource" id=5]
-resource_name = "Split"
-script = ExtResource( 14 )
-split = 2
-percent = 0.773885
-first = SubResource( 1 )
-second = SubResource( 4 )
-
-[sub_resource type="Resource" id=6]
-resource_name = "Tabs"
-script = ExtResource( 13 )
-names = PoolStringArray( "Albedo" )
-current_tab = 0
-
-[sub_resource type="Resource" id=7]
-resource_name = "Tabs"
-script = ExtResource( 13 )
-names = PoolStringArray( "Height" )
-current_tab = 0
-
-[sub_resource type="Resource" id=8]
-resource_name = "Tabs"
-script = ExtResource( 13 )
-names = PoolStringArray( "Normal" )
-current_tab = 0
-
-[sub_resource type="Resource" id=9]
-resource_name = "Split"
-script = ExtResource( 14 )
-split = 3
-percent = 0.5
-first = SubResource( 7 )
-second = SubResource( 8 )
-
-[sub_resource type="Resource" id=10]
-resource_name = "Split"
-script = ExtResource( 14 )
-split = 3
-percent = 0.333
-first = SubResource( 6 )
-second = SubResource( 9 )
-
-[sub_resource type="Resource" id=11]
-resource_name = "Split"
-script = ExtResource( 14 )
-split = 0
-percent = 0.207589
-first = SubResource( 5 )
-second = SubResource( 10 )
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -183,50 +120,50 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 3 )
 script = ExtResource( 2 )
-layout = SubResource( 11 )
+use_hidden_tabs_for_min_size = true
+layout = ExtResource( 13 )
 
 [node name="Albedo" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
 margin_left = 4.0
 margin_top = 32.0
-margin_right = -774.0
+margin_right = -872.725
 margin_bottom = -380.852
 
 [node name="Height" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
 margin_left = 4.0
 margin_top = 223.148
-margin_right = -774.0
+margin_right = -872.725
 margin_bottom = -192.426
 type = 1
 
 [node name="Normal" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
 margin_left = 4.0
 margin_top = 411.574
-margin_right = -774.0
+margin_right = -872.725
 margin_bottom = -4.0
 type = 2
 
 [node name="2D" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 16 )]
-margin_left = 270.0
+margin_left = 171.275
 margin_top = 32.0
-margin_right = -181.395
-margin_bottom = -4.0
+margin_right = -200.816
+margin_bottom = -288.0
 
 [node name="3D" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 15 )]
-visible = false
-margin_left = 270.0
-margin_top = 32.0
-margin_right = -181.395
+margin_left = 171.275
+margin_top = 316.0
+margin_right = -200.816
 margin_bottom = -4.0
 
 [node name="Lights" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 4 )]
-margin_left = 862.605
+margin_left = 843.184
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="History" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 8 )]
 visible = false
-margin_left = 862.605
+margin_left = 843.184
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0

@@ -1,0 +1,77 @@
+[gd_resource type="Resource" load_steps=13 format=2]
+
+[ext_resource path="res://addons/dockable_container/layout_panel.gd" type="Script" id=1]
+[ext_resource path="res://addons/dockable_container/layout_split.gd" type="Script" id=2]
+
+[sub_resource type="Resource" id=1]
+resource_name = "Tabs"
+script = ExtResource( 1 )
+names = PoolStringArray( "Albedo" )
+current_tab = 0
+
+[sub_resource type="Resource" id=2]
+resource_name = "Tabs"
+script = ExtResource( 1 )
+names = PoolStringArray( "Height" )
+current_tab = 0
+
+[sub_resource type="Resource" id=3]
+resource_name = "Tabs"
+script = ExtResource( 1 )
+names = PoolStringArray( "Normal" )
+current_tab = 0
+
+[sub_resource type="Resource" id=4]
+resource_name = "Split"
+script = ExtResource( 2 )
+direction = 1
+percent = 0.5
+first = SubResource( 2 )
+second = SubResource( 3 )
+
+[sub_resource type="Resource" id=5]
+resource_name = "Split"
+script = ExtResource( 2 )
+direction = 1
+percent = 0.333
+first = SubResource( 1 )
+second = SubResource( 4 )
+
+[sub_resource type="Resource" id=6]
+resource_name = "Tabs"
+script = ExtResource( 1 )
+names = PoolStringArray( "2D" )
+current_tab = 0
+
+[sub_resource type="Resource" id=7]
+resource_name = "Tabs"
+script = ExtResource( 1 )
+names = PoolStringArray( "3D" )
+current_tab = 0
+
+[sub_resource type="Resource" id=8]
+resource_name = "Split"
+script = ExtResource( 2 )
+direction = 1
+percent = 0.5
+first = SubResource( 6 )
+second = SubResource( 7 )
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 1 )
+names = PoolStringArray( "Lights", "History" )
+current_tab = 0
+
+[sub_resource type="Resource" id=10]
+script = ExtResource( 2 )
+direction = 0
+percent = 0.777273
+first = SubResource( 8 )
+second = SubResource( 9 )
+
+[resource]
+script = ExtResource( 2 )
+direction = 0
+percent = 0.157495
+first = SubResource( 5 )
+second = SubResource( 10 )
