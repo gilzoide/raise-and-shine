@@ -19,11 +19,16 @@ enum {
 	ALBEDO_FROM_ALBEDO,
 	ALBEDO_FROM_HEIGHT,
 	ALBEDO_FROM_NORMAL,
+	_SEPARATOR_2,
+	LAYOUT_RESTORE_DEFAULT,
 }
 
 export(ShaderMaterial) var plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
 export(ShaderMaterial) var quad_material = preload("res://editor/visualizers/3D/Quad_material.tres")
+export(NodePath) var workbench_container_path
+
 onready var menu_popup = get_popup()
+onready var _workbench_panel = get_node(workbench_container_path)
 
 
 func _ready() -> void:
@@ -66,6 +71,9 @@ func _ready() -> void:
 	menu_popup.add_radio_check_item("Preview normal map", ALBEDO_FROM_NORMAL)
 	menu_popup.set_item_shortcut(ALBEDO_FROM_NORMAL, preload("res://shortcuts/AlbedoFromNormal_shortcut.tres"))
 	update_albedo_from_check_items()
+	
+	menu_popup.add_separator()  # _SEPARATOR_2
+	menu_popup.add_item("Restore default layout", LAYOUT_RESTORE_DEFAULT)
 	
 	menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
 
@@ -114,6 +122,9 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		plane_material.set_shader_param("albedo_source", 2)
 		quad_material.set_shader_param("albedo_source", 2)
 		update_albedo_from_check_items()
+	elif id == LAYOUT_RESTORE_DEFAULT:
+		var layout = ResourceLoader.load("res://mainUI/DefaultLayout.tres", "", true)
+		_workbench_panel.layout = layout.clone()
 
 
 func toggle_filter_map(id: int, maptype: int) -> void:
