@@ -120,7 +120,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 3 )
 script = ExtResource( 2 )
-use_hidden_tabs_for_min_size = true
 layout = ExtResource( 13 )
 
 [node name="Albedo" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]

@@ -58,11 +58,13 @@ first = SubResource( 6 )
 second = SubResource( 7 )
 
 [sub_resource type="Resource" id=9]
+resource_name = "Tabs"
 script = ExtResource( 1 )
 names = PoolStringArray( "Lights", "History" )
 current_tab = 0
 
 [sub_resource type="Resource" id=10]
+resource_name = "Split"
 script = ExtResource( 2 )
 direction = 0
 percent = 0.777273
@@ -70,6 +72,7 @@ first = SubResource( 8 )
 second = SubResource( 9 )
 
 [resource]
+resource_name = "Split"
 script = ExtResource( 2 )
 direction = 0
 percent = 0.157495
