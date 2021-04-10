@@ -23,7 +23,7 @@ func _ready() -> void:
 	menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
 	
 	settings.load_config()  # TODO: load config in a more appropriate place
-	if not settings.skip_onboarding_at_startup:
+	if not settings.should_skip_onboarding_at_startup():
 		_on_menu_popup_id_pressed(HELP)
 
 
