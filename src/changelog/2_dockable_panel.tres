@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 build_number = 2
 date = "2021-04-10"
-description = "It's customization time!
+description = "It's layout customization time!
 Now you can drag tabs and drop them inside other views to split them or drop them alongside other tabs to move them from panel to panel."
 added = PoolStringArray( "Custom UI layout with docking panels" )
 changed = PoolStringArray( "Increased zoom out range", "Increased light energy slider precision" )
