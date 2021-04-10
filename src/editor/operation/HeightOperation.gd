@@ -19,18 +19,19 @@ var cached_rect: Rect2
 var is_easing_dirty := false
 
 func _init() -> void:
-	var _err = bezier.connect("changed", self, "emit_changed")
+	var _err = bezier.connect("changed", self, "_on_bezier_changed")
 
 
 func set_direction(value: float) -> void:
 	is_easing_dirty = value != direction
 	direction = value
-	emit_changed()
+	emit_signal("changed")
 
 
 func set_flat(value: bool) -> void:
+	is_easing_dirty = value != is_flat
 	is_flat = value
-	emit_changed()
+	emit_signal("changed")
 
 
 func cache_target_from_selection(image: Image) -> void:
@@ -55,7 +56,9 @@ func cache_target_from_selection(image: Image) -> void:
 				max_y = max(y, max_y)
 	image.unlock()
 	cached_rect = Rect2(min_x, min_y, max_x - min_x + 1, max_y - min_y + 1)
-	if not is_flat:
+	if is_flat:
+		is_easing_dirty = false
+	else:
 		recalculate_easing()
 
 
@@ -93,3 +96,8 @@ static func get_direction_depth(normalized_delta: Vector2, curve: CubicBezierCur
 
 static func get_brush_depth(percent_from_highest: float, curve: CubicBezierCurve) -> float:
 	return curve.interpolate(1.0 - clamp(percent_from_highest, 0, 1)).y
+
+
+func _on_bezier_changed() -> void:
+	is_easing_dirty = is_easing_dirty or not is_flat
+	emit_signal("changed")
