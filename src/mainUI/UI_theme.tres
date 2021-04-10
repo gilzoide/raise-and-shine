@@ -1,8 +1,14 @@
-[gd_resource type="Theme" load_steps=3 format=2]
+[gd_resource type="Theme" load_steps=5 format=2]
 
 [ext_resource path="res://textures/ContextMenuIcon.svg" type="Texture" id=1]
 [ext_resource path="res://textures/ContextMenuHighlightIcon.svg" type="Texture" id=2]
+[ext_resource path="res://textures/VSplitGrabberIcon.tres" type="Texture" id=3]
+[ext_resource path="res://textures/HSplitGrabberIcon.tres" type="Texture" id=4]
 
 [resource]
+HSplitContainer/constants/separation = 12
+HSplitContainer/icons/grabber = ExtResource( 4 )
 TabContainer/icons/menu = ExtResource( 1 )
 TabContainer/icons/menu_highlight = ExtResource( 2 )
+VSplitContainer/constants/separation = 12
+VSplitContainer/icons/grabber = ExtResource( 3 )
