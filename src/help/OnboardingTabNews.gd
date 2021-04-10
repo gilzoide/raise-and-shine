@@ -10,7 +10,8 @@ onready var _richtext = $ScrollContainer/NewsLabel
 
 
 func _ready() -> void:
-	var new_text = ""
+	var new_text := ""
 	for v in versions:
 		new_text += v.generate_bbcode()
+	new_text = new_text.replace("[url", "[color=#ff8588][url").replace("[/url]", "[/url][/color]")
 	_richtext.bbcode_text = new_text
