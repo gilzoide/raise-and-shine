@@ -7,10 +7,7 @@ extends Resource
 const CURRENT_VERSION = 2
 const DATE_FMT = "{year}-{month}-{day}"
 const BBCODE_FMT = """[u][b]Build {build_number}[/b]  ({date})[/u]
-{content}
-
-
-"""
+{content}"""
 
 export(int) var build_number = 0
 export(String) var date = DATE_FMT.format(OS.get_date())
