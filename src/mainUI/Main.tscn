@@ -126,44 +126,44 @@ layout = ExtResource( 13 )
 [node name="Albedo" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
 margin_left = 4.0
 margin_top = 32.0
-margin_right = -872.725
+margin_right = -869.315
 margin_bottom = -380.852
 
 [node name="Height" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
 margin_left = 4.0
 margin_top = 223.148
-margin_right = -872.725
+margin_right = -869.315
 margin_bottom = -192.426
 type = 1
 
 [node name="Normal" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
 margin_left = 4.0
 margin_top = 411.574
-margin_right = -872.725
+margin_right = -869.315
 margin_bottom = -4.0
 type = 2
 
 [node name="2D" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 16 )]
-margin_left = 171.275
+margin_left = 174.685
 margin_top = 32.0
-margin_right = -200.816
+margin_right = -194.215
 margin_bottom = -288.0
 
 [node name="3D" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 15 )]
-margin_left = 171.275
+margin_left = 174.685
 margin_top = 316.0
-margin_right = -200.816
+margin_right = -194.215
 margin_bottom = -4.0
 
 [node name="Lights" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 4 )]
-margin_left = 843.184
+margin_left = 849.785
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="History" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 8 )]
 visible = false
-margin_left = 843.184
+margin_left = 849.785
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0

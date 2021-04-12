@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=13 format=2]
+[gd_resource type="Resource" load_steps=15 format=2]
 
 [ext_resource path="res://addons/dockable_container/layout_panel.gd" type="Script" id=1]
 [ext_resource path="res://addons/dockable_container/layout_split.gd" type="Script" id=2]
+[ext_resource path="res://addons/dockable_container/layout.gd" type="Script" id=3]
 
 [sub_resource type="Resource" id=1]
 resource_name = "Tabs"
@@ -67,14 +68,19 @@ current_tab = 0
 resource_name = "Split"
 script = ExtResource( 2 )
 direction = 0
-percent = 0.777273
+percent = 0.784119
 first = SubResource( 8 )
 second = SubResource( 9 )
 
-[resource]
+[sub_resource type="Resource" id=11]
 resource_name = "Split"
 script = ExtResource( 2 )
 direction = 0
-percent = 0.157495
+percent = 0.160825
 first = SubResource( 5 )
 second = SubResource( 10 )
+
+[resource]
+resource_name = "Layout"
+script = ExtResource( 3 )
+root = SubResource( 11 )
