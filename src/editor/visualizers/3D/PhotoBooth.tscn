@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/Environment.tres" type="Environment" id=1]
 [ext_resource path="res://editor/visualizers/PhotoBoothModel.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://editor/brush/BorderMeshInstance.gd" type="Script" id=7]
 [ext_resource path="res://editor/visualizers/3D/UnshadedVerticesAlbedo_material.tres" type="Material" id=8]
 [ext_resource path="res://editor/visualizers/3D/PlateBorder.gd" type="Script" id=9]
+[ext_resource path="res://editor/visualizers/InvertScreenColor_material.tres" type="Material" id=10]
 
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 128, 128 )
@@ -66,7 +67,11 @@ skeleton = NodePath("")
 material/0 = null
 
 [node name="Border" type="MeshInstance" parent="Brush"]
+material_override = ExtResource( 10 )
+cast_shadow = 0
+generate_lightmap = false
 skeleton = NodePath("")
+software_skinning_transform_normals = false
 script = ExtResource( 7 )
 mesh_size = 1.414
 

@@ -18,7 +18,7 @@ func _ready() -> void:
 	_on_height_texture_changed(project.height_texture)
 	project.connect("height_texture_changed", self, "_on_height_texture_changed")
 	project.connect("normal_texture_changed", self, "_on_normal_texture_changed")
-	HeightDrawer.connect("brush_drawn", self, "update_height_in_rect")
+	var _err = HeightDrawer.connect("brush_drawn", self, "update_height_in_rect")
 
 
 func update_height_in_rect(rect: Rect2) -> void:
