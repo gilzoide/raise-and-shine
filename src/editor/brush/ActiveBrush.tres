@@ -5,3 +5,4 @@
 [resource]
 script = ExtResource( 1 )
 size = 15.0
+depth = 1.0
