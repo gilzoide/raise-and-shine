@@ -9,7 +9,7 @@ const project = preload("res://editor/project/ActiveEditorProject.tres")
 const history = preload("res://editor/undo/UndoHistory.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
 const quad_material = preload("res://editor/visualizers/3D/Quad_material.tres")
-const operation = preload("res://editor/operation/DragOperation.tres")
+const operation = preload("res://editor/height/DragOperation.tres")
 const selection = preload("res://editor/selection/ActiveSelection.tres")
 const LightPoint = preload("res://editor/visualizers/LightPoint.tscn")
 
@@ -42,7 +42,7 @@ func _ready() -> void:
 	
 	_on_albedo_texture_changed(project.albedo_texture)
 	_on_height_texture_changed(project.height_texture)
-	_brush_mesh_instance.scale = Vector3(brush.size, brush.size, brush.size)
+	_on_brush_changed()
 	_err = project.connect("height_texture_changed", self, "_on_height_texture_changed")
 	_err = project.connect("albedo_texture_changed", self, "_on_albedo_texture_changed")
 
@@ -138,4 +138,5 @@ func take_screenshot() -> void:
 
 
 func _on_brush_changed() -> void:
-	_brush_mesh_instance.scale = Vector3(brush.size, brush.size, brush.size)
+	var plane_scale = max(initial_plane_size.x / _height_size.x, initial_plane_size.y / _height_size.y)
+	_brush_mesh_instance.scale = Vector3(brush.size, brush.size, brush.size) * plane_scale

@@ -37,7 +37,7 @@ static func map_textures(type: int) -> Array:
 		else:
 			return [ALBEDO_TEXTURE]
 	elif type == Type.HEIGHT_MAP:
-		return [HEIGHT_TEXTURE]
+		return [HeightDrawer.get_texture(), HEIGHT_TEXTURE]
 	elif type == Type.NORMAL_MAP:
 		return [NormalDrawer.get_texture(), NORMAL_TEXTURE]
 	else:

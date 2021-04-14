@@ -16,7 +16,7 @@ enum DragTool {
 export(float) var drag_height_speed = 0.01
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
-export(Resource) var drag_operation = preload("res://editor/operation/DragOperation.tres")
+export(Resource) var drag_operation = preload("res://editor/height/DragOperation.tres")
 export(DragTool) var active_tool := DragTool.BRUSH_RECTANGLE
 
 var drag_start_position: Vector2

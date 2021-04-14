@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "HeightAlgorithm",
 "language": "GDScript",
-"path": "res://editor/operation/HeightAlgorithm.gd"
+"path": "res://editor/height/HeightAlgorithm.gd"
 }, {
 "base": "Reference",
 "class": "HeightMapData",
@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "HeightOperation",
 "language": "GDScript",
-"path": "res://editor/operation/HeightOperation.gd"
+"path": "res://editor/height/HeightOperation.gd"
 }, {
 "base": "Object",
 "class": "MapTypes",
@@ -90,6 +90,7 @@ config/windows_native_icon="res://icon.ico"
 [autoload]
 
 NormalDrawer="*res://editor/normal/NormalDrawer.tscn"
+HeightDrawer="*res://editor/height/HeightDrawer.tscn"
 SelectionDrawer="*res://editor/selection/SelectionDrawer.tscn"
 BrushDrawer="*res://editor/brush/BrushDrawer.tscn"
 PhotoBooth="*res://editor/visualizers/3D/PhotoBooth.tscn"

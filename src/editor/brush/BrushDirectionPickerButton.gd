@@ -4,7 +4,7 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Button
 
-export(Resource) var operation = preload("res://editor/operation/DragOperation.tres")
+export(Resource) var operation = preload("res://editor/height/DragOperation.tres")
 export(Resource) var settings = preload("res://settings/DefaultSettings.tres")
 export(Texture) var arrow = preload("res://textures/ArrowIcon.svg")
 export(float) var circle_margin = 4
