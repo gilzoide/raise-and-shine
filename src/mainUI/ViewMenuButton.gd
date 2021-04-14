@@ -4,6 +4,8 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends MenuButton
 
+const SAVED_LAYOUT_PATH = "user://layout.res"
+
 enum {
 	FILTER_ALBEDO,
 	FILTER_HEIGHT,
@@ -76,6 +78,16 @@ func _ready() -> void:
 	menu_popup.add_item("Restore default layout", LAYOUT_RESTORE_DEFAULT)
 	
 	menu_popup.connect("id_pressed", self, "_on_menu_popup_id_pressed")
+	
+	if ResourceLoader.exists(SAVED_LAYOUT_PATH):
+		var saved_layout = ResourceLoader.load(SAVED_LAYOUT_PATH, "", true)
+		if saved_layout:
+			_workbench_panel.layout = saved_layout
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_QUIT_REQUEST and OS.is_userfs_persistent():
+		var _err = ResourceSaver.save(SAVED_LAYOUT_PATH, _workbench_panel.layout)
 
 
 func _on_menu_popup_id_pressed(id: int) -> void:
