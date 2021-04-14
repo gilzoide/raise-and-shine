@@ -23,11 +23,22 @@ func _notification(what: int) -> void:
 		VisualServer.free_rid(_canvas_item)
 
 
-func _on_brush_changed() -> void:
-	_update_size()
+func draw_brush() -> void:
 	var color = Color(brush.depth, brush.depth, brush.depth)
+	VisualServer.canvas_item_clear(_canvas_item)
 	VisualServer.canvas_item_add_rect(_canvas_item, Rect2(Vector2.ZERO, size), color)
 	render_target_update_mode = Viewport.UPDATE_ONCE
+
+
+func erase_brush() -> void:
+	VisualServer.canvas_item_clear(_canvas_item)
+	VisualServer.canvas_item_add_rect(_canvas_item, Rect2(Vector2.ZERO, size), Color.black)
+	render_target_update_mode = Viewport.UPDATE_ONCE
+
+
+func _on_brush_changed() -> void:
+	_update_size()
+	draw_brush()
 
 
 func _update_size() -> void:

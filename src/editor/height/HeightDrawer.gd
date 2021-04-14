@@ -13,7 +13,6 @@ var _canvas_item = VisualServer.canvas_item_create()
 
 
 func _ready() -> void:
-	render_target_v_flip = true
 	get_texture().flags = Texture.FLAG_FILTER
 	
 	_canvas_item = VisualServer.canvas_item_create()
@@ -29,25 +28,25 @@ func _notification(what: int) -> void:
 		VisualServer.free_rid(_canvas_item)
 
 
-func draw_brush_centered_uv(brush, uv: Vector2) -> void:
+func draw_brush_centered_uv(brush, uv: Vector2, erasing: bool) -> void:
 	var position = (uv * size).floor()
-	draw_brush_centered(brush, position)
+	draw_brush_centered(brush, position, erasing)
 
 
-func draw_brush_centered(brush, center: Vector2) -> void:
+func draw_brush_centered(brush, center: Vector2, erasing: bool) -> void:
 	var half_size = floor(brush.size * 0.5)
 	var rect = Rect2(center - Vector2(half_size, half_size), Vector2(brush.size, brush.size))
-	BrushDrawer.get_texture().draw_rect(_canvas_item, rect, false)
+	VisualServer.canvas_item_clear(_canvas_item)
+	BrushDrawer.get_texture().draw_rect(_canvas_item, rect, false, Color.black if erasing else Color.white)
 	render_target_update_mode = Viewport.UPDATE_ONCE
-	yield(VisualServer, "frame_post_draw")
 	emit_signal("brush_drawn", rect)
 
 
 func clear_all(color = Color.black) -> void:
+	VisualServer.canvas_item_clear(_canvas_item)
 	VisualServer.canvas_item_add_rect(_canvas_item, Rect2(Vector2.ZERO, size), color)
 	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	render_target_update_mode = Viewport.UPDATE_ONCE
-	yield(VisualServer, "frame_post_draw")
 	emit_signal("cleared")
 
 

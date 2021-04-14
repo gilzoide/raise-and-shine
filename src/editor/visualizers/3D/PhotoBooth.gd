@@ -124,7 +124,6 @@ func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vec
 	_brush_mesh_instance.translation = click_position
 	if event is InputEventMouse:
 		last_hovered_uv = click_position_to_uv(click_position)
-		HeightDrawer.draw_brush_centered_uv(brush, last_hovered_uv)
 
 
 func click_position_to_uv(click_position: Vector3) -> Vector2:

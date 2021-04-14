@@ -8,6 +8,7 @@ export(float) var speed: float = 1
 export(float) var faster_factor: float = 5
 export(float) var zoom_speed: float = 0.01
 export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
+export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 
 onready var viewport: Viewport = $ViewportContainer/Viewport
 onready var camera: Camera = $ViewportContainer/Viewport/Camera
@@ -15,6 +16,7 @@ onready var zoom_slider = $ZoomSlider
 onready var camera_initial_transform: Transform = camera.transform
 var panning := false
 var dragging := false
+var is_erasing := false
 var current_zoom = 0
 var in_notification := false
 
@@ -52,7 +54,8 @@ func _gui_input(event: InputEvent) -> void:
 			return  # avoid processing input in viewport
 		if dragging:
 			ControlExtras.wrap_mouse_motion_if_needed(self, event)
-			selection.set_drag_hovering(event.relative, PhotoBooth.last_hovered_uv)
+			HeightDrawer.draw_brush_centered_uv(brush, PhotoBooth.last_hovered_uv, is_erasing)
+#			selection.set_drag_hovering(event.relative, PhotoBooth.last_hovered_uv)
 	viewport.unhandled_input(event)
 	
 
@@ -80,14 +83,20 @@ func stop_panning() -> void:
 
 func start_dragging(button_index: int) -> void:
 	dragging = true
-	set_drag_cursor()
-	selection.set_drag_operation_started(button_index, PhotoBooth.last_hovered_uv)
+	is_erasing = button_index == BUTTON_RIGHT
+	if is_erasing:
+		BrushDrawer.erase_brush()
+	HeightDrawer.draw_brush_centered_uv(brush, PhotoBooth.last_hovered_uv, is_erasing)
+#	set_drag_cursor()
+#	selection.set_drag_operation_started(button_index, PhotoBooth.last_hovered_uv)
 
 
 func stop_dragging() -> void:
 	dragging = false
-	set_normal_cursor()
-	selection.set_drag_operation_ended()
+	if is_erasing:
+		BrushDrawer.draw_brush()
+#	set_normal_cursor()
+#	selection.set_drag_operation_ended()
 
 
 func set_pan_cursor() -> void:
