@@ -37,12 +37,14 @@ onready var screenshot_camera = $ScreenshotViewport/Camera
 
 func _ready() -> void:
 	plane_material.set_shader_param("normal_map", NormalDrawer.get_texture())
-	var _err = brush.connect("changed", self, "_on_brush_changed")
+	quad_material.set_shader_param("normal_map", NormalDrawer.get_texture())
+	plane_material.set_shader_param("height_map", HeightDrawer.get_texture())
+	var _err = brush.connect("changed", self, "_update_brush_size")
 	_brush_mesh_instance.material_override.albedo_texture = BrushDrawer.get_texture()
 	
 	_on_albedo_texture_changed(project.albedo_texture)
 	_on_height_texture_changed(project.height_texture)
-	_on_brush_changed()
+	_update_brush_size()
 	_err = project.connect("height_texture_changed", self, "_on_height_texture_changed")
 	_err = project.connect("albedo_texture_changed", self, "_on_albedo_texture_changed")
 
@@ -84,6 +86,7 @@ func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 	quad_mesh.size = plane_size
 	quad_mesh_instance.mesh = quad_mesh
 	
+	_update_brush_size()
 	normal_vectors.set_map_size(new_size)
 
 
@@ -121,6 +124,7 @@ func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vec
 	_brush_mesh_instance.translation = click_position
 	if event is InputEventMouse:
 		last_hovered_uv = click_position_to_uv(click_position)
+		HeightDrawer.draw_brush_centered_uv(brush, last_hovered_uv)
 
 
 func click_position_to_uv(click_position: Vector3) -> Vector2:
@@ -137,6 +141,7 @@ func take_screenshot() -> void:
 	project.save_image_dialog(image, "_lit")
 
 
-func _on_brush_changed() -> void:
+func _update_brush_size() -> void:
 	var plane_scale = max(initial_plane_size.x / _height_size.x, initial_plane_size.y / _height_size.y)
 	_brush_mesh_instance.scale = Vector3(brush.size, brush.size, brush.size) * plane_scale
+	
