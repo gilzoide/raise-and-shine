@@ -4,5 +4,4 @@
 
 [resource]
 script = ExtResource( 1 )
-format = 0
-rect = Rect2( 0, 0, 0, 0 )
+size = 32.0

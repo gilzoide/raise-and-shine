@@ -4,6 +4,7 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Spatial
 
+const brush = preload("res://editor/brush/ActiveBrush.tres")
 const project = preload("res://editor/project/ActiveEditorProject.tres")
 const history = preload("res://editor/undo/UndoHistory.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
@@ -21,6 +22,7 @@ var last_hovered_uv: Vector2
 
 var _albedo_size: Vector2
 var _height_size: Vector2
+onready var _brush_mesh_instance = $Brush
 onready var plate = $Plate
 onready var plane_mesh_instance = $Plate/Model
 onready var quad_mesh_instance = $Plate/QuadModel
@@ -35,9 +37,13 @@ onready var screenshot_camera = $ScreenshotViewport/Camera
 
 func _ready() -> void:
 	plane_material.set_shader_param("normal_map", NormalDrawer.get_texture())
+	var _err = brush.connect("changed", self, "_on_brush_changed")
+	_brush_mesh_instance.material_override.albedo_texture = BrushDrawer.get_texture()
+	
 	_on_albedo_texture_changed(project.albedo_texture)
 	_on_height_texture_changed(project.height_texture)
-	var _err = project.connect("height_texture_changed", self, "_on_height_texture_changed")
+	_brush_mesh_instance.scale = Vector3(brush.size, brush.size, brush.size)
+	_err = project.connect("height_texture_changed", self, "_on_height_texture_changed")
 	_err = project.connect("albedo_texture_changed", self, "_on_albedo_texture_changed")
 
 
@@ -107,7 +113,12 @@ func get_normal_vectors_enabled() -> bool:
 	return normal_vectors.visible
 
 
+func set_brush_visible(value: bool) -> void:
+	_brush_mesh_instance.visible = value
+
+
 func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
+	_brush_mesh_instance.translation = click_position
 	if event is InputEventMouse:
 		last_hovered_uv = click_position_to_uv(click_position)
 
@@ -124,3 +135,7 @@ func take_screenshot() -> void:
 	yield(VisualServer, "frame_post_draw")
 	var image = screenshot_viewport.get_texture().get_data()
 	project.save_image_dialog(image, "_lit")
+
+
+func _on_brush_changed() -> void:
+	_brush_mesh_instance.scale = Vector3(brush.size, brush.size, brush.size)

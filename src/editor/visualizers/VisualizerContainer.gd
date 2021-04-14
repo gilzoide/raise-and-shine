@@ -114,16 +114,17 @@ func zoom_to(zoom: float) -> void:
 
 func _notification(what: int) -> void:
 	in_notification = true
-	if what == NOTIFICATION_MOUSE_EXIT:
-		stop_panning()
-	elif what == NOTIFICATION_FOCUS_ENTER:
+	if what == NOTIFICATION_FOCUS_ENTER:
 		set_process(true)
 	elif what == NOTIFICATION_FOCUS_EXIT:
 		set_process(false)
 	elif what == NOTIFICATION_MOUSE_ENTER:
 		grab_focus()
+		PhotoBooth.set_brush_visible(true)
 	elif what == NOTIFICATION_MOUSE_EXIT:
+		stop_panning()
 		release_focus()
+		PhotoBooth.set_brush_visible(false)
 	in_notification = false
 
 

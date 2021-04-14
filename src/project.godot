@@ -91,6 +91,7 @@ config/windows_native_icon="res://icon.ico"
 
 NormalDrawer="*res://editor/normal/NormalDrawer.tscn"
 SelectionDrawer="*res://editor/selection/SelectionDrawer.tscn"
+BrushDrawer="*res://editor/brush/BrushDrawer.tscn"
 PhotoBooth="*res://editor/visualizers/3D/PhotoBooth.tscn"
 LightEditorPopup="*res://editor/LightEditorPopup.tscn"
 ImageFileDialog="*res://mainUI/ImageFileDialog.tscn"
