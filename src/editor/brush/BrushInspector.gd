@@ -6,21 +6,20 @@ extends VBoxContainer
 
 export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 
+onready var _depth_spinbox = $DepthHeader/SpinBox
+onready var _depth_slider = $DepthSlider
 onready var _size_spinbox = $SizeHeader/SpinBox
 onready var _size_slider = $SizeSlider
 
-onready var _depth_spinbox = $DepthHeader/SpinBox
-onready var _depth_slider = $DepthSlider
-
 
 func _ready() -> void:
-	_size_spinbox.share(_size_slider)
-	_size_spinbox.value = brush.size
-	_size_spinbox.connect("value_changed", brush, "set_size")
-	
 	_depth_spinbox.share(_depth_slider)
 	_depth_spinbox.value = int(brush.depth * 100)
 	_depth_spinbox.connect("value_changed", self, "_on_depth_value_changed")
+	
+	_size_spinbox.share(_size_slider)
+	_size_spinbox.value = brush.size
+	_size_spinbox.connect("value_changed", brush, "set_size")
 
 
 func _on_depth_value_changed(value) -> void:

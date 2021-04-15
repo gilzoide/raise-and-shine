@@ -121,7 +121,7 @@ func set_brush_visible(value: bool) -> void:
 
 
 func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	_brush_mesh_instance.translation = click_position
+	_brush_mesh_instance.translation = Vector3(click_position.x, click_position.y, _brush_mesh_instance.translation.z)
 	if event is InputEventMouse:
 		last_hovered_uv = click_position_to_uv(click_position)
 
@@ -142,5 +142,5 @@ func take_screenshot() -> void:
 
 func _update_brush_size() -> void:
 	var plane_scale = max(initial_plane_size.x / _height_size.x, initial_plane_size.y / _height_size.y)
-	_brush_mesh_instance.scale = Vector3(brush.size, brush.size, brush.size) * plane_scale
+	_brush_mesh_instance.scale = Vector3(brush.size, brush.size, 1) * plane_scale
 	
