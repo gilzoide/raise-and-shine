@@ -6,7 +6,6 @@ extends Spatial
 
 const brush = preload("res://editor/brush/ActiveBrush.tres")
 const project = preload("res://editor/project/ActiveEditorProject.tres")
-const history = preload("res://editor/undo/UndoHistory.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
 const quad_material = preload("res://editor/visualizers/3D/Quad_material.tres")
 const operation = preload("res://editor/height/DragOperation.tres")

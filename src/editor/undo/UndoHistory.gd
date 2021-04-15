@@ -10,26 +10,20 @@ signal revision_changed(revision)
 class Revision:
 	extends Reference
 	var id: int
-	var heightmap = HeightMapData.new()
-	var selection = Image.new()
+	var heightmap = Image.new()
 
 var revision_history = [ Revision.new() ]
 var current_revision = 0
 
 
-func init_heightmap(data: HeightMapData) -> void:
+func init_heightmap(data: Image) -> void:
 	revision_history[0].heightmap.copy_from(data)
 
 
-func init_selection(selection: Image) -> void:
-	revision_history[0].selection.copy_from(selection)
-
-
-func push_revision(heightmap: HeightMapData, selection: Image) -> void:
+func push_revision(heightmap: Image) -> void:
 	revision_history.resize(current_revision + 1)
 	var new_revision = Revision.new()
 	new_revision.heightmap.copy_from(heightmap)
-	new_revision.selection.copy_from(selection)
 	revision_history.append(new_revision)
 	current_revision = revision_history.size() - 1
 	new_revision.id = current_revision

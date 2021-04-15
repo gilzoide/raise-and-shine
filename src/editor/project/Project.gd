@@ -34,7 +34,7 @@ func _init() -> void:
 	var albedo_size = albedo_image.get_size()
 	height_image.create(albedo_size.x, albedo_size.y, false, HeightMapData.HEIGHT_IMAGE_FORMAT)
 	set_height_image(height_image)
-	history.init_heightmap(height_data)
+	history.init_heightmap(height_image)
 	history.connect("revision_changed", self, "_on_history_revision_changed")
 
 
@@ -42,18 +42,9 @@ func _on_history_revision_changed(revision) -> void:
 	set_height_data(revision.heightmap)
 
 
-func set_height_data(data: HeightMapData, empty_data: bool = false) -> void:
-	height_data.copy_from(data)
-	if empty_data:
-		height_image.create(int(data.size.x), int(data.size.y), false, HeightMapData.HEIGHT_IMAGE_FORMAT)
-		height_image.fill(HeightMapData.EMPTY_HEIGHT_COLOR)
-		normal_image.create(int(data.size.x), int(data.size.y), false, HeightMapData.NORMAL_IMAGE_FORMAT)
-		normal_image.fill(HeightMapData.EMPTY_NORMAL_COLOR)
-	else:
-		height_data.fill_image(height_image)
-		normal_image = height_data.create_normalmap(height_algorithm)
+func set_height_data(data: Image, empty_data: bool = false) -> void:
+	height_image.copy_from(data)
 	height_texture.create_from_image(height_image, height_texture.flags)
-	normal_texture.create_from_image(normal_image, normal_texture.flags)
 	
 	emit_signal("height_texture_changed", height_texture, empty_data)
 	emit_signal("normal_texture_changed", normal_texture)
@@ -140,12 +131,11 @@ func apply_operation(operation, amount: float) -> void:
 
 
 func height_operation_ended(operation) -> void:
-	history.push_revision(height_data, SelectionDrawer.snapshot_image)
+	history.push_revision(height_data)
 	emit_signal("operation_ended", operation, height_data)
 
 
 func resize_maps(size: Vector2) -> void:
-	if height_data.size != size:
-		height_data.resize(size)
-		history.push_revision(height_data, SelectionDrawer.snapshot_image)
-		set_height_data(height_data)
+	if height_image.get_size() != size:
+		height_image.resize(int(size.x), int(size.y))
+		history.push_revision(height_image)

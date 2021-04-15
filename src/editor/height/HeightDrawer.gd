@@ -7,6 +7,7 @@ extends Viewport
 signal brush_drawn(rect)
 signal cleared()
 
+export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 
 var _canvas_item = VisualServer.canvas_item_create()
@@ -39,6 +40,7 @@ func draw_brush_centered(brush, center: Vector2) -> void:
 	VisualServer.canvas_item_clear(_canvas_item)
 	BrushDrawer.get_texture().draw_rect(_canvas_item, rect, false)
 	render_target_update_mode = Viewport.UPDATE_ONCE
+	yield(VisualServer, "frame_post_draw")
 	emit_signal("brush_drawn", rect)
 
 
@@ -51,7 +53,14 @@ func clear_all(color = Color.black) -> void:
 	VisualServer.canvas_item_add_rect(_canvas_item, Rect2(Vector2.ZERO, size), color)
 	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	render_target_update_mode = Viewport.UPDATE_ONCE
+	yield(VisualServer, "frame_post_draw")
 	emit_signal("cleared")
+
+
+func take_snapshot() -> void:
+	var image = get_texture().get_data()
+	history.push_revision(image)
+	project.height_image.copy_from(image)
 
 
 func _on_height_texture_changed(texture: Texture, empty_data = false) -> void:
@@ -63,3 +72,5 @@ func _on_height_texture_changed(texture: Texture, empty_data = false) -> void:
 	else:
 		texture.draw_rect(_canvas_item, Rect2(Vector2.ZERO, size), false)
 		render_target_update_mode = Viewport.UPDATE_ONCE
+		yield(VisualServer, "frame_post_draw")
+		emit_signal("cleared")

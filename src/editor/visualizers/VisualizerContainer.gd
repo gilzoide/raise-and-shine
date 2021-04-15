@@ -84,16 +84,13 @@ func start_dragging(button_index: int) -> void:
 	dragging = true
 	BrushDrawer.erasing = button_index == BUTTON_RIGHT
 	HeightDrawer.draw_brush_centered_uv(brush, PhotoBooth.last_hovered_uv)
-#	set_drag_cursor()
-#	selection.set_drag_operation_started(button_index, PhotoBooth.last_hovered_uv)
 
 
 func stop_dragging() -> void:
 	dragging = false
 	BrushDrawer.erasing = false
 	HeightDrawer.cancel_draw()
-#	set_normal_cursor()
-#	selection.set_drag_operation_ended()
+	HeightDrawer.take_snapshot()
 
 
 func set_pan_cursor() -> void:
