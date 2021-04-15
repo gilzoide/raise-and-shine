@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://editor/brush/BrushLibraryItem.gd" type="Script" id=1]
+[ext_resource path="res://textures/pixel.png" type="Texture" id=2]
+[ext_resource path="res://mainUI/ToolButtons_theme.tres" type="Theme" id=3]
+[ext_resource path="res://editor/brush/BrushLibraryItem_buttongroup.tres" type="ButtonGroup" id=4]
+
+[node name="BrushLibraryItem" type="Button"]
+margin_right = 64.0
+margin_bottom = 78.0
+rect_min_size = Vector2( 64, 78 )
+theme = ExtResource( 3 )
+toggle_mode = true
+pressed = true
+group = ExtResource( 4 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+texture = null
+
+[node name="Container" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 64, 78 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Container"]
+margin_right = 64.0
+margin_bottom = 60.0
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Container"]
+margin_top = 64.0
+margin_right = 64.0
+margin_bottom = 78.0
+align = 1
+clip_text = true

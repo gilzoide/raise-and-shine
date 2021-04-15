@@ -2,7 +2,7 @@
 
 [ext_resource path="res://textures/Albedo_imagetexture.tres" type="Texture" id=1]
 [ext_resource path="res://textures/Normal_imagetexture.tres" type="Texture" id=2]
-[ext_resource path="res://debug/pixel.png" type="Texture" id=3]
+[ext_resource path="res://textures/pixel.png" type="Texture" id=3]
 [ext_resource path="res://debug/InvertNormalY.tres" type="Material" id=4]
 
 [node name="PreviewIllumination2D" type="Node2D"]

@@ -61,7 +61,7 @@ second = SubResource( 7 )
 [sub_resource type="Resource" id=9]
 resource_name = "Tabs"
 script = ExtResource( 1 )
-names = PoolStringArray( "Brush" )
+names = PoolStringArray( "Brush", "Library" )
 current_tab = 0
 
 [sub_resource type="Resource" id=12]

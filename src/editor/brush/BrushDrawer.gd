@@ -29,7 +29,8 @@ func _notification(what: int) -> void:
 func draw_brush() -> void:
 	var color = Color(brush.depth, brush.depth, brush.depth)
 	VisualServer.canvas_item_clear(_canvas_item)
-	VisualServer.canvas_item_add_rect(_canvas_item, Rect2(Vector2.ZERO, size), color)
+	assert(brush.texture, "FIXME: brush must always have a texture")
+	brush.texture.draw_rect(_canvas_item, Rect2(Vector2.ZERO, size), false, color)
 	render_target_update_mode = Viewport.UPDATE_ONCE
 
 

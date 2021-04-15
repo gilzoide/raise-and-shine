@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://addons/dockable_container/dockable_container.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://editor/visualizers/3D/PerspectiveVisualizer.tscn" type="PackedScene" id=15]
 [ext_resource path="res://editor/visualizers/2D/OrthogonalVisualizer.tscn" type="PackedScene" id=16]
 [ext_resource path="res://editor/TextureSlot.tscn" type="PackedScene" id=17]
+[ext_resource path="res://editor/brush/BrushLibrary.tscn" type="PackedScene" id=18]
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -157,6 +158,13 @@ margin_right = -194.215
 margin_bottom = -4.0
 
 [node name="Brush" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 14 )]
+margin_left = 849.785
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -288.0
+
+[node name="Library" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 18 )]
+visible = false
 margin_left = 849.785
 margin_top = 32.0
 margin_right = -4.0

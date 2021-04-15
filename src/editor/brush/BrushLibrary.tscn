@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://editor/brush/BrushLibraryItem.tscn" type="PackedScene" id=1]
+[ext_resource path="res://editor/brush/BrushLibrary.gd" type="Script" id=2]
+[ext_resource path="res://textures/pixel.png" type="Texture" id=3]
+
+[sub_resource type="ImageTexture" id=1]
+
+[node name="BrushLibrary" type="ScrollContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+scroll_horizontal_enabled = false
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="VBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 0, 78 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EmptyBrushTextureItem" parent="GridContainer" instance=ExtResource( 1 )]
+margin_right = 1024.0
+title = "Empty"
+texture = ExtResource( 3 )
+builtin = true
+
+[node name="GrayscaleAlbedoBrushLibraryItem" parent="GridContainer" instance=ExtResource( 1 )]
+margin_top = 82.0
+margin_right = 1024.0
+margin_bottom = 160.0
+pressed = false
+title = "Grayscale Albedo"
+texture = SubResource( 1 )
+builtin = true
