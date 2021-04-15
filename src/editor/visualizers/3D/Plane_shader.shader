@@ -19,10 +19,8 @@ uniform float selection_pixel_width = 0.5;
 uniform vec2 selection_texture_pixel_size;
 uniform float height_scale = 0.2;
 
-varying float height;
-
 void vertex() {
-	height = texture(height_map, UV).r;
+	float height = texture(height_map, UV).r;
 	VERTEX.y += float(use_height) * height * height_scale;
 }
 
@@ -42,6 +40,7 @@ bool is_any_neighbour_not_selection(sampler2D tex, vec2 uv, vec2 uv_offset) {
 }
 
 void fragment() {
+	float height = texture(height_map, UV).r;
 	vec3 normal = texture(normal_map, UV).xyz;
 	vec4 texel = texture(albedo_map, UV);
 	texel.a = mix(1, texel.a, float(use_alpha));

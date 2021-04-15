@@ -39,6 +39,7 @@ func _ready() -> void:
 	plane_material.set_shader_param("normal_map", NormalDrawer.get_texture())
 	quad_material.set_shader_param("normal_map", NormalDrawer.get_texture())
 	plane_material.set_shader_param("height_map", HeightDrawer.get_texture())
+	quad_material.set_shader_param("height_map", HeightDrawer.get_texture())
 	var _err = brush.connect("changed", self, "_update_brush_size")
 	_brush_mesh_instance.material_override.albedo_texture = BrushDrawer.get_texture()
 	
