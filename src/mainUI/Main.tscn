@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://addons/dockable_container/dockable_container.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://textures/UndoToolIcon.svg" type="Texture" id=11]
 [ext_resource path="res://mainUI/ToolButtonPresentation.gd" type="Script" id=12]
 [ext_resource path="res://mainUI/DefaultLayout.tres" type="Resource" id=13]
+[ext_resource path="res://editor/brush/BrushInspector.tscn" type="PackedScene" id=14]
 [ext_resource path="res://editor/visualizers/3D/PerspectiveVisualizer.tscn" type="PackedScene" id=15]
 [ext_resource path="res://editor/visualizers/2D/OrthogonalVisualizer.tscn" type="PackedScene" id=16]
 [ext_resource path="res://editor/TextureSlot.tscn" type="PackedScene" id=17]
@@ -155,16 +156,22 @@ margin_top = 316.0
 margin_right = -194.215
 margin_bottom = -4.0
 
-[node name="Lights" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 4 )]
+[node name="Brush" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 14 )]
 margin_left = 849.785
 margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -288.0
+
+[node name="Lights" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 4 )]
+margin_left = 849.785
+margin_top = 316.0
 margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="History" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 8 )]
 visible = false
 margin_left = 849.785
-margin_top = 32.0
+margin_top = 316.0
 margin_right = -4.0
 margin_bottom = -4.0
 

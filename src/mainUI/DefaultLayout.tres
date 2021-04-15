@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=15 format=2]
+[gd_resource type="Resource" load_steps=17 format=2]
 
 [ext_resource path="res://addons/dockable_container/layout_panel.gd" type="Script" id=1]
 [ext_resource path="res://addons/dockable_container/layout_split.gd" type="Script" id=2]
@@ -61,8 +61,22 @@ second = SubResource( 7 )
 [sub_resource type="Resource" id=9]
 resource_name = "Tabs"
 script = ExtResource( 1 )
+names = PoolStringArray( "Brush" )
+current_tab = 0
+
+[sub_resource type="Resource" id=12]
+resource_name = "Tabs"
+script = ExtResource( 1 )
 names = PoolStringArray( "Lights", "History" )
 current_tab = 0
+
+[sub_resource type="Resource" id=13]
+resource_name = "Split"
+script = ExtResource( 2 )
+direction = 1
+percent = 0.5
+first = SubResource( 9 )
+second = SubResource( 12 )
 
 [sub_resource type="Resource" id=10]
 resource_name = "Split"
@@ -70,7 +84,7 @@ script = ExtResource( 2 )
 direction = 0
 percent = 0.784119
 first = SubResource( 8 )
-second = SubResource( 9 )
+second = SubResource( 13 )
 
 [sub_resource type="Resource" id=11]
 resource_name = "Split"
