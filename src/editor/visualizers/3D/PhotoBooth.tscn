@@ -9,7 +9,7 @@
 [ext_resource path="res://editor/brush/BrushBorder_arraymesh.tres" type="ArrayMesh" id=7]
 [ext_resource path="res://editor/visualizers/3D/UnshadedVerticesAlbedo_material.tres" type="Material" id=8]
 [ext_resource path="res://editor/visualizers/3D/PlateBorder.gd" type="Script" id=9]
-[ext_resource path="res://editor/visualizers/InvertScreenColor_material.tres" type="Material" id=10]
+[ext_resource path="res://editor/visualizers/InvertScreenColor_spatial_material.tres" type="Material" id=10]
 
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 128, 128 )

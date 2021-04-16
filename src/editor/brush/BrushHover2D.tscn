@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://editor/brush/BrushHover2D.gd" type="Script" id=1]
 [ext_resource path="res://editor/brush/BrushBorder_arraymesh.tres" type="ArrayMesh" id=2]
+[ext_resource path="res://editor/visualizers/InvertScreenColor_canvasitem_material.tres" type="Material" id=3]
 
 [sub_resource type="QuadMesh" id=1]
 
@@ -15,4 +16,5 @@ scale = Vector2( 1, -1 )
 mesh = SubResource( 1 )
 
 [node name="Border" type="MeshInstance2D" parent="."]
+material = ExtResource( 3 )
 mesh = ExtResource( 2 )

@@ -1,6 +1,6 @@
 [gd_resource type="ArrayMesh" load_steps=2 format=2]
 
-[ext_resource path="res://editor/brush/BrushBorder.gd" type="Script" id=1]
+[ext_resource path="res://editor/brush/BrushBorderArrayMesh.gd" type="Script" id=1]
 
 [resource]
 surfaces/0 = {

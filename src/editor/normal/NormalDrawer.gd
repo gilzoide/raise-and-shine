@@ -26,7 +26,7 @@ func _ready() -> void:
 func update_height_in_rect(rect: Rect2) -> void:
 	height_map_rect.subrect = rect.grow(1).clip(Rect2(Vector2.ZERO, size))
 	height_map_rect.update()
-	redraw()
+	render_target_update_mode = Viewport.UPDATE_ONCE
 
 
 func _on_normal_texture_changed(texture: Texture) -> void:
@@ -34,13 +34,9 @@ func _on_normal_texture_changed(texture: Texture) -> void:
 	current_normal.visible = true
 	current_normal.update()
 	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
-	redraw()
+	render_target_update_mode = Viewport.UPDATE_ONCE
 	yield(VisualServer, "frame_post_draw")
 	current_normal.visible = false
-
-
-func redraw() -> void:
-	render_target_update_mode = Viewport.UPDATE_ONCE
 
 
 func take_snapshot() -> void:

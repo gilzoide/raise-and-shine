@@ -31,7 +31,8 @@ func _rebuild() -> void:
 	var angle_inc = TAU / float(point_count)
 	var initial_vec = Vector2(radius, 0)
 	for i in point_count:
-		points.append(initial_vec.rotated(angle_inc * i))
+		points.append(initial_vec.rotated(i * angle_inc))
+	
 	var arrays = []
 	arrays.resize(ARRAY_MAX)
 	arrays[ARRAY_VERTEX] = points
