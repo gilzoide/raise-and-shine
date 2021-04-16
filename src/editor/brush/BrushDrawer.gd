@@ -17,7 +17,9 @@ func _ready() -> void:
 	_canvas_item = VisualServer.canvas_item_create()
 	VisualServer.canvas_item_set_parent(_canvas_item, find_world_2d().canvas)
 	
+	_update_size()
 	_on_brush_changed()
+	brush.connect("size_changed", self, "_update_size")
 	brush.connect("changed", self, "_on_brush_changed")
 
 
@@ -47,7 +49,6 @@ func get_erasing() -> bool:
 
 
 func _on_brush_changed() -> void:
-	_update_size()
 	draw_brush()
 
 

@@ -12,9 +12,10 @@ enum Type {
 
 export(Type) var type
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
-export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
+export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 
 onready var texture_rect = $TextureRect
+onready var _brush_hover = $BrushHover2D
 var textures
 
 var _dragging := false
@@ -28,6 +29,18 @@ func _ready() -> void:
 		project.connect("height_texture_changed", self, "_on_texture_updated")
 	elif type == MapTypes.Type.NORMAL_MAP:
 		project.connect("normal_texture_changed", self, "_on_texture_updated")
+	
+	_brush_hover.texture = BrushDrawer.get_texture()
+	texture_rect.connect("scale_changed", self, "_on_brush_size_changed")
+	brush.connect("size_changed", self, "_on_brush_size_changed")
+	brush.connect("changed", self, "_on_brush_changed")
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_MOUSE_ENTER:
+		brush.visible = true
+	elif what == NOTIFICATION_MOUSE_EXIT:
+		brush.visible = false
 
 
 func _on_texture_updated(_texture: Texture, _empty_data: bool = false) -> void:
@@ -36,16 +49,30 @@ func _on_texture_updated(_texture: Texture, _empty_data: bool = false) -> void:
 
 func _on_TextureRect_drag_started(button_index: int, uv: Vector2) -> void:
 	_dragging = true
-	ControlExtras.set_cursor(self, selection.get_cursor_for_active_tool())
-	selection.set_drag_operation_started(button_index, uv)
+	BrushDrawer.erasing = button_index == BUTTON_RIGHT
+	HeightDrawer.draw_brush_centered_uv(brush, uv)
 
 
 func _on_TextureRect_drag_ended() -> void:
-	_dragging = false
-	ControlExtras.set_cursor(self, Control.CURSOR_ARROW)
-	selection.set_drag_operation_ended()
-
-
-func _on_TextureRect_drag_moved(relative_motion: Vector2, uv: Vector2) -> void:
 	if _dragging:
-		selection.set_drag_hovering(relative_motion, uv)
+		_dragging = false
+		BrushDrawer.erasing = false
+		HeightDrawer.cancel_draw()
+		HeightDrawer.take_snapshot()
+
+
+func _on_TextureRect_drag_moved(uv: Vector2) -> void:
+	brush.uv = uv
+	if _dragging:
+		HeightDrawer.draw_brush_centered_uv(brush, uv)
+
+
+func _on_brush_size_changed() -> void:
+	_brush_hover.scale = Vector2(brush.size, brush.size) * texture_rect.draw_scale
+
+
+func _on_brush_changed() -> void:
+	_brush_hover.visible = brush.visible
+	if _brush_hover.visible:
+		var drawn_rect = texture_rect.drawn_rect
+		_brush_hover.position = drawn_rect.position + brush.uv * drawn_rect.size

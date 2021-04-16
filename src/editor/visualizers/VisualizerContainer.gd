@@ -53,7 +53,7 @@ func _gui_input(event: InputEvent) -> void:
 			return  # avoid processing input in viewport
 		if dragging:
 			ControlExtras.wrap_mouse_motion_if_needed(self, event)
-			HeightDrawer.draw_brush_centered_uv(brush, PhotoBooth.last_hovered_uv)
+			HeightDrawer.draw_brush_centered_uv(brush, brush.uv)
 #			selection.set_drag_hovering(event.relative, PhotoBooth.last_hovered_uv)
 	viewport.unhandled_input(event)
 	
@@ -83,7 +83,7 @@ func stop_panning() -> void:
 func start_dragging(button_index: int) -> void:
 	dragging = true
 	BrushDrawer.erasing = button_index == BUTTON_RIGHT
-	HeightDrawer.draw_brush_centered_uv(brush, PhotoBooth.last_hovered_uv)
+	HeightDrawer.draw_brush_centered_uv(brush, brush.uv)
 
 
 func stop_dragging() -> void:
@@ -123,11 +123,11 @@ func _notification(what: int) -> void:
 		set_process(false)
 	elif what == NOTIFICATION_MOUSE_ENTER:
 		grab_focus()
-		PhotoBooth.set_brush_visible(true)
+		brush.visible = true
 	elif what == NOTIFICATION_MOUSE_EXIT:
 		stop_panning()
 		release_focus()
-		PhotoBooth.set_brush_visible(false)
+		brush.visible = false
 	in_notification = false
 
 

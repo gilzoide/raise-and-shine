@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://editor/TextureSlot.gd" type="Script" id=1]
 [ext_resource path="res://editor/RayCastTextureRect.gd" type="Script" id=2]
+[ext_resource path="res://editor/brush/BrushHover2D.tscn" type="PackedScene" id=3]
 [ext_resource path="res://editor/visualizers/2D/ShowSelection_material.tres" type="Material" id=5]
 [ext_resource path="res://textures/Albedo_imagetexture.tres" type="Texture" id=6]
 
@@ -9,6 +10,7 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 64, 64 )
+rect_clip_content = true
 mouse_filter = 1
 script = ExtResource( 1 )
 __meta__ = {
@@ -25,6 +27,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 texture = ExtResource( 6 )
+
+[node name="BrushHover2D" parent="." instance=ExtResource( 3 )]
+visible = false
 
 [connection signal="drag_ended" from="TextureRect" to="." method="_on_TextureRect_drag_ended"]
 [connection signal="drag_moved" from="TextureRect" to="." method="_on_TextureRect_drag_moved"]

@@ -17,7 +17,6 @@ export(float) var plane_subdivide_scale = 1
 
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_vectors_enabled
-var last_hovered_uv: Vector2
 
 var _albedo_size: Vector2
 var _height_size: Vector2
@@ -39,7 +38,8 @@ func _ready() -> void:
 	quad_material.set_shader_param("normal_map", NormalDrawer.get_texture())
 	plane_material.set_shader_param("height_map", HeightDrawer.get_texture())
 	quad_material.set_shader_param("height_map", HeightDrawer.get_texture())
-	var _err = brush.connect("changed", self, "_update_brush_size")
+	var _err = brush.connect("changed", self, "_on_brush_changed")
+	_err = brush.connect("size_changed", self, "_update_brush_size")
 	_brush_mesh_instance.material_override.albedo_texture = BrushDrawer.get_texture()
 	
 	_on_albedo_texture_changed(project.albedo_texture)
@@ -116,19 +116,20 @@ func get_normal_vectors_enabled() -> bool:
 	return normal_vectors.visible
 
 
-func set_brush_visible(value: bool) -> void:
-	_brush_mesh_instance.visible = value
-
-
 func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	_brush_mesh_instance.translation = Vector3(click_position.x, click_position.y, _brush_mesh_instance.translation.z)
+#	_brush_mesh_instance.translation = Vector3(click_position.x, click_position.y, _brush_mesh_instance.translation.z)
 	if event is InputEventMouse:
-		last_hovered_uv = click_position_to_uv(click_position)
+		brush.uv = click_position_to_uv(click_position)
 
 
 func click_position_to_uv(click_position: Vector3) -> Vector2:
 	var local_click_position = plate.to_local(click_position)
 	return Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
+
+
+func uv_to_position(uv: Vector2) -> Vector3:
+	var local_position = (uv - Vector2(0.5, 0.5)) * plane_size
+	return to_global(Vector3(local_position.x, -local_position.y, 5))
 
 
 func take_screenshot() -> void:
@@ -138,6 +139,12 @@ func take_screenshot() -> void:
 	yield(VisualServer, "frame_post_draw")
 	var image = screenshot_viewport.get_texture().get_data()
 	project.save_image_dialog(image, "_lit")
+
+
+func _on_brush_changed() -> void:
+	_brush_mesh_instance.visible = brush.visible
+	if _brush_mesh_instance.visible:
+		_brush_mesh_instance.translation = uv_to_position(brush.uv)
 
 
 func _update_brush_size() -> void:

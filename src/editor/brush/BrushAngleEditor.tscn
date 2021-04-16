@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://editor/brush/BrushPropertyEditor.tscn" type="PackedScene" id=1]
+
+[node name="BrushAngleEditor" instance=ExtResource( 1 )]
+property = "angle"
+
+[node name="Label" parent="Header" index="0"]
+text = "Angle"
+
+[node name="SpinBox" parent="Header" index="1"]
+min_value = -180.0
+max_value = 180.0
+value = 0.0
+allow_greater = false
+
+[node name="Slider" parent="." index="1"]
+min_value = -180.0
+max_value = 180.0
+value = 0.0
+allow_greater = false

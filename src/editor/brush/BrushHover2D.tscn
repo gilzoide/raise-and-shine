@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://editor/brush/BrushBorder_arraymesh.tres" type="ArrayMesh" id=2]
+
+[sub_resource type="QuadMesh" id=1]
+
+[node name="BrushHover2D" type="MeshInstance2D"]
+self_modulate = Color( 1, 1, 1, 0.85 )
+scale = Vector2( 64, 64 )
+mesh = SubResource( 1 )
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+mesh = ExtResource( 2 )

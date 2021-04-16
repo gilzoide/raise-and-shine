@@ -4,16 +4,23 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Resource
 
+signal size_changed()
+
 const EMPTY_TEXTURE = preload("res://textures/pixel.png")
 
 export(float) var size = 32.0 setget set_size
 export(float, 0, 100) var depth = 100 setget set_depth
+export(float, -180, 180) var angle = 0 setget set_angle
 export(Texture) var texture: Texture = EMPTY_TEXTURE setget set_texture
+
+var uv: Vector2 setget set_uv
+var visible := false setget set_visible
 
 
 func set_size(value: float) -> void:
 	if value != size:
 		size = value
+		emit_signal("size_changed")
 		emit_signal("changed")
 
 
@@ -23,11 +30,29 @@ func set_depth(value: float) -> void:
 		emit_signal("changed")
 
 
+func set_angle(value: float) -> void:
+	if value != angle:
+		angle = value
+		emit_signal("changed")
+
+
 func set_texture(value: Texture) -> void:
 	if not value:
 		value = EMPTY_TEXTURE
 	if value != texture:
 		texture = value
+		emit_signal("changed")
+
+
+func set_uv(value: Vector2) -> void:
+	if value != uv:
+		uv = value
+		emit_signal("changed")
+
+
+func set_visible(value: bool) -> void:
+	if value != visible:
+		visible = value
 		emit_signal("changed")
 
 
