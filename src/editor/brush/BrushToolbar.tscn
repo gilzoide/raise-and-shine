@@ -1,24 +1,12 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://editor/brush/BrushToolbar.gd" type="Script" id=1]
-[ext_resource path="res://editor/brush/BrushDragOperation_buttongroup.tres" type="ButtonGroup" id=2]
-[ext_resource path="res://editor/brush/BrushDirectionPicker.tscn" type="PackedScene" id=3]
-[ext_resource path="res://shortcuts/SelectionToolHeight_shortcut.tres" type="ShortCut" id=4]
-[ext_resource path="res://shortcuts/SelectionToolRectangle_shortcut.tres" type="ShortCut" id=5]
-[ext_resource path="res://shortcuts/SelectionToolEllipse_shortcut.tres" type="ShortCut" id=6]
-[ext_resource path="res://shortcuts/SelectionToolLine_shortcut.tres" type="ShortCut" id=7]
-[ext_resource path="res://textures/LineToolIcon.svg" type="Texture" id=8]
-[ext_resource path="res://textures/RectangleToolIcon.svg" type="Texture" id=9]
-[ext_resource path="res://textures/EllipseToolIcon.svg" type="Texture" id=10]
-[ext_resource path="res://textures/HeightIcon.svg" type="Texture" id=11]
-[ext_resource path="res://shortcuts/SelectionToolPencil_shortcut.tres" type="ShortCut" id=12]
-[ext_resource path="res://textures/PencilIcon.svg" type="Texture" id=13]
-[ext_resource path="res://mainUI/ToolButtonPresentation.gd" type="Script" id=14]
-[ext_resource path="res://mainUI/ToolButtons_theme.tres" type="Theme" id=15]
+[ext_resource path="res://editor/brush/BrushSizeEditor.tscn" type="PackedScene" id=2]
+[ext_resource path="res://editor/brush/BrushDepthEditor.tscn" type="PackedScene" id=3]
 
 [node name="BrushToolbar" type="PanelContainer"]
-margin_right = 521.0
-margin_bottom = 44.0
+margin_right = 308.0
+margin_bottom = 58.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -27,81 +15,28 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 514.0
-margin_bottom = 37.0
+margin_right = 363.0
+margin_bottom = 51.0
+custom_constants/separation = 18
 
-[node name="Rectangle" type="Button" parent="HBoxContainer"]
-margin_right = 111.0
-margin_bottom = 30.0
-hint_tooltip = "Rectangle selection tool"
-theme = ExtResource( 15 )
-toggle_mode = true
-pressed = true
-shortcut = ExtResource( 5 )
-group = ExtResource( 2 )
-text = "Rectangle"
-icon = ExtResource( 9 )
-script = ExtResource( 14 )
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_top = 15.0
+margin_right = 37.0
+margin_bottom = 29.0
+text = "Brush"
 
-[node name="Ellipse" type="Button" parent="HBoxContainer"]
-margin_left = 115.0
-margin_right = 206.0
-margin_bottom = 30.0
-hint_tooltip = "Ellipse selection tool"
-theme = ExtResource( 15 )
-toggle_mode = true
-shortcut = ExtResource( 6 )
-group = ExtResource( 2 )
-text = "Ellipse"
-icon = ExtResource( 10 )
-script = ExtResource( 14 )
+[node name="BrushSizeEditor" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 55.0
+margin_right = 159.0
 
-[node name="Line" type="Button" parent="HBoxContainer"]
-margin_left = 210.0
-margin_right = 286.0
-margin_bottom = 30.0
-hint_tooltip = "Line selection tool"
-theme = ExtResource( 15 )
-toggle_mode = true
-shortcut = ExtResource( 7 )
-group = ExtResource( 2 )
-text = "Line"
-icon = ExtResource( 8 )
-script = ExtResource( 14 )
+[node name="BrushDepthEditor" parent="HBoxContainer" instance=ExtResource( 3 )]
+margin_left = 177.0
+margin_right = 294.0
 
-[node name="Pencil" type="Button" parent="HBoxContainer"]
-margin_left = 290.0
-margin_right = 378.0
-margin_bottom = 30.0
-hint_tooltip = "Pencil selection tool"
-theme = ExtResource( 15 )
-toggle_mode = true
-shortcut = ExtResource( 12 )
-group = ExtResource( 2 )
-text = "Pencil"
-icon = ExtResource( 13 )
-script = ExtResource( 14 )
-
-[node name="Height" type="Button" parent="HBoxContainer"]
-margin_left = 382.0
-margin_right = 473.0
-margin_bottom = 30.0
-hint_tooltip = "Height edit tool"
-theme = ExtResource( 15 )
-toggle_mode = true
-shortcut = ExtResource( 4 )
-group = ExtResource( 2 )
-text = "Height"
-icon = ExtResource( 11 )
-script = ExtResource( 14 )
-
-[node name="BrushDirectionPickerButton" parent="HBoxContainer" instance=ExtResource( 3 )]
-margin_left = 477.0
-margin_right = 507.0
-margin_bottom = 30.0
-
-[connection signal="pressed" from="HBoxContainer/Rectangle" to="." method="_on_tool_button_pressed" binds= [ 0 ]]
-[connection signal="pressed" from="HBoxContainer/Ellipse" to="." method="_on_tool_button_pressed" binds= [ 1 ]]
-[connection signal="pressed" from="HBoxContainer/Line" to="." method="_on_tool_button_pressed" binds= [ 2 ]]
-[connection signal="pressed" from="HBoxContainer/Pencil" to="." method="_on_tool_button_pressed" binds= [ 3 ]]
-[connection signal="pressed" from="HBoxContainer/Height" to="." method="_on_tool_button_pressed" binds= [ 4 ]]
+[node name="Preview" type="TextureRect" parent="HBoxContainer"]
+margin_left = 312.0
+margin_right = 356.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 44, 44 )
+expand = true
+stretch_mode = 6

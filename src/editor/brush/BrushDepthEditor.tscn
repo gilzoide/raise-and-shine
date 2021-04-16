@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://editor/brush/ActiveBrush.tres" type="Resource" id=1]
+[ext_resource path="res://editor/brush/BrushPropertyEditor.tscn" type="PackedScene" id=2]
+
+[node name="BrushDepthEditor" instance=ExtResource( 2 )]
+resource = ExtResource( 1 )
+property = "depth"
+
+[node name="Label" parent="Header" index="0"]
+text = "Depth"
+
+[node name="SpinBox" parent="Header" index="1"]
+max_value = 100.0
+value = 100.0
+allow_greater = false
+suffix = "%"
+
+[node name="Slider" parent="." index="1"]
+max_value = 100.0
+value = 100.0
+allow_greater = false

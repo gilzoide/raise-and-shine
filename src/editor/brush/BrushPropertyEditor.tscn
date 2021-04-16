@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://editor/brush/BrushPropertyEditor.gd" type="Script" id=1]
+
+[node name="BrushPropertyEditor" type="VBoxContainer"]
+margin_right = 163.0
+margin_bottom = 44.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Header" type="HBoxContainer" parent="."]
+margin_right = 163.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="Header"]
+margin_top = 5.0
+margin_right = 85.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Size"
+
+[node name="SpinBox" type="SpinBox" parent="Header"]
+margin_left = 89.0
+margin_right = 163.0
+margin_bottom = 24.0
+min_value = 1.0
+max_value = 128.0
+value = 15.0
+allow_greater = true
+
+[node name="Slider" type="HSlider" parent="."]
+margin_top = 28.0
+margin_right = 163.0
+margin_bottom = 44.0
+min_value = 1.0
+max_value = 128.0
+value = 15.0
+allow_greater = true

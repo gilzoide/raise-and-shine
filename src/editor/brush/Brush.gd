@@ -6,42 +6,30 @@ extends Resource
 
 const EMPTY_TEXTURE = preload("res://textures/pixel.png")
 
-export(float) var size = 32.0 setget set_size, get_size
-export(float, 0, 1) var depth = 1 setget set_depth, get_depth
-export(Texture) var texture: Texture = EMPTY_TEXTURE setget set_texture, get_texture
-
-var _depth := 1.0
-var _size := 32.0
-var _texture: Texture = EMPTY_TEXTURE
+export(float) var size = 32.0 setget set_size
+export(float, 0, 100) var depth = 100 setget set_depth
+export(Texture) var texture: Texture = EMPTY_TEXTURE setget set_texture
 
 
 func set_size(value: float) -> void:
-	if not is_equal_approx(value, _size):
-		_size = value
+	if value != size:
+		size = value
 		emit_signal("changed")
-
-
-func get_size() -> float:
-	return _size
 
 
 func set_depth(value: float) -> void:
-	if not is_equal_approx(value, _depth):
-		_depth = value
+	if value != depth:
+		depth = value
 		emit_signal("changed")
-
-
-func get_depth() -> float:
-	return _depth
 
 
 func set_texture(value: Texture) -> void:
 	if not value:
 		value = EMPTY_TEXTURE
-	if value != _texture:
-		_texture = value
+	if value != texture:
+		texture = value
 		emit_signal("changed")
 
 
-func get_texture() -> Texture:
-	return _texture
+func get_depth01() -> float:
+	return depth / 100.0

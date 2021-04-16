@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://mainUI/FileMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://addons/dockable_container/dockable_container.gd" type="Script" id=2]
@@ -13,7 +13,6 @@
 [ext_resource path="res://textures/UndoToolIcon.svg" type="Texture" id=11]
 [ext_resource path="res://mainUI/ToolButtonPresentation.gd" type="Script" id=12]
 [ext_resource path="res://mainUI/DefaultLayout.tres" type="Resource" id=13]
-[ext_resource path="res://editor/brush/BrushInspector.tscn" type="PackedScene" id=14]
 [ext_resource path="res://editor/visualizers/3D/PerspectiveVisualizer.tscn" type="PackedScene" id=15]
 [ext_resource path="res://editor/visualizers/2D/OrthogonalVisualizer.tscn" type="PackedScene" id=16]
 [ext_resource path="res://editor/TextureSlot.tscn" type="PackedScene" id=17]
@@ -46,7 +45,7 @@ __meta__ = {
 
 [node name="MenuBar" type="HBoxContainer" parent="MainPanel/VBoxContainer"]
 margin_right = 1024.0
-margin_bottom = 44.0
+margin_bottom = 58.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
@@ -54,7 +53,7 @@ __meta__ = {
 
 [node name="FileMenuButton" type="MenuButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_right = 35.0
-margin_bottom = 44.0
+margin_bottom = 58.0
 text = "File"
 switch_on_hover = true
 script = ExtResource( 1 )
@@ -65,7 +64,7 @@ __meta__ = {
 [node name="EditMenuButton" type="MenuButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 39.0
 margin_right = 75.0
-margin_bottom = 44.0
+margin_bottom = 58.0
 text = "Edit"
 switch_on_hover = true
 script = ExtResource( 7 )
@@ -73,7 +72,7 @@ script = ExtResource( 7 )
 [node name="ViewMenuButton" type="MenuButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 79.0
 margin_right = 121.0
-margin_bottom = 44.0
+margin_bottom = 58.0
 text = "View"
 switch_on_hover = true
 script = ExtResource( 10 )
@@ -82,7 +81,7 @@ workbench_container_path = NodePath("../../WorkbenchPanel")
 [node name="HelpMenuButton" type="MenuButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 125.0
 margin_right = 167.0
-margin_bottom = 44.0
+margin_bottom = 58.0
 text = "Help"
 switch_on_hover = true
 script = ExtResource( 5 )
@@ -90,12 +89,12 @@ script = ExtResource( 5 )
 [node name="VSeparator" type="VSeparator" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 171.0
 margin_right = 175.0
-margin_bottom = 44.0
+margin_bottom = 58.0
 
 [node name="UndoButton" type="ToolButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 179.0
 margin_right = 260.0
-margin_bottom = 44.0
+margin_bottom = 58.0
 hint_tooltip = "Undo"
 text = "Undo"
 icon = ExtResource( 11 )
@@ -104,7 +103,7 @@ script = ExtResource( 12 )
 [node name="RedoButton" type="ToolButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 264.0
 margin_right = 343.0
-margin_bottom = 44.0
+margin_bottom = 58.0
 hint_tooltip = "Redo"
 text = "Redo"
 icon = ExtResource( 9 )
@@ -112,10 +111,10 @@ script = ExtResource( 12 )
 
 [node name="BrushToolbar" parent="MainPanel/VBoxContainer/MenuBar" instance=ExtResource( 6 )]
 margin_left = 347.0
-margin_right = 918.0
+margin_right = 655.0
 
 [node name="WorkbenchPanel" type="Container" parent="MainPanel/VBoxContainer"]
-margin_top = 44.0
+margin_top = 58.0
 margin_right = 1024.0
 margin_bottom = 600.0
 mouse_filter = 1
@@ -129,18 +128,18 @@ layout = ExtResource( 13 )
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -869.315
-margin_bottom = -380.852
+margin_bottom = -371.514
 
 [node name="Height" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
 margin_left = 4.0
-margin_top = 223.148
+margin_top = 218.486
 margin_right = -869.315
-margin_bottom = -192.426
+margin_bottom = -187.757
 type = 1
 
 [node name="Normal" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
 margin_left = 4.0
-margin_top = 411.574
+margin_top = 402.243
 margin_right = -869.315
 margin_bottom = -4.0
 type = 2
@@ -149,24 +148,17 @@ type = 2
 margin_left = 174.685
 margin_top = 32.0
 margin_right = -194.215
-margin_bottom = -288.0
+margin_bottom = -281.0
 
 [node name="3D" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 15 )]
 margin_left = 174.685
-margin_top = 316.0
+margin_top = 309.0
 margin_right = -194.215
 margin_bottom = -4.0
 
-[node name="Brush" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 14 )]
-margin_left = 849.785
-margin_top = 316.0
-margin_right = -4.0
-margin_bottom = -4.0
-
 [node name="Library" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 18 )]
-visible = false
 margin_left = 849.785
-margin_top = 316.0
+margin_top = 309.0
 margin_right = -4.0
 margin_bottom = -4.0
 
@@ -174,14 +166,14 @@ margin_bottom = -4.0
 margin_left = 849.785
 margin_top = 32.0
 margin_right = -4.0
-margin_bottom = -288.0
+margin_bottom = -281.0
 
 [node name="History" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 8 )]
 visible = false
 margin_left = 849.785
 margin_top = 32.0
 margin_right = -4.0
-margin_bottom = -288.0
+margin_bottom = -281.0
 
 [connection signal="pressed" from="MainPanel/VBoxContainer/MenuBar/UndoButton" to="MainPanel/VBoxContainer/MenuBar/EditMenuButton" method="call_undo"]
 [connection signal="pressed" from="MainPanel/VBoxContainer/MenuBar/RedoButton" to="MainPanel/VBoxContainer/MenuBar/EditMenuButton" method="call_redo"]

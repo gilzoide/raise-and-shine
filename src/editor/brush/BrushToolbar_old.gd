@@ -4,8 +4,8 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends PanelContainer
 
-onready var _preview = $HBoxContainer/Preview
+export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
 
 
-func _ready() -> void:
-	_preview.texture = BrushDrawer.get_texture()
+func _on_tool_button_pressed(op: int) -> void:
+	selection.set_active_tool(op)
