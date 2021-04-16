@@ -7,6 +7,7 @@ extends Control
 
 export(Resource) var resource = preload("res://editor/brush/ActiveBrush.tres")
 export(String) var property := "size" setget set_property
+export(float) var faster_factor = 10
 
 var _initial_value
 onready var _label = $Header/Label
@@ -27,9 +28,9 @@ func _gui_input(event: InputEvent) -> void:
 		if event.button_index == BUTTON_RIGHT:
 			_spinbox.value = _initial_value
 		elif event.button_index == BUTTON_WHEEL_UP:
-			_spinbox.value += _spinbox.step
+			_scroll_range(1)
 		elif event.button_index == BUTTON_WHEEL_DOWN:
-			_spinbox.value -= _spinbox.step
+			_scroll_range(-1)
 
 
 func set_property(value: String) -> void:
@@ -40,3 +41,10 @@ func set_property(value: String) -> void:
 
 func _on_value_changed(value) -> void:
 	resource.set(property, value)
+
+
+func _scroll_range(factor: float) -> void:
+	if Input.is_action_pressed("visualizer_3d_faster"):
+		factor *= faster_factor
+	var new_value = _spinbox.value + factor * _spinbox.step
+	_spinbox.value = new_value

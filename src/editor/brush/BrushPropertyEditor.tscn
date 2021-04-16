@@ -28,7 +28,7 @@ margin_bottom = 24.0
 mouse_filter = 1
 min_value = 1.0
 max_value = 128.0
-value = 15.0
+value = 16.0
 allow_greater = true
 
 [node name="Slider" type="HSlider" parent="."]
@@ -38,5 +38,6 @@ margin_bottom = 44.0
 mouse_filter = 1
 min_value = 1.0
 max_value = 128.0
-value = 15.0
+value = 16.0
 allow_greater = true
+scrollable = false

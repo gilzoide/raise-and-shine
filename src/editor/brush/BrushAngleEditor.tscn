@@ -4,6 +4,7 @@
 
 [node name="BrushAngleEditor" instance=ExtResource( 1 )]
 property = "angle"
+faster_factor = 25.0
 
 [node name="Label" parent="Header" index="0"]
 text = "Angle"
