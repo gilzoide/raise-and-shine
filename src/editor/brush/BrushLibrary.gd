@@ -6,7 +6,7 @@ extends Control
 
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 
-onready var _grayscale_albedo_item = $GridContainer/GrayscaleAlbedoBrushLibraryItem
+onready var _grayscale_albedo_item = $FixedCellGridContainer/GrayscaleAlbedoBrushLibraryItem
 
 
 func _ready() -> void:

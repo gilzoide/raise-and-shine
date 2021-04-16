@@ -44,57 +44,57 @@ script = ExtResource( 1 )
 names = PoolStringArray( "2D" )
 current_tab = 0
 
-[sub_resource type="Resource" id=7]
+[sub_resource type="Resource" id=14]
 resource_name = "Tabs"
 script = ExtResource( 1 )
 names = PoolStringArray( "3D" )
 current_tab = 0
 
-[sub_resource type="Resource" id=8]
+[sub_resource type="Resource" id=15]
 resource_name = "Split"
 script = ExtResource( 2 )
 direction = 1
 percent = 0.5
 first = SubResource( 6 )
-second = SubResource( 7 )
+second = SubResource( 14 )
 
-[sub_resource type="Resource" id=9]
-resource_name = "Tabs"
-script = ExtResource( 1 )
-names = PoolStringArray( "Brush", "Library" )
-current_tab = 0
-
-[sub_resource type="Resource" id=12]
+[sub_resource type="Resource" id=10]
 resource_name = "Tabs"
 script = ExtResource( 1 )
 names = PoolStringArray( "Lights", "History" )
 current_tab = 0
 
-[sub_resource type="Resource" id=13]
+[sub_resource type="Resource" id=16]
+resource_name = "Tabs"
+script = ExtResource( 1 )
+names = PoolStringArray( "Brush", "Library" )
+current_tab = 0
+
+[sub_resource type="Resource" id=17]
 resource_name = "Split"
 script = ExtResource( 2 )
 direction = 1
 percent = 0.5
-first = SubResource( 9 )
-second = SubResource( 12 )
+first = SubResource( 10 )
+second = SubResource( 16 )
 
-[sub_resource type="Resource" id=10]
+[sub_resource type="Resource" id=12]
 resource_name = "Split"
 script = ExtResource( 2 )
 direction = 0
 percent = 0.784119
-first = SubResource( 8 )
-second = SubResource( 13 )
+first = SubResource( 15 )
+second = SubResource( 17 )
 
-[sub_resource type="Resource" id=11]
+[sub_resource type="Resource" id=13]
 resource_name = "Split"
 script = ExtResource( 2 )
 direction = 0
 percent = 0.160825
 first = SubResource( 5 )
-second = SubResource( 10 )
+second = SubResource( 12 )
 
 [resource]
 resource_name = "Layout"
 script = ExtResource( 3 )
-root = SubResource( 11 )
+root = SubResource( 13 )

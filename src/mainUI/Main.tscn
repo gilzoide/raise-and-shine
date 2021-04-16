@@ -159,29 +159,29 @@ margin_bottom = -4.0
 
 [node name="Brush" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 14 )]
 margin_left = 849.785
-margin_top = 32.0
+margin_top = 316.0
 margin_right = -4.0
-margin_bottom = -288.0
+margin_bottom = -4.0
 
 [node name="Library" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 18 )]
 visible = false
 margin_left = 849.785
+margin_top = 316.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Lights" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 4 )]
+margin_left = 849.785
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -288.0
 
-[node name="Lights" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 4 )]
-margin_left = 849.785
-margin_top = 316.0
-margin_right = -4.0
-margin_bottom = -4.0
-
 [node name="History" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 8 )]
 visible = false
 margin_left = 849.785
-margin_top = 316.0
+margin_top = 32.0
 margin_right = -4.0
-margin_bottom = -4.0
+margin_bottom = -288.0
 
 [connection signal="pressed" from="MainPanel/VBoxContainer/MenuBar/UndoButton" to="MainPanel/VBoxContainer/MenuBar/EditMenuButton" method="call_undo"]
 [connection signal="pressed" from="MainPanel/VBoxContainer/MenuBar/RedoButton" to="MainPanel/VBoxContainer/MenuBar/EditMenuButton" method="call_redo"]

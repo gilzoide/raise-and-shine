@@ -8,7 +8,7 @@
 [node name="BrushLibraryItem" type="Button"]
 margin_right = 64.0
 margin_bottom = 78.0
-rect_min_size = Vector2( 64, 78 )
+rect_min_size = Vector2( 78, 78 )
 theme = ExtResource( 3 )
 toggle_mode = true
 pressed = true
@@ -17,7 +17,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-texture = null
 
 [node name="Container" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -28,7 +27,7 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Container"]
-margin_right = 64.0
+margin_right = 78.0
 margin_bottom = 60.0
 size_flags_vertical = 3
 texture = ExtResource( 2 )
@@ -37,7 +36,7 @@ stretch_mode = 6
 
 [node name="Label" type="Label" parent="Container"]
 margin_top = 64.0
-margin_right = 64.0
+margin_right = 78.0
 margin_bottom = 78.0
 align = 1
 clip_text = true
