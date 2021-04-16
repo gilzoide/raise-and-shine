@@ -1,15 +1,12 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://fonts/DroidSans_32.tres" type="DynamicFont" id=1]
 [ext_resource path="res://help/OnboardingTabNews.tscn" type="PackedScene" id=2]
-[ext_resource path="res://help/OnboardingTabSelecting.tscn" type="PackedScene" id=3]
 [ext_resource path="res://mainUI/TabContainerNextPrevious.gd" type="Script" id=4]
 [ext_resource path="res://help/OnboardingWindow.gd" type="Script" id=5]
-[ext_resource path="res://help/OnboardingTabUnselecting.tscn" type="PackedScene" id=6]
 [ext_resource path="res://mainUI/Help_theme.tres" type="Theme" id=7]
 [ext_resource path="res://shortcuts/OnboardingPrevious_shortcut.tres" type="ShortCut" id=8]
 [ext_resource path="res://shortcuts/OnboardingNext_shortcut.tres" type="ShortCut" id=9]
-[ext_resource path="res://help/OnboardingTabHeight.tscn" type="PackedScene" id=10]
 [ext_resource path="res://help/OnboardingTabPreview.tscn" type="PackedScene" id=11]
 
 [node name="Onboarding" type="VBoxContainer"]
@@ -50,19 +47,7 @@ __meta__ = {
 [node name="News" parent="Center/Slides" instance=ExtResource( 2 )]
 margin_top = 39.0
 
-[node name="Select" parent="Center/Slides" instance=ExtResource( 3 )]
-visible = false
-margin_top = 39.0
-
-[node name="Unselect" parent="Center/Slides" instance=ExtResource( 6 )]
-visible = false
-margin_top = 39.0
-
 [node name="Preview" parent="Center/Slides" instance=ExtResource( 11 )]
-visible = false
-margin_top = 39.0
-
-[node name="Push Heights" parent="Center/Slides" instance=ExtResource( 10 )]
 visible = false
 margin_top = 39.0
 
