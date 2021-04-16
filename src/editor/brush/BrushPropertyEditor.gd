@@ -40,6 +40,9 @@ func set_property(value: String) -> void:
 
 
 func _on_value_changed(value) -> void:
+	if is_nan(value) or is_inf(value):
+		_spinbox.value = _initial_value
+		return
 	resource.set(property, value)
 
 
