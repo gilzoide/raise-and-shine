@@ -68,10 +68,10 @@ func save_image_dialog_type(type: int) -> void:
 	if type == MapTypes.Type.ALBEDO_MAP:
 		image = albedo_image
 	elif type == MapTypes.Type.HEIGHT_MAP:
-		image = height_image
+		image = HeightDrawer.get_texture().get_data()
 		suffix = "_height"
 	elif type == MapTypes.Type.NORMAL_MAP:
-		image = normal_image
+		image = NormalDrawer.get_texture().get_data()
 		suffix = "_normal"
 	assert(image != null, "Invalid map type %d" % type)
 	save_image_dialog(image, suffix)
