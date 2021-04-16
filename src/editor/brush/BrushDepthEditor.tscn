@@ -1,10 +1,12 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://editor/brush/ActiveBrush.tres" type="Resource" id=1]
 [ext_resource path="res://editor/brush/BrushPropertyEditor.tscn" type="PackedScene" id=2]
 
 [node name="BrushDepthEditor" instance=ExtResource( 2 )]
-resource = ExtResource( 1 )
+hint_tooltip = "Brush depth, in percentage. 100% represents the white color and 0% represents black.
+The text box supports mathematical expressions.
+Scroll with mouse wheel to change value, right click to reset.
+Hold shift while scrolling to change the value faster."
 property = "depth"
 
 [node name="Label" parent="Header" index="0"]

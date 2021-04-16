@@ -3,6 +3,10 @@
 [ext_resource path="res://editor/brush/BrushPropertyEditor.tscn" type="PackedScene" id=1]
 
 [node name="BrushSizeEditor" instance=ExtResource( 1 )]
+hint_tooltip = "Brush size, in pixels.
+The text box supports mathematical expressions.
+Scroll with mouse wheel to change value, right click to reset.
+Hold shift while scrolling to change the value faster."
 
 [node name="SpinBox" parent="Header" index="1"]
 suffix = "px"
