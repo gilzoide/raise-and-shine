@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://editor/brush/BrushToolbar.gd" type="Script" id=1]
 [ext_resource path="res://editor/brush/BrushSizeEditor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://editor/brush/BrushDepthEditor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://editor/brush/BrushAngleEditor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://editor/brush/BrushHover2D.tscn" type="PackedScene" id=5]
 
 [node name="BrushToolbar" type="PanelContainer"]
 margin_right = 308.0
@@ -38,10 +39,12 @@ margin_right = 294.0
 margin_left = 312.0
 margin_right = 426.0
 
-[node name="Preview" type="TextureRect" parent="HBoxContainer"]
+[node name="Preview" type="Control" parent="HBoxContainer"]
 margin_left = 444.0
 margin_right = 488.0
 margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
-expand = true
-stretch_mode = 6
+
+[node name="BrushHover2D" parent="HBoxContainer/Preview" instance=ExtResource( 5 )]
+position = Vector2( 22, 22 )
+scale = Vector2( 35, 35 )

@@ -20,7 +20,7 @@ var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_v
 
 var _albedo_size: Vector2
 var _height_size: Vector2
-onready var _brush_mesh_instance = $Brush
+onready var _brush_mesh_instance: Spatial = $Brush
 onready var plate = $Plate
 onready var plane_mesh_instance = $Plate/Model
 onready var quad_mesh_instance = $Plate/QuadModel
@@ -116,10 +116,8 @@ func get_normal_vectors_enabled() -> bool:
 	return normal_vectors.visible
 
 
-func _on_Plate_input_event(_camera: Node, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-#	_brush_mesh_instance.translation = Vector3(click_position.x, click_position.y, _brush_mesh_instance.translation.z)
-	if event is InputEventMouse:
-		brush.uv = click_position_to_uv(click_position)
+func _on_Plate_input_event(_camera: Node, _event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
+	brush.uv = click_position_to_uv(click_position)
 
 
 func click_position_to_uv(click_position: Vector3) -> Vector2:
@@ -145,6 +143,7 @@ func _on_brush_changed() -> void:
 	_brush_mesh_instance.visible = brush.visible
 	if _brush_mesh_instance.visible:
 		_brush_mesh_instance.translation = uv_to_position(brush.uv)
+		_brush_mesh_instance.rotation_degrees = Vector3(0, 0, brush.angle)
 
 
 func _update_brush_size() -> void:

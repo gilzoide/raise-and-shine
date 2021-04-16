@@ -30,7 +30,6 @@ func _ready() -> void:
 	elif type == MapTypes.Type.NORMAL_MAP:
 		project.connect("normal_texture_changed", self, "_on_texture_updated")
 	
-	_brush_hover.texture = BrushDrawer.get_texture()
 	texture_rect.connect("scale_changed", self, "_on_brush_size_changed")
 	brush.connect("size_changed", self, "_on_brush_size_changed")
 	brush.connect("changed", self, "_on_brush_changed")
@@ -76,3 +75,4 @@ func _on_brush_changed() -> void:
 	if _brush_hover.visible:
 		var drawn_rect = texture_rect.drawn_rect
 		_brush_hover.position = drawn_rect.position + brush.uv * drawn_rect.size
+		_brush_hover.rotation_degrees = -brush.angle
