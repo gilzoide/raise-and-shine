@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/fixed_size_grid_container/fixed_size_grid_container.gd" type="Script" id=1]
+
+[node name="ScrollContainer" type="ScrollContainer"]
+margin_right = 419.0
+margin_bottom = 359.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Container" type="Container" parent="."]
+margin_right = 419.0
+margin_bottom = 359.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+direction = 1
+cell_size = Vector2( 120, 64 )
+
+[node name="ColorRect" type="ColorRect" parent="Container"]
+margin_right = 120.0
+margin_bottom = 64.0
+
+[node name="ColorRect2" type="ColorRect" parent="Container"]
+margin_top = 72.0
+margin_right = 120.0
+margin_bottom = 136.0
+color = Color( 1, 0.560784, 0, 1 )
+
+[node name="ColorRect3" type="ColorRect" parent="Container"]
+margin_top = 144.0
+margin_right = 120.0
+margin_bottom = 208.0
+color = Color( 0.945098, 1, 0.0117647, 1 )
+
+[node name="ColorRect4" type="ColorRect" parent="Container"]
+margin_top = 216.0
+margin_right = 120.0
+margin_bottom = 280.0
+color = Color( 0.0117647, 1, 0.560784, 1 )
+
+[node name="ColorRect5" type="ColorRect" parent="Container"]
+margin_top = 288.0
+margin_right = 120.0
+margin_bottom = 352.0
+color = Color( 0.0117647, 0.929412, 1, 1 )
+
+[node name="ColorRect6" type="ColorRect" parent="Container"]
+margin_left = 128.0
+margin_right = 248.0
+margin_bottom = 64.0
+color = Color( 0.0117647, 0.282353, 1, 1 )
+
+[node name="ColorRect7" type="ColorRect" parent="Container"]
+margin_left = 128.0
+margin_top = 72.0
+margin_right = 248.0
+margin_bottom = 136.0
+color = Color( 0.854902, 0.0117647, 1, 1 )
+
+[node name="ColorRect8" type="ColorRect" parent="Container"]
+margin_left = 128.0
+margin_top = 144.0
+margin_right = 248.0
+margin_bottom = 208.0
+color = Color( 1, 0.0117647, 0.290196, 1 )
