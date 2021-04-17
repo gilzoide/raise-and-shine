@@ -8,7 +8,7 @@ enum {
 	LOAD,
 	_SEPARATOR_0,
 	LOAD_HEIGHT,
-	LOAD_NORMAL,
+#	LOAD_NORMAL,
 	_SEPARATOR_1,
 	EXPORT_ALBEDO,
 	EXPORT_HEIGHT,
@@ -33,7 +33,7 @@ func _ready() -> void:
 	popup.add_separator()  # _SEPARATOR_0
 	
 	popup.add_item("Load height map", LOAD_HEIGHT)
-	popup.add_item("Load normal map", LOAD_NORMAL)
+#	popup.add_item("Load normal map", LOAD_NORMAL)
 	
 	popup.add_separator()  # _SEPARATOR_1
 	
@@ -58,8 +58,8 @@ func _on_item_pressed(id: int) -> void:
 		project.load_project_dialog()
 	elif id == LOAD_HEIGHT:
 		project.load_image_dialog(MapTypes.Type.HEIGHT_MAP)
-	elif id == LOAD_NORMAL:
-		project.load_image_dialog(MapTypes.Type.NORMAL_MAP)
+#	elif id == LOAD_NORMAL:
+#		project.load_image_dialog(MapTypes.Type.NORMAL_MAP)
 	elif id == EXPORT_ALBEDO:
 		project.save_image_dialog_type(MapTypes.Type.ALBEDO_MAP)
 	elif id == EXPORT_HEIGHT:
