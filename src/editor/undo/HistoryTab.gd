@@ -18,6 +18,8 @@ func _ready() -> void:
 
 
 func _on_history_revision_added(revision) -> void:
+	if not is_visible_in_tree():
+		return
 	for _i in range(0, revision_container.get_child_count() - revision.id):
 		var child = revision_container.get_child(0)
 		revision_container.remove_child(child)
@@ -26,6 +28,8 @@ func _on_history_revision_added(revision) -> void:
 
 
 func _on_history_revision_changed(revision) -> void:
+	if not is_visible_in_tree():
+		return
 	var revision_id = revision.id
 	revision_container.get_child(revision_container.get_child_count() - 1 - revision_id).set_current()
 
