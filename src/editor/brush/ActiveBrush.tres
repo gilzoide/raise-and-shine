@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource( 1 )
 size = 16.0
-depth = 100.0
+pressure = 100.0
 angle = 0.0
 texture = ExtResource( 2 )

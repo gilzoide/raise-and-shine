@@ -3,14 +3,14 @@
 [ext_resource path="res://editor/brush/BrushPropertyEditor.tscn" type="PackedScene" id=2]
 
 [node name="BrushDepthEditor" instance=ExtResource( 2 )]
-hint_tooltip = "Brush depth, in percentage. 100% represents the white color and 0% represents black.
+hint_tooltip = "Brush pressure, in percentage. 100% represents the white color and 0% represents black.
 The text box supports mathematical expressions.
 Scroll with mouse wheel to change value, right click to reset.
 Hold shift while scrolling to change the value faster."
-property = "depth"
+property = "pressure"
 
 [node name="Label" parent="Header" index="0"]
-text = "Depth"
+text = "Pressure"
 
 [node name="SpinBox" parent="Header" index="1"]
 max_value = 100.0

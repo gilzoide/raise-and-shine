@@ -29,7 +29,7 @@ func _notification(what: int) -> void:
 
 
 func draw_brush() -> void:
-	var depth = brush.get_depth01()
+	var depth = brush.get_pressure01()
 	var color = Color(depth, depth, depth)
 	VisualServer.canvas_item_clear(_canvas_item)
 	assert(brush.texture, "FIXME: brush must always have a texture")

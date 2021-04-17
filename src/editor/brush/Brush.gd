@@ -9,7 +9,7 @@ signal size_changed()
 const EMPTY_TEXTURE = preload("res://textures/pixel.png")
 
 export(float) var size = 32.0 setget set_size
-export(float, 0, 100) var depth = 100 setget set_depth
+export(float, 0, 100) var pressure = 100 setget set_pressure
 export(float, -180, 180) var angle = 0 setget set_angle
 export(Texture) var texture: Texture = EMPTY_TEXTURE setget set_texture
 
@@ -24,9 +24,9 @@ func set_size(value: float) -> void:
 		emit_signal("changed")
 
 
-func set_depth(value: float) -> void:
-	if value != depth:
-		depth = value
+func set_pressure(value: float) -> void:
+	if value != pressure:
+		pressure = value
 		emit_signal("changed")
 
 
@@ -56,5 +56,5 @@ func set_visible(value: bool) -> void:
 		emit_signal("changed")
 
 
-func get_depth01() -> float:
-	return depth / 100.0
+func get_pressure01() -> float:
+	return pressure / 100.0
