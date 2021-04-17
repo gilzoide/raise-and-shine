@@ -7,15 +7,17 @@ extends Viewport
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(ShaderMaterial) var height_to_normal_material = preload("res://editor/normal/HeightToNormal_material.tres")
 
-onready var height_map_rect = $HeightMapRect
-onready var current_normal = $CurrentNormal
+var _canvas_item
 onready var is_gles3 = OS.get_current_video_driver() == OS.VIDEO_DRIVER_GLES3
 
 
 func _ready() -> void:
 	get_texture().flags = Texture.FLAG_FILTER
-	height_map_rect.texture = HeightDrawer.get_texture()
-	height_map_rect.subrect = Rect2(Vector2.ZERO, size)
+	
+	_canvas_item = VisualServer.canvas_item_create()
+	VisualServer.canvas_item_set_parent(_canvas_item, find_world_2d().canvas)
+	VisualServer.canvas_item_set_material(_canvas_item, RID(height_to_normal_material))
+	
 	_on_height_texture_changed(project.height_texture)
 	project.connect("height_texture_changed", self, "_on_height_texture_changed")
 	project.connect("normal_texture_changed", self, "_on_normal_texture_changed")
@@ -24,19 +26,17 @@ func _ready() -> void:
 
 
 func update_height_in_rect(rect: Rect2) -> void:
-	height_map_rect.subrect = rect.grow(1).clip(Rect2(Vector2.ZERO, size))
-	height_map_rect.update()
+	var region = rect.grow(1).clip(Rect2(Vector2.ZERO, size))
+	VisualServer.canvas_item_clear(_canvas_item)
+	HeightDrawer.get_texture().draw_rect_region(_canvas_item, region, region)
 	render_target_update_mode = Viewport.UPDATE_ONCE
 
 
 func _on_normal_texture_changed(texture: Texture) -> void:
-	current_normal.texture = texture
-	current_normal.visible = true
-	current_normal.update()
+	VisualServer.canvas_item_clear(_canvas_item)
+	texture.draw(_canvas_item, Vector2.ZERO)
 	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	render_target_update_mode = Viewport.UPDATE_ONCE
-	yield(VisualServer, "frame_post_draw")
-	current_normal.visible = false
 
 
 func take_snapshot() -> void:
@@ -49,8 +49,6 @@ func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 	var new_size = texture.get_size()
 	if not new_size.is_equal_approx(size):
 		size = new_size
-		current_normal.rect_size = new_size
-		height_map_rect.rect_size = new_size
 
 
 func _on_height_drawer_cleared() -> void:

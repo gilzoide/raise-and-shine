@@ -47,7 +47,6 @@ func set_height_data(data: Image, empty_data: bool = false) -> void:
 	height_texture.create_from_image(height_image, height_texture.flags)
 	
 	emit_signal("height_texture_changed", height_texture, empty_data)
-	emit_signal("normal_texture_changed", normal_texture)
 
 
 func load_image_dialog(type: int) -> void:
@@ -112,7 +111,6 @@ func set_height_image(value: Image, _path: String = "") -> void:
 	height_data.copy_from_image(height_image)
 	height_texture.create_from_image(height_image, height_texture.flags)
 	emit_signal("height_texture_changed", height_texture, false)
-	set_normal_image(height_data.create_normalmap(height_algorithm))
 
 
 func set_normal_image(value: Image, _path: String = "") -> void:
@@ -138,4 +136,6 @@ func height_operation_ended(operation) -> void:
 func resize_maps(size: Vector2) -> void:
 	if height_image.get_size() != size:
 		height_image.resize(int(size.x), int(size.y))
+		height_texture.create_from_image(height_image, height_texture.flags)
 		history.push_revision(height_image)
+		emit_signal("height_texture_changed", height_texture, false)

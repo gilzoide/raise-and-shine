@@ -64,6 +64,7 @@ func clear_to_texture(texture: Texture) -> void:
 	VisualServer.canvas_item_clear(_canvas_item)
 	VisualServer.canvas_item_set_transform(_canvas_item, Transform2D.IDENTITY)
 	texture.draw_rect(_canvas_item, Rect2(Vector2.ZERO, size), false)
+	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	render_target_update_mode = Viewport.UPDATE_ONCE
 	yield(VisualServer, "frame_post_draw")
 	emit_signal("cleared")
