@@ -9,6 +9,11 @@ signal size_confirmed(size)
 onready var size_picker = $SizePicker
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_POST_POPUP:
+		size_picker.focus_first()
+
+
 func popup_with_size(size: Vector2) -> void:
 	size_picker.set_values(size)
 	popup_centered()

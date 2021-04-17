@@ -16,5 +16,6 @@ __meta__ = {
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 192.0
-margin_bottom = 70.0
+margin_bottom = 88.0
+
 [connection signal="confirmed" from="." to="." method="_on_confirmed"]

@@ -39,6 +39,10 @@ func update_values() -> void:
 	aspect_button.pressed = keep_aspect
 
 
+func focus_first() -> void:
+	width_picker.get_line_edit().grab_focus()
+
+
 func _on_WidthSpinBox_value_changed(value: float) -> void:
 	if not is_equal_approx(value, width):
 		width = int(value)

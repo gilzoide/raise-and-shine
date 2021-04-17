@@ -63,6 +63,7 @@ rounded = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="value_changed" from="WidthSpinBox" to="." method="_on_WidthSpinBox_value_changed"]
 [connection signal="toggled" from="AspectCheckButton" to="." method="_on_AspectCheckButton_toggled"]
 [connection signal="value_changed" from="HeightSpinBox" to="." method="_on_HeightSpinBox_value_changed"]
