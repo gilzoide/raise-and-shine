@@ -25,10 +25,8 @@ func _ready() -> void:
 	texture_rect.texture = textures[0]
 	if type == MapTypes.Type.ALBEDO_MAP:
 		project.connect("albedo_texture_changed", self, "_on_texture_updated")
-	elif type == MapTypes.Type.HEIGHT_MAP:
+	elif type == MapTypes.Type.HEIGHT_MAP or type == MapTypes.Type.NORMAL_MAP:
 		project.connect("height_texture_changed", self, "_on_texture_updated")
-	elif type == MapTypes.Type.NORMAL_MAP:
-		project.connect("normal_texture_changed", self, "_on_texture_updated")
 	
 	texture_rect.connect("scale_changed", self, "_on_brush_size_changed")
 	brush.connect("size_changed", self, "_on_brush_size_changed")
