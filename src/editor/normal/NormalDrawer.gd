@@ -18,9 +18,7 @@ func _ready() -> void:
 	VisualServer.canvas_item_set_parent(_canvas_item, find_world_2d().canvas)
 	VisualServer.canvas_item_set_material(_canvas_item, RID(height_to_normal_material))
 	
-	_on_height_drawer_size_changed()
-	var _err = HeightDrawer.connect("size_changed", self, "_on_height_drawer_size_changed")
-	_err = HeightDrawer.connect("brush_drawn", self, "update_height_in_rect")
+	var _err = HeightDrawer.connect("brush_drawn", self, "update_height_in_rect")
 	_err = HeightDrawer.connect("cleared", self, "_on_height_drawer_cleared")
 
 
@@ -31,25 +29,15 @@ func update_height_in_rect(rect: Rect2) -> void:
 	render_target_update_mode = Viewport.UPDATE_ONCE
 
 
-func _on_normal_texture_changed(texture: Texture) -> void:
-	VisualServer.canvas_item_clear(_canvas_item)
-	texture.draw(_canvas_item, Vector2.ZERO)
-	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
-	render_target_update_mode = Viewport.UPDATE_ONCE
-
-
 func take_snapshot() -> void:
 	project.normal_image = get_texture().get_data()
 	project.normal_image.convert(HeightMapData.NORMAL_IMAGE_FORMAT)
 	project.normal_texture.create_from_image(project.normal_image, project.normal_texture.flags)
 
 
-func _on_height_drawer_size_changed() -> void:
+func _on_height_drawer_cleared() -> void:
 	var new_size = HeightDrawer.size
 	if not new_size.is_equal_approx(size):
 		size = new_size
 		render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
-
-
-func _on_height_drawer_cleared() -> void:
 	update_height_in_rect(Rect2(Vector2.ZERO, size))
