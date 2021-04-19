@@ -39,6 +39,11 @@ func set_property(value: String) -> void:
 		_label.text = property.capitalize()
 
 
+func set_max_value(max_value) -> void:
+	_spinbox.max_value = max_value
+	_slider.max_value = max_value
+
+
 func _on_value_changed(value) -> void:
 	if is_nan(value) or is_inf(value):
 		_spinbox.value = _initial_value

@@ -17,7 +17,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 495.0
+margin_right = 512.0
 margin_bottom = 51.0
 custom_constants/separation = 18
 
@@ -33,15 +33,15 @@ margin_right = 159.0
 
 [node name="BrushDepthEditor" parent="HBoxContainer" instance=ExtResource( 3 )]
 margin_left = 177.0
-margin_right = 294.0
+margin_right = 311.0
 
 [node name="BrushAngleEditor" parent="HBoxContainer" instance=ExtResource( 4 )]
-margin_left = 312.0
-margin_right = 426.0
+margin_left = 329.0
+margin_right = 443.0
 
 [node name="Preview" type="Control" parent="HBoxContainer"]
-margin_left = 444.0
-margin_right = 488.0
+margin_left = 461.0
+margin_right = 505.0
 margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
 
