@@ -31,7 +31,7 @@ func update_height_in_rect(rect: Rect2) -> void:
 
 func take_snapshot() -> void:
 	project.normal_image = get_texture().get_data()
-	project.normal_image.convert(HeightMapData.NORMAL_IMAGE_FORMAT)
+	project.normal_image.convert(MapTypes.NORMAL_IMAGE_FORMAT)
 	project.normal_texture.create_from_image(project.normal_image, project.normal_texture.flags)
 
 

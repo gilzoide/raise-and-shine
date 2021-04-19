@@ -17,6 +17,9 @@ const ALBEDO_SRGB_TEXTURE = preload("res://textures/Albedo_SRGB_imagetexture.tre
 const HEIGHT_TEXTURE = preload("res://textures/Height_imagetexture.tres")
 const NORMAL_TEXTURE = preload("res://textures/Normal_imagetexture.tres")
 
+const HEIGHT_IMAGE_FORMAT = Image.FORMAT_L8
+const NORMAL_IMAGE_FORMAT = Image.FORMAT_RGB8
+
 
 static func map_name(type: int) -> String:
 	if type == Type.ALBEDO_MAP:
