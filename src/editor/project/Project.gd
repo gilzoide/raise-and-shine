@@ -7,8 +7,6 @@ extends Resource
 signal albedo_texture_changed(texture)
 signal height_texture_changed(texture, empty_data)
 signal normal_texture_changed(texture)
-#signal operation_applied(operation, height_data)
-#signal operation_ended(operation, height_data)
 
 export(Image) var albedo_image: Image = preload("res://textures/P1_2_Hair.png")
 export(Image) var height_image: Image = Image.new()
@@ -30,14 +28,9 @@ func _init() -> void:
 	history.connect("revision_changed", self, "_on_history_revision_changed")
 
 
-func _on_history_revision_changed(revision) -> void:
-	set_height_data(revision.heightmap)
-
-
-func set_height_data(data: Image, empty_data: bool = false) -> void:
-	height_image = data
+func set_height_image(image: Image, empty_data: bool = false) -> void:
+	height_image = image
 	height_texture.create_from_image(height_image, height_texture.flags)
-	
 	emit_signal("height_texture_changed", height_texture, empty_data)
 
 
@@ -46,7 +39,7 @@ func load_image_dialog(type: int) -> void:
 	if type == MapTypes.Type.ALBEDO_MAP:
 		method = "set_albedo_image"
 	elif type == MapTypes.Type.HEIGHT_MAP:
-		method = "set_height_image"
+		method = "_on_height_image_loaded"
 	elif type == MapTypes.Type.NORMAL_MAP:
 		method = "set_normal_image"
 	assert(method != "", "Invalid map type %d" % type)
@@ -84,12 +77,12 @@ func on_project_dialog_image(value: Image, path: String = "") -> void:
 	set_albedo_image(value)
 	var new_size = value.get_size()
 	height_image.create(new_size.x, new_size.y, false, MapTypes.HEIGHT_IMAGE_FORMAT)
-	set_height_data(height_image, true)
+	set_height_image(height_image, true)
 	history.push_revision(height_image)
 
 
 func set_albedo_image(value: Image, _path: String = "") -> void:
-	albedo_image.copy_from(value)
+	albedo_image = value
 	albedo_texture.create_from_image(albedo_image, albedo_texture.flags)
 	if OS.get_current_video_driver() == OS.VIDEO_DRIVER_GLES3:
 		albedo_image.convert(Image.FORMAT_RGBAH)
@@ -97,31 +90,10 @@ func set_albedo_image(value: Image, _path: String = "") -> void:
 	emit_signal("albedo_texture_changed", albedo_texture)
 
 
-func set_height_image(value: Image, _path: String = "") -> void:
-	height_image.copy_from(value)
-	height_image.convert(Image.FORMAT_L8)
-	height_texture.create_from_image(height_image, height_texture.flags)
-	emit_signal("height_texture_changed", height_texture, false)
-
-
 func set_normal_image(value: Image, _path: String = "") -> void:
-	normal_image.copy_from(value)
+	normal_image = value
 	normal_texture.create_from_image(normal_image, normal_texture.flags)
 	emit_signal("normal_texture_changed", normal_texture)
-
-
-#func apply_operation(operation, amount: float) -> void:
-#	if operation.is_easing_dirty:
-#		operation.recalculate_easing()
-#	height_algorithm.apply_height_increments(height_data, operation.cached_target, amount)
-#	height_data.fill_image(height_image)
-#	height_texture.set_data(height_image)
-#	emit_signal("operation_applied", operation, height_data)
-#
-#
-#func height_operation_ended(operation) -> void:
-#	history.push_revision(height_data)
-#	emit_signal("operation_ended", operation, height_data)
 
 
 func resize_maps(size: Vector2) -> void:
@@ -130,3 +102,12 @@ func resize_maps(size: Vector2) -> void:
 		height_texture.create_from_image(height_image, height_texture.flags)
 		history.push_revision(height_image)
 		emit_signal("height_texture_changed", height_texture, false)
+
+
+func _on_height_image_loaded(value: Image, _path: String = "") -> void:
+	value.convert(MapTypes.HEIGHT_IMAGE_FORMAT)
+	set_height_image(value)
+
+
+func _on_history_revision_changed(revision) -> void:
+	set_height_image(revision.heightmap)
