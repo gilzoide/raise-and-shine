@@ -99,9 +99,8 @@ func set_normal_image(value: Image, _path: String = "") -> void:
 func resize_maps(size: Vector2) -> void:
 	if height_image.get_size() != size:
 		height_image.resize(int(size.x), int(size.y))
-		height_texture.create_from_image(height_image, height_texture.flags)
+		set_height_image(height_image)
 		history.push_revision(height_image)
-		emit_signal("height_texture_changed", height_texture, false)
 
 
 func _on_height_image_loaded(value: Image, _path: String = "") -> void:

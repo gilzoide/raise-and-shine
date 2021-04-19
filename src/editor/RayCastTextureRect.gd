@@ -8,12 +8,10 @@ extends Control
 signal drag_started(button_index, uv)
 signal drag_moved(uv)
 signal drag_ended()
-signal scale_changed()
 
 export(Resource) var settings = preload("res://settings/DefaultSettings.tres")
-export(Texture) var texture: Texture
+export(Texture) var texture: Texture setget set_texture
 var drawn_rect: Rect2
-var draw_scale: float
 
 
 func _draw() -> void:
@@ -39,6 +37,11 @@ func _gui_input(event: InputEvent) -> void:
 		drag_move(event)
 
 
+func set_texture(value: Texture) -> void:
+	texture = value
+	update()
+
+
 func start_dragging(event: InputEventMouseButton) -> void:
 	emit_signal("drag_started", event.button_index, position_to_uv(event.position))
 
@@ -59,15 +62,12 @@ func update_drawn_rect() -> void:
 	# Ref: https://github.com/godotengine/godot/blob/7961a1dea3e7ce8c4e7197a0000e35ab31e9ff2e/scene/gui/texture_rect.cpp#L66-L81
 	var texture_size = texture.get_size()
 	var size = rect_size - Vector2(2, 2)
-	draw_scale = size.y / texture_size.y
-	var tex_width = texture_size.x * draw_scale
+	var tex_width = texture_size.x * size.y / texture_size.y
 	var tex_height = size.y
 	
 	if tex_width > size.x:
 		tex_width = size.x
-		draw_scale = tex_width / texture_size.x
-		tex_height = texture_size.y * draw_scale
+		tex_height = texture_size.y * tex_width / texture_size.x
 	
 	var offset = Vector2((size.x - tex_width) * 0.5, (size.y - tex_height) * 0.5)
 	drawn_rect = Rect2(offset.x + 1, offset.y + 1, tex_width, tex_height)
-	emit_signal("scale_changed")

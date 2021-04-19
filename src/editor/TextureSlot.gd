@@ -23,14 +23,19 @@ var _dragging := false
 func _ready() -> void:
 	textures = MapTypes.map_textures(type)
 	texture_rect.texture = textures[0]
-	if type == MapTypes.Type.ALBEDO_MAP:
-		project.connect("albedo_texture_changed", self, "_on_texture_updated")
-	elif type == MapTypes.Type.HEIGHT_MAP or type == MapTypes.Type.NORMAL_MAP:
-		project.connect("height_texture_changed", self, "_on_texture_updated")
 	
-	texture_rect.connect("scale_changed", self, "_on_brush_size_changed")
-	brush.connect("size_changed", self, "_on_brush_size_changed")
-	brush.connect("changed", self, "_on_brush_changed")
+	var _err
+	if type == MapTypes.Type.ALBEDO_MAP:
+		_err = project.connect("albedo_texture_changed", self, "_on_drawn_texture_updated")
+	elif type == MapTypes.Type.HEIGHT_MAP:
+		_err = HeightDrawer.connect("size_changed", self, "_on_drawn_texture_updated")
+	elif type == MapTypes.Type.NORMAL_MAP:
+		_err = NormalDrawer.connect("size_changed", self, "_on_drawn_texture_updated")
+	_err = HeightDrawer.connect("size_changed", self, "_recalculate_brush_scale")
+	
+	_err = texture_rect.connect("draw", self, "_recalculate_brush_scale", [], CONNECT_DEFERRED)
+	_err = brush.connect("size_changed", self, "_on_brush_size_changed")
+	_err = brush.connect("changed", self, "_on_brush_changed")
 
 
 func _notification(what: int) -> void:
@@ -40,8 +45,9 @@ func _notification(what: int) -> void:
 		brush.visible = false
 
 
-func _on_texture_updated(_texture: Texture, _empty_data: bool = false) -> void:
+func _on_drawn_texture_updated(_texture: Texture = null, _empty_data: bool = false) -> void:
 	texture_rect.update()
+	_recalculate_brush_scale()
 
 
 func _on_TextureRect_drag_started(button_index: int, uv: Vector2) -> void:
@@ -65,7 +71,12 @@ func _on_TextureRect_drag_moved(uv: Vector2) -> void:
 
 
 func _on_brush_size_changed() -> void:
-	_brush_hover.scale = Vector2(brush.size, brush.size) * texture_rect.draw_scale
+	_recalculate_brush_scale()
+
+
+func _recalculate_brush_scale() -> void:
+	var texture_pixel_size = texture_rect.drawn_rect.size / HeightDrawer.size
+	_brush_hover.scale = Vector2(brush.size, brush.size) * texture_pixel_size
 
 
 func _on_brush_changed() -> void:
