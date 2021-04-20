@@ -68,6 +68,7 @@ func start_panning() -> void:
 	panning = true
 	grab_focus()
 	set_pan_cursor()
+	brush.visible = false
 	if OS.get_name() != "HTML5":
 		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 	else:
@@ -77,6 +78,8 @@ func start_panning() -> void:
 func stop_panning() -> void:
 	panning = false
 	set_normal_cursor()
+	if Rect2(Vector2.ZERO, rect_size).has_point(get_local_mouse_position()):
+		brush.visible = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
