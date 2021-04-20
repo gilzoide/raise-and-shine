@@ -7,31 +7,49 @@
 
 [sub_resource type="ImageTexture" id=1]
 
-[node name="BrushLibrary" type="ScrollContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-scroll_horizontal_enabled = false
+[node name="BrushLibrary" type="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 102.0
+size_flags_horizontal = 3
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FixedCellGridContainer" type="Container" parent="."]
+[node name="ImportButton" type="Button" parent="."]
+margin_left = 462.0
+margin_right = 561.0
+margin_bottom = 20.0
+size_flags_horizontal = 4
+text = "Import image"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_top = 24.0
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 102.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FixedCellGridContainer" type="Container" parent="ScrollContainer"]
+margin_right = 1024.0
+margin_bottom = 78.0
 rect_min_size = Vector2( 0, 78 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 3 )
 cell_size = Vector2( 128, 78 )
 
-[node name="RectangleBrushTextureItem" parent="FixedCellGridContainer" instance=ExtResource( 1 )]
+[node name="RectangleBrushTextureItem" parent="ScrollContainer/FixedCellGridContainer" instance=ExtResource( 1 )]
 margin_right = 128.0
 hint_tooltip = "Rectangle"
 title = "Rectangle"
 builtin = true
 
-[node name="CircleBrushTextureItem" parent="FixedCellGridContainer" instance=ExtResource( 1 )]
+[node name="CircleBrushTextureItem" parent="ScrollContainer/FixedCellGridContainer" instance=ExtResource( 1 )]
 margin_left = 136.0
 margin_right = 264.0
 hint_tooltip = "Circle"
@@ -40,7 +58,7 @@ title = "Circle"
 texture = ExtResource( 4 )
 builtin = true
 
-[node name="GrayscaleAlbedoBrushLibraryItem" parent="FixedCellGridContainer" instance=ExtResource( 1 )]
+[node name="GrayscaleAlbedoBrushLibraryItem" parent="ScrollContainer/FixedCellGridContainer" instance=ExtResource( 1 )]
 margin_left = 272.0
 margin_right = 400.0
 hint_tooltip = "Grayscale Albedo"
@@ -48,3 +66,5 @@ pressed = false
 title = "Grayscale Albedo"
 texture = SubResource( 1 )
 builtin = true
+
+[connection signal="pressed" from="ImportButton" to="." method="_on_ImportButton_pressed"]
