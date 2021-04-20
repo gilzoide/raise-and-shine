@@ -147,5 +147,5 @@ func _on_brush_changed() -> void:
 
 
 func _update_brush_size() -> void:
-	var plane_scale = initial_plane_size / _height_size
+	var plane_scale = plane_size / _height_size
 	_brush_mesh_instance.scale = Vector3(brush.size * plane_scale.x, brush.size * plane_scale.y, 1)
