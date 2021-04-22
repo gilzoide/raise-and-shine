@@ -20,6 +20,23 @@ var current_zoom = 0
 var in_notification := false
 
 
+func _notification(what: int) -> void:
+	in_notification = true
+	if what == NOTIFICATION_FOCUS_ENTER:
+		set_process(true)
+	elif what == NOTIFICATION_FOCUS_EXIT:
+		set_process(false)
+	elif what == NOTIFICATION_MOUSE_ENTER:
+		grab_focus()
+		brush.visible = true
+	elif what == NOTIFICATION_MOUSE_EXIT:
+		stop_panning()
+		release_focus()
+		brush.visible = false
+	elif what == NOTIFICATION_RESIZED and camera:
+		camera.keep_aspect = Camera.KEEP_HEIGHT if rect_size.aspect() >= 1 else Camera.KEEP_WIDTH
+
+
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("visualizer_zoom_up"):
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
@@ -54,7 +71,6 @@ func _gui_input(event: InputEvent) -> void:
 		if dragging:
 			ControlExtras.wrap_mouse_motion_if_needed(self, event)
 			HeightDrawer.draw_brush_centered_uv(brush, brush.uv)
-#			selection.set_drag_hovering(event.relative, PhotoBooth.last_hovered_uv)
 	viewport.unhandled_input(event)
 	
 
@@ -116,22 +132,6 @@ func zoom_to(zoom: float) -> void:
 	zoom_slider.value = zoom
 	current_zoom = clamp(zoom, 0, 1)
 	set_camera_zoom_percent(current_zoom)
-
-
-func _notification(what: int) -> void:
-	in_notification = true
-	if what == NOTIFICATION_FOCUS_ENTER:
-		set_process(true)
-	elif what == NOTIFICATION_FOCUS_EXIT:
-		set_process(false)
-	elif what == NOTIFICATION_MOUSE_ENTER:
-		grab_focus()
-		brush.visible = true
-	elif what == NOTIFICATION_MOUSE_EXIT:
-		stop_panning()
-		release_focus()
-		brush.visible = false
-	in_notification = false
 
 
 func update_camera_with_pan(_pan: Vector2) -> void:
