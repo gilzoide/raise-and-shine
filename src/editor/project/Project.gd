@@ -76,9 +76,10 @@ func on_project_dialog_image(value: Image, path: String = "") -> void:
 	last_loaded_filename = path.get_file().get_basename()
 	set_albedo_image(value)
 	var new_size = value.get_size()
-	height_image.create(new_size.x, new_size.y, false, MapTypes.HEIGHT_IMAGE_FORMAT)
-	set_height_image(height_image, true)
-	history.push_revision(height_image)
+	var new_height_image = Image.new()
+	new_height_image.create(new_size.x, new_size.y, false, MapTypes.HEIGHT_IMAGE_FORMAT)
+	set_height_image(new_height_image, true)
+	history.push_revision(new_height_image)
 
 
 func set_albedo_image(value: Image, _path: String = "") -> void:
