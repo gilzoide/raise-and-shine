@@ -1,10 +1,9 @@
-[gd_resource type="ShaderMaterial" load_steps=6 format=2]
+[gd_resource type="ShaderMaterial" load_steps=5 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/Plane_shader.shader" type="Shader" id=1]
 [ext_resource path="res://textures/Albedo_imagetexture.tres" type="Texture" id=2]
 [ext_resource path="res://textures/Height_imagetexture.tres" type="Texture" id=3]
 [ext_resource path="res://textures/Normal_imagetexture.tres" type="Texture" id=4]
-[ext_resource path="res://textures/Selection_imagetexture.tres" type="Texture" id=5]
 
 [resource]
 shader = ExtResource( 1 )
@@ -17,4 +16,3 @@ shader_param/height_scale = 0.5
 shader_param/albedo_map = ExtResource( 2 )
 shader_param/height_map = ExtResource( 3 )
 shader_param/normal_map = ExtResource( 4 )
-shader_param/selection_map = ExtResource( 5 )

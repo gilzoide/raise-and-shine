@@ -7,7 +7,7 @@ extends Spatial
 const brush = preload("res://editor/brush/ActiveBrush.tres")
 const project = preload("res://editor/project/ActiveEditorProject.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
-const quad_material = preload("res://editor/visualizers/3D/Quad_material.tres")
+const brush_material = preload("res://editor/visualizers/3D/Brush3D_material.tres")
 const operation = preload("res://editor/height/DragOperation.tres")
 const selection = preload("res://editor/selection/ActiveSelection.tres")
 const LightPoint = preload("res://editor/visualizers/LightPoint.tscn")
@@ -20,14 +20,15 @@ var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_v
 
 var _albedo_size: Vector2
 var _height_size: Vector2
-onready var _brush_mesh_instance: Spatial = $Brush
+var _height_scale: float
+onready var _brush_spatial: Spatial = $Brush
+onready var _brush_mesh_instance: Spatial = $Brush/MeshInstance
 onready var plate = $Plate
 onready var plane_mesh_instance = $Plate/Model
-onready var quad_mesh_instance = $Plate/QuadModel
 onready var border = $Plate/Border
-onready var lights = $Lights
+onready var _lights = $Lights
 onready var ambient_light = $WorldEnvironment
-onready var normal_vectors = $Plate/Model/NormalVectorsMultiMeshInstance
+onready var _normal_vectors = $Plate/Model/NormalVectorsMultiMeshInstance
 onready var initial_plane_size = plane_mesh_instance.mesh.size
 onready var plane_size = initial_plane_size
 onready var screenshot_viewport = $ScreenshotViewport
@@ -35,12 +36,10 @@ onready var screenshot_camera = $ScreenshotViewport/Camera
 
 func _ready() -> void:
 	plane_material.set_shader_param("normal_map", NormalDrawer.get_texture())
-	quad_material.set_shader_param("normal_map", NormalDrawer.get_texture())
 	plane_material.set_shader_param("height_map", HeightDrawer.get_texture())
-	quad_material.set_shader_param("height_map", HeightDrawer.get_texture())
+	brush_material.albedo_texture = BrushDrawer.get_texture()
 	var _err = brush.connect("changed", self, "_on_brush_changed")
 	_err = brush.connect("size_changed", self, "_update_brush_size")
-	_brush_mesh_instance.material_override.albedo_texture = BrushDrawer.get_texture()
 	
 	_on_albedo_texture_changed(project.albedo_texture)
 	_on_height_texture_changed(project.height_texture)
@@ -61,19 +60,17 @@ func _on_albedo_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 		plane_size.y = initial_plane_size.y / aspect
 		var inv_aspect = 1.0 / aspect
 		plane_mesh_instance.scale = Vector3(1, 1, inv_aspect)
-		quad_mesh_instance.scale = Vector3(1, inv_aspect, 1)
 	else:
 		plane_size.x = initial_plane_size.x * aspect
 		plane_size.y = initial_plane_size.y
 		plane_mesh_instance.scale = Vector3(aspect, 1, 1)
-		quad_mesh_instance.scale = Vector3(aspect, 1, 1)
 	
 	border.setup_with_plane_size(plane_size)
-	normal_vectors.set_plane_size(plane_size)
+	_normal_vectors.set_plane_size(plane_size)
 	
-	var height_scale = min(plane_size.x, plane_size.y) * 0.5
-	plane_material.set_shader_param("height_scale", height_scale)
-	normal_vectors.set_height_scale(height_scale)
+	_height_scale = min(plane_size.x, plane_size.y) * 0.5
+	plane_material.set_shader_param("height_scale", _height_scale)
+	_normal_vectors.set_height_scale(_height_scale)
 
 
 func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> void:
@@ -86,29 +83,29 @@ func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 
 
 func get_light_nodes() -> Array:
-	return lights.get_children()
+	return _lights.get_children()
 
 
 func set_lights_enabled(value: bool) -> void:
-	lights.visible = value
+	_lights.visible = value
 
 
 func get_lights_enabled() -> bool:
-	return lights.visible
+	return _lights.visible
 
 
 func add_light():
 	var new_light = LightPoint.instance()
-	lights.add_child(new_light)
+	_lights.add_child(new_light)
 	return new_light
 
 
 func set_normal_vectors_enabled(value: bool) -> void:
-	normal_vectors.visible = value
+	_normal_vectors.visible = value
 
 
 func get_normal_vectors_enabled() -> bool:
-	return normal_vectors.visible
+	return _normal_vectors.visible
 
 
 func _on_Plate_input_event(_camera: Node, _event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
@@ -120,9 +117,9 @@ func click_position_to_uv(click_position: Vector3) -> Vector2:
 	return Vector2(local_click_position.x, local_click_position.z) / plane_size + Vector2(0.5, 0.5)
 
 
-func uv_to_position(uv: Vector2) -> Vector3:
+func uv_to_position(uv: Vector2, z: float = 0) -> Vector3:
 	var local_position = (uv - Vector2(0.5, 0.5)) * plane_size
-	return to_global(Vector3(local_position.x, -local_position.y, 5))
+	return Vector3(local_position.x, -local_position.y, z)
 
 
 func take_screenshot() -> void:
@@ -135,12 +132,13 @@ func take_screenshot() -> void:
 
 
 func _on_brush_changed() -> void:
-	_brush_mesh_instance.visible = brush.visible
-	if _brush_mesh_instance.visible:
-		_brush_mesh_instance.translation = uv_to_position(brush.uv)
-		_brush_mesh_instance.rotation_degrees = Vector3(0, 0, brush.angle)
+	_brush_spatial.visible = brush.visible
+	if _brush_spatial.visible:
+		_brush_mesh_instance.translation = Vector3(0, 0, _height_scale * brush.get_pressure01())
+		_brush_spatial.translation = uv_to_position(brush.uv, _brush_spatial.translation.z)
+		_brush_spatial.rotation_degrees = Vector3(0, 0, brush.angle)
 
 
 func _update_brush_size() -> void:
 	var plane_scale = plane_size / _height_size
-	_brush_mesh_instance.scale = Vector3(brush.size * plane_scale.x, brush.size * plane_scale.y, 1)
+	_brush_spatial.scale = Vector3(brush.size * plane_scale.x, brush.size * plane_scale.y, 1)

@@ -11,7 +11,6 @@ const int ALBEDO_FROM_NORMAL = 2;
 uniform sampler2D albedo_map : hint_albedo;
 uniform sampler2D height_map;
 uniform sampler2D normal_map : hint_normal;
-uniform sampler2D selection_map;
 uniform bool use_albedo = true;
 uniform bool use_height = true;
 uniform bool use_normal = true;

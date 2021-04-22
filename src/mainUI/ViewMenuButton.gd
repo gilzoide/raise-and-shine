@@ -26,7 +26,6 @@ enum {
 }
 
 export(ShaderMaterial) var plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
-export(ShaderMaterial) var quad_material = preload("res://editor/visualizers/3D/Quad_material.tres")
 export(NodePath) var workbench_container_path
 
 onready var menu_popup = get_popup()
@@ -100,16 +99,13 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 	elif id == TOGGLE_ALBEDO:
 		var value = not plane_material.get_shader_param("use_albedo")
 		plane_material.set_shader_param("use_albedo", value)
-		quad_material.set_shader_param("use_albedo", value)
 		update_albedo_check_item()
 	elif id == TOGGLE_HEIGHT:
 		plane_material.set_shader_param("use_height", not plane_material.get_shader_param("use_height"))
-		# quad_material never uses height, that's why it exists in the first place
 		update_height_check_item()
 	elif id == TOGGLE_NORMAL:
 		var value = not plane_material.get_shader_param("use_normal")
 		plane_material.set_shader_param("use_normal", value)
-		quad_material.set_shader_param("use_normal", value)
 		update_normal_check_item()
 	elif id == TOGGLE_LIGHTS:
 		PhotoBooth.lights_enabled = not PhotoBooth.lights_enabled
@@ -117,22 +113,18 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 	elif id == TOGGLE_ALPHA:
 		var value = not plane_material.get_shader_param("use_alpha")
 		plane_material.set_shader_param("use_alpha", value)
-		quad_material.set_shader_param("use_alpha", value)
 		update_background_check_item()
 #	elif id == TOGGLE_NORMAL_VECTORS:
 #		PhotoBooth.normal_vectors_enabled = not PhotoBooth.normal_vectors_enabled
 #		update_normal_vectors_check_item()
 	elif id == ALBEDO_FROM_ALBEDO:
 		plane_material.set_shader_param("albedo_source", 0)
-		quad_material.set_shader_param("albedo_source", 0)
 		update_albedo_from_check_items()
 	elif id == ALBEDO_FROM_HEIGHT:
 		plane_material.set_shader_param("albedo_source", 1)
-		quad_material.set_shader_param("albedo_source", 1)
 		update_albedo_from_check_items()
 	elif id == ALBEDO_FROM_NORMAL:
 		plane_material.set_shader_param("albedo_source", 2)
-		quad_material.set_shader_param("albedo_source", 2)
 		update_albedo_from_check_items()
 	elif id == LAYOUT_RESTORE_DEFAULT:
 		var layout = ResourceLoader.load("res://mainUI/DefaultLayout.tres", "", true)

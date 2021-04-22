@@ -1,31 +1,23 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/Environment.tres" type="Environment" id=1]
 [ext_resource path="res://editor/visualizers/PhotoBoothModel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://editor/visualizers/3D/PhotoBooth.gd" type="Script" id=3]
 [ext_resource path="res://editor/visualizers/LightPoint.tscn" type="PackedScene" id=4]
 [ext_resource path="res://editor/visualizers/3D/AmbientLightWorldEnvironment.gd" type="Script" id=5]
-[ext_resource path="res://editor/visualizers/3D/Quad_material.tres" type="Material" id=6]
 [ext_resource path="res://editor/brush/BrushBorder_arraymesh.tres" type="ArrayMesh" id=7]
 [ext_resource path="res://editor/visualizers/3D/UnshadedVerticesAlbedo_material.tres" type="Material" id=8]
 [ext_resource path="res://editor/visualizers/3D/PlateBorder.gd" type="Script" id=9]
 [ext_resource path="res://editor/visualizers/InvertScreenColor_spatial_material.tres" type="Material" id=10]
 [ext_resource path="res://editor/visualizers/3D/Plane_material.tres" type="Material" id=11]
+[ext_resource path="res://editor/visualizers/3D/Brush3D_material.tres" type="Material" id=12]
 
-[sub_resource type="QuadMesh" id=1]
-size = Vector2( 128, 128 )
+[sub_resource type="ArrayMesh" id=1]
 
-[sub_resource type="ArrayMesh" id=2]
-
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape" id=2]
 extents = Vector3( 1024, 0.1, 1024 )
 
-[sub_resource type="SpatialMaterial" id=4]
-flags_transparent = true
-flags_unshaded = true
-albedo_color = Color( 1, 1, 1, 0.85 )
-
-[sub_resource type="QuadMesh" id=5]
+[sub_resource type="QuadMesh" id=3]
 
 [node name="PhotoBooth" type="Spatial"]
 script = ExtResource( 3 )
@@ -34,40 +26,33 @@ script = ExtResource( 3 )
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 
 [node name="Model" parent="Plate" instance=ExtResource( 2 )]
+layers = 9
 material_override = ExtResource( 11 )
 cast_shadow = 0
 generate_lightmap = false
-material/0 = null
-
-[node name="QuadModel" type="MeshInstance" parent="Plate"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
-layers = 12
-material_override = ExtResource( 6 )
-cast_shadow = 0
-generate_lightmap = false
-mesh = SubResource( 1 )
-skeleton = NodePath("")
-software_skinning_transform_normals = false
 material/0 = null
 
 [node name="Border" type="MeshInstance" parent="Plate"]
 material_override = ExtResource( 8 )
 cast_shadow = 0
 generate_lightmap = false
-mesh = SubResource( 2 )
+mesh = SubResource( 1 )
 skeleton = NodePath("")
 software_skinning_transform_normals = false
 script = ExtResource( 9 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Plate"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
-[node name="Brush" type="MeshInstance" parent="."]
-transform = Transform( 64, 0, 0, 0, 64, 0, 0, 0, 1, 0, 0, 5 )
+[node name="Brush" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
 visible = false
-material_override = SubResource( 4 )
-mesh = SubResource( 5 )
-skeleton = NodePath("")
+
+[node name="MeshInstance" type="MeshInstance" parent="Brush"]
+material_override = ExtResource( 12 )
+cast_shadow = 0
+generate_lightmap = false
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="Border" type="MeshInstance" parent="Brush"]

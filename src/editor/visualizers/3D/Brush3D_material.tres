@@ -1,4 +1,6 @@
 [gd_resource type="SpatialMaterial" format=2]
 
 [resource]
+flags_transparent = true
+flags_unshaded = true
 params_cull_mode = 2

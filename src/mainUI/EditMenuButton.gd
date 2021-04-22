@@ -54,7 +54,7 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 			_size_picker_popup = load("res://mainUI/SizePickerPopup.tscn").instance()
 			add_child(_size_picker_popup)
 		var _err = _size_picker_popup.connect("size_confirmed", project, "resize_maps", [], CONNECT_ONESHOT)
-		_size_picker_popup.popup_with_size(project.height_image.get_size())
+		_size_picker_popup.popup_with_size(HeightDrawer.size)
 
 
 func _on_menu_popup_about_to_show() -> void:
