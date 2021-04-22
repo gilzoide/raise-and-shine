@@ -19,6 +19,8 @@ func set_revision(revision) -> void:
 	var height_texture = ImageTexture.new()
 	height_texture.create_from_image(revision.heightmap, HEIGHT_TEXTURE_FLAGS)
 	texture_rect.texture = height_texture
+	var size = height_texture.get_size()
+	button.hint_tooltip = "%dx%d" % [size.x, size.y]
 
 
 func set_current() -> void:
