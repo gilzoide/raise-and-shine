@@ -25,9 +25,9 @@ skeleton = NodePath("")
 material/0 = null
 
 [node name="SpotLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 64 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 128 )
 layers = 15
-omni_range = 256.0
+omni_range = 512.0
 omni_attenuation = 0.5
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
