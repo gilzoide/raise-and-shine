@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://editor/brush/BrushDirectionPickerButton.gd" type="Script" id=1]
 [ext_resource path="res://editor/brush/BrushDirectionPicker.gd" type="Script" id=2]
@@ -11,17 +11,9 @@
 [ext_resource path="res://addons/cubic_bezier_controls/easings/ease_out_sine.tres" type="Resource" id=9]
 [ext_resource path="res://addons/cubic_bezier_controls/easings/ease_linear.tres" type="Resource" id=10]
 [ext_resource path="res://editor/brush/PresetsButton.gd" type="Script" id=11]
-[ext_resource path="res://editor/brush/HeightOperation_canvasitem.shader" type="Shader" id=12]
-[ext_resource path="res://textures/CursorIcon.svg" type="Texture" id=13]
+[ext_resource path="res://editor/brush/BrushCurve_material.tres" type="Material" id=14]
 
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 12 )
-shader_param/is_flat = true
-shader_param/direction = 0.67
-shader_param/control1 = Vector2( 0, 0 )
-shader_param/control2 = Vector2( 1, 1 )
-
-[sub_resource type="Resource" id=2]
+[sub_resource type="Resource" id=1]
 resource_local_to_scene = true
 script = ExtResource( 4 )
 control1 = Vector2( 0, 0 )
@@ -35,7 +27,6 @@ hint_tooltip = "Choose height tool curve and direction."
 focus_mode = 0
 custom_constants/hseparation = 8
 text = "Curve"
-icon = ExtResource( 13 )
 align = 2
 script = ExtResource( 1 )
 __meta__ = {
@@ -43,7 +34,7 @@ __meta__ = {
 }
 
 [node name="Preview" type="ColorRect" parent="."]
-material = SubResource( 1 )
+material = ExtResource( 14 )
 anchor_bottom = 1.0
 margin_left = 6.0
 margin_top = 3.0
@@ -121,7 +112,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-curve = SubResource( 2 )
+curve = SubResource( 1 )
 
 [node name="PresetsButton" type="ToolButton" parent="PanelPopup/VBoxContainer/HBoxContainer/AspectRatioContainer"]
 margin_top = 190.0
@@ -281,7 +272,7 @@ line_width = 4.0
 
 [node name="Preview_2" type="ColorRect" parent="PanelPopup/VBoxContainer/HBoxContainer/DirectionChooser"]
 show_behind_parent = true
-material = SubResource( 1 )
+material = ExtResource( 14 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2

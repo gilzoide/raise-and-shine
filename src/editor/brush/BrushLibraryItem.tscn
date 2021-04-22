@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://editor/brush/BrushLibraryItem.gd" type="Script" id=1]
 [ext_resource path="res://textures/pixel.png" type="Texture" id=2]
 [ext_resource path="res://mainUI/ToolButtons_theme.tres" type="Theme" id=3]
 [ext_resource path="res://editor/brush/BrushLibraryItem_buttongroup.tres" type="ButtonGroup" id=4]
+[ext_resource path="res://editor/brush/BrushCurve_Library_material.tres" type="Material" id=5]
 
 [node name="BrushLibraryItem" type="Button"]
 margin_right = 64.0
@@ -27,6 +28,7 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Container"]
+material = ExtResource( 5 )
 margin_right = 78.0
 margin_bottom = 60.0
 size_flags_vertical = 3

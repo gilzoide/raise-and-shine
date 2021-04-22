@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://editor/brush/BrushCurve_canvasitem.shader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/is_flat = true
+shader_param/direction = 0.67
+shader_param/control1 = Vector2( 0, 0 )
+shader_param/control2 = Vector2( 1, 1 )

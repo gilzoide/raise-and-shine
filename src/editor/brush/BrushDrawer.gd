@@ -5,6 +5,7 @@
 extends Viewport
 
 export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
+export(Material) var brush_curve_material = preload("res://editor/brush/BrushCurve_material.tres")
 export(int) var minimum_size = 128
 
 var erasing = false setget set_erasing, get_erasing
@@ -16,6 +17,7 @@ var _canvas_item
 func _ready() -> void:
 	_canvas_item = VisualServer.canvas_item_create()
 	VisualServer.canvas_item_set_parent(_canvas_item, find_world_2d().canvas)
+	VisualServer.canvas_item_set_material(_canvas_item, RID(brush_curve_material))
 	
 	_update_size()
 	_on_brush_changed()

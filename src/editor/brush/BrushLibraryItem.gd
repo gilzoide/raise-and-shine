@@ -5,7 +5,7 @@
 tool
 extends Button
 
-const HEIGHT_TEXTURE_FLAGS = 0
+const HEIGHT_TEXTURE_FLAGS = Texture.FLAG_FILTER
 const EMPTY_TEXTURE = preload("res://textures/pixel.png")
 
 export(String) var title := "" setget set_title

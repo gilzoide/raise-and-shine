@@ -16,6 +16,7 @@ vec2 interpolate_bezier(vec2 start, vec2 c1, vec2 c2, vec2 end, float t) {
 			+ c2 * omt * t2 * 3.0
 			+ end * t3;
 }
+
 float directional_height(vec2 uv) {
 	float t;
 	if(isnan(direction)) {
@@ -31,5 +32,9 @@ float directional_height(vec2 uv) {
 
 void fragment() {
 	float height = is_flat ? 1.0 : clamp(directional_height((UV - 0.5) * 2.0), 0, 1);
-	COLOR.rgb *= height;
+	vec4 texel = texture(TEXTURE, UV);
+	float grayscale = dot(texel.rgb, vec3(0.3, 0.59, 0.11));
+	texel.rgb = vec3(grayscale);
+	texel.a *= height;
+	COLOR = texel;
 }
