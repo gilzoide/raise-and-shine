@@ -34,7 +34,5 @@ void fragment() {
 	float height = is_flat ? 1.0 : clamp(directional_height((UV - 0.5) * 2.0), 0, 1);
 	vec4 texel = texture(TEXTURE, UV);
 	float grayscale = dot(texel.rgb, vec3(0.3, 0.59, 0.11));
-	texel.rgb = vec3(grayscale);
-	texel.a *= height;
-	COLOR = texel;
+	COLOR *= vec4(vec3(grayscale), texel.a * height);
 }
