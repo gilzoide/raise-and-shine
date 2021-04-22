@@ -9,6 +9,7 @@ const BrushLibraryItem = preload("res://editor/brush/BrushLibraryItem.tscn")
 export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 
+var _item_per_path = {}
 onready var _grayscale_albedo_item = $ScrollContainer/FixedCellGridContainer/GrayscaleAlbedoBrushLibraryItem
 onready var _brush_item_container = $ScrollContainer/FixedCellGridContainer
 
@@ -30,11 +31,14 @@ func _on_ImportButton_pressed() -> void:
 
 
 func _on_image_imported(image: Image, path: String) -> void:
-	var new_item = BrushLibraryItem.instance()
-	var texture = ImageTexture.new()
+	var brush_item = _item_per_path.get(path)
+	if not brush_item:
+		brush_item = BrushLibraryItem.instance()
+		brush_item.texture = ImageTexture.new()
+		brush_item.title = path
+		brush_item.pressed = false
+		_item_per_path[path] = brush_item
+		_brush_item_container.add_child(brush_item)
+	
 	image.convert(MapTypes.BRUSH_IMAGE_FORMAT)
-	texture.create_from_image(image, new_item.HEIGHT_TEXTURE_FLAGS)
-	new_item.title = path
-	new_item.texture = texture
-	new_item.pressed = false
-	_brush_item_container.add_child(new_item)
+	brush_item.texture.create_from_image(image, brush_item.HEIGHT_TEXTURE_FLAGS)
