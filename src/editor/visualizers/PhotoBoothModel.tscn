@@ -5,8 +5,8 @@
 
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 128, 128 )
-subdivide_width = 64
-subdivide_depth = 64
+subdivide_width = 1024
+subdivide_depth = 1024
 
 [sub_resource type="ArrayMesh" id=2]
 
