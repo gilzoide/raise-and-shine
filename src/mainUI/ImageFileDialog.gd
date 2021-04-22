@@ -36,11 +36,10 @@ const OPEN_EXTENSIONS = PoolStringArray([
 const OPEN_TEXT = "You can also drop files to this window\n"
 const SAVE_TEXT = ""
 
-onready var file_dialog = $FileDialog
-onready var drop_dialog = $DropDialog
 var success_method: FuncRef
 var image_to_save: Image
-var hovering = false
+onready var file_dialog = $FileDialog
+onready var drop_dialog = $DropDialog
 
 
 func _ready() -> void:
@@ -130,4 +129,3 @@ func _on_popup_hide() -> void:
 	file_dialog.deselect_items()
 	success_method = null
 	image_to_save = null
-	hovering = false

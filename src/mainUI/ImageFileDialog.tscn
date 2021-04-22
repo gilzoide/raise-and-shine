@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://mainUI/ImageFileDialog.gd" type="Script" id=1]
 [ext_resource path="res://fonts/DroidSans_32.tres" type="DynamicFont" id=2]
+[ext_resource path="res://mainUI/loading/LoadingOverlay.tscn" type="PackedScene" id=3]
 
 [node name="ImageFileDialog" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -11,15 +12,15 @@ anchor_left = 0.2
 anchor_top = 0.2
 anchor_right = 0.8
 anchor_bottom = 0.8
-window_title = "Abrir um Arquivo"
+window_title = "Open a File"
 resizable = true
 dialog_text = "You can also drop files to this window
 "
 mode = 0
 access = 2
 filters = PoolStringArray( "*.bmp ; BMP", "*.dds ; DirectDraw Surface", "*.exr ; OpenEXR", "*.hdr ; Radiance HDR", "*.jpg ; JPG", "*.jpeg ; JPEG", "*.png ; PNG", "*.tga ; Truevision Targa", "*.webp ; WebP" )
-current_dir = "/media/dados/prog/Godot-Projects/normal-height-map-editor/src"
-current_path = "/media/dados/prog/Godot-Projects/normal-height-map-editor/src/"
+current_dir = "/media/dados/prog/Godot-Projects/RaiseAndShine/src"
+current_path = "/media/dados/prog/Godot-Projects/RaiseAndShine/src/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -58,6 +59,9 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="LoadingOverlay" parent="." instance=ExtResource( 3 )]
+visible = false
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]
 [connection signal="popup_hide" from="FileDialog" to="." method="_on_popup_hide"]
