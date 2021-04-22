@@ -33,7 +33,15 @@ func draw_brush() -> void:
 	var color = Color(depth, depth, depth)
 	VisualServer.canvas_item_clear(_canvas_item)
 	assert(brush.texture, "FIXME: brush must always have a texture")
-	brush.texture.draw_rect(_canvas_item, Rect2(Vector2.ZERO, size), false, color)
+	var rect = Rect2(Vector2.ZERO, size)
+	var aspect = brush.texture.get_size().aspect()
+	if aspect > 1:
+		rect.size.y /= aspect
+		rect.position.y = (size.y - rect.size.y) * 0.5
+	elif aspect < 1:
+		rect.size.x *= aspect
+		rect.position.x = (size.x - rect.size.x) * 0.5
+	brush.texture.draw_rect(_canvas_item, rect, false, color)
 	render_target_update_mode = Viewport.UPDATE_ONCE
 
 
