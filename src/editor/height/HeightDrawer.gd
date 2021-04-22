@@ -39,7 +39,7 @@ func draw_brush_centered(brush, center: Vector2) -> void:
 	var transform = Transform2D(deg2rad(-brush.angle), center)
 	var rect = Rect2(-Vector2(half_size, half_size), Vector2(brush.size, brush.size))
 	VisualServer.canvas_item_clear(_canvas_item)
-	VisualServer.canvas_item_set_transform(_canvas_item, transform)
+	VisualServer.canvas_item_add_set_transform(_canvas_item, transform)
 	BrushDrawer.get_texture().draw_rect(_canvas_item, rect, false)
 	render_target_update_mode = Viewport.UPDATE_ONCE
 	yield(VisualServer, "frame_post_draw")
@@ -52,7 +52,6 @@ func cancel_draw() -> void:
 
 func clear_all(color = Color.black) -> void:
 	VisualServer.canvas_item_clear(_canvas_item)
-	VisualServer.canvas_item_set_transform(_canvas_item, Transform2D.IDENTITY)
 	VisualServer.canvas_item_add_rect(_canvas_item, Rect2(Vector2.ZERO, size), color)
 	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	render_target_update_mode = Viewport.UPDATE_ONCE
@@ -62,7 +61,6 @@ func clear_all(color = Color.black) -> void:
 
 func clear_to_texture(texture: Texture) -> void:
 	VisualServer.canvas_item_clear(_canvas_item)
-	VisualServer.canvas_item_set_transform(_canvas_item, Transform2D.IDENTITY)
 	texture.draw_rect(_canvas_item, Rect2(Vector2.ZERO, size), false)
 	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	render_target_update_mode = Viewport.UPDATE_ONCE
