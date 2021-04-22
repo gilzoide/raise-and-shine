@@ -14,7 +14,7 @@ onready var flat_checkbox = $PanelPopup/VBoxContainer/FlatCheckBox
 onready var controls_container = $PanelPopup/VBoxContainer/HBoxContainer
 onready var bezier_curve = $PanelPopup/VBoxContainer/HBoxContainer/AspectRatioContainer/Panel/CubicBezierEdit.curve
 onready var direction_chooser = $PanelPopup/VBoxContainer/HBoxContainer/DirectionChooser
-onready var preview_material = $Preview.material
+onready var preview_material = $ButtonChildren/Preview.material
 
 
 func _ready() -> void:

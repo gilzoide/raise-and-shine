@@ -20,27 +20,48 @@ control1 = Vector2( 0, 0 )
 control2 = Vector2( 1, 1 )
 
 [node name="BrushDirectionPickerButton" type="Button"]
-margin_right = 74.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 30, 30 )
-hint_tooltip = "Choose height tool curve and direction."
+margin_right = 76.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 76, 30 )
+hint_tooltip = "Choose the direction and curve of brush's alpha mask.
+Perfect for making bevels."
 focus_mode = 0
 custom_constants/hseparation = 8
-text = "Curve"
-align = 2
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Preview" type="ColorRect" parent="."]
-material = ExtResource( 14 )
+[node name="ButtonChildren" type="HBoxContainer" parent="."]
+anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 6.0
-margin_top = 3.0
-margin_right = 30.0
-margin_bottom = -3.0
+margin_right = -6.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Preview" type="ColorRect" parent="ButtonChildren"]
+material = ExtResource( 14 )
+margin_top = 13.0
+margin_right = 24.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 24, 24 )
 mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ButtonChildren"]
+margin_left = 28.0
+margin_top = 9.0
+margin_right = 64.0
+margin_bottom = 40.0
+text = "Alpha
+Mask"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -76,7 +97,7 @@ __meta__ = {
 margin_left = 169.0
 margin_right = 272.0
 margin_bottom = 40.0
-hint_tooltip = "Toggle between flat or curved height tool."
+hint_tooltip = "Toggle between flat or curved alpha mask."
 size_flags_horizontal = 4
 text = "Flat"
 
@@ -259,6 +280,7 @@ margin_left = 223.0
 margin_right = 442.0
 margin_bottom = 212.0
 hint_tooltip = "Choose curve direction with mouse.
+Click inside the inner circle for a radial maks. 
 Hold Control to snap angle."
 size_flags_horizontal = 3
 size_flags_vertical = 3

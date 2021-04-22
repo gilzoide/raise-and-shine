@@ -18,13 +18,13 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 578.0
-margin_bottom = 55.0
+margin_right = 606.0
+margin_bottom = 51.0
 custom_constants/separation = 18
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 margin_right = 37.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 size_flags_vertical = 3
 text = "Brush"
 valign = 1
@@ -32,38 +32,30 @@ valign = 1
 [node name="BrushSizeEditor" parent="HBoxContainer" instance=ExtResource( 2 )]
 margin_left = 55.0
 margin_right = 159.0
-margin_bottom = 48.0
 
 [node name="BrushDepthEditor" parent="HBoxContainer" instance=ExtResource( 3 )]
 margin_left = 177.0
 margin_right = 311.0
-margin_bottom = 48.0
 
 [node name="BrushAngleEditor" parent="HBoxContainer" instance=ExtResource( 4 )]
 margin_left = 329.0
 margin_right = 443.0
-margin_bottom = 48.0
 
 [node name="CurveEditor" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 461.0
-margin_right = 509.0
-margin_bottom = 48.0
-
-[node name="Label" type="Label" parent="HBoxContainer/CurveEditor"]
-margin_right = 48.0
-margin_bottom = 14.0
-text = "Curve"
-align = 1
+margin_right = 537.0
+margin_bottom = 44.0
+hint_tooltip = "Alpha mask curve "
 
 [node name="BrushDirectionPickerButton" parent="HBoxContainer/CurveEditor" instance=ExtResource( 6 )]
-margin_top = 18.0
-margin_right = 48.0
-margin_bottom = 48.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Preview" type="Control" parent="HBoxContainer"]
-margin_left = 527.0
-margin_right = 571.0
-margin_bottom = 48.0
+margin_left = 555.0
+margin_right = 599.0
+margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
 
 [node name="BrushHover2D" parent="HBoxContainer/Preview" instance=ExtResource( 5 )]

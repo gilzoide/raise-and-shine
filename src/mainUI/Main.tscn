@@ -45,7 +45,7 @@ __meta__ = {
 
 [node name="MenuBar" type="HBoxContainer" parent="MainPanel/VBoxContainer"]
 margin_right = 1024.0
-margin_bottom = 58.0
+margin_bottom = 62.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
@@ -53,7 +53,7 @@ __meta__ = {
 
 [node name="FileMenuButton" type="MenuButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_right = 35.0
-margin_bottom = 58.0
+margin_bottom = 62.0
 text = "File"
 switch_on_hover = true
 script = ExtResource( 1 )
@@ -64,7 +64,7 @@ __meta__ = {
 [node name="EditMenuButton" type="MenuButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 39.0
 margin_right = 75.0
-margin_bottom = 58.0
+margin_bottom = 62.0
 text = "Edit"
 switch_on_hover = true
 script = ExtResource( 7 )
@@ -72,7 +72,7 @@ script = ExtResource( 7 )
 [node name="ViewMenuButton" type="MenuButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 79.0
 margin_right = 121.0
-margin_bottom = 58.0
+margin_bottom = 62.0
 text = "View"
 switch_on_hover = true
 script = ExtResource( 10 )
@@ -81,7 +81,7 @@ workbench_container_path = NodePath("../../WorkbenchPanel")
 [node name="HelpMenuButton" type="MenuButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 125.0
 margin_right = 167.0
-margin_bottom = 58.0
+margin_bottom = 62.0
 text = "Help"
 switch_on_hover = true
 script = ExtResource( 5 )
@@ -89,12 +89,12 @@ script = ExtResource( 5 )
 [node name="VSeparator" type="VSeparator" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 171.0
 margin_right = 175.0
-margin_bottom = 58.0
+margin_bottom = 62.0
 
 [node name="UndoButton" type="ToolButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 179.0
 margin_right = 260.0
-margin_bottom = 58.0
+margin_bottom = 62.0
 hint_tooltip = "Undo"
 text = "Undo"
 icon = ExtResource( 11 )
@@ -103,7 +103,7 @@ script = ExtResource( 12 )
 [node name="RedoButton" type="ToolButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 264.0
 margin_right = 343.0
-margin_bottom = 58.0
+margin_bottom = 62.0
 hint_tooltip = "Redo"
 text = "Redo"
 icon = ExtResource( 9 )
@@ -111,10 +111,11 @@ script = ExtResource( 12 )
 
 [node name="BrushToolbar" parent="MainPanel/VBoxContainer/MenuBar" instance=ExtResource( 6 )]
 margin_left = 347.0
-margin_right = 866.0
+margin_right = 964.0
+margin_bottom = 62.0
 
 [node name="WorkbenchPanel" type="Container" parent="MainPanel/VBoxContainer"]
-margin_top = 58.0
+margin_top = 62.0
 margin_right = 1024.0
 margin_bottom = 600.0
 mouse_filter = 1
@@ -128,18 +129,18 @@ layout = ExtResource( 13 )
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -869.315
-margin_bottom = -371.514
+margin_bottom = -368.846
 
 [node name="Height" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
 margin_left = 4.0
-margin_top = 218.486
+margin_top = 217.154
 margin_right = -869.315
-margin_bottom = -187.757
+margin_bottom = -186.423
 type = 1
 
 [node name="Normal" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 17 )]
 margin_left = 4.0
-margin_top = 402.243
+margin_top = 399.577
 margin_right = -869.315
 margin_bottom = -4.0
 type = 2
@@ -148,32 +149,32 @@ type = 2
 margin_left = 174.685
 margin_top = 32.0
 margin_right = -194.215
-margin_bottom = -281.0
+margin_bottom = -279.0
 
 [node name="3D" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 15 )]
 margin_left = 174.685
-margin_top = 309.0
+margin_top = 307.0
 margin_right = -194.215
 margin_bottom = -4.0
 
 [node name="Library" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 18 )]
 margin_left = 849.785
-margin_top = 309.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_top = 307.0
+margin_right = 1020.0
+margin_bottom = 534.0
 
 [node name="Lights" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 4 )]
 margin_left = 849.785
 margin_top = 32.0
 margin_right = -4.0
-margin_bottom = -281.0
+margin_bottom = -279.0
 
 [node name="History" parent="MainPanel/VBoxContainer/WorkbenchPanel" instance=ExtResource( 8 )]
 visible = false
 margin_left = 849.785
 margin_top = 32.0
 margin_right = -4.0
-margin_bottom = -281.0
+margin_bottom = -279.0
 
 [connection signal="pressed" from="MainPanel/VBoxContainer/MenuBar/UndoButton" to="MainPanel/VBoxContainer/MenuBar/EditMenuButton" method="call_undo"]
 [connection signal="pressed" from="MainPanel/VBoxContainer/MenuBar/RedoButton" to="MainPanel/VBoxContainer/MenuBar/EditMenuButton" method="call_redo"]
