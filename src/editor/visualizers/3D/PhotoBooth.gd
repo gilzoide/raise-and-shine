@@ -55,12 +55,18 @@ func _on_albedo_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 		return
 	
 	_albedo_size = new_size
+	var aspect = new_size.aspect()
 	if new_size.x > new_size.y:
 		plane_size.x = initial_plane_size.x
-		plane_size.y = initial_plane_size.y / new_size.aspect()
+		plane_size.y = initial_plane_size.y / aspect
+		var inv_aspect = 1.0 / aspect
+		plane_mesh_instance.scale = Vector3(1, 1, inv_aspect)
+		quad_mesh_instance.scale = Vector3(1, inv_aspect, 1)
 	else:
-		plane_size.x = initial_plane_size.x * new_size.aspect()
+		plane_size.x = initial_plane_size.x * aspect
 		plane_size.y = initial_plane_size.y
+		plane_mesh_instance.scale = Vector3(aspect, 1, 1)
+		quad_mesh_instance.scale = Vector3(aspect, 1, 1)
 	
 	border.setup_with_plane_size(plane_size)
 	normal_vectors.set_plane_size(plane_size)
@@ -76,18 +82,7 @@ func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 		return
 	
 	_height_size = new_size
-	var plane_mesh = PlaneMesh.new()
-	plane_mesh.subdivide_width = new_size.x * plane_subdivide_scale
-	plane_mesh.subdivide_depth = new_size.y * plane_subdivide_scale
-	plane_mesh.size = plane_size
-	plane_mesh_instance.mesh = plane_mesh
-	
-	var quad_mesh = QuadMesh.new()
-	quad_mesh.size = plane_size
-	quad_mesh_instance.mesh = quad_mesh
-	
 	_update_brush_size()
-	normal_vectors.set_map_size(new_size)
 
 
 func get_light_nodes() -> Array:

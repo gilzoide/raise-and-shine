@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/Environment.tres" type="Environment" id=1]
 [ext_resource path="res://editor/visualizers/PhotoBoothModel.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://editor/visualizers/3D/UnshadedVerticesAlbedo_material.tres" type="Material" id=8]
 [ext_resource path="res://editor/visualizers/3D/PlateBorder.gd" type="Script" id=9]
 [ext_resource path="res://editor/visualizers/InvertScreenColor_spatial_material.tres" type="Material" id=10]
+[ext_resource path="res://editor/visualizers/3D/Plane_material.tres" type="Material" id=11]
 
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 128, 128 )
@@ -33,8 +34,10 @@ script = ExtResource( 3 )
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 
 [node name="Model" parent="Plate" instance=ExtResource( 2 )]
+material_override = ExtResource( 11 )
 cast_shadow = 0
 generate_lightmap = false
+material/0 = null
 
 [node name="QuadModel" type="MeshInstance" parent="Plate"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
