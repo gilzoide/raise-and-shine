@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://editor/brush/BrushToolbar.gd" type="Script" id=1]
 [ext_resource path="res://editor/brush/BrushSizeEditor.tscn" type="PackedScene" id=2]
@@ -7,6 +7,30 @@
 [ext_resource path="res://editor/brush/BrushHover2D.tscn" type="PackedScene" id=5]
 [ext_resource path="res://editor/brush/BrushDirectionPicker.tscn" type="PackedScene" id=6]
 [ext_resource path="res://mainUI/ScrollableOptionButton.gd" type="Script" id=7]
+
+[sub_resource type="InputEventAction" id=3]
+action = "brush_size_up"
+
+[sub_resource type="ShortCut" id=4]
+shortcut = SubResource( 3 )
+
+[sub_resource type="InputEventAction" id=1]
+action = "brush_size_down"
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
+
+[sub_resource type="InputEventAction" id=5]
+action = "ui_right"
+
+[sub_resource type="ShortCut" id=6]
+shortcut = SubResource( 5 )
+
+[sub_resource type="InputEventAction" id=7]
+action = "ui_left"
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
 
 [node name="BrushToolbar" type="PanelContainer"]
 margin_right = 308.0
@@ -43,21 +67,25 @@ hint_tooltip = "Brush blending mode.
 By default, brush is blended with current height based on transparency.
 Add mode sums the current height with brush.
 Subtract mode subtracts brush from current height.
-Multiply current height with brush value, useful for scaling down whole regions."
+Multiply mode multiplies current height with brush value, useful for scaling down whole regions."
 text = "Blend"
 script = ExtResource( 7 )
 
 [node name="BrushSizeEditor" parent="HBoxContainer" instance=ExtResource( 2 )]
 margin_left = 108.0
 margin_right = 212.0
+global_up_shortcut = SubResource( 4 )
+global_down_shortcut = SubResource( 2 )
 
-[node name="BrushDepthEditor" parent="HBoxContainer" instance=ExtResource( 3 )]
+[node name="BrushPressureEditor" parent="HBoxContainer" instance=ExtResource( 3 )]
 margin_left = 230.0
 margin_right = 364.0
 
 [node name="BrushAngleEditor" parent="HBoxContainer" instance=ExtResource( 4 )]
 margin_left = 382.0
 margin_right = 496.0
+global_up_shortcut = SubResource( 6 )
+global_down_shortcut = SubResource( 8 )
 
 [node name="CurveEditor" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 514.0

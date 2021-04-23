@@ -68,6 +68,7 @@ margin_bottom = 58.0
 text = "Edit"
 switch_on_hover = true
 script = ExtResource( 7 )
+brush_toolbar_path = NodePath("../BrushToolbar")
 
 [node name="ViewMenuButton" type="MenuButton" parent="MainPanel/VBoxContainer/MenuBar"]
 margin_left = 79.0
@@ -111,7 +112,7 @@ script = ExtResource( 12 )
 
 [node name="BrushToolbar" parent="MainPanel/VBoxContainer/MenuBar" instance=ExtResource( 6 )]
 margin_left = 347.0
-margin_right = 960.0
+margin_right = 1013.0
 
 [node name="WorkbenchPanel" type="Container" parent="MainPanel/VBoxContainer"]
 margin_top = 58.0

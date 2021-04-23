@@ -6,8 +6,11 @@ extends PanelContainer
 
 export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 
+onready var size_editor = $HBoxContainer/BrushSizeEditor
+onready var pressure_editor = $HBoxContainer/BrushPressureEditor
+onready var angle_editor = $HBoxContainer/BrushAngleEditor
+
 onready var _brush_preview = $HBoxContainer/Preview/BrushHover2D
-onready var _brush_size_editor = $HBoxContainer/BrushSizeEditor
 onready var _blend_mode_option_button = $HBoxContainer/Title_Blend/BlendModeOptionButton
 
 
@@ -28,7 +31,7 @@ func _on_brush_changed() -> void:
 
 func _on_height_drawer_size_changed() -> void:
 	var max_value = max(max(HeightDrawer.size.x, HeightDrawer.size.y), BrushDrawer.minimum_size)
-	_brush_size_editor.set_max_value(max_value)
+	size_editor.set_max_value(max_value)
 
 
 func _on_blend_mode_selected(value: int) -> void:
