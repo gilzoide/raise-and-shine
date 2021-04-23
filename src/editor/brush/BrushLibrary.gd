@@ -30,6 +30,11 @@ func _on_image_imported(image: Image, path: String) -> void:
 		brush_item.texture = ImageTexture.new()
 		brush_item.title = path
 		brush_item.pressed = false
+		var _err = brush_item.connect("tree_exiting", self, "_on_brush_item_tree_exiting", [brush_item])
 		_item_per_path[path] = brush_item
 		_brush_item_container.add_child(brush_item)
 	brush_item.texture.create_from_image(image, BrushLibraryItem.HEIGHT_TEXTURE_FLAGS)
+
+
+func _on_brush_item_tree_exiting(item) -> void:
+	_item_per_path.erase(item.title)
