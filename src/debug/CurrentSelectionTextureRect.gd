@@ -4,5 +4,7 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends TextureRect
 
+onready var SelectionDrawer = preload("res://editor/selection/SelectionDrawer.tscn").instance()
+
 func _ready() -> void:
 	texture = SelectionDrawer.get_texture()
