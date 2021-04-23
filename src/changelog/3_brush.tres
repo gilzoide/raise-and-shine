@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://changelog/ChangelogVersion.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+build_number = 3
+date = "2021-04-23"
+description = "Painting heights is normal!
+Height map editing is now based on paint brushes. You can resize, rotate and set the brush's pressure, and you can import any images to use as brush, available in the [b]Library[/b] panel."
+added = PoolStringArray( "Brush based height drawing", "Brush library to choose current brush and import new images", "(Desktop only) Cache library image paths to restore on next session", "(Desktop only) Loading indication while new texture is loading" )
+changed = PoolStringArray( "Preview navigation keys now need [b]Space[/b] being hold", "Start Ambient light with lower energy", "Increase performance of loading new textures" )
+fixed = PoolStringArray( "3D visualization depth test" )
+removed = PoolStringArray( "Selection tools and toolbar", "Height pushing tool and toolbar", "Light editor popup by right clicking lights on 2D/3D views" )

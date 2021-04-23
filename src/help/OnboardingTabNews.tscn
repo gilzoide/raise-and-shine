@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://fonts/Roboto-Medium.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://fonts/DroidSans_24.tres" type="DynamicFont" id=6]
 [ext_resource path="res://mainUI/RichTextOpenMeta.gd" type="Script" id=7]
 [ext_resource path="res://changelog/2_dockable_panel.tres" type="Resource" id=8]
+[ext_resource path="res://changelog/3_brush.tres" type="Resource" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 52
@@ -21,7 +22,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-versions = [ ExtResource( 8 ), ExtResource( 5 ) ]
+versions = [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 5 ) ]
 
 [node name="_Spacing_0" type="Control" parent="."]
 margin_right = 1024.0

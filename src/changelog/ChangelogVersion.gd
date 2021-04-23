@@ -4,7 +4,7 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Resource
 
-const CURRENT_VERSION = 2
+const CURRENT_VERSION = 3
 const DATE_FMT = "{year}-{month}-{day}"
 const BBCODE_FMT = """[u][b]Build {build_number}[/b]  ({date})[/u]
 {content}"""
