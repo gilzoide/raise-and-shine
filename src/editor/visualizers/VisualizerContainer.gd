@@ -37,10 +37,10 @@ func _notification(what: int) -> void:
 
 
 func _gui_input(event: InputEvent) -> void:
-	if event.is_action_pressed("visualizer_zoom_up"):
+	if event.is_action_pressed("visualizer_zoom_up", true):
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
 		zoom_by(factor)
-	elif event.is_action_pressed("visualizer_zoom_down"):
+	elif event.is_action_pressed("visualizer_zoom_down", true):
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
 		zoom_by(-factor)
 	elif event.is_action("visualizer_pan_modifier"):
