@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://editor/brush/BrushToolbar.gd" type="Script" id=1]
 [ext_resource path="res://editor/brush/BrushSizeEditor.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://editor/brush/BrushAngleEditor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://editor/brush/BrushHover2D.tscn" type="PackedScene" id=5]
 [ext_resource path="res://editor/brush/BrushDirectionPicker.tscn" type="PackedScene" id=6]
+[ext_resource path="res://mainUI/ScrollableOptionButton.gd" type="Script" id=7]
 
 [node name="BrushToolbar" type="PanelContainer"]
 margin_right = 308.0
@@ -18,32 +19,49 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 606.0
+margin_right = 675.0
 margin_bottom = 51.0
 custom_constants/separation = 18
 
-[node name="Label" type="Label" parent="HBoxContainer"]
-margin_right = 37.0
+[node name="Title_Blend" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 90.0
 margin_bottom = 44.0
+
+[node name="Label" type="Label" parent="HBoxContainer/Title_Blend"]
+margin_right = 90.0
+margin_bottom = 20.0
 size_flags_vertical = 3
 text = "Brush"
 valign = 1
 
+[node name="BlendModeOptionButton" type="OptionButton" parent="HBoxContainer/Title_Blend"]
+margin_top = 24.0
+margin_right = 90.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 90, 0 )
+hint_tooltip = "Brush blending mode.
+By default, brush is blended with current height based on transparency.
+Add mode sums the current height with brush.
+Subtract mode subtracts brush from current height."
+text = "Blend"
+selected = 0
+script = ExtResource( 7 )
+
 [node name="BrushSizeEditor" parent="HBoxContainer" instance=ExtResource( 2 )]
-margin_left = 55.0
-margin_right = 159.0
+margin_left = 108.0
+margin_right = 212.0
 
 [node name="BrushDepthEditor" parent="HBoxContainer" instance=ExtResource( 3 )]
-margin_left = 177.0
-margin_right = 311.0
+margin_left = 230.0
+margin_right = 364.0
 
 [node name="BrushAngleEditor" parent="HBoxContainer" instance=ExtResource( 4 )]
-margin_left = 329.0
-margin_right = 443.0
+margin_left = 382.0
+margin_right = 496.0
 
 [node name="CurveEditor" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 461.0
-margin_right = 537.0
+margin_left = 514.0
+margin_right = 590.0
 margin_bottom = 44.0
 hint_tooltip = "Alpha mask curve "
 
@@ -53,8 +71,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Preview" type="Control" parent="HBoxContainer"]
-margin_left = 555.0
-margin_right = 599.0
+margin_left = 608.0
+margin_right = 652.0
 margin_bottom = 44.0
 rect_min_size = Vector2( 44, 44 )
 

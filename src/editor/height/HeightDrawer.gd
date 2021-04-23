@@ -9,6 +9,7 @@ signal cleared()
 
 export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
+export(Material) var brush_material = preload("res://editor/height/BrushHeight_material.tres")
 
 var _canvas_item = VisualServer.canvas_item_create()
 
@@ -18,6 +19,7 @@ func _ready() -> void:
 	
 	_canvas_item = VisualServer.canvas_item_create()
 	VisualServer.canvas_item_set_parent(_canvas_item, find_world_2d().canvas)
+	VisualServer.canvas_item_set_material(_canvas_item, RID(brush_material))
 	
 	_on_height_texture_changed(project.height_texture)
 	project.connect("height_texture_changed", self, "_on_height_texture_changed")
@@ -51,20 +53,24 @@ func cancel_draw() -> void:
 
 
 func clear_all(color = Color.black) -> void:
+	VisualServer.canvas_item_set_material(_canvas_item, RID())
 	VisualServer.canvas_item_clear(_canvas_item)
 	VisualServer.canvas_item_add_rect(_canvas_item, Rect2(Vector2.ZERO, size), color)
 	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	render_target_update_mode = Viewport.UPDATE_ONCE
 	yield(VisualServer, "frame_post_draw")
+	VisualServer.canvas_item_set_material(_canvas_item, RID(brush_material))
 	emit_signal("cleared")
 
 
 func clear_to_texture(texture: Texture) -> void:
+	VisualServer.canvas_item_set_material(_canvas_item, RID())
 	VisualServer.canvas_item_clear(_canvas_item)
 	texture.draw_rect(_canvas_item, Rect2(Vector2.ZERO, size), false)
 	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	render_target_update_mode = Viewport.UPDATE_ONCE
 	yield(VisualServer, "frame_post_draw")
+	VisualServer.canvas_item_set_material(_canvas_item, RID(brush_material))
 	emit_signal("cleared")
 
 

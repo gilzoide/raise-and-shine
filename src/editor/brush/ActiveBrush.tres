@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://editor/brush/Brush.gd" type="Script" id=1]
 [ext_resource path="res://textures/pixel.png" type="Texture" id=2]
+[ext_resource path="res://editor/height/BrushHeight_material.tres" type="Material" id=3]
 
 [resource]
 script = ExtResource( 1 )
@@ -9,3 +10,4 @@ size = 16.0
 pressure = 100.0
 angle = 0.0
 texture = ExtResource( 2 )
+material = ExtResource( 3 )

@@ -8,8 +8,6 @@ const brush = preload("res://editor/brush/ActiveBrush.tres")
 const project = preload("res://editor/project/ActiveEditorProject.tres")
 const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
 const brush_material = preload("res://editor/visualizers/3D/Brush3D_material.tres")
-const operation = preload("res://editor/height/DragOperation.tres")
-const selection = preload("res://editor/selection/ActiveSelection.tres")
 const LightPoint = preload("res://editor/visualizers/LightPoint.tscn")
 
 export(float) var plate_angular_speed = 0.01
