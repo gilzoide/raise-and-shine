@@ -14,12 +14,8 @@ var dragging: bool = false
 
 
 func _input_event(camera: Object, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT:
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 			dragging = event.is_pressed()
-		elif event.button_index == BUTTON_RIGHT and event.is_pressed() and not event.is_echo():
-			var position = get_tree().root.get_viewport().get_mouse_position()
-			open_light_editor(position)
 	elif dragging and event is InputEventMouseMotion:
 		var position_in_xy = Plane.PLANE_XY.intersects_ray(
 			camera.project_ray_origin(event.position),
@@ -27,15 +23,6 @@ func _input_event(camera: Object, event: InputEvent, _click_position: Vector3, _
 		)
 		if position_in_xy:
 			translation = position_in_xy
-
-
-func open_light_editor(root_viewport_position: Vector2) -> void:
-	LightEditorPopup.popup_at(
-		root_viewport_position,
-		light.light_color,
-		funcref(self, "set_light_color"),
-		funcref(self, "set_light_energy")
-	)
 
 
 func set_light_color(color: Color) -> void:
