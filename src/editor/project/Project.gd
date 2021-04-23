@@ -57,6 +57,9 @@ func save_image_dialog_type(type: int) -> void:
 	elif type == MapTypes.Type.NORMAL_MAP:
 		image = NormalDrawer.get_texture().get_data()
 		suffix = "_normal"
+	elif type == MapTypes.Type.ILLUMINATED_MAP:
+		image = PhotoBooth.screenshot_viewport.get_texture().get_data()
+		suffix = "_illuminated"
 	assert(image != null, "Invalid map type %d" % type)
 	save_image_dialog(image, suffix)
 

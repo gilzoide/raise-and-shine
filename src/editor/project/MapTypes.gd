@@ -10,6 +10,7 @@ enum Type {
 	ALBEDO_MAP,
 	HEIGHT_MAP,
 	NORMAL_MAP,
+	ILLUMINATED_MAP,
 }
 
 const ALBEDO_TEXTURE = preload("res://textures/Albedo_imagetexture.tres")
@@ -29,6 +30,8 @@ static func map_name(type: int) -> String:
 		return "Height"
 	elif type == Type.NORMAL_MAP:
 		return "Normal"
+	elif type == Type.ILLUMINATED_MAP:
+		return "Illuminated"
 	else:
 		assert(false, "Unknown map type %d" % type)
 		return ""
@@ -44,6 +47,8 @@ static func map_textures(type: int) -> Array:
 		return [HeightDrawer.get_texture(), HEIGHT_TEXTURE]
 	elif type == Type.NORMAL_MAP:
 		return [NormalDrawer.get_texture(), NORMAL_TEXTURE]
+	elif type == Type.ILLUMINATED_MAP:
+		return [PhotoBooth.screenshot_viewport.get_texture()]
 	else:
 		assert(false, "Unknown map type %d" % type)
 		return []

@@ -8,6 +8,7 @@ enum Type {
 	ALBEDO_MAP,
 	HEIGHT_MAP,
 	NORMAL_MAP,
+	ILLUMINATED_MAP,
 }
 
 export(Type) var type

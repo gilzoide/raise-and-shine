@@ -10,9 +10,6 @@ const plane_material = preload("res://editor/visualizers/3D/Plane_material.tres"
 const brush_material = preload("res://editor/visualizers/3D/Brush3D_material.tres")
 const LightPoint = preload("res://editor/visualizers/LightPoint.tscn")
 
-export(float) var plate_angular_speed = 0.01
-export(float) var plane_subdivide_scale = 1
-
 var lights_enabled: bool setget set_lights_enabled, get_lights_enabled
 var normal_vectors_enabled: bool setget set_normal_vectors_enabled, get_normal_vectors_enabled
 
@@ -124,9 +121,6 @@ func take_screenshot() -> void:
 	screenshot_viewport.size = _albedo_size
 	screenshot_camera.size = plane_size.y
 	screenshot_viewport.render_target_update_mode = Viewport.UPDATE_ONCE
-	yield(VisualServer, "frame_post_draw")
-	var image = screenshot_viewport.get_texture().get_data()
-	project.save_image_dialog(image, "_lit")
 
 
 func _on_brush_changed() -> void:

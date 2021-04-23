@@ -11,6 +11,7 @@ onready var _normal_invert_y = $NormalLabel/InvertYCheckBox
 
 func _ready() -> void:
 	_normal_invert_y.pressed = NormalDrawer.invert_y
+	PhotoBooth.take_screenshot()
 
 
 func _on_AlbedoExportButton_pressed() -> void:
@@ -23,6 +24,10 @@ func _on_HeightExportButton_pressed() -> void:
 
 func _on_NormalExportButton_pressed() -> void:
 	project.save_image_dialog_type(MapTypes.Type.NORMAL_MAP)
+
+
+func _on_IlluminatedExportButton_pressed() -> void:
+	project.save_image_dialog_type(MapTypes.Type.ILLUMINATED_MAP)
 
 
 func _on_InvertYCheckBox_toggled(button_pressed: bool) -> void:

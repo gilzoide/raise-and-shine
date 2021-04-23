@@ -13,9 +13,9 @@ __meta__ = {
 }
 
 [node name="AlbedoLabel" type="Label" parent="."]
-margin_top = 91.0
+margin_top = 66.0
 margin_right = 77.0
-margin_bottom = 105.0
+margin_bottom = 80.0
 text = "Albedo"
 
 [node name="AlbedoTextureSlot" parent="." instance=ExtResource( 1 )]
@@ -23,7 +23,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 81.0
 margin_right = 968.0
-margin_bottom = 197.0
+margin_bottom = 147.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -33,25 +33,25 @@ mouse_filter = 2
 
 [node name="AlbedoExportButton" type="Button" parent="."]
 margin_left = 972.0
-margin_top = 88.0
+margin_top = 63.0
 margin_right = 1024.0
-margin_bottom = 108.0
+margin_bottom = 83.0
 size_flags_vertical = 4
 text = "Export"
 
 [node name="HeightLabel" type="Label" parent="."]
-margin_top = 292.0
+margin_top = 217.0
 margin_right = 77.0
-margin_bottom = 306.0
+margin_bottom = 231.0
 text = "Height"
 
 [node name="HeightTextureSlot" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 81.0
-margin_top = 201.0
+margin_top = 151.0
 margin_right = 968.0
-margin_bottom = 398.0
+margin_bottom = 298.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -62,37 +62,37 @@ mouse_filter = 2
 
 [node name="HeightExportButton" type="Button" parent="."]
 margin_left = 972.0
-margin_top = 289.0
+margin_top = 214.0
 margin_right = 1024.0
-margin_bottom = 309.0
+margin_bottom = 234.0
 size_flags_vertical = 4
 text = "Export"
 
 [node name="NormalLabel" type="VBoxContainer" parent="."]
-margin_top = 402.0
+margin_top = 302.0
 margin_right = 77.0
-margin_bottom = 599.0
+margin_bottom = 449.0
 alignment = 1
 
 [node name="Label" type="Label" parent="NormalLabel"]
-margin_top = 77.0
+margin_top = 52.0
 margin_right = 77.0
-margin_bottom = 91.0
+margin_bottom = 66.0
 text = "Normal"
 
 [node name="InvertYCheckBox" type="CheckBox" parent="NormalLabel"]
-margin_top = 95.0
+margin_top = 70.0
 margin_right = 77.0
-margin_bottom = 119.0
+margin_bottom = 94.0
 text = "Invert Y"
 
 [node name="NormalTextureSlot" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 81.0
-margin_top = 402.0
+margin_top = 302.0
 margin_right = 968.0
-margin_bottom = 599.0
+margin_bottom = 449.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -103,9 +103,38 @@ mouse_filter = 2
 
 [node name="NormalExportButton" type="Button" parent="."]
 margin_left = 972.0
-margin_top = 490.0
+margin_top = 365.0
 margin_right = 1024.0
-margin_bottom = 510.0
+margin_bottom = 385.0
+size_flags_vertical = 4
+text = "Export"
+
+[node name="IlluminatedLabel" type="Label" parent="."]
+margin_top = 519.0
+margin_right = 77.0
+margin_bottom = 533.0
+text = "Illuminated"
+
+[node name="IlluminatedTextureSlot" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 81.0
+margin_top = 453.0
+margin_right = 968.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+type = 3
+
+[node name="TextureRect" parent="IlluminatedTextureSlot" index="0"]
+mouse_filter = 2
+
+[node name="IlluminatedExportButton" type="Button" parent="."]
+margin_left = 972.0
+margin_top = 516.0
+margin_right = 1024.0
+margin_bottom = 536.0
 size_flags_vertical = 4
 text = "Export"
 
@@ -113,7 +142,9 @@ text = "Export"
 [connection signal="pressed" from="HeightExportButton" to="." method="_on_HeightExportButton_pressed"]
 [connection signal="toggled" from="NormalLabel/InvertYCheckBox" to="." method="_on_InvertYCheckBox_toggled"]
 [connection signal="pressed" from="NormalExportButton" to="." method="_on_NormalExportButton_pressed"]
+[connection signal="pressed" from="IlluminatedExportButton" to="." method="_on_IlluminatedExportButton_pressed"]
 
 [editable path="AlbedoTextureSlot"]
 [editable path="HeightTextureSlot"]
 [editable path="NormalTextureSlot"]
+[editable path="IlluminatedTextureSlot"]
