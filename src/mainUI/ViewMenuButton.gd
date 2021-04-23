@@ -10,6 +10,7 @@ enum {
 	FILTER_ALBEDO,
 	FILTER_HEIGHT,
 	FILTER_NORMAL,
+	INVERT_NORMAL_Y,
 	_SEPARATOR_0,
 	TOGGLE_ALBEDO,
 	TOGGLE_HEIGHT,
@@ -41,6 +42,12 @@ func _ready() -> void:
 	update_filter_map_check_item(FILTER_HEIGHT, MapTypes.Type.HEIGHT_MAP)
 	menu_popup.add_check_item("Filter normal map", FILTER_NORMAL)
 	update_filter_map_check_item(FILTER_NORMAL, MapTypes.Type.NORMAL_MAP)
+	menu_popup.add_check_item("Invert normal map Y axis", INVERT_NORMAL_Y)
+	menu_popup.set_item_tooltip(INVERT_NORMAL_Y, """
+	Toggle normal map Y axis to represent positive (OpenGL style) or negative (DirectX style) values.
+	When off, use positive Y values (OpenGL style).
+	""")
+	update_normal_invert_y_check_item()
 	
 	menu_popup.add_separator()  # _SEPARATOR_0
 	
@@ -96,6 +103,9 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		toggle_filter_map(FILTER_HEIGHT, MapTypes.Type.HEIGHT_MAP)
 	elif id == FILTER_NORMAL:
 		toggle_filter_map(FILTER_NORMAL, MapTypes.Type.NORMAL_MAP)
+	elif id == INVERT_NORMAL_Y:
+		NormalDrawer.invert_y = not NormalDrawer.invert_y
+		update_normal_invert_y_check_item()
 	elif id == TOGGLE_ALBEDO:
 		var value = not plane_material.get_shader_param("use_albedo")
 		plane_material.set_shader_param("use_albedo", value)
@@ -136,6 +146,10 @@ func toggle_filter_map(id: int, maptype: int) -> void:
 	for m in maps:
 		m.flags ^= Texture.FLAG_FILTER
 	update_filter_map_check_item(id, maptype)
+
+
+func update_normal_invert_y_check_item() -> void:
+	menu_popup.set_item_checked(INVERT_NORMAL_Y, NormalDrawer.invert_y)
 
 
 func update_filter_map_check_item(id: int, maptype: int) -> void:

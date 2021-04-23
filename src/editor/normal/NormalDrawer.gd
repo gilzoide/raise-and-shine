@@ -6,6 +6,9 @@ extends Viewport
 
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(ShaderMaterial) var height_to_normal_material = preload("res://editor/normal/HeightToNormal_material.tres")
+export(ShaderMaterial) var plane_material = preload("res://editor/visualizers/3D/Plane_material.tres")
+
+var invert_y := false setget set_invert_y
 
 var _canvas_item
 onready var is_gles3 = OS.get_current_video_driver() == OS.VIDEO_DRIVER_GLES3
@@ -40,6 +43,14 @@ func take_snapshot() -> void:
 	project.normal_image = get_texture().get_data()
 	project.normal_image.convert(MapTypes.NORMAL_IMAGE_FORMAT)
 	project.normal_texture.create_from_image(project.normal_image, project.normal_texture.flags)
+
+
+func set_invert_y(value: bool) -> void:
+	if value != invert_y:
+		invert_y = value
+		height_to_normal_material.set_shader_param("invert_y", value)
+		plane_material.set_shader_param("invert_normal_y", value)
+		update_all()
 
 
 func _on_height_drawer_cleared() -> void:

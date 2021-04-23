@@ -11,6 +11,7 @@ shader_param/use_albedo = true
 shader_param/use_height = true
 shader_param/use_normal = true
 shader_param/use_alpha = true
+shader_param/invert_normal_y = false
 shader_param/albedo_source = 0
 shader_param/height_scale = 0.5
 shader_param/albedo_map = ExtResource( 2 )

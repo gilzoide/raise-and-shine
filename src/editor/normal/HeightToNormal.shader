@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
 uniform float bump_scale = 1;
+uniform bool invert_y = false;
 
 void fragment() {
 	vec2 uv_offset = TEXTURE_PIXEL_SIZE;
@@ -18,6 +19,7 @@ void fragment() {
 	float zx = (z3 + z6 + z9 - z1 - z4 - z7) / 6.0f * bump_scale;
 	float zy = (z1 + z2 + z3 - z7 - z8 - z9) / 6.0f * bump_scale;
 	vec3 normal = normalize(vec3(-zx, zy, 1.0));
+	normal.y = mix(normal.y, -normal.y, float(invert_y));
 	
 	COLOR.rgb = normal * 0.5 + 0.5;
 }

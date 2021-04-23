@@ -15,6 +15,7 @@ uniform bool use_albedo = true;
 uniform bool use_height = true;
 uniform bool use_normal = true;
 uniform bool use_alpha = true;
+uniform bool invert_normal_y = false;
 uniform int albedo_source = 0;
 uniform float height_scale = 0.2;
 
@@ -25,15 +26,16 @@ void vertex() {
 
 void fragment() {
 	float height = texture(height_map, UV).r;
-	vec3 normal = texture(normal_map, UV).xyz;
+	vec3 normal_rgb = texture(normal_map, UV).xyz;
 	vec4 texel = texture(albedo_map, UV);
 	texel.a = mix(1, texel.a, float(use_alpha));
 	
 	vec4 color = float(albedo_source == ALBEDO_FROM_ALBEDO) * texel
 		+ float(albedo_source == ALBEDO_FROM_HEIGHT) * vec4(height, height, height, 1)
-		+ float(albedo_source == ALBEDO_FROM_NORMAL) * vec4(normal, 1);
+		+ float(albedo_source == ALBEDO_FROM_NORMAL) * vec4(normal_rgb, 1);
 	
-	NORMALMAP = mix(NORMALMAP, normal, float(use_normal));
+	normal_rgb.y = mix(normal_rgb.y, 1.0 - normal_rgb.y, float(invert_normal_y));
+	NORMALMAP = mix(NORMALMAP, normal_rgb, float(use_normal));
 	ALBEDO = mix(vec3(1), color.rgb, float(use_albedo));
 	ALPHA = color.a;
 }

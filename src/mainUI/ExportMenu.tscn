@@ -1,0 +1,119 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://editor/TextureSlot.tscn" type="PackedScene" id=1]
+[ext_resource path="res://mainUI/ExportMenu.gd" type="Script" id=2]
+
+[node name="ExportMenu" type="GridContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+columns = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AlbedoLabel" type="Label" parent="."]
+margin_top = 91.0
+margin_right = 77.0
+margin_bottom = 105.0
+text = "Albedo"
+
+[node name="AlbedoTextureSlot" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 81.0
+margin_right = 968.0
+margin_bottom = 197.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" parent="AlbedoTextureSlot" index="0"]
+mouse_filter = 2
+
+[node name="AlbedoExportButton" type="Button" parent="."]
+margin_left = 972.0
+margin_top = 88.0
+margin_right = 1024.0
+margin_bottom = 108.0
+size_flags_vertical = 4
+text = "Export"
+
+[node name="HeightLabel" type="Label" parent="."]
+margin_top = 292.0
+margin_right = 77.0
+margin_bottom = 306.0
+text = "Height"
+
+[node name="HeightTextureSlot" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 81.0
+margin_top = 201.0
+margin_right = 968.0
+margin_bottom = 398.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+type = 1
+
+[node name="TextureRect" parent="HeightTextureSlot" index="0"]
+mouse_filter = 2
+
+[node name="HeightExportButton" type="Button" parent="."]
+margin_left = 972.0
+margin_top = 289.0
+margin_right = 1024.0
+margin_bottom = 309.0
+size_flags_vertical = 4
+text = "Export"
+
+[node name="NormalLabel" type="VBoxContainer" parent="."]
+margin_top = 402.0
+margin_right = 77.0
+margin_bottom = 599.0
+alignment = 1
+
+[node name="Label" type="Label" parent="NormalLabel"]
+margin_top = 77.0
+margin_right = 77.0
+margin_bottom = 91.0
+text = "Normal"
+
+[node name="InvertYCheckBox" type="CheckBox" parent="NormalLabel"]
+margin_top = 95.0
+margin_right = 77.0
+margin_bottom = 119.0
+text = "Invert Y"
+
+[node name="NormalTextureSlot" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 81.0
+margin_top = 402.0
+margin_right = 968.0
+margin_bottom = 599.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+type = 2
+
+[node name="TextureRect" parent="NormalTextureSlot" index="0"]
+mouse_filter = 2
+
+[node name="NormalExportButton" type="Button" parent="."]
+margin_left = 972.0
+margin_top = 490.0
+margin_right = 1024.0
+margin_bottom = 510.0
+size_flags_vertical = 4
+text = "Export"
+
+[connection signal="pressed" from="AlbedoExportButton" to="." method="_on_AlbedoExportButton_pressed"]
+[connection signal="pressed" from="HeightExportButton" to="." method="_on_HeightExportButton_pressed"]
+[connection signal="toggled" from="NormalLabel/InvertYCheckBox" to="." method="_on_InvertYCheckBox_toggled"]
+[connection signal="pressed" from="NormalExportButton" to="." method="_on_NormalExportButton_pressed"]
+
+[editable path="AlbedoTextureSlot"]
+[editable path="HeightTextureSlot"]
+[editable path="NormalTextureSlot"]
