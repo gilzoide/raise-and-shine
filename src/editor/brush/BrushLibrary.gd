@@ -28,7 +28,9 @@ func _on_image_imported(image: Image, path: String) -> void:
 	if not brush_item:
 		brush_item = BrushLibraryItemScene.instance()
 		brush_item.texture = ImageTexture.new()
-		brush_item.title = path
+		if ProjectSettings.get_setting("global/brush_library_track_files"):
+			brush_item.path = path
+		brush_item.title = path.get_file()
 		brush_item.pressed = false
 		var _err = brush_item.connect("tree_exiting", self, "_on_brush_item_tree_exiting", [brush_item])
 		_item_per_path[path] = brush_item
@@ -37,4 +39,4 @@ func _on_image_imported(image: Image, path: String) -> void:
 
 
 func _on_brush_item_tree_exiting(item) -> void:
-	_item_per_path.erase(item.title)
+	_item_per_path.erase(item.path)

@@ -7,12 +7,14 @@ extends Button
 
 enum {
 	REMOVE,
+	SHOW_FILE_MANAGER,
 }
 
 const HEIGHT_TEXTURE_FLAGS = Texture.FLAG_FILTER
 const EMPTY_TEXTURE = preload("res://textures/pixel.png")
 
 export(String) var title := "" setget set_title
+export(String) var path := "" setget set_path
 export(Texture) var texture: Texture = EMPTY_TEXTURE setget set_texture
 export(bool) var builtin = false
 export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
@@ -30,6 +32,8 @@ func _ready() -> void:
 		_context_menu = PopupMenu.new()
 		_context_menu.add_item("Remove", REMOVE)
 		_context_menu.set_item_tooltip(REMOVE, "Remove brush from library")
+		if ProjectSettings.get_setting("global/brush_library_track_files"):
+			_context_menu.add_item("Show in File Manager", SHOW_FILE_MANAGER)
 		var _err = _context_menu.connect("id_pressed", self, "_on_context_menu_id_pressed")
 		add_child(_context_menu)
 
@@ -45,9 +49,15 @@ func _pressed() -> void:
 
 func set_title(value: String) -> void:
 	title = value
-	hint_tooltip = value
+	if path.empty():
+		hint_tooltip = value
 	if _label:
 		_label.text = value
+
+
+func set_path(value: String) -> void:
+	path = value
+	hint_tooltip = value
 
 
 func set_texture(value: Texture) -> void:
@@ -62,3 +72,5 @@ func _on_context_menu_id_pressed(id: int) -> void:
 	if id == REMOVE:
 		get_parent().remove_child(self)
 		queue_free() 
+	elif id == SHOW_FILE_MANAGER:
+		var _err = OS.shell_open(path.get_base_dir())
