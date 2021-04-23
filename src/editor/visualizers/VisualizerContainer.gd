@@ -29,7 +29,7 @@ func _notification(what: int) -> void:
 	elif what == NOTIFICATION_MOUSE_ENTER:
 		grab_focus()
 		brush.visible = true
-	elif what == NOTIFICATION_MOUSE_EXIT:
+	elif what == NOTIFICATION_MOUSE_EXIT or what == NOTIFICATION_WM_MOUSE_EXIT:
 		stop_panning()
 		release_focus()
 		brush.visible = false

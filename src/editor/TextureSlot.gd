@@ -41,7 +41,7 @@ func _ready() -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_MOUSE_ENTER:
 		brush.visible = true
-	elif what == NOTIFICATION_MOUSE_EXIT:
+	elif what == NOTIFICATION_MOUSE_EXIT or what == NOTIFICATION_WM_MOUSE_EXIT:
 		brush.visible = false
 
 

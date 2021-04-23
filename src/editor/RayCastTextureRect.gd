@@ -23,7 +23,7 @@ func _draw() -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED:
 		update()
-	elif what == NOTIFICATION_MOUSE_EXIT:
+	elif what == NOTIFICATION_MOUSE_EXIT or what == NOTIFICATION_WM_MOUSE_EXIT:
 		stop_dragging()
 
 
