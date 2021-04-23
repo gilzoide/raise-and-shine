@@ -12,6 +12,7 @@ enum DragTool {
 	HEIGHT_EDIT,
 }
 
+onready var SelectionDrawer = preload("res://editor/selection/SelectionDrawer.tscn").instance()
 
 export(float) var drag_height_speed = 0.01
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")

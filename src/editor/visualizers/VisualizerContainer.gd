@@ -7,7 +7,6 @@ extends Control
 export(float) var speed: float = 1
 export(float) var faster_factor: float = 5
 export(float) var zoom_speed: float = 0.01
-export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
 export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 
 onready var viewport: Viewport = $ViewportContainer/Viewport
@@ -114,10 +113,6 @@ func stop_dragging() -> void:
 
 func set_pan_cursor() -> void:
 	ControlExtras.set_cursor(self, Control.CURSOR_MOVE, not in_notification)
-
-
-func set_drag_cursor() -> void:
-	ControlExtras.set_cursor(self, selection.get_cursor_for_active_tool(), not in_notification)
 
 
 func set_normal_cursor() -> void:

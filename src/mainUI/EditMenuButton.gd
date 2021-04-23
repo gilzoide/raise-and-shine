@@ -12,7 +12,6 @@ enum {
 }
 
 export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
-export(Resource) var selection = preload("res://editor/selection/ActiveSelection.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 
 var _size_picker_popup: Popup = null
