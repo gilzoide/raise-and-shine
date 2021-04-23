@@ -16,12 +16,7 @@ onready var _brush_item_container = $ScrollContainer/FixedCellGridContainer
 
 
 func _ready() -> void:
-	_on_albedo_texture_changed()
-	project.connect("albedo_texture_changed", self, "_on_albedo_texture_changed")
-
-
-func _on_albedo_texture_changed(_texture: Texture = null, _empty_data = false) -> void:
-	_grayscale_albedo_item.texture.create_from_image(project.albedo_image, BrushLibraryItem.HEIGHT_TEXTURE_FLAGS)
+	_grayscale_albedo_item.texture = MapTypes.map_textures(MapTypes.Type.ALBEDO_MAP)[0]
 
 
 func _on_ImportButton_pressed() -> void:
