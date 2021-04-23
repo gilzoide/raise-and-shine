@@ -16,7 +16,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if has_focus():
+	if pan_modifier:
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * delta
 		var movement = Vector2(
 			Input.get_action_strength("visualizer_3d_rotate_left") - Input.get_action_strength("visualizer_3d_rotate_right"),

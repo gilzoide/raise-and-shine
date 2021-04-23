@@ -5,9 +5,9 @@
 [node name="BrushSizeEditor" instance=ExtResource( 1 )]
 hint_tooltip = "Brush size, in pixels.
 The text box supports mathematical expressions.
-Scroll with mouse wheel or press [ or ] keys to change value
+Scroll with mouse wheel or press A or D keys to change value
 Right click to reset.
-Hold shift while scrolling to change the value faster."
+Hold shift to change the value faster."
 
 [node name="SpinBox" parent="Header" index="1"]
 suffix = "px"

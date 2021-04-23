@@ -13,6 +13,7 @@ onready var viewport: Viewport = $ViewportContainer/Viewport
 onready var camera: Camera = $ViewportContainer/Viewport/Camera
 onready var zoom_slider = $ZoomSlider
 onready var camera_initial_transform: Transform = camera.transform
+var pan_modifier := false
 var panning := false
 var dragging := false
 var current_zoom = 0
@@ -36,6 +37,18 @@ func _notification(what: int) -> void:
 		camera.keep_aspect = Camera.KEEP_HEIGHT if rect_size.aspect() >= 1 else Camera.KEEP_WIDTH
 
 
+func _input(event: InputEvent) -> void:
+	if pan_modifier:
+		if (event.is_action("visualizer_3d_rotate_left")
+				or event.is_action("visualizer_3d_rotate_right")
+				or event.is_action("visualizer_3d_rotate_up")
+				or event.is_action("visualizer_3d_rotate_down")
+				or event.is_action("visualizer_3d_rotate_clockwise")
+				or event.is_action("visualizer_3d_rotate_counterclockwise")):
+			# avoid changing brush, as shortcuts are the same
+			get_tree().set_input_as_handled()
+
+
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("visualizer_zoom_up", true):
 		var factor = (faster_factor if Input.is_action_pressed("visualizer_3d_faster") else 1.0) * zoom_speed
@@ -46,8 +59,10 @@ func _gui_input(event: InputEvent) -> void:
 	elif event.is_action("visualizer_pan_modifier"):
 		if event.is_pressed():
 			set_pan_cursor()
+			pan_modifier = true
 		else:
 			set_normal_cursor()
+			pan_modifier = false
 	elif event.is_action_pressed("visualizer_reset"):
 		reset_camera()
 	elif event is InputEventMouseButton:
@@ -71,7 +86,6 @@ func _gui_input(event: InputEvent) -> void:
 			ControlExtras.wrap_mouse_motion_if_needed(self, event)
 			HeightDrawer.draw_brush_centered_uv(brush, brush.uv)
 	viewport.unhandled_input(event)
-	
 
 
 func pan_by_mouse(relative: Vector2, faster: bool = false) -> void:

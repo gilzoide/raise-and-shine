@@ -1,27 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://editor/brush/BrushPropertyEditor.tscn" type="PackedScene" id=2]
-
-[sub_resource type="InputEventAction" id=1]
-action = "ui_up"
-
-[sub_resource type="ShortCut" id=2]
-shortcut = SubResource( 1 )
-
-[sub_resource type="InputEventAction" id=3]
-action = "ui_down"
-
-[sub_resource type="ShortCut" id=4]
-shortcut = SubResource( 3 )
 
 [node name="BrushDepthEditor" instance=ExtResource( 2 )]
 hint_tooltip = "Brush pressure, in percentage. 100% represents the white color and 0% represents black.
 The text box supports mathematical expressions.
-Scroll with mouse wheel to change value, right click to reset.
-Hold shift while scrolling to change the value faster."
+Scroll with mouse wheel or press W or S keys to change value.
+Right click to reset.
+Hold shift to change the value faster."
 property = "pressure"
-global_up_shortcut = SubResource( 2 )
-global_down_shortcut = SubResource( 4 )
 
 [node name="Label" parent="Header" index="0"]
 text = "Pressure"
