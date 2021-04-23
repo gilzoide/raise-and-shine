@@ -16,6 +16,7 @@ export(CanvasItemMaterial) var material: CanvasItemMaterial = preload("res://edi
 
 var uv: Vector2 setget set_uv
 var visible := false setget set_visible
+var erasing := false setget set_erasing
 
 
 func set_size(value: float) -> void:
@@ -54,6 +55,12 @@ func set_uv(value: Vector2) -> void:
 func set_visible(value: bool) -> void:
 	if value != visible:
 		visible = value
+		emit_signal("changed")
+
+
+func set_erasing(value: bool) -> void:
+	if value != erasing:
+		erasing = value
 		emit_signal("changed")
 
 

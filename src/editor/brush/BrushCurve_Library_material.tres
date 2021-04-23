@@ -8,3 +8,4 @@ shader_param/is_flat = true
 shader_param/direction = 0.67
 shader_param/control1 = Vector2( 0, 0 )
 shader_param/control2 = Vector2( 1, 1 )
+shader_param/is_inverted = false

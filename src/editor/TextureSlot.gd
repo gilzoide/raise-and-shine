@@ -52,14 +52,14 @@ func _on_drawn_texture_updated(_texture: Texture = null, _empty_data: bool = fal
 
 func _on_TextureRect_drag_started(button_index: int, uv: Vector2) -> void:
 	_dragging = true
-	BrushDrawer.erasing = button_index == BUTTON_RIGHT
+	brush.erasing = button_index == BUTTON_RIGHT
 	HeightDrawer.draw_brush_centered_uv(brush, uv)
 
 
 func _on_TextureRect_drag_ended() -> void:
 	if _dragging:
 		_dragging = false
-		BrushDrawer.erasing = false
+		brush.erasing = false
 		HeightDrawer.cancel_draw()
 		HeightDrawer.take_snapshot()
 

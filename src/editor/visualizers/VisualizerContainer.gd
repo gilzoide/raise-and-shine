@@ -114,13 +114,13 @@ func stop_panning() -> void:
 
 func start_dragging(button_index: int) -> void:
 	dragging = true
-	BrushDrawer.erasing = button_index == BUTTON_RIGHT
+	brush.erasing = button_index == BUTTON_RIGHT
 	HeightDrawer.draw_brush_centered_uv(brush, brush.uv)
 
 
 func stop_dragging() -> void:
 	dragging = false
-	BrushDrawer.erasing = false
+	brush.erasing = false
 	HeightDrawer.cancel_draw()
 	HeightDrawer.take_snapshot()
 

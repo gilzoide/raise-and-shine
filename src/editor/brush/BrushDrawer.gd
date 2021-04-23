@@ -8,9 +8,6 @@ export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 export(Material) var brush_curve_material = preload("res://editor/brush/BrushCurve_material.tres")
 export(int) var minimum_size = 128
 
-var erasing = false setget set_erasing, get_erasing
-
-var _erasing = false
 var _canvas_item
 
 
@@ -47,18 +44,8 @@ func draw_brush() -> void:
 	render_target_update_mode = Viewport.UPDATE_ONCE
 
 
-func set_erasing(value: bool) -> void:
-	if value != _erasing:
-		_erasing = value
-		VisualServer.canvas_item_set_self_modulate(_canvas_item, Color.black if value else Color.white)
-		render_target_update_mode = Viewport.UPDATE_ONCE
-
-
-func get_erasing() -> bool:
-	return _erasing
-
-
 func _on_brush_changed() -> void:
+	brush_curve_material.set_shader_param("is_inverted", brush.erasing)
 	draw_brush()
 
 
