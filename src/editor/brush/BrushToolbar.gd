@@ -18,6 +18,7 @@ func _ready() -> void:
 	_blend_mode_option_button.add_item("Blend")
 	_blend_mode_option_button.add_item("Add")
 	_blend_mode_option_button.add_item("Subtract")
+	_blend_mode_option_button.add_item("Multiply")
 	_err = _blend_mode_option_button.connect("item_selected", self, "_on_blend_mode_selected")
 
 

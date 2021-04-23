@@ -19,7 +19,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 675.0
+margin_right = 659.0
 margin_bottom = 51.0
 custom_constants/separation = 18
 
@@ -42,9 +42,9 @@ rect_min_size = Vector2( 90, 0 )
 hint_tooltip = "Brush blending mode.
 By default, brush is blended with current height based on transparency.
 Add mode sums the current height with brush.
-Subtract mode subtracts brush from current height."
+Subtract mode subtracts brush from current height.
+Multiply current height with brush value, useful for scaling down whole regions."
 text = "Blend"
-selected = 0
 script = ExtResource( 7 )
 
 [node name="BrushSizeEditor" parent="HBoxContainer" instance=ExtResource( 2 )]
