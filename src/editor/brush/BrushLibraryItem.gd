@@ -5,6 +5,8 @@
 tool
 extends Button
 
+signal removed()
+
 enum {
 	REMOVE,
 	SHOW_FILE_MANAGER,
@@ -71,6 +73,7 @@ func set_texture(value: Texture) -> void:
 func _on_context_menu_id_pressed(id: int) -> void:
 	if id == REMOVE:
 		get_parent().remove_child(self)
+		emit_signal("removed")
 		queue_free() 
 	elif id == SHOW_FILE_MANAGER:
 		var _err = OS.shell_open(path.get_base_dir())
