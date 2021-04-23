@@ -6,9 +6,9 @@
 script = ExtResource( 1 )
 build_number = 3
 date = "2021-04-23"
-description = "Painting heights is normal!
+description = "Life is a Canvas, go higher and paint your own normal!
 Height map editing is now based on paint brushes. You can resize, rotate and set the brush's pressure, and you can import any images to use as brush, available in the [b]Library[/b] panel."
-added = PoolStringArray( "Brush based height drawing", "Brush library to choose current brush and import new images", "(Desktop only) Cache library image paths to restore on next session", "(Desktop only) Loading indication while new texture is loading" )
-changed = PoolStringArray( "Preview navigation keys now need [b]Space[/b] being hold", "Start Ambient light with lower energy", "Increase performance of loading new textures" )
+added = PoolStringArray( "Brush based height drawing", "Brush library to choose current brush and import new images", "Optionally invert normal map Y axis for DirectX style maps", "(Desktop only) Cache library image paths to restore on next session", "(Desktop only) Loading indication while new texture is loading" )
+changed = PoolStringArray( "Preview navigation keys now need [b]Space[/b] being hold", "Initial Ambient light with lower energy", "Increase performance of loading new textures" )
 fixed = PoolStringArray( "3D visualization depth test" )
 removed = PoolStringArray( "Selection tools and toolbar", "Height pushing tool and toolbar", "Light editor popup by right clicking lights on 2D/3D views" )
