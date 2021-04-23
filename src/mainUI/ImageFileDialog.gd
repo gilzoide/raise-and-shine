@@ -4,8 +4,6 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends Node
 
-signal image_loaded(image)
-
 const OPEN_FILTERS = [
 	"*.bmp ; BMP",
 	"*.dds ; DirectDraw Surface",
@@ -36,18 +34,21 @@ const OPEN_EXTENSIONS = PoolStringArray([
 const OPEN_TEXT = "You can also drop files to this window\n"
 const SAVE_TEXT = ""
 
-var success_method: FuncRef
+export(Resource) var dispatch_queue = preload("res://mainUI/loading/LoadImage_dispatchqueue.tres")
+
 var image_to_save: Image
+var _success_method: FuncRef
 onready var file_dialog = $FileDialog
 onready var drop_dialog = $DropDialog
+onready var _loading_overlay = $LoadingOverlay
 
 
 func _ready() -> void:
 	var _err = get_tree().connect("files_dropped", self, "_on_files_dropped")
 
 
-func try_load_image(on_success_method: FuncRef) -> void:
-	success_method = on_success_method
+func try_load_image(success_method: FuncRef) -> void:
+	_success_method = success_method
 	if OS.get_name() != "HTML5":
 		file_dialog.mode = FileDialog.MODE_OPEN_FILE
 		file_dialog.filters = OPEN_FILTERS
@@ -86,14 +87,12 @@ func try_save_image(image: Image, filename: String) -> void:
 func _on_file_selected(path: String) -> void:
 	Input.set_default_cursor_shape(Input.CURSOR_WAIT)
 	if file_dialog.mode == FileDialog.MODE_OPEN_FILE:
-		var img = Image.new()
-		if img.load(path) == OK:
-			emit_signal("image_loaded", img)
-			if success_method:
-				success_method.call_func(img, path)
-			_show_toast("Image loaded")
+		if dispatch_queue.is_threaded():
+			_loading_overlay.visible = true
+			dispatch_queue.dispatch(self, "_load_image_from_path", [path, _success_method]).then_deferred(self, "_on_load_image_finished")
 		else:
-			_show_toast("Failed to load image =(")
+			var image = _load_image_from_path(path, _success_method)
+			_on_load_image_finished(image)
 	elif file_dialog.mode == FileDialog.MODE_SAVE_FILE:
 		var res = ERR_FILE_UNRECOGNIZED
 		if path.ends_with(".png"):
@@ -104,7 +103,7 @@ func _on_file_selected(path: String) -> void:
 			_show_toast("Image saved at \"%s\"" % path)
 		else:
 			_show_toast("Failed to save image =(")
-	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 
 
 func _on_files_dropped(files: PoolStringArray, _screen: int) -> void:
@@ -127,5 +126,19 @@ func _show_toast(msg: String) -> void:
 
 func _on_popup_hide() -> void:
 	file_dialog.deselect_items()
-	success_method = null
+	_success_method = null
 	image_to_save = null
+
+
+func _load_image_from_path(path: String, success_method: FuncRef) -> Image:
+	var img = Image.new()
+	if img.load(path) == OK:
+		if success_method:
+			success_method.call_func(img, path)
+	return img
+
+
+func _on_load_image_finished(image: Image) -> void:
+	_show_toast("Failed to load image =(" if image.is_empty() else "Image loaded")
+	_loading_overlay.visible = false
+	Input.set_default_cursor_shape(Input.CURSOR_ARROW)

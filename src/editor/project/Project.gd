@@ -85,7 +85,6 @@ func set_albedo_image(value: Image, _path: String = "") -> void:
 	albedo_image = value
 	albedo_texture.create_from_image(albedo_image, albedo_texture.flags)
 	if OS.get_current_video_driver() == OS.VIDEO_DRIVER_GLES3:
-		albedo_image.convert(Image.FORMAT_RGBAH)
 		albedo_srgb_texture.create_from_image(albedo_image, albedo_srgb_texture.flags)
 	emit_signal("albedo_texture_changed", albedo_texture)
 

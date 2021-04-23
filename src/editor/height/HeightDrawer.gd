@@ -12,6 +12,7 @@ export(Resource) var project = preload("res://editor/project/ActiveEditorProject
 export(Material) var brush_material = preload("res://editor/height/BrushHeight_material.tres")
 
 var _canvas_item = VisualServer.canvas_item_create()
+onready var _brush_material_rid = RID(brush_material)
 
 
 func _ready() -> void:
@@ -19,7 +20,6 @@ func _ready() -> void:
 	
 	_canvas_item = VisualServer.canvas_item_create()
 	VisualServer.canvas_item_set_parent(_canvas_item, find_world_2d().canvas)
-	VisualServer.canvas_item_set_material(_canvas_item, RID(brush_material))
 	
 	_on_height_texture_changed(project.height_texture)
 	project.connect("height_texture_changed", self, "_on_height_texture_changed")
@@ -40,11 +40,13 @@ func draw_brush_centered(brush, center: Vector2) -> void:
 	var half_size = floor(brush.size * 0.5)
 	var transform = Transform2D(deg2rad(-brush.angle), center)
 	var rect = Rect2(-Vector2(half_size, half_size), Vector2(brush.size, brush.size))
+	VisualServer.canvas_item_set_material(_canvas_item, _brush_material_rid)
 	VisualServer.canvas_item_clear(_canvas_item)
 	VisualServer.canvas_item_add_set_transform(_canvas_item, transform)
 	BrushDrawer.get_texture().draw_rect(_canvas_item, rect, false)
 	render_target_update_mode = Viewport.UPDATE_ONCE
-	yield(VisualServer, "frame_post_draw")
+	# NOTE: emiting before drawing actually happens only works
+	# because HeightDrawer is declared before in Autoload
 	emit_signal("brush_drawn", transform.xform(rect))
 
 
@@ -58,8 +60,8 @@ func clear_all(color = Color.black) -> void:
 	VisualServer.canvas_item_add_rect(_canvas_item, Rect2(Vector2.ZERO, size), color)
 	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	render_target_update_mode = Viewport.UPDATE_ONCE
-	yield(VisualServer, "frame_post_draw")
-	VisualServer.canvas_item_set_material(_canvas_item, RID(brush_material))
+	# NOTE: emiting before drawing actually happens only works
+	# because HeightDrawer is declared before in Autoload
 	emit_signal("cleared")
 
 
@@ -69,8 +71,8 @@ func clear_to_texture(texture: Texture) -> void:
 	texture.draw_rect(_canvas_item, Rect2(Vector2.ZERO, size), false)
 	render_target_clear_mode = Viewport.CLEAR_MODE_ONLY_NEXT_FRAME
 	render_target_update_mode = Viewport.UPDATE_ONCE
-	yield(VisualServer, "frame_post_draw")
-	VisualServer.canvas_item_set_material(_canvas_item, RID(brush_material))
+	# NOTE: emiting before drawing actually happens only works
+	# because HeightDrawer is declared before in Autoload
 	emit_signal("cleared")
 
 
