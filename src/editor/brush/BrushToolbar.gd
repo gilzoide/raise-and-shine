@@ -26,7 +26,7 @@ func _ready() -> void:
 
 
 func _on_brush_changed() -> void:
-	_brush_preview.rotation_degrees = -brush.angle
+	_brush_preview.rotation_degrees = brush.angle
 
 
 func _on_height_drawer_size_changed() -> void:

@@ -38,7 +38,7 @@ func draw_brush_centered_uv(brush, uv: Vector2) -> void:
 
 func draw_brush_centered(brush, center: Vector2) -> void:
 	var half_size = floor(brush.size * 0.5)
-	var transform = Transform2D(deg2rad(-brush.angle), center)
+	var transform = Transform2D(deg2rad(brush.angle), center)
 	var rect = Rect2(-Vector2(half_size, half_size), Vector2(brush.size, brush.size))
 	VisualServer.canvas_item_set_material(_canvas_item, _brush_material_rid)
 	VisualServer.canvas_item_clear(_canvas_item)

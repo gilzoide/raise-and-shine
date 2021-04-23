@@ -84,4 +84,4 @@ func _on_brush_changed() -> void:
 	if _brush_hover.visible:
 		var drawn_rect = texture_rect.drawn_rect
 		_brush_hover.position = drawn_rect.position + brush.uv * drawn_rect.size
-		_brush_hover.rotation_degrees = -brush.angle
+		_brush_hover.rotation_degrees = brush.angle

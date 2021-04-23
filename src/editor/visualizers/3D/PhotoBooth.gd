@@ -134,7 +134,7 @@ func _on_brush_changed() -> void:
 	if _brush_spatial.visible:
 		_brush_mesh_instance.translation = Vector3(0, 0, _height_scale * brush.get_pressure01())
 		_brush_spatial.translation = uv_to_position(brush.uv, _brush_spatial.translation.z)
-		_brush_spatial.rotation_degrees = Vector3(0, 0, brush.angle)
+		_brush_spatial.rotation_degrees = Vector3(0, 0, -brush.angle)
 
 
 func _update_brush_size() -> void:
