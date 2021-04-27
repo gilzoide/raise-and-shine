@@ -40,7 +40,9 @@ func update_values() -> void:
 
 
 func focus_first() -> void:
-	width_picker.get_line_edit().grab_focus()
+	var line_edit = width_picker.get_line_edit()
+	line_edit.grab_focus()
+	line_edit.select_all()
 
 
 func _on_WidthSpinBox_value_changed(value: float) -> void:
