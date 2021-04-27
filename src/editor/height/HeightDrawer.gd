@@ -9,6 +9,7 @@ signal cleared()
 
 export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
+export(Resource) var brush = preload("res://editor/brush/ActiveBrush.tres")
 export(Material) var brush_material = preload("res://editor/height/BrushHeight_material.tres")
 
 var _canvas_item = VisualServer.canvas_item_create()
@@ -86,6 +87,7 @@ func _on_height_texture_changed(texture: Texture, empty_data = false) -> void:
 	var new_size = texture.get_size()
 	if not new_size.is_equal_approx(size):
 		size = new_size
+		brush.uv_snap_to_size = new_size
 	if empty_data:
 		clear_all()
 	else:
