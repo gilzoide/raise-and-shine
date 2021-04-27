@@ -50,9 +50,10 @@ func set_texture(value: Texture) -> void:
 
 
 func set_uv(value: Vector2) -> void:
-	if value != uv:
-		var pos = (value * uv_snap_to_size).floor() + Vector2(0.5, 0.5)
-		uv = pos * _inv_uv_snap_to_size
+	var pos = (value * uv_snap_to_size).floor() + Vector2(0.5, 0.5)
+	value = pos * _inv_uv_snap_to_size
+	if not value.is_equal_approx(uv):
+		uv = value
 		emit_signal("changed")
 
 
