@@ -24,6 +24,8 @@ func _ready() -> void:
 	_spinbox.share(_slider)
 	_spinbox.value = _initial_value
 	_spinbox.connect("value_changed", self, "_on_value_changed")
+	var line_edit = _spinbox.get_line_edit() 
+	line_edit.connect("focus_entered", line_edit, "select_all", [], CONNECT_DEFERRED)
 	
 	set_process_unhandled_input(global_up_shortcut or global_down_shortcut)
 
