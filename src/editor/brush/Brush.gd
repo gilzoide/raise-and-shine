@@ -12,7 +12,6 @@ export(float) var size = 32.0 setget set_size
 export(float, 0, 100) var pressure = 100 setget set_pressure
 export(float, -180, 180) var angle = 0 setget set_angle
 export(Texture) var texture: Texture = EMPTY_TEXTURE setget set_texture
-export(CanvasItemMaterial) var material: CanvasItemMaterial = preload("res://editor/height/BrushHeight_material.tres")
 
 var uv: Vector2 setget set_uv
 var uv_snap_to_size: Vector2 setget set_uv_snap_to_size

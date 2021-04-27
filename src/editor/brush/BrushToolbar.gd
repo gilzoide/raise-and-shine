@@ -22,6 +22,8 @@ func _ready() -> void:
 	_blend_mode_option_button.add_item("Add")
 	_blend_mode_option_button.add_item("Subtract")
 	_blend_mode_option_button.add_item("Multiply")
+	_blend_mode_option_button.add_item("Highest")
+	_blend_mode_option_button.add_item("Lowest")
 	_err = _blend_mode_option_button.connect("item_selected", self, "_on_blend_mode_selected")
 
 
@@ -35,4 +37,4 @@ func _on_height_drawer_size_changed() -> void:
 
 
 func _on_blend_mode_selected(value: int) -> void:
-	brush.material.blend_mode = value
+	HeightDrawer.blend_mode = value
