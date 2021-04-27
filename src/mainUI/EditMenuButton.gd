@@ -22,7 +22,7 @@ export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 export(NodePath) var brush_toolbar_path
 
-var _size_picker_popup: Popup = null
+var SizePickerPopup: PackedScene = null
 
 onready var _brush_toolbar = get_node(brush_toolbar_path)
 onready var menu_popup = get_popup()
@@ -95,11 +95,13 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 	elif id == BRUSH_ANGLE_DECREASE:
 		_brush_toolbar.angle_editor.scroll_range(-1)
 	elif id == RESIZE_MAPS:
-		if _size_picker_popup == null:
-			_size_picker_popup = load("res://mainUI/SizePickerPopup.tscn").instance()
-			add_child(_size_picker_popup)
-		var _err = _size_picker_popup.connect("size_confirmed", project, "resize_maps", [], CONNECT_ONESHOT)
-		_size_picker_popup.popup_with_size(HeightDrawer.size)
+		if SizePickerPopup == null:
+			SizePickerPopup = load("res://mainUI/SizePickerPopup.tscn")
+		var popup = SizePickerPopup.instance()
+		add_child(popup)
+		var _err = popup.connect("size_confirmed", project, "resize_maps", [], CONNECT_ONESHOT)
+		_err = popup.connect("popup_hide", popup, "queue_free", [], CONNECT_ONESHOT)
+		popup.popup_with_size(HeightDrawer.size)
 
 
 func _on_menu_popup_about_to_show() -> void:
