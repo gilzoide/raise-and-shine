@@ -25,14 +25,15 @@ float directional_height(vec2 uv) {
 	}
 	else {
 		float angle = atan(uv.y, uv.x);
-		float delta_factor = -cos(direction - angle);
-		t = delta_factor * length(uv) * 0.5 + 0.5;
+		float delta_angle_factor = -cos(direction - angle);  // -1 ~ 1
+		t = delta_angle_factor * length(uv) * 0.5 + 0.5;
 	}
 	return interpolate_bezier(vec2(0), control1, control2, vec2(1), 1.0 - clamp(t, 0, 1)).y;
 }
 
 void fragment() {
-	float height = is_flat ? 1.0 : clamp(directional_height((UV - 0.5) * 2.0), 0, 1);
+	vec2 radial_uv = (UV - 0.5) * 2.0 ;  // -1 ~ 1
+	float height = is_flat ? 1.0 : clamp(directional_height(radial_uv), 0, 1);
 	vec4 texel = texture(TEXTURE, UV);
 	float grayscale = dot(texel.rgb, vec3(0.3, 0.59, 0.11));
 	grayscale = mix(grayscale, 1.0 - grayscale, float(is_inverted));

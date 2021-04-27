@@ -28,12 +28,6 @@ func _init() -> void:
 	history.connect("revision_changed", self, "_on_history_revision_changed")
 
 
-func set_height_image(image: Image, empty_data: bool = false) -> void:
-	height_image = image
-	height_texture.create_from_image(height_image, height_texture.flags)
-	emit_signal("height_texture_changed", height_texture, empty_data)
-
-
 func load_image_dialog(type: int) -> void:
 	var method = ""
 	if type == MapTypes.Type.ALBEDO_MAP:
@@ -90,6 +84,12 @@ func set_albedo_image(value: Image, _path: String = "") -> void:
 	if OS.get_current_video_driver() == OS.VIDEO_DRIVER_GLES3:
 		albedo_srgb_texture.create_from_image(albedo_image, albedo_srgb_texture.flags)
 	emit_signal("albedo_texture_changed", albedo_texture)
+
+
+func set_height_image(image: Image, empty_data: bool = false) -> void:
+	height_image = image
+	height_texture.create_from_image(height_image, height_texture.flags)
+	emit_signal("height_texture_changed", height_texture, empty_data)
 
 
 func set_normal_image(value: Image, _path: String = "") -> void:
