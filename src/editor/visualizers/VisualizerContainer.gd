@@ -28,7 +28,6 @@ func _notification(what: int) -> void:
 		set_process(false)
 	elif what == NOTIFICATION_MOUSE_ENTER:
 		grab_focus()
-		brush.visible = true
 	elif what == NOTIFICATION_MOUSE_EXIT or what == NOTIFICATION_WM_MOUSE_EXIT:
 		stop_panning()
 		release_focus()
@@ -82,6 +81,8 @@ func _gui_input(event: InputEvent) -> void:
 			ControlExtras.wrap_mouse_motion_if_needed(self, event)
 			pan_by_mouse(event.relative, Input.is_action_pressed("visualizer_3d_faster"))
 			return  # avoid processing input in viewport
+		else:
+			brush.visible = true
 		if dragging:
 			ControlExtras.wrap_mouse_motion_if_needed(self, event)
 			HeightDrawer.draw_brush_centered_uv(brush, brush.uv)

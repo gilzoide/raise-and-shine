@@ -40,9 +40,7 @@ func _ready() -> void:
 
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_MOUSE_ENTER:
-		brush.visible = true
-	elif what == NOTIFICATION_MOUSE_EXIT or what == NOTIFICATION_WM_MOUSE_EXIT:
+	if what == NOTIFICATION_MOUSE_EXIT or what == NOTIFICATION_WM_MOUSE_EXIT:
 		brush.visible = false
 
 
@@ -66,6 +64,7 @@ func _on_TextureRect_drag_ended() -> void:
 
 
 func _on_TextureRect_drag_moved(uv: Vector2) -> void:
+	brush.visible = true
 	brush.uv = uv
 	if _dragging:
 		HeightDrawer.draw_brush_centered_uv(brush, uv)
