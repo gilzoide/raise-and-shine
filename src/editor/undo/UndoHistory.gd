@@ -28,6 +28,7 @@ func push_revision(heightmap: Image) -> void:
 	current_revision = revision_history.size() - 1
 	new_revision.id = current_revision
 	emit_signal("revision_added", new_revision)
+	emit_signal("revision_changed", new_revision)
 
 
 func set_current_revision(id: int) -> void:
