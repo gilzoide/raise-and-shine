@@ -17,7 +17,8 @@ export(ImageTexture) var height_texture: ImageTexture = MapTypes.HEIGHT_TEXTURE
 export(ImageTexture) var normal_texture: ImageTexture = MapTypes.NORMAL_TEXTURE
 export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 
-var last_loaded_filename := ""
+var _last_loaded_filename := ""
+var _last_loaded_directory := ""
 
 
 func _init() -> void:
@@ -59,7 +60,7 @@ func save_image_dialog_type(type: int) -> void:
 
 
 func save_image_dialog(image: Image, suffix: String = "") -> void:
-	var filename = last_loaded_filename if last_loaded_filename != "" else "raise_and_shine_generated"
+	var filename = _last_loaded_filename if _last_loaded_filename != "" else "raise_and_shine_generated"
 	filename += suffix
 	filename += ".png"
 	ImageFileDialog.try_save_image(image, filename)
@@ -70,11 +71,17 @@ func load_project_dialog() -> void:
 
 
 func on_project_dialog_image(value: Image, path: String = "") -> void:
-	last_loaded_filename = path.get_file().get_basename()
+	_last_loaded_filename = path.get_file().get_basename()
+	_last_loaded_directory = path.get_base_dir()
 	set_albedo_image(value)
-	var new_size = value.get_size()
-	height_image.create(new_size.x, new_size.y, false, MapTypes.HEIGHT_IMAGE_FORMAT)
-	set_height_image(height_image, true)
+	var img = _try_find_height_image_in_dir(_last_loaded_directory, _last_loaded_filename)
+	var is_empty_data = img.is_empty()
+	if is_empty_data:
+		var new_size = value.get_size()
+		height_image.create(new_size.x, new_size.y, false, MapTypes.HEIGHT_IMAGE_FORMAT)
+	else:
+		height_image = img
+	set_height_image(height_image, is_empty_data)
 	history.push_revision(height_image)
 
 
@@ -113,3 +120,22 @@ func _on_height_image_loaded(value: Image, _path: String = "") -> void:
 func _on_history_revision_changed(revision) -> void:
 	height_image.copy_from(revision.heightmap)
 	set_height_image(height_image)
+
+
+func _try_find_height_image_in_dir(dirname: String, basename: String) -> Image:
+	var dir := Directory.new()
+	var img = Image.new()
+	if dir.open(dirname) == OK:
+		var possible_basenames = {
+			basename + "_h": true,
+			basename + "_height": true,
+		}
+		var _err = dir.list_dir_begin()
+		var filename = dir.get_next()
+		while filename != "":
+			if filename.get_basename() in possible_basenames:
+				_err = img.load(dirname.plus_file(filename))
+				break
+			filename = dir.get_next()
+		dir.list_dir_end()
+	return img
