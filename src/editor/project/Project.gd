@@ -105,6 +105,14 @@ func set_normal_image(value: Image, _path: String = "") -> void:
 	emit_signal("normal_texture_changed", normal_texture)
 
 
+func clear_maps() -> void:
+	HeightDrawer.clear_all()
+	height_image.lock()
+	height_image.fill(Color.black)
+	height_image.unlock()
+	history.push_revision(height_image)
+
+
 func resize_maps(size: Vector2) -> void:
 	if height_image.get_size() != size:
 		height_image.resize(int(size.x), int(size.y))

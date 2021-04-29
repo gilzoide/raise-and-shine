@@ -15,6 +15,7 @@ enum {
 	BRUSH_ANGLE_INCREASE,
 	BRUSH_ANGLE_DECREASE,
 	_SEPARATOR_1,
+	CLEAR_MAPS,
 	RESIZE_MAPS,
 }
 
@@ -59,6 +60,7 @@ func _ready() -> void:
 	
 	menu_popup.add_separator()  # _SEPARATOR_1
 	
+	menu_popup.add_item("Clear maps", CLEAR_MAPS)
 	menu_popup.add_item("Resize maps", RESIZE_MAPS)
 	menu_popup.set_item_tooltip(RESIZE_MAPS, """
 	Resize height and normal maps, scaling current content.
@@ -94,6 +96,8 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		_brush_toolbar.angle_editor.scroll_range(1)
 	elif id == BRUSH_ANGLE_DECREASE:
 		_brush_toolbar.angle_editor.scroll_range(-1)
+	elif id == CLEAR_MAPS:
+		project.clear_maps()
 	elif id == RESIZE_MAPS:
 		if SizePickerPopup == null:
 			SizePickerPopup = load("res://mainUI/SizePickerPopup.tscn")
