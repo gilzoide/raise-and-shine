@@ -9,6 +9,8 @@ Run it on you browser: https://gilzoide.itch.io/raise-and-shine
 
 ![](screenshots/hi.gif)
 
+![](screenshots/brush-highest.gif)
+
 ![](screenshots/foot.gif)
 
 ![](screenshots/wink-lit.png)
