@@ -15,3 +15,7 @@ src/native/*.dll
 src/native/*.dylib
 src/native/*.so
 src/native/*.wasm
+
+
+# My own folder of test images that I don't want to track
+ignoredimages/
