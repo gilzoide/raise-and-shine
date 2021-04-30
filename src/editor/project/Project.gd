@@ -17,7 +17,9 @@ export(ImageTexture) var height_texture: ImageTexture = MapTypes.HEIGHT_TEXTURE
 export(ImageTexture) var normal_texture: ImageTexture = MapTypes.NORMAL_TEXTURE
 export(Resource) var history = preload("res://editor/undo/UndoHistory.tres")
 
-var _last_loaded_filename := ""
+var have_unsaved_changes := false
+
+var _last_loaded_filename := "raise_and_shine_generated.png"
 var _last_loaded_directory := ""
 
 
@@ -27,6 +29,7 @@ func _init() -> void:
 	set_height_image(height_image)
 	history.init_heightmap(height_image)
 	history.connect("revision_changed", self, "_on_history_revision_changed")
+	history.connect("revision_added", self, "_on_history_revision_added")
 
 
 func load_image_dialog(type: int) -> void:
@@ -60,9 +63,7 @@ func save_image_dialog_type(type: int) -> void:
 
 
 func save_image_dialog(image: Image, suffix: String = "") -> void:
-	var filename = _last_loaded_filename if _last_loaded_filename != "" else "raise_and_shine_generated"
-	filename += suffix
-	filename += ".png"
+	var filename = _last_loaded_filename.get_basename() + suffix + ".png"
 	ImageFileDialog.try_save_image(image, filename)
 
 
@@ -71,7 +72,8 @@ func save_current() -> void:
 	var height_path = _last_loaded_directory.plus_file("%s_height.%s" % [_last_loaded_filename.get_basename(), _last_loaded_filename.get_extension()])
 	normal_image = NormalDrawer.get_texture().get_data()
 	var normal_path = _last_loaded_directory.plus_file("%s_normal.%s" % [_last_loaded_filename.get_basename(), _last_loaded_filename.get_extension()])
-	ImageFileDialog.save_current_images(height_image, height_path, normal_image, normal_path)
+	if ImageFileDialog.save_current_images(height_image, height_path, normal_image, normal_path):
+		have_unsaved_changes = false
 
 
 func load_project_dialog() -> void:
@@ -91,6 +93,7 @@ func on_project_dialog_image(value: Image, path: String = "") -> void:
 		height_image = img
 	set_height_image(height_image, is_empty_data)
 	history.push_revision(height_image)
+	have_unsaved_changes = false
 
 
 func set_albedo_image(value: Image, _path: String = "") -> void:
@@ -131,6 +134,10 @@ func resize_maps(size: Vector2) -> void:
 func _on_height_image_loaded(value: Image, _path: String = "") -> void:
 	value.convert(MapTypes.HEIGHT_IMAGE_FORMAT)
 	set_height_image(value)
+
+
+func _on_history_revision_added(_revision) -> void:
+	have_unsaved_changes = true
 
 
 func _on_history_revision_changed(revision) -> void:

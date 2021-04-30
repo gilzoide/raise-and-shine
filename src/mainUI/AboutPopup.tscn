@@ -1,12 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
+[ext_resource path="res://mainUI/AutofreePopup.gd" type="Script" id=1]
 [ext_resource path="res://mainUI/RichTextOpenMeta.gd" type="Script" id=2]
 
 [node name="AboutPopup" type="WindowDialog"]
 margin_right = 455.0
 margin_bottom = 238.0
 resizable = true
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -23,6 +24,7 @@ margin_right = 455.0
 margin_bottom = 238.0
 size_flags_vertical = 3
 tab_align = 0
+script = ExtResource( 2 )
 
 [node name="About" type="RichTextLabel" parent="VBoxContainer/TabContainer"]
 anchor_right = 1.0
@@ -1255,6 +1257,6 @@ This program uses icons from Material Design Icons collection, available under t
    END OF TERMS AND CONDITIONS
 "
 
-[connection signal="meta_clicked" from="VBoxContainer/TabContainer/About" to="." method="_on_RichTextLabel_meta_clicked"]
-[connection signal="meta_clicked" from="VBoxContainer/TabContainer/Libraries" to="." method="_on_RichTextLabel_meta_clicked"]
-[connection signal="meta_clicked" from="VBoxContainer/TabContainer/Assets" to="." method="_on_RichTextLabel_meta_clicked"]
+[connection signal="meta_clicked" from="VBoxContainer/TabContainer/About" to="VBoxContainer/TabContainer" method="_on_RichTextLabel_meta_clicked"]
+[connection signal="meta_clicked" from="VBoxContainer/TabContainer/Libraries" to="VBoxContainer/TabContainer" method="_on_RichTextLabel_meta_clicked"]
+[connection signal="meta_clicked" from="VBoxContainer/TabContainer/Assets" to="VBoxContainer/TabContainer" method="_on_RichTextLabel_meta_clicked"]

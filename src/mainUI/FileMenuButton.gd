@@ -17,6 +17,7 @@ export(Resource) var project = preload("res://editor/project/ActiveEditorProject
 
 var ExportMenuPopup
 onready var popup = get_popup()
+var _confirm_quit_popup: Popup
 
 func _ready() -> void:
 	popup.add_item("Open image...", LOAD)
@@ -52,6 +53,11 @@ func _ready() -> void:
 	popup.connect("id_pressed", self, "_on_item_pressed")
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_QUIT_REQUEST:
+		_confirm_save_changes_or_quit()
+
+
 func _on_item_pressed(id: int) -> void:
 	if id == LOAD:
 		project.load_project_dialog()
@@ -66,11 +72,35 @@ func _on_item_pressed(id: int) -> void:
 			ExportMenuPopup = load("res://mainUI/ExportMenuPopup.tscn")
 		var popup: Popup = ExportMenuPopup.instance()
 		add_child(popup)
-		var _err = popup.connect("popup_hide", popup, "queue_free", [], CONNECT_ONESHOT)
 		popup.popup_centered_ratio()
 	elif id == QUIT:
-		get_tree().quit()
+		_confirm_save_changes_or_quit()
+
+
+func _confirm_save_changes_or_quit() -> void:
+	if project.have_unsaved_changes and not _confirm_quit_popup:
+		_confirm_quit_popup = ConfirmationDialog.new()
+		_confirm_quit_popup.set_script(load("res://mainUI/AutofreePopup.gd"))
+		_confirm_quit_popup.dialog_text = "There are unsaved changes.\nWhat do you want to do?"
+		_confirm_quit_popup.get_ok().text = "Save"
+		_confirm_quit_popup.get_cancel().text = "Discard"
+		var _err = _confirm_quit_popup.get_cancel().connect("pressed", self, "_quit")
+		_err = _confirm_quit_popup.connect("popup_hide", self, "set", ["_confirm_quit_popup", null])
+		_err = _confirm_quit_popup.connect("confirmed", self, "_save_changes_and_quit")
+		call_deferred("add_child", _confirm_quit_popup)
+		_confirm_quit_popup.call_deferred("popup_centered")
+	else:
+		_quit()
 
 
 func _on_project_albedo_texture_changed(_texture) -> void:
 	popup.set_item_disabled(popup.get_item_index(SAVE), false)
+
+
+func _save_changes_and_quit() -> void:
+	project.save_current()
+	_quit()
+
+
+func _quit() -> void:
+	get_tree().quit()

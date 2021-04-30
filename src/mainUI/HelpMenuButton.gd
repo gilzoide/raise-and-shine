@@ -38,12 +38,10 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 			OnboardingPopup = load("res://help/OnboardingPopup.tscn")
 		var popup: Popup = OnboardingPopup.instance()
 		add_child(popup)
-		var _err = popup.connect("popup_hide", popup, "queue_free", [], CONNECT_ONESHOT)
 		popup.popup_centered_ratio(0.91)
 	elif id == ABOUT:
 		if not AboutPopup:
 			AboutPopup = load("res://mainUI/AboutPopup.tscn")
 		var popup: Popup = AboutPopup.instance()
 		add_child(popup)
-		var _err = popup.connect("popup_hide", popup, "queue_free", [], CONNECT_ONESHOT)
 		popup.popup_centered()

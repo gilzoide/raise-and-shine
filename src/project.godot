@@ -74,6 +74,7 @@ run/main_scene="res://mainUI/Main.tscn"
 config/icon="res://icon.png"
 config/macos_native_icon="res://icon.icns"
 config/windows_native_icon="res://icon.ico"
+config/auto_accept_quit=false
 
 [autoload]
 

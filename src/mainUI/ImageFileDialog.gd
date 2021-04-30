@@ -84,11 +84,18 @@ func try_save_image(image: Image, filename: String) -> void:
 			_show_toast("Failed to save image =(")
 
 
-func save_current_images(heightmap: Image, heightmap_path: String, normalmap: Image, normalmap_path: String):
-	dispatch_queue.dispatch_group([
+func save_current_images(heightmap: Image, heightmap_path: String, normalmap: Image, normalmap_path: String) -> bool:
+	var group = dispatch_queue.dispatch_group([
 		[self, "_save_image", [heightmap, heightmap_path]],
 		[self, "_save_image", [normalmap, normalmap_path]],
-	]).then_deferred(self, "_on_current_images_saved", [heightmap_path, normalmap_path])
+	])
+	var results = yield(group, "finished")
+	var message = "%s\n%s" % [
+		"Height map saved at \"%s\"" % heightmap_path if results[0] == OK else "Failed saving height map",
+		"Normal map saved at \"%s\"" % normalmap_path if results[1] == OK else "Failed saving normal map",
+	]
+	_show_toast(message)
+	return results[0] == OK and results[1] == OK
 
 
 func _save_image(image: Image, path: String) -> int:
@@ -153,11 +160,3 @@ func _on_load_image_finished(image: Image) -> void:
 	_show_toast("Failed to load image =(" if image.is_empty() else "Image loaded")
 	_loading_overlay.visible = false
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
-
-
-func _on_current_images_saved(results, heightmap_path: String, normalmap_path: String) -> void:
-	var message = "%s\n%s" % [
-		"Height map saved at \"%s\"" % heightmap_path if results[0] == OK else "Failed saving height map",
-		"Normal map saved at \"%s\"" % normalmap_path if results[1] == OK else "Failed saving normal map",
-	]
-	_show_toast(message)

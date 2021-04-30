@@ -104,7 +104,6 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		var popup = SizePickerPopup.instance()
 		add_child(popup)
 		var _err = popup.connect("size_confirmed", project, "resize_maps", [], CONNECT_ONESHOT)
-		_err = popup.connect("popup_hide", popup, "queue_free", [], CONNECT_ONESHOT)
 		popup.popup_with_size(HeightDrawer.size)
 
 
