@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://changelog/ChangelogVersion.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+build_number = 4
+date = "2021-04-30"
+description = "Both Highs and Lows are important, keep them as you please!
+With the new \"Highest\" and \"Lowest\" brush modes you can keep some height values while updating others, useful to create peaks and valleys. Also, we get some workflow improvements, check them out below."
+added = PoolStringArray( "Highest and Lowest brush modes", "Load height map alongside albedo if there is an image with same name suffixed by \"_h\" or \"height\" in the same folder", "(Desktop only) \"File -> Save\" (Ctrl + S) menu item to save height and normal maps in the same folder than loaded albedo, suffixed with \"_height\" and \"_normal\" respectively", "(Desktop only) Confirmation popup when quitting and there are unsaved changes, so you don\'t lose work by accident", "\"Edit -> Clear maps\" menu item that clears current maps. " )
+changed = PoolStringArray(  )
+fixed = PoolStringArray( "Disable/enable Undo/Redo shortcuts correctly" )
+removed = PoolStringArray(  )
