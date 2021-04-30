@@ -74,7 +74,7 @@ func _on_item_pressed(id: int) -> void:
 		add_child(popup)
 		popup.popup_centered_ratio()
 	elif id == QUIT:
-		_confirm_save_changes_or_quit()
+		get_tree().root.propagate_notification(NOTIFICATION_WM_QUIT_REQUEST)
 
 
 func _confirm_save_changes_or_quit() -> void:
