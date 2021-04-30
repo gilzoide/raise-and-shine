@@ -75,11 +75,13 @@ margin_top = 24.0
 margin_right = 90.0
 margin_bottom = 44.0
 rect_min_size = Vector2( 90, 0 )
-hint_tooltip = "Brush blending mode.
+hint_tooltip = "Brush mode.
 By default, brush is blended with current height based on transparency.
 Add mode sums the current height with brush.
 Subtract mode subtracts brush from current height.
-Multiply mode multiplies current height with brush value, useful for scaling down whole regions."
+Multiply mode multiplies current height with brush value, useful for scaling down whole regions.
+Highest maintains the highest value.
+Lowest maintains the lowest value."
 text = "Blend"
 script = ExtResource( 7 )
 
