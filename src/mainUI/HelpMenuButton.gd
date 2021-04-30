@@ -27,6 +27,11 @@ func _ready() -> void:
 		_on_menu_popup_id_pressed(HELP)
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_ABOUT:
+		_on_menu_popup_id_pressed(ABOUT)
+
+
 func _on_menu_popup_id_pressed(id: int) -> void:
 	if id == HELP:
 		if not OnboardingPopup:
