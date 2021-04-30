@@ -103,6 +103,8 @@ brush_library_track_files=true
 brush_library_track_files.HTML5=false
 file_menu_have_save=true
 file_menu_have_save.HTML5=false
+file_menu_have_quit=true
+file_menu_have_quit.HTML5=false
 
 [input]
 

@@ -7,11 +7,9 @@ extends MenuButton
 enum {
 	LOAD,
 	SAVE,
-	_SEPARATOR_0,
 	LOAD_HEIGHT,
 #	LOAD_NORMAL,
 	EXPORT,
-	_SEPARATOR_1,
 	QUIT,
 }
 
@@ -39,15 +37,15 @@ func _ready() -> void:
 		""")
 		project.connect("albedo_texture_changed", self, "_on_project_albedo_texture_changed")
 	
-	popup.add_separator()  # _SEPARATOR_0
+	popup.add_separator()
 	
 	popup.add_item("Load height map", LOAD_HEIGHT)
 #	popup.add_item("Load normal map", LOAD_NORMAL)
 	popup.add_item("Export...", EXPORT)
 	popup.set_item_shortcut(popup.get_item_index(EXPORT), load("res://shortcuts/ExportMenu_shortcut.tres"))
 	
-	if OS.get_name() != "HTML5":
-		popup.add_separator()  # _SEPARATOR_1
+	if ProjectSettings.get_setting("global/file_menu_have_quit"):
+		popup.add_separator()
 		popup.add_item("Quit", QUIT)
 		popup.set_item_shortcut(popup.get_item_index(QUIT), load("res://shortcuts/Quit_shortcut.tres"))
 		popup.set_item_tooltip(popup.get_item_index(QUIT), "Quit the application.")
