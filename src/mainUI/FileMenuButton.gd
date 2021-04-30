@@ -6,6 +6,7 @@ extends MenuButton
 
 enum {
 	LOAD,
+	SAVE,
 	_SEPARATOR_0,
 	LOAD_HEIGHT,
 #	LOAD_NORMAL,
@@ -17,35 +18,47 @@ enum {
 export(Resource) var project = preload("res://editor/project/ActiveEditorProject.tres")
 
 var ExportMenuPopup
-
+onready var popup = get_popup()
 
 func _ready() -> void:
-	var popup = get_popup()
 	popup.add_item("Open image...", LOAD)
-	popup.set_item_shortcut(LOAD, load("res://shortcuts/FileLoad_shortcut.tres"))
-	popup.set_item_tooltip(LOAD, """
+	popup.set_item_shortcut(popup.get_item_index(LOAD), load("res://shortcuts/FileLoad_shortcut.tres"))
+	popup.set_item_tooltip(popup.get_item_index(LOAD), """
 	Open image to be used as albedo.
 	Empty height and normal maps will be created with the same dimensions as the loaded image.
 	""")
+	
+	if ProjectSettings.get_setting("global/file_menu_have_save"):
+		popup.add_item("Save", SAVE)
+		popup.set_item_disabled(popup.get_item_index(SAVE), true)
+		popup.set_item_shortcut(popup.get_item_index(SAVE), load("res://shortcuts/FileSave_shortcut.tres"))
+		popup.set_item_tooltip(popup.get_item_index(SAVE), """
+		Save height and normal map images to the same directory as loaded image.
+		Height map will have "_height" appended to the loaded image name.
+		Normal map will have "_normal" appended to the loaded image name.
+		""")
+		project.connect("albedo_texture_changed", self, "_on_project_albedo_texture_changed")
 	
 	popup.add_separator()  # _SEPARATOR_0
 	
 	popup.add_item("Load height map", LOAD_HEIGHT)
 #	popup.add_item("Load normal map", LOAD_NORMAL)
 	popup.add_item("Export...", EXPORT)
-	popup.set_item_shortcut(EXPORT, load("res://shortcuts/ExportMenu_shortcut.tres"))
+	popup.set_item_shortcut(popup.get_item_index(EXPORT), load("res://shortcuts/ExportMenu_shortcut.tres"))
 	
 	if OS.get_name() != "HTML5":
 		popup.add_separator()  # _SEPARATOR_1
 		popup.add_item("Quit", QUIT)
-		popup.set_item_shortcut(QUIT, load("res://shortcuts/Quit_shortcut.tres"))
-		popup.set_item_tooltip(QUIT, "Quit the application.")
+		popup.set_item_shortcut(popup.get_item_index(QUIT), load("res://shortcuts/Quit_shortcut.tres"))
+		popup.set_item_tooltip(popup.get_item_index(QUIT), "Quit the application.")
 	popup.connect("id_pressed", self, "_on_item_pressed")
 
 
 func _on_item_pressed(id: int) -> void:
 	if id == LOAD:
 		project.load_project_dialog()
+	elif id == SAVE:
+		project.save_current()
 	elif id == LOAD_HEIGHT:
 		project.load_image_dialog(MapTypes.Type.HEIGHT_MAP)
 #	elif id == LOAD_NORMAL:
@@ -59,3 +72,7 @@ func _on_item_pressed(id: int) -> void:
 		popup.popup_centered_ratio()
 	elif id == QUIT:
 		get_tree().quit()
+
+
+func _on_project_albedo_texture_changed(_texture) -> void:
+	popup.set_item_disabled(popup.get_item_index(SAVE), false)

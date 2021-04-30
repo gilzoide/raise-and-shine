@@ -84,6 +84,22 @@ func try_save_image(image: Image, filename: String) -> void:
 			_show_toast("Failed to save image =(")
 
 
+func save_current_images(heightmap: Image, heightmap_path: String, normalmap: Image, normalmap_path: String):
+	dispatch_queue.dispatch_group([
+		[self, "_save_image", [heightmap, heightmap_path]],
+		[self, "_save_image", [normalmap, normalmap_path]],
+	]).then_deferred(self, "_on_current_images_saved", [heightmap_path, normalmap_path])
+
+
+func _save_image(image: Image, path: String) -> int:
+	var res = ERR_FILE_UNRECOGNIZED
+	if path.ends_with(".png"):
+		res = image.save_png(path)
+	elif path.ends_with(".exr"):
+		res = image.save_exr(path)
+	return res
+
+
 func _on_file_selected(path: String) -> void:
 	Input.set_default_cursor_shape(Input.CURSOR_WAIT)
 	if file_dialog.mode == FileDialog.MODE_OPEN_FILE:
@@ -94,12 +110,7 @@ func _on_file_selected(path: String) -> void:
 			var image = _load_image_from_path(path, _success_method)
 			_on_load_image_finished(image)
 	elif file_dialog.mode == FileDialog.MODE_SAVE_FILE:
-		var res = ERR_FILE_UNRECOGNIZED
-		if path.ends_with(".png"):
-			res = image_to_save.save_png(path)
-		elif path.ends_with(".exr"):
-			res = image_to_save.save_exr(path)
-		if res == OK:
+		if _save_image(image_to_save, path) == OK:
 			_show_toast("Image saved at \"%s\"" % path)
 		else:
 			_show_toast("Failed to save image =(")
@@ -142,3 +153,11 @@ func _on_load_image_finished(image: Image) -> void:
 	_show_toast("Failed to load image =(" if image.is_empty() else "Image loaded")
 	_loading_overlay.visible = false
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+
+
+func _on_current_images_saved(results, heightmap_path: String, normalmap_path: String) -> void:
+	var message = "%s\n%s" % [
+		"Height map saved at \"%s\"" % heightmap_path if results[0] == OK else "Failed saving height map",
+		"Normal map saved at \"%s\"" % normalmap_path if results[1] == OK else "Failed saving normal map",
+	]
+	_show_toast(message)

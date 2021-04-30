@@ -66,15 +66,23 @@ func save_image_dialog(image: Image, suffix: String = "") -> void:
 	ImageFileDialog.try_save_image(image, filename)
 
 
+func save_current() -> void:
+	height_image = HeightDrawer.get_texture().get_data()
+	var height_path = _last_loaded_directory.plus_file("%s_height.%s" % [_last_loaded_filename.get_basename(), _last_loaded_filename.get_extension()])
+	normal_image = NormalDrawer.get_texture().get_data()
+	var normal_path = _last_loaded_directory.plus_file("%s_normal.%s" % [_last_loaded_filename.get_basename(), _last_loaded_filename.get_extension()])
+	ImageFileDialog.save_current_images(height_image, height_path, normal_image, normal_path)
+
+
 func load_project_dialog() -> void:
 	ImageFileDialog.try_load_image(funcref(self, "on_project_dialog_image"))
 
 
 func on_project_dialog_image(value: Image, path: String = "") -> void:
-	_last_loaded_filename = path.get_file().get_basename()
+	_last_loaded_filename = path.get_file()
 	_last_loaded_directory = path.get_base_dir()
 	set_albedo_image(value)
-	var img = _try_find_height_image_in_dir(_last_loaded_directory, _last_loaded_filename)
+	var img = _try_find_height_image_in_dir(_last_loaded_directory, _last_loaded_filename.get_basename())
 	var is_empty_data = img.is_empty()
 	if is_empty_data:
 		var new_size = value.get_size()
@@ -130,7 +138,7 @@ func _on_history_revision_changed(revision) -> void:
 	set_height_image(height_image)
 
 
-func _try_find_height_image_in_dir(dirname: String, basename: String) -> Image:
+static func _try_find_height_image_in_dir(dirname: String, basename: String) -> Image:
 	var dir := Directory.new()
 	var img = Image.new()
 	if dir.open(dirname) == OK:
