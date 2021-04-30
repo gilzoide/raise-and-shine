@@ -103,7 +103,6 @@ func clear_to_texture(texture: Texture) -> void:
 
 func take_snapshot() -> void:
 	var image = get_texture().get_data()
-	project.height_image = image
 	history.push_revision(image)
 
 
