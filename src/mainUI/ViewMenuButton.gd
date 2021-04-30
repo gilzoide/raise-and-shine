@@ -137,7 +137,7 @@ func _on_menu_popup_id_pressed(id: int) -> void:
 		plane_material.set_shader_param("albedo_source", 2)
 		update_albedo_from_check_items()
 	elif id == LAYOUT_RESTORE_DEFAULT:
-		var layout = ResourceLoader.load("res://mainUI/DefaultLayout.tres", "", true)
+		var layout = load("res://mainUI/DefaultLayout.tres")
 		_workbench_panel.layout = layout.clone()
 
 
