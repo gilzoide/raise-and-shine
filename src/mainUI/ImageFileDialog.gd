@@ -30,6 +30,10 @@ const OPEN_EXTENSIONS = PoolStringArray([
 	"tga",
 	"webp",
 ])
+const SAVE_EXTENSIONS = PoolStringArray([
+	"png",
+	"exr",
+])
 
 const OPEN_TEXT = "You can also drop files to this window\n"
 const SAVE_TEXT = ""

@@ -69,9 +69,13 @@ func save_image_dialog(image: Image, suffix: String = "") -> void:
 
 func save_current() -> void:
 	height_image = HeightDrawer.get_texture().get_data()
-	var height_path = _last_loaded_directory.plus_file("%s_height.%s" % [_last_loaded_filename.get_basename(), _last_loaded_filename.get_extension()])
+	var basebane = _last_loaded_filename.get_basename()
+	var extension = _last_loaded_filename.get_extension()
+	if not extension in ImageFileDialog.SAVE_EXTENSIONS:
+		extension = ImageFileDialog.SAVE_EXTENSIONS[0]
+	var height_path = _last_loaded_directory.plus_file("%s_height.%s" % [basebane, extension])
 	normal_image = NormalDrawer.get_texture().get_data()
-	var normal_path = _last_loaded_directory.plus_file("%s_normal.%s" % [_last_loaded_filename.get_basename(), _last_loaded_filename.get_extension()])
+	var normal_path = _last_loaded_directory.plus_file("%s_normal.%s" % [basebane, extension])
 	if ImageFileDialog.save_current_images(height_image, height_path, normal_image, normal_path):
 		have_unsaved_changes = false
 
