@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://editor/visualizers/3D/Environment.tres" type="Environment" id=1]
 [ext_resource path="res://editor/visualizers/PhotoBoothModel.tscn" type="PackedScene" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://editor/visualizers/3D/UnshadedVerticesAlbedo_material.tres" type="Material" id=8]
 [ext_resource path="res://editor/visualizers/3D/PlateBorder.gd" type="Script" id=9]
 [ext_resource path="res://editor/visualizers/InvertScreenColor_spatial_material.tres" type="Material" id=10]
-[ext_resource path="res://editor/visualizers/3D/Plane_material.tres" type="Material" id=11]
 [ext_resource path="res://editor/visualizers/3D/Brush3D_material.tres" type="Material" id=12]
 
 [sub_resource type="ArrayMesh" id=1]
@@ -27,10 +26,8 @@ transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0
 
 [node name="Model" parent="Plate" instance=ExtResource( 2 )]
 layers = 9
-material_override = ExtResource( 11 )
 cast_shadow = 0
 generate_lightmap = false
-material/0 = null
 
 [node name="Border" type="MeshInstance" parent="Plate"]
 material_override = ExtResource( 8 )

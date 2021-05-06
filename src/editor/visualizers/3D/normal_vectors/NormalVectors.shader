@@ -21,23 +21,23 @@ void vertex() {
 	vec2 half_size = map_size * 0.5;
 	vec2 origin2d = (vec2(x, y) + 0.5 - half_size) * origin_scale;
 	
-//	normal_rgb = texture(normal_map, map_uv).rgb;
-//	vec3 normal = normalize((normal_rgb - 0.5) * 2.0);
+	normal_rgb = texture(normal_map, map_uv).rgb;
+	vec3 normal = normalize((normal_rgb - 0.5) * 2.0);
 	
-//	vec3 right = normalize(cross(normal, vec3(0, 1, 0)));
-//	vec3 forward = normalize(cross(right, normal));
-//	mat4 rotation = mat4(
-//		vec4(right, 0),
-//		vec4(forward, 0),
-//		vec4(normal, 0),
-//		vec4(0, 0, 0, 1)
-//	);
+	vec3 forward = normal;
+	vec3 right = normalize(cross(forward, vec3(0, 1, 0)));
+	vec3 up = normalize(cross(right, forward));
+	mat4 transform = mat4(
+		vec4(right, 0),
+		vec4(up, 0),
+		vec4(forward, 0),
+		vec4(origin2d.x, height, origin2d.y, 1)
+	);
 	
-//	VERTEX = (rotation * vec4(VERTEX, 1)).xyz + vec3(origin2d.x, height, origin2d.y);
-	VERTEX += vec3(origin2d.x, height, origin2d.y);
+	VERTEX = (transform * vec4(VERTEX, 1)).xyz;
 }
 
 
 void fragment() {
-	ALBEDO = normal_rgb;
+	ALBEDO = COLOR.rgb * normal_rgb;
 }

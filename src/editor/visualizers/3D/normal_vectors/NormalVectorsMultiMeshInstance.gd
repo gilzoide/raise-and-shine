@@ -4,30 +4,38 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 extends MultiMeshInstance
 
-const PIXEL_CENTER_OFFSET = Vector2(0.5, 0.5)
-
+export(float) var vector_side: float = 0.5
 export(float) var vector_height: float = 5
+
+var _current_instance_count = 0
 
 
 func _ready() -> void:
-	var vertices = PoolVector3Array()
-	vertices.append(Vector3(-0.5, 0, -0.5))
-	vertices.append(Vector3(0.5, 0, 0.5))
-	vertices.append(Vector3(-0.5, 0, 0.5))
-	vertices.append(Vector3(0.5, 0, -0.5))
-	vertices.append(Vector3(0, 0, 0))
-	vertices.append(Vector3(0, vector_height, 0))
+	var vertices = PoolVector3Array([
+		Vector3(-vector_side, 0, -vector_side),
+		Vector3(vector_side, 0, vector_side),
+		Vector3(-vector_side, 0, vector_side),
+		Vector3(vector_side, 0, -vector_side),
+		Vector3(0, 0, 0),
+		Vector3(0, vector_height, 0),
+	])
 	var arrays = []
 	arrays.resize(ArrayMesh.ARRAY_MAX)
 	arrays[ArrayMesh.ARRAY_VERTEX] = vertices
 	multimesh.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINES, arrays)
-	multimesh.instance_count = 4096
+	material_override.set_shader_param("height_map", HeightDrawer.get_texture())
 	material_override.set_shader_param("normal_map", NormalDrawer.get_texture())
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_VISIBILITY_CHANGED and visible:
+		if multimesh.instance_count != _current_instance_count:
+			multimesh.instance_count = _current_instance_count
 
 
 func set_plane_size(plane_size: Vector2) -> void:
 	material_override.set_shader_param("plane_size", plane_size)
-	multimesh.instance_count = int(plane_size.x * plane_size.y)
+	set_current_instance_count(int(plane_size.x * plane_size.y))
 
 
 func set_height_scale(height_scale: float) -> void:
@@ -36,4 +44,10 @@ func set_height_scale(height_scale: float) -> void:
 
 func set_map_size(map_size: Vector2) -> void:
 	material_override.set_shader_param("map_size", map_size)
-	multimesh.instance_count = int(map_size.x * map_size.y)
+	set_current_instance_count(int(map_size.x * map_size.y))
+
+
+func set_current_instance_count(value: int) -> void:
+	_current_instance_count = value
+	if visible:
+		multimesh.instance_count = value

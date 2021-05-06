@@ -74,6 +74,7 @@ func _on_height_texture_changed(texture: Texture, _empty_data: bool = false) -> 
 		return
 	
 	_height_size = new_size
+	_normal_vectors.set_map_size(new_size)
 	_update_brush_size()
 
 
