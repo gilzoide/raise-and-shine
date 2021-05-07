@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://fonts/Roboto-Medium.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://changelog/2_dockable_panel.tres" type="Resource" id=8]
 [ext_resource path="res://changelog/3_brush.tres" type="Resource" id=9]
 [ext_resource path="res://changelog/4_save.tres" type="Resource" id=10]
+[ext_resource path="res://changelog/5_save_fix.tres" type="Resource" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 52
@@ -23,7 +24,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-versions = [ ExtResource( 5 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ]
+versions = [ ExtResource( 5 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ]
 
 [node name="_Spacing_0" type="Control" parent="."]
 margin_right = 1024.0

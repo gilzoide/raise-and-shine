@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://changelog/ChangelogVersion.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+build_number = 5
+date = "2021-05-07"
+description = ""
+added = PoolStringArray(  )
+changed = PoolStringArray(  )
+fixed = PoolStringArray( "Save .png files when imported texture is not .png or .exr" )
+removed = PoolStringArray(  )
